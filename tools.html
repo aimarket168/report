@@ -1,0 +1,14 @@
+javascript:(function(){
+  const today = new Date();
+  const dateStr = today.getFullYear() + 
+    String(today.getMonth() + 1).padStart(2, '0') + 
+    String(today.getDate()).padStart(2, '0');
+  const url = `https://marketupdate.netlify.app/${dateStr}.html`;
+  
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(url);
+    alert('已複製今日連結：' + url);
+  } else {
+    prompt('請複製以下連結：', url);
+  }
+})();
