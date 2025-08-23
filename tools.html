@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日報週報連結產生工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .report-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .section-title {
+            color: #495057;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title .icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="date"], input[type="week"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            max-width: 300px;
+        }
+        .url-display {
+            background: #ffffff;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+        .quick-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .help-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 日報週報連結產生工具</h1>
+        
+        <!-- 日報區域 -->
+        <div class="report-section">
+            <div class="section-title">
+                <span class="icon">📅</span>
+                日報連結產生
+            </div>
+            
+            <div class="quick-buttons">
+                <button class="btn btn-success" onclick="generateDailyUrl('today')">產生今日連結</button>
+                <button class="btn" onclick="generateDailyUrl('yesterday')">產生昨日連結</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="dailyDate">選擇日期：</label>
+                <input type="date" id="dailyDate" onchange="generateDailyUrl('custom')">
+            </div>
+            
+            <div class="url-display" id="dailyUrlDisplay">
+                點擊上方按鈕產生日報連結...
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn" onclick="copyUrl('daily')" id="dailyCopyBtn" disabled>📋 複製日報連結</button>
+                <button class="btn" onclick="openUrl('daily')" id="dailyOpenBtn" disabled>🔗 開啟日報</button>
+            </div>
+        </div>
+
+        <!-- 週報區域 -->
+        <div class="report-section">
+            <div class="section-title">
+                <span class="icon">📈</span>
+                週報連結產生
+            </div>
+            
+            <div class="quick-buttons">
+                <button class="btn btn-warning" onclick="generateWeeklyUrl('thisWeek')">產生本週連結</button>
+                <button class="btn" onclick="generateWeeklyUrl('lastWeek')">產生上週連結</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="weeklyDate">選擇日期：</label>
+                <input type="date" id="weeklyDate" onchange="generateWeeklyUrl('custom')">
+            </div>
+            
+            <div class="url-display" id="weeklyUrlDisplay">
+                點擊上方按鈕產生週報連結...
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn" onclick="copyUrl('weekly')" id="weeklyCopyBtn" disabled>📋 複製週報連結</button>
+                <button class="btn" onclick="openUrl('weekly')" id="weeklyOpenBtn" disabled>🔗 開啟週報</button>
+            </div>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div class="help-section">
+            <h3>使用說明：</h3>
+            <ul>
+                <li><strong>日報：</strong>點擊「產生今日連結」或選擇特定日期</li>
+                <li><strong>週報：</strong>點擊「產生本週連結」或選擇特定週別</li>
+                <li><strong>複製連結：</strong>點擊複製按鈕後直接貼到 LINE 群組</li>
+                <li><strong>預覽：</strong>點擊開啟按鈕可以預覽報告內容</li>
+            </ul>
+            
+            <h4>檔案路徑說明：</h4>
+            <ul>
+                <li>日報檔案位置：<code>/Daily/YYYYMMDD.html</code></li>
+                <li>週報檔案位置：<code>/weekly/YYYYMMDD.html</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'https://marketupdate.netlify.app/';
+        let currentDailyUrl = '';
+        let currentWeeklyUrl = '';
+
+        // 日期格式化函數
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}${month}${day}`;
+        }
+
+        // 週報也使用日期格式，這裡保留函數以備未來需要
+        function formatWeek(date) {
+            return formatDate(date); // 週報也使用日期格式
+        }
+
+        // 產生日報連結
+        function generateDailyUrl(type) {
+            let date;
+            
+            switch(type) {
+                case 'today':
+                    date = new Date();
+                    break;
+                case 'yesterday':
+                    date = new Date();
+                    date.setDate(date.getDate() - 1);
+                    break;
+                case 'custom':
+                    const dateInput = document.getElementById('dailyDate');
+                    if (!dateInput.value) return;
+                    date = new Date(dateInput.value + 'T12:00:00');
+                    break;
+            }
+            
+            const dateStr = formatDate(date);
+            currentDailyUrl = `${baseUrl}Daily/${dateStr}.html`;
+            
+            document.getElementById('dailyUrlDisplay').textContent = currentDailyUrl;
+            document.getElementById('dailyCopyBtn').disabled = false;
+            document.getElementById('dailyOpenBtn').disabled = false;
+            document.getElementById('dailyDate').value = date.toISOString().split('T')[0];
+            
+            showMessage('已產生日報連結！', 'success');
+        }
+
+        // 產生週報連結
+        function generateWeeklyUrl(type) {
+            let date;
+            
+            switch(type) {
+                case 'thisWeek':
+                    date = new Date();
+                    break;
+                case 'lastWeek':
+                    date = new Date();
+                    date.setDate(date.getDate() - 7);
+                    break;
+                case 'custom':
+                    const weekInput = document.getElementById('weeklyDate');
+                    if (!weekInput.value) return;
+                    date = new Date(weekInput.value + 'T12:00:00');
+                    break;
+            }
+            
+            const dateStr = formatDate(date); // 週報也使用日期格式
+            currentWeeklyUrl = `${baseUrl}weekly/${dateStr}.html`;
+            
+            document.getElementById('weeklyUrlDisplay').textContent = currentWeeklyUrl;
+            document.getElementById('weeklyCopyBtn').disabled = false;
+            document.getElementById('weeklyOpenBtn').disabled = false;
+            
+            // 設定日期輸入框
+            document.getElementById('weeklyDate').value = date.toISOString().split('T')[0];
+            
+            showMessage('已產生週報連結！', 'success');
+        }
+
+        // 複製連結
+        function copyUrl(type) {
+            const url = type === 'daily' ? currentDailyUrl : currentWeeklyUrl;
+            
+            if (url) {
+                navigator.clipboard.writeText(url).then(function() {
+                    showMessage(`✅ ${type === 'daily' ? '日報' : '週報'}連結已複製到剪貼簿！`, 'success');
+                }, function() {
+                    // 備用方法
+                    const textArea = document.createElement('textarea');
+                    textArea.value = url;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showMessage(`✅ ${type === 'daily' ? '日報' : '週報'}連結已複製到剪貼簿！`, 'success');
+                });
+            }
+        }
+
+        // 開啟連結
+        function openUrl(type) {
+            const url = type === 'daily' ? currentDailyUrl : currentWeeklyUrl;
+            if (url) {
+                window.open(url, '_blank');
+            }
+        }
+
+        // 顯示訊息
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // 頁面載入時自動產生今日連結
+        window.onload = function() {
+            generateDailyUrl('today');
+        };
+    </script>
+</body>
+</html>
