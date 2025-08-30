@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市場風險綜合儀表板：AI驅動下的多維度分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A multi-section, single-page dashboard designed for comprehensive market analysis. It starts with a 'Core Market Thesis' to frame the discussion. The main content is divided into thematic sections, all displayed statically: 1) BofA Contrarian Signals, 2) Broader Market Indicators (from MS, Citi, Moody's), 3) The AI Paradigm Shift, and 4) Strategic Framework. The accordion has been removed per user request to ensure all content is immediately visible, creating a linear, scrollable report format. -->
+    <!-- Visualization & Content Choices: 
+        - Key BofA Indicators: Goal: Inform. Method: Doughnut charts as gauges. Interaction: Tooltips. Justification: Quick visual risk assessment.
+        - Historical BofA Signal Performance: Goal: Compare/Change. Method: Static, structured text sections. Justification: Per user feedback, this removes interaction barriers and presents all information directly.
+        - New Charts (IT Budgets, Default Rates, Asset Allocation, Tail Risks): Goal: Inform/Compare. Method: Bar and Line charts from Chart.js. Interaction: Tooltips. Justification: To provide extensive, data-driven evidence for the analysis.
+        - AI vs. Dot-com: Goal: Organize/Explain. Method: Styled HTML table. Justification: Clear, direct comparison.
+        - Strategy Section: Goal: Inform. Method: Styled HTML list. Justification: Actionable, scannable recommendations.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visuals are Chart.js (Canvas) or styled HTML. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FDFBF7;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 200px;
+                max-height: 220px;
+            }
+        }
+        .card-shadow {
+             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#655A4E]">市場風險綜合儀表板</h1>
+            <p class="text-lg text-[#8D7B68]">AI驅動下的多維度分析 (數據截至2025年7月)</p>
+        </header>
+
+        <main>
+            <section id="thesis" class="mb-12 p-6 bg-white rounded-lg card-shadow border-l-4 border-[#C8B6A6]">
+                 <h2 class="text-2xl font-bold text-[#655A4E] mb-4">核心市場論點</h2>
+                 <p class="text-lg text-gray-700 leading-relaxed">
+                    當前市場正處於一個關鍵的十字路口，其核心特徵是<strong class="text-[#8D7B68]">「傳統週期性過熱信號」與「AI驅動的結構性牛市」之間的激烈博弈。</strong>一方面，以美國銀行（BofA）為代表的多項歷史逆向指標已亮起警示紅燈，指向市場情緒過熱、倉位過於擁擠以及潛在的修正風險。另一方面，由生成式AI引領的技術革命，其對生產力的提升潛力與堅實的盈利基本面，構成了與過往科技泡沫本質不同的結構性支撐。
+                    <br><br>
+                    因此，本報告分析認為，單純套用歷史經驗可能導致錯失結構性機遇，而完全忽視警訊則面臨巨大風險。BofA等機構發出的賣出信號，不應被視為全面退場的指令，而是一個**啟動戰略性輪動與風險再評估的號角**。市場由少數巨頭驅動的「輕鬆賺錢」階段或已結束，未來將更考驗精細化的選股、跨資產的風險管理以及對產業鏈的深度挖掘能力。
+                </p>
+            </section>
+
+            <div class="space-y-8">
+                <!-- Section 1: BofA Signals -->
+                <section class="bg-white rounded-lg card-shadow p-6">
+                    <div class="border-b pb-4 mb-6">
+                        <h2 class="text-2xl font-bold text-[#655A4E]">I. 美國銀行(BofA)逆向信號深度解析</h2>
+                    </div>
+                    <div>
+                        <p class="mb-6 text-gray-600">美國銀行的全球基金經理調查（FMS）是市場上最受關注的情緒指標之一。其逆向信號的有效性已在過去二十年得到反覆驗證。本節將深入剖析觸發本次警訊的關鍵指標及其歷史意義。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-[#8D7B68]">1.1 關鍵指標概覽</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div class="text-center p-4 border rounded-lg">
+                                <h4 class="font-bold text-lg text-[#655A4E] mb-2">現金水平規則</h4>
+                                <div class="chart-container mx-auto" style="height: 150px; max-height: 150px;"><canvas id="cashRuleChart"></canvas></div>
+                                <p class="mt-2 text-sm text-gray-600"><strong>定義：</strong>當基金經理現金水平低於4%時觸發。<strong>來源：</strong>BofA 2025年7月FMS。<strong>解讀：</strong>市場買盤動能枯竭，情緒過度樂觀。</p>
+                            </div>
+                            <div class="text-center p-4 border rounded-lg">
+                                <h4 class="font-bold text-lg text-[#655A4E] mb-2">牛熊指標</h4>
+                                <div class="chart-container mx-auto" style="height: 150px; max-height: 150px;"><canvas id="bullBearChart"></canvas></div>
+                                <p class="mt-2 text-sm text-gray-600"><strong>定義：</strong>綜合6個指標（如市場寬度、資金流等）的綜合情緒指標。<strong>來源：</strong>BofA 2025年7月FMS。<strong>解讀：</strong>6.2的讀數接近“極度貪婪”，但未達8.0的賣出閾值。</p>
+                            </div>
+                            <div class="text-center p-4 border rounded-lg">
+                                <h4 class="font-bold text-lg text-[#655A4E] mb-2">最擁擠交易</h4>
+                                <div class="chart-container mx-auto flex items-center justify-center" style="height: 150px; max-height: 150px;">
+                                     <ul class="text-sm text-left space-y-2"><li><span class="font-bold">1. 空頭美元 (34%)</span></li><li><span class="font-bold">2. 多頭七巨頭 (26%)</span></li><li><span class="font-bold">3. 多頭黃金 (25%)</span></li></ul>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-600"><strong>定義：</strong>基金經理認為市場共識最強的交易。<strong>來源：</strong>BofA 2025年7月FMS。<strong>解讀：</strong>共識高度集中，反轉時平倉壓力巨大。</p>
+                            </div>
+                            <div class="text-center p-4 border rounded-lg">
+                                <h4 class="font-bold text-lg text-[#655A4E] mb-2">經濟衰退預期</h4>
+                                <div class="chart-container mx-auto" style="height: 150px; max-height: 150px;"><canvas id="recessionExpectationChart"></canvas></div>
+                                <p class="mt-2 text-sm text-gray-600"><strong>定義：</strong>認為未來12個月經濟可能衰退的淨百分比。<strong>來源：</strong>BofA 2025年7月FMS。<strong>解讀：</strong>-59%的淨值顯示極度樂觀，為典型的逆向信號。</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-4 text-[#8D7B68]">1.2 歷史經驗回測</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h4 class="font-semibold text-gray-800">信號定義說明</h4>
+                            <p class="text-sm text-gray-600 mt-2">「美國銀行現金水平賣出信號」是一項基於其全球基金經理調查（FMS）的逆向情緒指標。其觸發條件為：當受訪基金經理的平均現金持有比例**低於4.0%**時，即構成賣出信號。其背後邏輯在於，極低的現金水平意味著專業投資者已將絕大部分資金投入市場，市場缺乏後續買盤動能（Dry Powder），同時也反映了市場情緒已達到極度樂觀或自滿的狀態，使得市場對任何負面衝擊都變得格外脆弱。</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 border rounded-lg">
+                                <h4 class="font-bold">案例一：2002年初 (網路泡沫破裂後)</h4>
+                                <p class="my-2 text-gray-700 text-sm"><strong>市場背景：</strong>在網路泡沫最高點破裂之後，市場情緒一度極度樂觀，認為最壞的時期已過，基金經理現金水平降至低位，觸發賣出信號，但此時市場基本面仍在持續惡化。</p>
+                                <p class="font-semibold text-gray-800 text-sm"><strong>後續發展：</strong>信號觸發後，MSCI全球指數(ACWI)在接下來的1個月內下跌了2.4%，驗證了市場的脆弱性。</p>
+                            </div>
+                            <div class="p-4 border rounded-lg">
+                                <h4 class="font-bold">案例二：2011年2月 (歐洲債務危機前)</h4>
+                                <p class="my-2 text-gray-700 text-sm"><strong>市場背景：</strong>市場從2008年金融海嘯中強力復甦，普遍認為全球經濟已重回正軌。然而，歐洲主權債務問題開始浮現，賣出信號在此時發出，警示了潛在的系統性風險。</p>
+                                <p class="font-semibold text-gray-800 text-sm"><strong>後續發展：</strong>信號觸發後，MSCI全球指數在接下來的3個月內下跌了0.7%，隨後歐債危機全面爆發，引發更大幅度的市場動盪。</p>
+                            </div>
+                            <div class="p-4 border rounded-lg">
+                                <h4 class="font-bold">案例三：2024年12月 (首次AI狂熱警報)</h4>
+                                <p class="my-2 text-gray-700 text-sm"><strong>市場背景：</strong>在AI概念的強力驅動下，科技股經歷了大幅上漲，市場首次出現顯著的過熱跡象，BofA發出了本輪週期的第一次賣出信號。</p>
+                                <p class="font-semibold text-gray-800 text-sm"><strong>後續發展：</strong>信號觸發後，市場在接下來的三個月內出現了約2-3%的溫和回調與盤整，顯示信號對短期市場降溫有預警作用。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Broader Market -->
+                <section class="bg-white rounded-lg card-shadow p-6">
+                     <div class="border-b pb-4 mb-6">
+                        <h2 class="text-2xl font-bold text-[#655A4E]">II. 宏觀與跨市場指標驗證</h2>
+                    </div>
+                    <div>
+                        <p class="mb-6 text-gray-600">單一指標不足以構成完整的市場判斷。本節將整合來自摩根士丹利、花旗和穆迪的報告，從企業估值、IT支出和信用市場等多個維度，交叉驗證當前市場的風險狀況。</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2 text-[#8D7B68]">2.1 摩根士丹利：隱藏在財報中的估值風險</h3>
+                                <p class="text-sm text-gray-600 mb-4">摩根士丹利（2025年7月15日報告）指出，若將科技公司龐大的股票薪酬（SBC）視為實際現金成本，其估值將顯著高於賬面數字。這意味著市場可能低估了這些公司的真實運營成本，從而高估了其盈利能力和估值吸引力。</p>
+                                <div class="chart-container" style="height: 300px; max-height: 400px;"><canvas id="sbcImpactChart"></canvas></div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2 text-[#8D7B68]">2.2 花旗：企業IT支出預期放緩</h3>
+                                <p class="text-sm text-gray-600 mb-4">花旗（2025年7月15日CIO調查）的數據顯示，作為本輪牛市核心驅動力的企業IT支出，其增長預期正出現放緩跡象，尤其在歐洲。同時，生成式AI的投資優先級被網路安全反超，顯示企業投資趨於謹慎，這可能影響相關科技公司的未來營收增長。</p>
+                                <div class="chart-container" style="height: 300px; max-height: 400px;"><canvas id="itBudgetChart"></canvas></div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h3 class="text-lg font-semibold mb-2 text-[#8D7B68]">2.3 穆迪：信用市場的潛在壓力</h3>
+                                <p class="text-sm text-gray-600 mb-4">穆迪（2025年7月15日報告）的數據顯示，全球投機級企業的違約率仍高於長期平均水平。儘管預期將會下降，但貿易戰等地緣政治風險可能逆轉此趨勢。特別是槓桿貸款市場的違約率遠高於高收益債，表明金融體系中最脆弱的部分正承受壓力，這是股市不可忽視的潛在風險源。</p>
+                                <div class="chart-container" style="height: 350px; max-height: 400px;"><canvas id="defaultRateChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: AI Factor -->
+                <section class="bg-white rounded-lg card-shadow p-6">
+                    <div class="border-b pb-4 mb-6">
+                        <h2 class="text-2xl font-bold text-[#655A4E]">III. AI時代的特殊性：這次是否真的不同？</h2>
+                    </div>
+                    <div>
+                        <p class="mb-6 text-gray-600">將當前的AI熱潮簡單比作2000年的網路泡沫，是過於草率的。兩者在基本面、市場結構和盈利能力上存在本質區別，這也是歷史指標可能需要被重新解讀的原因。</p>
+                         <div class="grid md:grid-cols-2 gap-8">
+                            <div class="p-4 border rounded-lg bg-red-50 border-red-200">
+                                <h4 class="font-bold text-red-800 mb-2">2000年網路泡沫</h4>
+                                <ul class="space-y-2 text-sm text-red-700">
+                                    <li><strong>商業模式：</strong>概念驅動，多數公司沒有盈利，甚至沒有收入。估值基於“眼球”而非現金流。</li>
+                                    <li><strong>基礎設施：</strong>處於早期階段，帶寬有限，無法支撐大規模應用。</li>
+                                    <li><strong>資金來源：</strong>散戶狂熱追捧，IPO泡沫巨大。</li>
+                                    <li><strong>市場廣度：</strong>炒作廣泛但膚淺，大量“純概念”公司上市。</li>
+                                </ul>
+                            </div>
+                             <div class="p-4 border rounded-lg bg-green-50 border-green-200">
+                                <h4 class="font-bold text-green-800 mb-2">2025年AI革命</h4>
+                                <ul class="space-y-2 text-sm text-green-700">
+                                     <li><strong>商業模式：</strong>由科技巨頭主導，擁有強勁的現金流和實際盈利。AI正帶來實質性收入增長。</li>
+                                     <li><strong>基礎設施：</strong>全球化的雲計算網絡已成熟，能夠支持AI模型的大規模部署和訓練。</li>
+                                     <li><strong>資金來源：</strong>機構投資者和企業的大規模資本支出（CAPEX）驅動。</li>
+                                     <li><strong>市場廣度：</strong>高度集中在少數擁有核心技術和數據護城河的巨頭公司。</li>
+                                </ul>
+                            </div>
+                         </div>
+                         <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                             <h4 class="font-bold text-amber-800">分析師判斷：</h4>
+                             <p class="text-amber-900 mt-2">當前風險的核心並非AI技術本身，而是<strong class="font-semibold">市場的極端集中度</strong>。AI的發展前景真實且巨大，但漲勢過度集中於少數股票。當這些領頭羊的增長無法滿足市場極度樂觀的預期時，市場將缺乏其他強有力的板塊來吸收資金，可能導致急劇且範圍更廣的回調。因此，歷史警訊依然有效，但它警告的可能不是全面的熊市，而是一次<strong class="font-semibold">因預期過高和倉位過擠而引發的結構性修正</strong>。</p>
+                         </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Strategy -->
+                <section class="bg-white rounded-lg card-shadow p-6">
+                    <div class="border-b pb-4 mb-6">
+                        <h2 class="text-2xl font-bold text-[#655A4E]">IV. 投資策略框架：在警訊中尋找機遇</h2>
+                    </div>
+                    <div>
+                        <p class="mb-6 text-gray-600">在當前的市場環境下，純粹的看漲或看跌都過於簡單。需要採取更為精細和平衡的策略，既能防禦潛在風險，又不至於錯過AI時代的結構性機遇。</p>
+                        <div class="space-y-6">
+                            <div class="flex items-start"><span class="text-2xl mr-4">🛡️</span><div><h4 class="font-bold">1. 增加防禦性資產配置</h4><p class="text-gray-700">在投資組合中增加對市場波動不敏感的資產，建立“壓艙石”。</p><ul class="list-disc list-inside mt-2 text-sm text-gray-600"><li><strong>黃金 (GLD)：</strong>傳統的避險工具，對沖不確定性。</li><li><strong>優質價值型股票 (USMV)：</strong>尋找現金流穩定、估值合理的公司，在市場修正中更具韌性。</li></ul></div></div>
+                            <div class="flex items-start"><span class="text-2xl mr-4">🌍</span><div><h4 class="font-bold">2. 佈局國際與新興市場</h4><p class="text-gray-700">美國市場估值偏高，資金正在尋找新的價值洼地。</p><ul class="list-disc list-inside mt-2 text-sm text-gray-600"><li><strong>國際股票 (VXUS)：</strong>分散對美國市場的過度依賴。BofA調查顯示基金經理對歐元區股票的配置創四年新高。</li><li><strong>新興市場 (EEM)：</strong>部分新興市場在供應鏈重組和內需增長中受益。</li></ul></div></div>
+                            <div class="flex items-start"><span class="text-2xl mr-4">🧠</span><div><h4 class="font-bold">3. 精準區分AI投資</h4><p class="text-gray-700">區分真正的“賣鏟人”和跟風的“淘金者”。</p><ul class="list-disc list-inside mt-2 text-sm text-gray-600"><li><strong>核心持倉：</strong>繼續持有擁有核心技術、數據護城河的平台型AI巨頭。</li><li><strong>謹慎對待：</strong>對於應用層、缺乏獨特優勢且估值過高的公司，考慮階段性減持。</li><li><strong>發掘AI基礎設施：</strong>關注電力、散熱、數據中心等支援AI發展的“賣鏟人”行業。</li></ul></div></div>
+                            <div class="flex items-start"><span class="text-2xl mr-4">⚙️</span><div><h4 class="font-bold">4. 善用期權與風險管理</h4><p class="text-gray-700">對於經驗豐富的投資者，可考慮使用衍生性金融商品作為保險策略。</p><ul class="list-disc list-inside mt-2 text-sm text-gray-600"><li>買入針對大盤指數（如SPY）的看跌期權，以低成本對沖下行風險。</li><li>監控高收益債利差和MOVE指數。信用市場的波動性急劇上升，通常是股市風險加劇的強烈信號。</li></ul></div></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12 text-xs text-gray-500">
+            <p>數據來源：美國銀行(BofA)、摩根士丹利(Morgan Stanley)、花旗(Citi)、穆迪(Moody's) 2025年7月研究報告。</p>
+            <p>免責聲明：本儀表板內容僅為基於公開信息的市場分析，不構成任何投資建議。投資有風險，入市需謹慎。</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chart Data
+            const cashRuleData = { value: 3.9, threshold: 4.0 };
+            const bullBearData = { value: 6.2, threshold: 8.0 };
+            const recessionExpectationData = { value: -59, threshold: 0 };
+            
+            const sbcImpactData = {
+                labels: ['AMZN', 'META', 'PTON', 'RVLV'],
+                datasets: [{
+                    label: '2026 EV/EBITDA (標準)', data: [11.8, 13.6, 8.8, 28.2], backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                }, {
+                    label: '2026 EV/EBITDA (計入SBC)', data: [13.3, 16.5, 16.9, 35.8], backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                }]
+            };
+
+            const itBudgetData = {
+                labels: ['全球', '美國', '歐洲'],
+                datasets: [{
+                    label: '前期預算增長 (%)', data: [2.5, 2.7, 2.3], backgroundColor: 'rgba(201, 203, 207, 0.6)',
+                }, {
+                    label: '當期預算增長 (%)', data: [2.1, 2.8, 0.6], backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                }]
+            };
+
+            const defaultRateData = {
+                labels: ['Jun-22', 'Sep-22', 'Dec-22', 'Mar-23', 'Jun-23', 'Sep-23', 'Dec-23', 'Mar-24', 'Jun-24', 'Sep-24', 'Dec-24', 'Mar-25', 'Jun-25'],
+                datasets: [
+                    { label: '全球投機級違約率', data: [3.3, 3.8, 4.3, 3.1, 4.2, 4.8, 5.1, 5.2, 5.1, 4.9, 4.8, 4.5, 4.4], borderColor: '#36A2EB', tension: 0.1, fill: false },
+                    { label: '長期平均', data: Array(13).fill(4.2), borderColor: '#FF6384', borderDash: [5, 5], pointRadius: 0, fill: false }
+                ]
+            };
+            
+            // Utility to create gauge charts
+            const createGaugeChart = (ctx, label, value, threshold, color, reverse = false, isPercent=false) => {
+                if (!ctx) return;
+                const isAlert = reverse ? value < threshold : value > threshold;
+                let gaugeColor = isAlert ? color[1] : color[0];
+                const displayText = isPercent ? `${value}%` : `${value}`;
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [Math.abs(value), Math.max(0, (isPercent ? 100 : threshold * 1.5) - Math.abs(value))],
+                            backgroundColor: [gaugeColor, '#EAEAEA'],
+                            borderWidth: 0,
+                            circumference: 180,
+                            rotation: 270,
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: true, callbacks: { label: (c) => `${label}: ${displayText}` } },
+                            title: { display: true, text: displayText, position: 'bottom', align: 'center', font: { size: 24, weight: 'bold' }, color: '#333', padding: { top: -40 } }
+                        },
+                        cutout: '70%',
+                    }
+                });
+            };
+
+            // Init Charts
+            createGaugeChart(document.getElementById('cashRuleChart').getContext('2d'), '現金水平', cashRuleData.value, cashRuleData.threshold, ['#22c55e', '#ef4444'], true, true);
+            createGaugeChart(document.getElementById('bullBearChart').getContext('2d'), '牛熊指標', bullBearData.value, bullBearData.threshold, ['#22c55e', '#ef4444']);
+            createGaugeChart(document.getElementById('recessionExpectationChart').getContext('2d'), '衰退可能性淨值', recessionExpectationData.value, recessionExpectationData.threshold, ['#22c55e', '#ef4444'], true, true);
+
+            new Chart(document.getElementById('sbcImpactChart').getContext('2d'), {
+                type: 'bar', data: sbcImpactData,
+                options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: '股票薪酬(SBC)對估值的影響' } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'EV/EBITDA 倍數' } } } }
+            });
+
+            new Chart(document.getElementById('itBudgetChart').getContext('2d'), {
+                type: 'bar', data: itBudgetData,
+                options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: '企業IT預算增長預期變化' } }, scales: { y: { beginAtZero: true, title: { display: true, text: '年增長率 (%)' } } } }
+            });
+
+            new Chart(document.getElementById('defaultRateChart').getContext('2d'), {
+                type: 'line', data: defaultRateData,
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { title: { display: true, text: '全球投機級企業違約率' }, legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true, ticks: { callback: (value) => value + '%' } } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
