@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美國銀行(BofA)資金流向報告深度解讀</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #1a5276;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2e86c1;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2874a6;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2e86c1;
+        }
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .highlight {
+            background-color: #ebf5fb;
+            padding: 20px;
+            border-left: 4px solid #2e86c1;
+            margin: 20px 0;
+        }
+        .chart-container {
+            margin: 40px 0;
+            position: relative;
+            height: 400px;
+        }
+        .footnote {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 30px;
+        }
+        .key-point {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .grid-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .small-chart {
+            height: 300px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #f1f1f1;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background: #2e86c1;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>美國銀行(BofA)資金流向報告深度解讀 (截至 2025/09/11)</h1>
+    
+    <div class="container">
+        <div class="key-point">
+            <h2>核心洞察：市場風向正在轉變</h2>
+            <p>根據美國銀行最新發布的《The Flow Show》報告，市場正處於一個關鍵的轉折點。報告明確指出，自2020年以來的三大投資主題「ABB (除了債券都買)」、「ABC (除了中國都買)」與「AI」，即將在2025年迎來結構性轉變。</p>
+            <p><strong>核心論點：</strong> 隨著美國名目GDP增長預期將在2025年見頂回落 (從年增6%降至4%)，「ABB」與「ABC」的時代即將結束，取而代之的將是「ABD (除了美元都買)」的新主題。</p>
+        </div>
+    </div>
+
+    <div class="container section">
+        <h2>一、本週關鍵資金流動數據</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>資產類別</th>
+                    <th>本週資金流動 (億美元)</th>
+                    <th>趨勢解讀</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>現金 (Cash)</td>
+                    <td>+$661</td>
+                    <td>巨額流入，避險情緒極度高漲</td>
+                </tr>
+                <tr>
+                    <td>債券 (Bonds)</td>
+                    <td>+$179</td>
+                    <td>持續穩定流入</td>
+                </tr>
+                <tr>
+                    <td>黃金 (Gold)</td>
+                    <td>+$34</td>
+                    <td>創紀錄的強勁流入</td>
+                </tr>
+                <tr>
+                    <td>加密貨幣 (Crypto)</td>
+                    <td>+$1</td>
+                    <td>少量流入</td>
+                </tr>
+                <tr>
+                    <td>股票 (Stocks)</td>
+                    <td>-$99</td>
+                    <td>顯著流出</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container section">
+        <h2>二、最值得關注的資金動向細節</h2>
+        
+        <h3>避險情緒達到頂點：</h3>
+        <ul>
+            <li><strong>現金為王：</strong> 過去短短4週內，貨幣市場基金(現金)湧入了高達2,660億美元的資金，顯示市場整體的防禦心態非常強烈。</li>
+            <li><strong>黃金大爆發：</strong> 本週黃金錄得34億美元的淨流入，是史上第四大單週流入紀錄。這清晰地表明，投資人正在積極尋求避險資產。</li>
+            <li><strong>股票ETF失血：</strong> 全球股票型ETF出現4個月以來的首次資金淨流出 (流出32億美元)，這是市場情緒轉向的重要警訊，代表部分投資人已開始獲利了結。</li>
+        </ul>
+        
+        <h3>債券市場的結構性流入：</h3>
+        <ul>
+            <li><strong>市政債創紀錄：</strong> 市政債券基金本週錄得31億美元的淨流入，創下單週歷史新高。</li>
+            <li><strong>各類債券持續吸金：</strong> 從投資級債、高收益債到新興市場債，幾乎所有固定收益類別都呈現連續數週甚至數十週的資金淨流入，凸顯市場對鎖定收益率的偏好。</li>
+        </ul>
+        
+        <h3>高淨值客戶與市場的分歧：</h3>
+        <ul>
+            <li><strong>逆勢加碼股票：</strong> 與整體市場資金從股票流出相反，美國銀行旗下管理4.1兆美元資產的高淨值客戶，其股票配置比例反而升至64.2%，是2022年3月以來的新高。</li>
+            <li><strong>現金水位創多年新低：</strong> 這群富裕客戶的現金配置比例降至10.6%，為2021年10月以來最低。</li>
+            <li><strong>重押七巨頭：</strong> 其資產有高達16%集中在美股七巨頭 (Magnificent 7)，遠高於對非美國股票 (4%)、美國公債 (3%) 或黃金 (0.4%) 的配置。</li>
+        </ul>
+    </div>
+
+    <div class="container section">
+        <h2>三、深度分析與策略意涵</h2>
+        
+        <h3>1. 宏觀轉向：從「ABB」到「擁抱BIG」</h3>
+        <p>報告最重要的洞見是預告了2025年的投資主題將從「Anything but Bonds」轉向。背後邏輯是，美國強勁的名目GDP增長週期即將觸頂，這通常也意味著債券殖利率的高點已現。</p>
+        
+        <div class="highlight">
+            <p><strong>策略意涵：</strong> 過去幾年表現不佳的債券及對利率敏感的資產（如小型股、價值股）有望在2025年迎來逆轉。報告建議開始佈局「BIG」：</p>
+            <ul>
+                <li><strong>Bonds (債券):</strong> 殖利率有望走低 (預測5年期公債至3%，30年期至4%)。</li>
+                <li><strong>International (國際市場):</strong> 在美元走弱、歐日擺脫通縮的預期下，國際市場（特別是中國科技股）成為平衡美國AI泡沫的理想選擇。</li>
+                <li><strong>Gold (黃金):</strong> 作為對沖美元貶值與混亂風險的工具，即使近期已有大量資金流入，後市依然看漲。</li>
+            </ul>
+        </div>
+        
+        <h3>2. 市場正在定價「軟著陸」，但風險猶存</h3>
+        <p>聯準會即將降息，市場普遍認為這是「領先曲線(ahead-of-the-curve)」的預防性降息，有利於信用利差收斂、銀行股和小型股表現。</p>
+        
+        <div class="highlight">
+            <p><strong>風險警訊：</strong> 報告提醒需關注幾個關鍵水位，以判斷Fed是否其實是「落後曲線(behind-the-curve)」，即經濟放緩速度快於預期：</p>
+            <ul>
+                <li>投資等級債信用違約交換指數 (IG CDX) > 60個基點</li>
+                <li>銀行股指數 (BKX) < 140</li>
+                <li>羅素2000指數 (RTY) 無法突破 2400 點</li>
+            </ul>
+        </div>
+        
+        <h3>3. 避險與貪婪的拉鋸</h3>
+        <p>數據呈現出一個矛盾但清晰的畫面：一方面，整體市場資金（共同基金、ETF）因恐懼而大規模湧入現金與黃金；另一方面，高淨值客戶群體則反向操作，大舉加碼股票，尤其是大型科技股，顯示出對AI前景的極度樂觀。這種巨大的分歧本身就是市場不穩定的來源，預示著未來波動可能加劇。</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表1：美銀證券牛熊指標維持在5.9</h2>
+        <div class="chart-container">
+            <canvas id="bullBearChart"></canvas>
+        </div>
+        <p class="footnote">美銀多空指標的指標僅作為指示性指標。此指標並非為作為基準而創建。</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表2：2020–2025年美國名義GDP成長週期為二戰以來最強勁美國經濟擴張週期</h2>
+        <div class="chart-container">
+            <canvas id="gdpChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略、彭博社</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表3：風險平價已突破2024年水準風險平衡ETF</h2>
+        <div class="chart-container">
+            <canvas id="riskParityChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略、彭博社</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表4：超大規模雲端運算商在2025年第2季的資本支出/現金流量</h2>
+        <div class="chart-container">
+            <canvas id="cloudChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略、美國銀行美股策略研究。*微軟、谷歌、Meta、亞馬遜、甲骨文*</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表5：美國科技產業信用利差接近1997年以來最緊的水準</h2>
+        <div class="chart-container">
+            <canvas id="techSpreadChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美銀全球投資策略，ICE資料指數有限公司</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表6：小型股與大型股過去10年年化報酬率差額為-4%</h2>
+        <div class="chart-container">
+            <canvas id="smallCapChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略、彭博社</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表7：通膨憂慮下降，但仍遠高於歷史水平</h2>
+        <div class="chart-container">
+            <canvas id="inflationChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略、彭博社</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表8：黃金基金最大規模資金流入達歷史紀錄</h2>
+        <div class="chart-container">
+            <canvas id="goldFlowChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美銀全球投資策略部、EPFR</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表9：FICC流入黃金、白銀、商品、銀行貸款、TIPS</h2>
+        <div class="chart-container">
+            <canvas id="ficcChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：EPFR Global</p>
+    </div>
+
+    <div class="container">
+        <h2>表格1：按資產類別劃分的累計年初至今流量</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>週%AUM</th>
+                    <th>年初至今</th>
+                    <th>年初至今%AUM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>股票</td>
+                    <td>0.0%</td>
+                    <td>386,077</td>
+                    <td>1.7%</td>
+                </tr>
+                <tr>
+                    <td>ETF</td>
+                    <td>0.0%</td>
+                    <td>712,437</td>
+                    <td>5.8%</td>
+                </tr>
+                <tr>
+                    <td>LO</td>
+                    <td>-0.1%</td>
+                    <td>-326,873</td>
+                    <td>-3.0%</td>
+                </tr>
+                <tr>
+                    <td>債券</td>
+                    <td>0.2%</td>
+                    <td>507,829</td>
+                    <td>6.0%</td>
+                </tr>
+                <tr>
+                    <td>商品</td>
+                    <td>0.5%</td>
+                    <td>98,360</td>
+                    <td>15.1%</td>
+                </tr>
+                <tr>
+                    <td>貨幣市場</td>
+                    <td>0.6%</td>
+                    <td>755,659</td>
+                    <td>7.7%</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footnote">*截至2025年9月10日當週：**資料來源：** EPFR Global</p>
+    </div>
+
+    <div class="container">
+        <h2>表格2：美國股票流入仍在年初至今佔主導地位</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>週%AUM</th>
+                    <th>年初至今</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>總股票</td>
+                    <td>0.0%</td>
+                    <td>386,077</td>
+                </tr>
+                <tr>
+                    <td>純多頭基金</td>
+                    <td>-0.1%</td>
+                    <td>-326,873</td>
+                </tr>
+                <tr>
+                    <td>ETF</td>
+                    <td>0.0%</td>
+                    <td>712,437</td>
+                </tr>
+                <tr>
+                    <td>總新興市場</td>
+                    <td>0.0%</td>
+                    <td>16,068</td>
+                </tr>
+                <tr>
+                    <td>巴西</td>
+                    <td>0.7%</td>
+                    <td>781</td>
+                </tr>
+                <tr>
+                    <td>印度</td>
+                    <td>-0.1%</td>
+                    <td>-2,542</td>
+                </tr>
+                <tr>
+                    <td>中國</td>
+                    <td>-0.2%</td>
+                    <td>-6,250</td>
+                </tr>
+                <tr>
+                    <td>總發達市場</td>
+                    <td>0.0%</td>
+                    <td>370,009</td>
+                </tr>
+                <tr>
+                    <td>美國</td>
+                    <td>-0.1%</td>
+                    <td>153,161</td>
+                </tr>
+                <tr>
+                    <td>歐洲</td>
+                    <td>0.0%</td>
+                    <td>48,503</td>
+                </tr>
+                <tr>
+                    <td>日本</td>
+                    <td>0.1%</td>
+                    <td>-8,299</td>
+                </tr>
+                <tr>
+                    <td>國際</td>
+                    <td>0.1%</td>
+                    <td>154,596</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footnote">總股票 = 總新興市場 + 總發達市場<br>**資料來源：** EPFR Global</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表10：全球財富投資管理（GWIM）股票配置為64%</h2>
+        <div class="chart-container">
+            <canvas id="gwimEquityChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表11：GWIM債務配置為18%</h2>
+        <div class="chart-container">
+            <canvas id="gwimDebtChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略</p>
+    </div>
+
+    <div class="container">
+        <h2>圖表12：GWM現金配置為11%</h2>
+        <div class="chart-container">
+            <canvas id="gwmCashChart"></canvas>
+        </div>
+        <p class="footnote">資料來源：美國銀行全球投資策略</p>
+    </div>
+
+    <script>
+        // 創建牛熊指標圖表
+        const bullBearCtx = document.getElementById('bullBearChart').getContext('2d');
+        const bullBearChart = new Chart(bullBearCtx, {
+            type: 'bar',
+            data: {
+                labels: ['牛熊指標'],
+                datasets: [{
+                    label: '當前值',
+                    data: [5.9],
+                    backgroundColor: 'rgba(255, 159, 64, 0.8)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1,
+                    barPercentage: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: '指標值'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                if (value === 0) return '極端看空';
+                                if (value === 10) return '極端看漲';
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美銀證券牛熊指標',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `當前值: ${context.raw}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 創建GDP增長圖表
+        const gdpCtx = document.getElementById('gdpChart').getContext('2d');
+        const gdpChart = new Chart(gdpCtx, {
+            type: 'bar',
+            data: {
+                labels: ['49-52', '54-57', '58-60', '61-64', '71-73', '75-78', '80-81', '83-88', '91-96', '01-07', '09-14', '20-25'],
+                datasets: [{
+                    label: '名義GDP增長(%)',
+                    data: [43, 22, 15, null, 32, 53, 9, 49, 33, 33, 23, 54],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(0, 0, 0, 0)', // 空數據
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.8)' // 突出顯示當前週期
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(0, 0, 0, 0)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美國經濟擴張週期（從衰退低點的名義GDP成長），1946–2025年',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `增長: ${context.raw}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '名義GDP增長(%)'
+                        },
+                        suggestedMax: 60
+                    }
+                }
+            }
+        });
+
+        // 創建風險平價圖表
+        const riskParityCtx = document.getElementById('riskParityChart').getContext('2d');
+        const riskParityChart = new Chart(riskParityCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '風險平價ETF',
+                    data: [16, 18, 15, 17, 19, 22],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '風險平衡ETF',
+                        font: {
+                            size: 16
+                        }
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '指數值'
+                        },
+                        min: 14,
+                        max: 23
+                    }
+                }
+            }
+        });
+
+        // 創建雲端運算商資本支出圖表
+        const cloudCtx = document.getElementById('cloudChart').getContext('2d');
+        const cloudChart = new Chart(cloudCtx, {
+            type: 'line',
+            data: {
+                labels: ['2012', '2014', '2016', '2018', '2020', '2022', '2024'],
+                datasets: [{
+                    label: '資本支出/現金流量 (%)',
+                    data: [20, 25, 30, 40, 50, 60, 70],
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'AI超大規模雲端運算商資本支出佔營運現金流量的百分比',
+                        font: {
+                            size: 16
+                        }
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        },
+                        max: 80
+                    }
+                }
+            }
+        });
+
+        // 創建科技信用利差圖表
+        const techSpreadCtx = document.getElementById('techSpreadChart').getContext('2d');
+        const techSpreadChart = new Chart(techSpreadCtx, {
+            type: 'line',
+            data: {
+                labels: ['1997', '1999', '2001', '2003', '2005', '2007', '2009', '2011', '2013', '2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [{
+                    label: '美國投資級別科技信用利差（基點）',
+                    data: [150, 200, 350, 250, 150, 200, 400, 250, 150, 200, 150, 100, 80, 70, 65],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美國企業債券利差：科技（投資等級，基點）',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                mode: 'horizontal',
+                                scaleID: 'y',
+                                value: 65,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    enabled: true,
+                                    content: '2025年9月: 65個基點'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '基點'
+                        },
+                        min: 0,
+                        max: 450
+                    }
+                }
+            }
+        });
+
+        // 創建小型股圖表
+        const smallCapCtx = document.getElementById('smallCapChart').getContext('2d');
+        const smallCapChart = new Chart(smallCapCtx, {
+            type: 'line',
+            data: {
+                labels: ['1936', '1941', '1946', '1951', '1956', '1961', '1966', '1971', '1976', '1981', '1986', '1991', '1996', '2001', '2006', '2011', '2016', '2021', '2025'],
+                datasets: [{
+                    label: '美國小型股 versus 大型股（10年年化報酬率）',
+                    data: [5, 8, 10, 12, 8, 6, 4, -2, 5, 15, 10, 8, 12, 5, 3, 2, 0, -2, -4],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '小型股自1936年以來的10年年化報酬率',
+                        font: {
+                            size: 16
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '年化報酬率 (%)'
+                        },
+                        min: -5,
+                        max: 20
+                    }
+                }
+            }
+        });
+
+        // 創建通膨憂慮圖表
+        const inflationCtx = document.getElementById('inflationChart').getContext('2d');
+        const inflationChart = new Chart(inflationCtx, {
+            type: 'line',
+            data: {
+                labels: ['1973', '1976', '1979', '1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018', '2021', '2025'],
+                datasets: [{
+                    label: '小型企業表示通膨是第一大最重要問題 (%)',
+                    data: [5, 10, 40, 35, 15, 10, 8, 5, 5, 8, 10, 15, 5, 10, 5, 8, 35, 25],
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '小型企業表示通膨是第一大最重要問題',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            point1: {
+                                type: 'point',
+                                xValue: '1974-10',
+                                yValue: 45,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                radius: 5,
+                                label: {
+                                    enabled: true,
+                                    content: '1974年10月高峰'
+                                }
+                            },
+                            point2: {
+                                type: 'point',
+                                xValue: '1979-07',
+                                yValue: 40,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                radius: 5,
+                                label: {
+                                    enabled: true,
+                                    content: '1979年7月'
+                                }
+                            },
+                            point3: {
+                                type: 'point',
+                                xValue: '2008-06',
+                                yValue: 35,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                radius: 5,
+                                label: {
+                                    enabled: true,
+                                    content: '2008年6月'
+                                }
+                            },
+                            point4: {
+                                type: 'point',
+                                xValue: '2022-07',
+                                yValue: 35,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                radius: 5,
+                                label: {
+                                    enabled: true,
+                                    content: '2022年7月'
+                                }
+                            },
+                            point5: {
+                                type: 'point',
+                                xValue: '2025-08',
+                                yValue: 25,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                radius: 5,
+                                label: {
+                                    enabled: true,
+                                    content: '2025年8月'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        },
+                        max: 45
+                    }
+                }
+            }
+        });
+
+        // 創建黃金資金流向圖表
+        const goldFlowCtx = document.getElementById('goldFlowChart').getContext('2d');
+        const goldFlowChart = new Chart(goldFlowCtx, {
+            type: 'line',
+            data: {
+                labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '黃金資金流向（十億美元）',
+                    data: [1, 2, 3, 2, 1, 3, 8, 5, 3, 5, 7, 10],
+                    borderColor: 'rgba(255, 215, 0, 1)',
+                    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: '黃金資金流向4週移動平均（十億美元）',
+                    data: [1.2, 1.8, 2.5, 2.2, 1.5, 2.5, 5, 4, 3.5, 4.5, 6, 8],
+                    borderColor: 'rgba(205, 127, 50, 1)',
+                    backgroundColor: 'rgba(205, 127, 50, 0.1)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.3,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '黃金基金資金流入：每週與4週移動平均',
+                        font: {
+                            size: 16
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '十億美元'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 創建FICC流入圖表
+        const ficcCtx = document.getElementById('ficcChart').getContext('2d');
+        const ficcChart = new Chart(ficcCtx, {
+            type: 'bar',
+            data: {
+                labels: ['貨幣市場', '商品', '黃金與白銀', 'TIPS', '公司高收益債', '新興市場債務', '公司投資級債', '政府/國債', '銀行貸款'],
+                datasets: [{
+                    label: '每週FICC流入佔AUM百分比',
+                    data: [0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, -0.1, -0.2],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 215, 0, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(201, 203, 207, 0.7)',
+                        'rgba(0, 128, 0, 0.7)',
+                        'rgba(128, 0, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 215, 0, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(0, 128, 0, 1)',
+                        'rgba(128, 0, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '每週FICC流入佔AUM百分比',
+                        font: {
+                            size: 16
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: -0.6,
+                        max: 0.8,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 創建GWIM股票配置圖表
+        const gwimEquityCtx = document.getElementById('gwimEquityChart').getContext('2d');
+        const gwimEquityChart = new Chart(gwimEquityCtx, {
+            type: 'line',
+            data: {
+                labels: ['2005', '2007', '2009', '2011', '2013', '2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [{
+                    label: '環球投資管理股權佔資產管理規模百分比',
+                    data: [48, 52, 45, 50, 55, 53, 58, 60, 62, 63, 64],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美國銀行私人客戶股票持股佔資產管理規模（AUM）的百分比',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                mode: 'horizontal',
+                                scaleID: 'y',
+                                value: 56,
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                borderDash: [5, 5],
+                                label: {
+                                    enabled: true,
+                                    content: '平均值: 56%'
+                                }
+                            },
+                            box1: {
+                                type: 'box',
+                                xMin: '2024',
+                                xMax: '2025',
+                                yMin: 63,
+                                yMax: 64,
+                                backgroundColor: 'rgba(255, 99, 132, 0.25)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 2,
+                                label: {
+                                    enabled: true,
+                                    content: '當前: 64%'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 38,
+                        max: 68,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 創建GWIM債務配置圖表
+        const gwimDebtCtx = document.getElementById('gwimDebtChart').getContext('2d');
+        const gwimDebtChart = new Chart(gwimDebtCtx, {
+            type: 'line',
+            data: {
+                labels: ['2005', '2007', '2009', '2011', '2013', '2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [{
+                    label: 'GWM債務佔AUM百分比',
+                    data: [34, 32, 30, 28, 26, 24, 22, 20, 19, 18, 18],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美國銀行私人客戶債務持股佔資產管理規模（AUM）的百分比',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                mode: 'horizontal',
+                                scaleID: 'y',
+                                value: 26,
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                borderDash: [5, 5],
+                                label: {
+                                    enabled: true,
+                                    content: '平均值: 26%'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 15,
+                        max: 35,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 創建GWM現金配置圖表
+        const gwmCashCtx = document.getElementById('gwmCashChart').getContext('2d');
+        const gwmCashChart = new Chart(gwmCashCtx, {
+            type: 'line',
+            data: {
+                labels: ['2005', '2007', '2009', '2011', '2013', '2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [{
+                    label: 'GWM現金佔AUM百分比',
+                    data: [8, 10, 20, 16, 12, 10, 8, 12, 11, 10.5, 10.6],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '美國銀行私人客戶現金持股佔資產管理規模（AUM）的百分比',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                mode: 'horizontal',
+                                scaleID: 'y',
+                                value: 11,
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                borderDash: [5, 5],
+                                label: {
+                                    enabled: true,
+                                    content: '平均值: 11%'
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 21,
+                        title: {
+                            display: true,
+                            text: '百分比 (%)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
