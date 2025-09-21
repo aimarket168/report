@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美股「永動機」解析：政策驅動下的市場新生態</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', 'PingFang TC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.4;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #e94560 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.3);
+            border-radius: 0;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .epic-header {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #e94560 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .epic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0%, transparent 50%);
+            animation: cosmic 20s linear infinite;
+        }
+
+        @keyframes cosmic {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .epic-header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 900;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            background: linear-gradient(45deg, #ffffff, #ffd700, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+            0% { filter: brightness(1) hue-rotate(0deg); }
+            100% { filter: brightness(1.2) hue-rotate(10deg); }
+        }
+
+        .epic-header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .epic-header .tagline {
+            font-size: 0.9em;
+            position: relative;
+            z-index: 2;
+            font-style: italic;
+            opacity: 0.8;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .story-navigation {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-chapter {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.85em;
+            border: 1px solid transparent;
+        }
+
+        .nav-chapter:hover {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 30px 25px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .chapter {
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .chapter:nth-child(odd) { animation-delay: 0.2s; }
+        .chapter:nth-child(even) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chapter-number {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            font-size: 4em;
+            font-weight: 900;
+            color: rgba(233, 69, 96, 0.1);
+            z-index: 0;
+            line-height: 1;
+        }
+
+        .chapter h2 {
+            color: #1a1a2e;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+            padding: 15px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #e94560 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(135deg, #e94560 0%, #1a1a2e 100%);
+            border-radius: 2px;
+        }
+
+        .story-text {
+            font-size: 1em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: justify;
+            position: relative;
+            z-index: 1;
+        }
+
+        .key-insight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .key-insight::before {
+            content: '💡';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.2em;
+            opacity: 0.7;
+        }
+
+        .key-insight h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .chart-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #e94560 100%);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .chart-subtitle {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .data-table td {
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .data-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            transform: scale(1.005);
+            transition: all 0.3s ease;
+        }
+
+        .positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .flow-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .flow-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .flow-card h5 {
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        .flow-card .value {
+            font-size: 1.8em;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .flow-card .description {
+            font-size: 0.85em;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .risk-warning {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .risk-warning::before {
+            content: '⚠️';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            opacity: 0.7;
+        }
+
+        .risk-warning h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .epilogue {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .epilogue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            animation: gentleFloat 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .epilogue h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .epilogue p {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .epic-header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .chapter-number {
+                display: none;
+            }
+            
+            .chapter h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="epic-header">
+            <h1>美股「永動機」解析</h1>
+            <div class="subtitle">政策驅動下的市場新生態</div>
+            <div class="tagline">從政策三重奏到投資新格局的系統性分析</div>
+        </header>
+
+        <nav class="story-navigation">
+            <a href="#prologue" class="nav-chapter">序章：表象下的均衡</a>
+            <a href="#chapter1" class="nav-chapter">第一章：政策三重奏</a>
+            <a href="#chapter2" class="nav-chapter">第二章：資金重配置</a>
+            <a href="#chapter3" class="nav-chapter">第三章：ETF新生態</a>
+            <a href="#chapter4" class="nav-chapter">第四章：全球再平衡</a>
+            <a href="#chapter5" class="nav-chapter">第五章：泡沫科學化</a>
+            <a href="#chapter6" class="nav-chapter">第六章：算力新紀元</a>
+            <a href="#chapter7" class="nav-chapter">第七章：政治風險</a>
+            <a href="#chapter8" class="nav-chapter">第八章：投資新格局</a>
+            <a href="#epilogue" class="nav-chapter">結語：永動機制</a>
+        </nav>
+
+        <main class="content">
+            <!-- 序章：表象下的市場均衡 -->
+            <section id="prologue" class="chapter">
+                <div class="chapter-number">序</div>
+                <h2>表象下的均衡：市場情緒的微妙平衡點</h2>
+                
+                <p class="story-text">
+                    2025年9月，全球金融市場呈現出一種看似平靜實則暗潮洶湧的狀態。美銀多空指標停留在6.0這個中性位置，既不過度樂觀也不盲目悲觀，反映出投資者在複雜環境中的理性謹慎。這種平衡狀態並非偶然，而是多重力量博弈的結果。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">市場情緒平衡儀：6.0位置的深層意義</div>
+                    <div class="chart-subtitle">美銀多空指標顯示投資者情緒趨於理性平衡</div>
+                    
+                    <svg viewBox="0 0 800 300" style="width: 100%; height: 200px;">
+                        <!-- 背景 -->
+                        <rect width="800" height="300" fill="#f8f9fa"/>
+                        
+                        <!-- 看空區域 (0-3) -->
+                        <rect x="100" y="100" width="210" height="40" fill="#28a745" opacity="0.8"/>
+                        <text x="205" y="125" text-anchor="middle" font-size="18" fill="white" font-weight="bold">看空區域 (0-3)</text>
+                        
+                        <!-- 中性區域 (3-7) -->
+                        <rect x="310" y="100" width="280" height="40" fill="#ffc107" opacity="0.9"/>
+                        <text x="450" y="125" text-anchor="middle" font-size="18" fill="white" font-weight="bold">中性區域 (3-7)</text>
+                        
+                        <!-- 看多區域 (7-10) -->
+                        <rect x="590" y="100" width="210" height="40" fill="#dc3545" opacity="0.8"/>
+                        <text x="695" y="125" text-anchor="middle" font-size="18" fill="white" font-weight="bold">看多區域 (7-10)</text>
+                        
+                        <!-- 當前指標位置 -->
+                        <circle cx="520" cy="120" r="8" fill="#e94560"/>
+                        <text x="520" y="127" text-anchor="middle" font-size="15" fill="white" font-weight="bold">6.0</text>
+                        
+                        <!-- 刻度標記 -->
+                        <text x="100" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">0</text>
+                        <text x="205" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">2</text>
+                        <text x="310" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">3</text>
+                        <text x="450" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">5</text>
+                        <text x="590" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">7</text>
+                        <text x="695" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">8</text>
+                        <text x="800" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">10</text>
+                        
+                        <!-- 當前位置箭頭 -->
+                        <path d="M 520 70 L 530 85 L 510 85 Z" fill="#e94560"/>
+                        <text x="520" y="65" text-anchor="middle" font-size="13" fill="#e94560" font-weight="bold">當前位置</text>
+                        
+                        <!-- 說明文字 -->
+                        <text x="450" y="160" text-anchor="middle" font-size="15" fill="#333">樂觀因素：基金經理現金部位低、全球股指技術面強勁</text>
+                        <text x="450" y="175" text-anchor="middle" font-size="15" fill="#333">謹慎因素：信貸市場流入有限、避險基金增持美債期貨</text>
+                        
+                        <!-- 關鍵門檻說明 -->
+                        <text x="450" y="200" text-anchor="middle" font-size="18" fill="#e94560" font-weight="bold">87%國家股指高於均線，接近88%技術超買臨界點</text>
+                    </svg>
+                </div>
+
+                <div class="key-insight">
+                    <h4>平衡背後的結構性力量</h4>
+                    <p>這種市場平衡並非靜態，而是動態均衡的體現。87%的全球股指位於技術性多頭區間，接近88%的超買警戒線，顯示市場正處於關鍵的轉折點。投資策略應從追逐指數轉向發掘結構性機會，關注政策驅動下的新興投資主題。</p>
+                </div>
+
+                <p class="story-text">
+                    這種表面平靜下的均衡狀態，實際上掩蓋了深層的結構性變化正在發生。政府政策、資本流動、技術創新和地緣政治等多重因素正在重塑投資格局，形成了我們稱之為「永動機」的新市場生態系統。理解這個系統的運作機制，將是在新時代獲得投資成功的關鍵。
+                </p>
+            </section>
+
+            <!-- 第一章：政策三重奏的驅動力 -->
+            <section id="chapter1" class="chapter">
+                <div class="chapter-number">1</div>
+                <h2>政策三重奏：永動機的核心驅動力</h2>
+                
+                <p class="story-text">
+                    美股「永動機」的運轉並非自發形成，而是政策制定者精心設計的三重奏政策體系的直接結果。這三大政策支柱相互配合，形成了一個自我強化的正向循環：財政政策提供基礎動力、貨幣政策確保流動性充足、產業政策指引投資方向。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">政策危機預警：川普通膨控制滿意度創新低</div>
+                    <div class="chart-subtitle">民眾對政府通膨控制能力的信心持續下滑至59%</div>
+                    
+                    <svg viewBox="0 0 900 400" style="width: 100%; height: 260px;">
+                        <!-- 背景網格 -->
+                        <defs>
+                            <pattern id="grid5" width="40" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="900" height="400" fill="url(#grid5)"/>
+                        
+                        <!-- Y軸線 -->
+                        <line x1="80" y1="60" x2="80" y2="360" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- Y軸標籤 -->
+                        <text x="70" y="80" text-anchor="end" font-size="16" fill="#666">65%</text>
+                        <text x="70" y="120" text-anchor="end" font-size="16" fill="#666">63%</text>
+                        <text x="70" y="160" text-anchor="end" font-size="16" fill="#666">61%</text>
+                        <text x="70" y="200" text-anchor="end" font-size="16" fill="#666">59%</text>
+                        <text x="70" y="240" text-anchor="end" font-size="16" fill="#666">57%</text>
+                        <text x="70" y="280" text-anchor="end" font-size="16" fill="#666">55%</text>
+                        <text x="70" y="320" text-anchor="end" font-size="16" fill="#666">53%</text>
+                        <text x="70" y="360" text-anchor="end" font-size="16" fill="#666">51%</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="150" y="385" text-anchor="middle" font-size="15" fill="#666">2024/12</text>
+                        <text x="250" y="385" text-anchor="middle" font-size="15" fill="#666">2025/2</text>
+                        <text x="350" y="385" text-anchor="middle" font-size="15" fill="#666">2025/4</text>
+                        <text x="450" y="385" text-anchor="middle" font-size="15" fill="#666">2025/6</text>
+                        <text x="550" y="385" text-anchor="middle" font-size="15" fill="#666">2025/8</text>
+                        <text x="650" y="385" text-anchor="middle" font-size="15" fill="#666">2025/9</text>
+                        
+                        <!-- 危險水位線 -->
+                        <line x1="80" y1="200" x2="650" y2="200" stroke="#e94560" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="660" y="205" font-size="15" fill="#e94560" font-weight="bold">政治風險線 59%</text>
+                        
+                        <!-- 主要數據線 -->
+                        <path d="M 100 80 L 150 100 L 200 120 L 250 130 L 300 140 L 350 160 L 400 170 L 450 180 L 500 190 L 550 195 L 600 200 L 650 200" 
+                              fill="none" stroke="#dc3545" stroke-width="4"/>
+                        
+                        <!-- 危險區域填充 -->
+                        <path d="M 400 170 L 450 180 L 500 190 L 550 195 L 600 200 L 650 200 L 650 360 L 400 360 Z" 
+                              fill="#dc3545" fill-opacity="0.2"/>
+                        
+                        <!-- 當前數值標記 -->
+                        <circle cx="650" cy="200" r="8" fill="#e94560"/>
+                        <text x="670" y="195" font-size="19" fill="#e94560" font-weight="bold">59%</text>
+                        <text x="670" y="210" font-size="15" fill="#e94560">2025年9月</text>
+                        
+                        <!-- 2026中期選舉警告 -->
+                        <text x="450" y="50" text-anchor="middle" font-size="22" fill="#dc3545" font-weight="bold">⚠️ 2026中期選舉風險警報</text>
+                    </svg>
+                </div>
+
+                <p class="story-text">
+                    政策風險的政治經濟學：川普政府面臨的通膨控制挑戰反映了政策三重奏的內在矛盾。一方面，擴張性財政政策刺激經濟成長；另一方面，這種刺激可能加劇通膨壓力，進而侵蝕政治支持基礎。民調數據顯示政府滿意度跌至59%，已觸及政治風險警戒線。
+                </p>
+
+                <div class="key-insight">
+                    <h4>政策三重奏的運作機制</h4>
+                    <p>第一重奏：財政擴張維持消費動能，透過減稅和基建投資釋放流動性；第二重奏：維持寬鬆貨幣政策，確保資本成本合理；第三重奏：產業政策導向AI、能源和製造業回流。三大政策相互強化，形成經濟成長的正向循環，但同時也埋下通膨和資產泡沫的隱憂。</p>
+                </div>
+
+                <p class="story-text">
+                    這種政策組合的巧妙之處在於其自我調節機制：當經濟過熱時，政治壓力會迫使政策適度收緊；當增長放緩時，政策又會重新寬鬆。這種動態平衡使得「永動機」得以持續運轉，但也要求投資者密切關注政策邊際變化，提前布局政策受益板塊，同時規避政策風險區域。
+                </p>
+            </section>
+
+            <!-- 第二章：資金洪流重塑投資格局 -->
+            <section id="chapter2" class="chapter">
+                <div class="chapter-number">2</div>
+                <h2>資金重配置：史無前例的全球洪流</h2>
+                
+                <p class="story-text">
+                    政策三重奏的直接效應是觸發了一輪史無前例的全球資金重新配置。這不僅是資金規模的放大，更是投資範式的根本性轉變。投資者正在從傳統的股債配置模式，轉向更加複雜和精細的多元化資產配置策略。
+                </p>
+
+                <div class="flow-grid">
+                    <div class="flow-card">
+                        <h5>全球股票</h5>
+                        <div class="value positive">$684億</div>
+                        <div class="description">近12個月最大週流入量</div>
+                    </div>
+                    <div class="flow-card">
+                        <h5>美國股票</h5>
+                        <div class="value positive">$577億</div>
+                        <div class="description">佔全球股票流入84%</div>
+                    </div>
+                    <div class="flow-card">
+                        <h5>債券市場</h5>
+                        <div class="value positive">$143億</div>
+                        <div class="description">流入規模相對溫和</div>
+                    </div>
+                    <div class="flow-card">
+                        <h5>現金部位</h5>
+                        <div class="value negative">-$48億</div>
+                        <div class="description">7週來首次淨流出</div>
+                    </div>
+                    <div class="flow-card">
+                        <h5>新興市場</h5>
+                        <div class="value positive">$76億</div>
+                        <div class="description">5個月來最大流入</div>
+                    </div>
+                    <div class="flow-card">
+                        <h5>替代投資</h5>
+                        <div class="value positive">$38億</div>
+                        <div class="description">包含加密貨幣等新興資產</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">投資工具革命：ETF vs 傳統基金的分流</div>
+                    <div class="chart-subtitle">年初至今資金流向顯示投資者偏好的結構性變化</div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>投資工具</th>
+                                <th>週流入</th>
+                                <th>年初至今流入</th>
+                                <th>佔AUM比重</th>
+                                <th>趨勢判斷</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ETF產品</td>
+                                <td class="positive">$875億</td>
+                                <td class="positive">$7,999億</td>
+                                <td class="positive">6.5%</td>
+                                <td>🚀 強勁成長</td>
+                            </tr>
+                            <tr>
+                                <td>共同基金</td>
+                                <td class="negative">-$191億</td>
+                                <td class="negative">-$3,460億</td>
+                                <td class="negative">-3.2%</td>
+                                <td>📉 持續流出</td>
+                            </tr>
+                            <tr>
+                                <td>避險基金</td>
+                                <td class="positive">$25億</td>
+                                <td class="positive">$180億</td>
+                                <td class="positive">0.8%</td>
+                                <td>🔄 溫和回流</td>
+                            </tr>
+                            <tr>
+                                <td>私募股權</td>
+                                <td class="positive">$15億</td>
+                                <td class="positive">$120億</td>
+                                <td class="positive">1.2%</td>
+                                <td>⬆️ 穩定增長</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-insight">
+                    <h4>資金流向的深層邏輯</h4>
+                    <p>ETF與共同基金的分流反映了投資者對透明度、流動性和成本效益的重新認知。現金部位的首次流出標誌著「現金為王」時代的結束，投資者開始主動承擔風險以獲取收益。新興市場的強勁流入顯示全球投資者正在為後美元時代做準備。</p>
+                </div>
+
+                <p class="story-text">
+                    這種資金重配置的模式揭示了投資者行為的三大轉變：第一，從被動配置轉向主動配置，尋求多元化收益來源；第二，從本土偏好轉向全球配置，分散地緣政治風險；第三，從傳統工具轉向創新工具，追求更高的投資效率。這些變化為理解當前市場動態和預測未來趨勢提供了重要線索。
+                </p>
+            </section>
+
+            <!-- 第三章：ETF生態系統的結構性變革 -->
+            <section id="chapter3" class="chapter">
+                <div class="chapter-number">3</div>
+                <h2>ETF新生態：資本市場的結構性革命</h2>
+                
+                <p class="story-text">
+                    在資金重配置的驅動下，ETF市場正在經歷一場深刻的結構性變革。這不僅僅是產品規模的擴張，更是整個資本市場運作模式的重新定義。ETF已從單純的投資工具演變為市場基礎設施的重要組成部分。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">ETF市場的指數級成長軌跡</div>
+                    <div class="chart-subtitle">美國ETF管理資產規模：從千億到十兆的二十年躍昇</div>
+                    
+                    <svg viewBox="0 0 900 400" style="width: 100%; height: 280px;">
+                        <!-- 背景網格 -->
+                        <defs>
+                            <pattern id="grid" width="45" height="25" patternUnits="userSpaceOnUse">
+                                <path d="M 45 0 L 0 0 0 25" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="900" height="400" fill="url(#grid)"/>
+                        
+                        <!-- Y軸標籤 -->
+                        <text x="40" y="60" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">12兆</text>
+                        <text x="40" y="90" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">10兆</text>
+                        <text x="40" y="120" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">8兆</text>
+                        <text x="40" y="150" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">6兆</text>
+                        <text x="40" y="180" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">4兆</text>
+                        <text x="40" y="210" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">2兆</text>
+                        <text x="40" y="360" text-anchor="middle" font-size="15" fill="#666" font-weight="bold">0</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="120" y="385" text-anchor="middle" font-size="13" fill="#666">2000</text>
+                        <text x="200" y="385" text-anchor="middle" font-size="13" fill="#666">2005</text>
+                        <text x="280" y="385" text-anchor="middle" font-size="13" fill="#666">2010</text>
+                        <text x="360" y="385" text-anchor="middle" font-size="13" fill="#666">2015</text>
+                        <text x="440" y="385" text-anchor="middle" font-size="13" fill="#666">2018</text>
+                        <text x="520" y="385" text-anchor="middle" font-size="13" fill="#666">2020</text>
+                        <text x="600" y="385" text-anchor="middle" font-size="13" fill="#666">2022</text>
+                        <text x="680" y="385" text-anchor="middle" font-size="13" fill="#666">2024</text>
+                        <text x="760" y="385" text-anchor="middle" font-size="13" fill="#666">2025預估</text>
+                        
+                        <!-- 指數成長曲線 -->
+                        <path d="M 120 360 L 150 358 L 180 356 L 210 350 L 240 340 L 270 320 L 300 290 L 330 250 L 360 200 L 390 160 L 420 130 L 450 110 L 480 95 L 510 85 L 540 78 L 570 72 L 600 66 L 630 60 L 660 55 L 690 52 L 720 50 L 760 48" 
+                              fill="none" stroke="#1f4e79" stroke-width="4"/>
+                        
+                        <!-- 2024年里程碑 -->
+                        <circle cx="680" cy="55" r="6" fill="#e94560"/>
+                        <text x="700" y="45" font-size="16" fill="#e94560" font-weight="bold">10.3兆美元</text>
+                        <text x="700" y="58" font-size="13" fill="#e94560">2024年創紀錄</text>
+                        
+                        <!-- 預測點 -->
+                        <circle cx="760" cy="48" r="5" fill="#ffc107"/>
+                        <text x="780" y="40" font-size="14" fill="#ffc107" font-weight="bold">11.2兆美元</text>
+                        <text x="780" y="53" font-size="11" fill="#ffc107">2025年預估</text>
+                        
+                        <!-- 成長軌跡填充 -->
+                        <defs>
+                            <linearGradient id="growthGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1f4e79;stop-opacity:0.3"/>
+                                <stop offset="100%" style="stop-color:#1f4e79;stop-opacity:0.1"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M 120 360 L 150 358 L 180 356 L 210 350 L 240 340 L 270 320 L 300 290 L 330 250 L 360 200 L 390 160 L 420 130 L 450 110 L 480 95 L 510 85 L 540 78 L 570 72 L 600 66 L 630 60 L 660 55 L 690 52 L 720 50 L 760 48 L 760 360 L 120 360 Z" 
+                              fill="url(#growthGradient)"/>
+                        
+                        <!-- 關鍵轉折點 -->
+                        <circle cx="360" cy="200" r="4" fill="#28a745"/>
+                        <text x="380" y="195" font-size="12" fill="#28a745" font-weight="bold">1兆美元突破</text>
+                        <text x="380" y="208" font-size="10" fill="#28a745">2015年里程碑</text>
+                    </svg>
+                </div>
+
+                <div class="key-insight">
+                    <h4>ETF革命的三大驅動因素</h4>
+                    <p>成本優勢：ETF平均費用率較傳統基金低60-80%，為投資者節省數千億美元成本；流動性優勢：提供即時交易能力，滿足快速變化的市場需求；透明度優勢：每日公布持倉，讓投資者清楚了解投資標的。這三大優勢使ETF成為新時代的主流投資工具。</p>
+                </div>
+
+                <p class="story-text">
+                    ETF生態系統的成熟標誌著投資民主化的實現。個人投資者現在可以用相對較少的資金，獲得過去只有機構投資者才能享有的多元化投資機會。從單一指數追蹤到主題投資、從國內市場到全球配置、從傳統資產到另類投資，ETF正在重新定義投資的可能性邊界。
+                </p>
+
+                <p class="story-text">
+                    更重要的是，ETF的普及正在改變市場微觀結構。被動投資的興起降低了價格發現的效率，但同時也減少了市場波動。這種變化要求投資者重新思考選股邏輯：在指數化投資盛行的時代，能夠跑贏指數的策略變得更加稀缺和珍貴。
+                </p>
+            </section>
+
+            <!-- 第四章：全球再平衡的新秩序 -->
+            <section id="chapter4" class="chapter">
+                <div class="chapter-number">4</div>
+                <h2>全球再平衡：東西方經濟力量的重新洗牌</h2>
+                
+                <p class="story-text">
+                    在美國政策驅動的「永動機」運轉過程中，全球其他經濟體並非被動承受者，而是積極的參與者和受益者。一場深層的地緣經濟重組正在展開，其中最引人注目的是日本經濟的歷史性復甦和全球資產價格體系的重新定義。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">日本經濟復甦的技術指標：20年來股匯首次正相關</div>
+                    <div class="chart-subtitle">TOPIX指數與美元日圓匯率相關係數的歷史性轉變</div>
+                    
+                    <svg viewBox="0 0 900 400" style="width: 100%; height: 260px;">
+                        <!-- 背景 -->
+                        <rect width="900" height="400" fill="#f8f9fa"/>
+                        
+                        <!-- 零線 -->
+                        <line x1="450" y1="80" x2="450" y2="380" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="445" y="75" text-anchor="end" font-size="15" fill="#666" font-weight="bold">0.0</text>
+                        
+                        <!-- Y軸標籤 -->
+                        <text x="70" y="80" text-anchor="end" font-size="15" fill="#666">+0.4</text>
+                        <text x="70" y="140" text-anchor="end" font-size="15" fill="#666">+0.2</text>
+                        <text x="70" y="260" text-anchor="end" font-size="15" fill="#666">-0.2</text>
+                        <text x="70" y="320" text-anchor="end" font-size="15" fill="#666">-0.4</text>
+                        <text x="70" y="380" text-anchor="end" font-size="15" fill="#666">-0.6</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="120" y="395" text-anchor="middle" font-size="13" fill="#666">2004</text>
+                        <text x="200" y="395" text-anchor="middle" font-size="13" fill="#666">2008</text>
+                        <text x="280" y="395" text-anchor="middle" font-size="13" fill="#666">2012</text>
+                        <text x="360" y="395" text-anchor="middle" font-size="13" fill="#666">2016</text>
+                        <text x="440" y="395" text-anchor="middle" font-size="13" fill="#666">2020</text>
+                        <text x="520" y="395" text-anchor="middle" font-size="13" fill="#666">2022</text>
+                        <text x="600" y="395" text-anchor="middle" font-size="13" fill="#666">2024</text>
+                        <text x="680" y="395" text-anchor="middle" font-size="13" fill="#666">2025</text>
+                        
+                        <!-- 相關係數變化線 -->
+                        <path d="M 120 200 L 150 220 L 180 260 L 210 300 L 240 340 L 270 350 L 300 340 L 330 320 L 360 280 L 390 260 L 420 240 L 450 220 L 480 260 L 510 280 L 540 260 L 570 220 L 600 180 L 630 140 L 660 100 L 680 80" 
+                              fill="none" stroke="#1f4e79" stroke-width="4"/>
+                        
+                        <!-- 正相關期間標示 -->
+                        <path d="M 570 220 L 600 180 L 630 140 L 660 100 L 680 80 L 680 200 L 630 200 L 600 200 L 570 200 Z" 
+                              fill="#e94560" fill-opacity="0.3"/>
+                        
+                        <!-- 歷史轉折點 -->
+                        <circle cx="680" cy="80" r="6" fill="#e94560"/>
+                        <text x="700" y="70" font-size="15" fill="#e94560" font-weight="bold">真正牛市信號</text>
+                        <text x="700" y="85" font-size="13" fill="#e94560">股匯雙升模式</text>
+                        
+                        <!-- 負相關期間標註 -->
+                        <text x="300" y="50" text-anchor="middle" font-size="14" fill="#999">經濟疲軟期：股升匯貶</text>
+                        <text x="650" y="50" text-anchor="middle" font-size="14" fill="#e94560" font-weight="bold">經濟復甦期：股匯同升</text>
+                    </svg>
+                </div>
+
+                <div class="key-insight">
+                    <h4>日本模式的全球啟示</h4>
+                    <p>日本股匯正相關的出現標誌著其經濟基本面的實質改善，而非僅依賴貨幣寬鬆的虛假繁榮。這種「真正牛市」模式為其他發達經濟體提供了範本：通過結構性改革實現可持續成長，而非依賴無限量化寬鬆。日本的成功經驗預示著全球經濟正在從流動性驅動轉向基本面驅動。</p>
+                </div>
+
+                <p class="story-text">
+                    全球資產價格的重新定價反映了投資者對地緣經濟格局變化的深度認知。2025年年初至今，黃金上漲35.4%反映避險需求；比特幣上漲17.2%體現對法幣體系的質疑；美元下跌9.3%顯示其霸權地位的相對弱化。這種分化格局確立了「去美元化」的長期趨勢。
+                </p>
+
+                <p class="story-text">
+                    新興市場的差異化發展也值得關注。中國小型股上漲51%、印度繼續獲得資金流入、巴西等商品出口國受益於全球通膨，顯示新興經濟體正在擺脫對發達國家政策的依賴，尋找適合自身特點的發展路徑。這種多極化趨勢為全球投資者提供了更多元化的配置選擇。
+                </p>
+            </section>
+
+            <!-- 第五章：泡沫的科學化管理 -->
+            <section id="chapter5" class="chapter">
+                <div class="chapter-number">5</div>
+                <h2>泡沫科學化：七巨頭現象的精密分析</h2>
+                
+                <p class="story-text">
+                    在新的投資生態中，市場對泡沫的認知和管理達到了前所未有的科學化水準。透過對歷史上十次重大股市泡沫的系統性分析，我們發現當前的「七巨頭」現象雖然具備泡沫特徵，但仍處在歷史可控範圍內，為精明的投資者提供了風險可控的獲利機會。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">歷史泡沫比較分析：七巨頭的相對位置</div>
+                    <div class="chart-subtitle">基於125年市場數據的泡沫量化評估</div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>歷史泡沫案例</th>
+                                <th>代表指數</th>
+                                <th>持續時間</th>
+                                <th>最大漲幅</th>
+                                <th>最大跌幅</th>
+                                <th>高峰P/E</th>
+                                <th>風險評級</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>荷蘭鬱金香</td>
+                                <td>阿姆斯特丹</td>
+                                <td>3年</td>
+                                <td class="positive">2000%+</td>
+                                <td class="negative">-95%</td>
+                                <td>N/A</td>
+                                <td>🔴 極度</td>
+                            </tr>
+                            <tr>
+                                <td>1929美國</td>
+                                <td>道瓊工業</td>
+                                <td>3.5年</td>
+                                <td class="positive">381%</td>
+                                <td class="negative">-89%</td>
+                                <td>32.6倍</td>
+                                <td>🔴 極度</td>
+                            </tr>
+                            <tr>
+                                <td>日本1980s</td>
+                                <td>日經225</td>
+                                <td>4年</td>
+                                <td class="positive">289%</td>
+                                <td class="negative">-63%</td>
+                                <td>70.8倍</td>
+                                <td>🔴 極度</td>
+                            </tr>
+                            <tr>
+                                <td>網路泡沫</td>
+                                <td>納斯達克</td>
+                                <td>2.5年</td>
+                                <td class="positive">400%</td>
+                                <td class="negative">-78%</td>
+                                <td>175倍</td>
+                                <td>🔴 極度</td>
+                            </tr>
+                            <tr>
+                                <td>2021成長股</td>
+                                <td>ARK創新</td>
+                                <td>1年</td>
+                                <td class="positive">384%</td>
+                                <td class="negative">-82%</td>
+                                <td>N/A</td>
+                                <td>🟡 高度</td>
+                            </tr>
+                            <tr style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); font-weight: bold;">
+                                <td>歷史平均水準</td>
+                                <td>-</td>
+                                <td>2.8年</td>
+                                <td class="positive">350%</td>
+                                <td class="negative">-72%</td>
+                                <td>69倍</td>
+                                <td>🟡 參考</td>
+                            </tr>
+                            <tr style="background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%); font-weight: bold;">
+                                <td>七巨頭(當前)</td>
+                                <td>Mag 7</td>
+                                <td>2.5年</td>
+                                <td class="positive">225%</td>
+                                <td>進行中</td>
+                                <td>39倍</td>
+                                <td>🟢 可控</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-insight">
+                    <h4>數據驅動的泡沫管理策略</h4>
+                    <p>量化分析顯示七巨頭當前估值和漲幅均低於歷史泡沫平均水準，提供了相對安全的參與空間。關鍵在於建立系統性的風險管理框架：設置動態止損點（基於技術和基本面指標）、分散投資期限（避免集中到期）、對沖極端風險（利用衍生品工具）。</p>
+                </div>
+
+                <p class="story-text">
+                    現代泡沫管理的精髓在於將其視為可計算、可預測、可利用的市場現象。基於歷史模式分析，美銀提出四大科學化泡沫交易策略：直接參與策略（在上升階段獲取β收益）、價值對沖策略（配置困境資產作為防守）、信貸先行策略（監控債券市場的領先信號）、波動套利策略（利用不同資產類別波動率差異）。
+                </p>
+
+                <p class="story-text">
+                    這種科學化管理方法的關鍵在於動態調整和嚴格紀律。投資者需要建立清晰的進入和退出規則，避免情緒化決策。當前七巨頭泡沫的可控性為投資者提供了難得的學習和實踐機會，關鍵在於平衡貪婪和恐懼，在獲取超額收益的同時保護資本安全。
+                </p>
+            </section>
+
+            <!-- 第六章：算力時代的投資新紀元 -->
+            <section id="chapter6" class="chapter">
+                <div class="chapter-number">6</div>
+                <h2>算力新紀元：AI革命重塑投資格局</h2>
+                
+                <p class="story-text">
+                    人工智慧革命正在以前所未有的速度重塑全球經濟結構，為投資者帶來兆元級的新興機會。與工業革命需要百年時間不同，AI革命的基礎設施已在雲計算時代完成布局，使得這場變革得以在短短數年內完成，創造了投資歷史上最大的主題性機會。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">算力需求的指數級增長預測</div>
+                    <div class="chart-subtitle">每位知識工作者算力消耗的歷史性躍昇</div>
+                    
+                    <svg viewBox="0 0 900 400" style="width: 100%; height: 280px;">
+                        <!-- 背景 -->
+                        <rect width="900" height="400" fill="#f8f9fa"/>
+                        
+                        <!-- Y軸標籤（對數刻度） -->
+                        <text x="40" y="350" text-anchor="middle" font-size="14" fill="#666">1x</text>
+                        <text x="40" y="320" text-anchor="middle" font-size="14" fill="#666">10x</text>
+                        <text x="40" y="290" text-anchor="middle" font-size="14" fill="#666">100x</text>
+                        <text x="40" y="260" text-anchor="middle" font-size="14" fill="#666">1,000x</text>
+                        <text x="40" y="230" text-anchor="middle" font-size="14" fill="#666">10,000x</text>
+                        <text x="40" y="200" text-anchor="middle" font-size="14" fill="#666">100,000x</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="120" y="385" text-anchor="middle" font-size="12" fill="#666">2020</text>
+                        <text x="220" y="385" text-anchor="middle" font-size="12" fill="#666">2022</text>
+                        <text x="320" y="385" text-anchor="middle" font-size="12" fill="#666">2024</text>
+                        <text x="420" y="385" text-anchor="middle" font-size="12" fill="#666">2026</text>
+                        <text x="520" y="385" text-anchor="middle" font-size="12" fill="#666">2028</text>
+                        <text x="620" y="385" text-anchor="middle" font-size="12" fill="#666">2030</text>
+                        
+                        <!-- 保守預測線 -->
+                        <path d="M 120 350 L 170 340 L 220 330 L 270 315 L 320 300 L 370 285 L 420 270 L 470 255 L 520 240 L 570 225 L 620 210" 
+                              fill="none" stroke="#17a2b8" stroke-width="3" stroke-dasharray="5,5"/>
+                        
+                        <!-- 樂觀預測線 -->
+                        <path d="M 120 350 L 170 335 L 220 315 L 270 290 L 320 260 L 370 225 L 420 185 L 470 140 L 520 95 L 570 50 L 620 20" 
+                              fill="none" stroke="#e94560" stroke-width="4"/>
+                        
+                        <!-- 當前位置 -->
+                        <circle cx="320" cy="300" r="6" fill="#28a745"/>
+                        <text x="340" y="295" font-size="14" fill="#28a745" font-weight="bold">當前：ChatGPT時代</text>
+                        <text x="340" y="310" font-size="12" fill="#28a745">約10x基準算力</text>
+                        
+                        <!-- 預測區間 -->
+                        <path d="M 420 270 L 520 240 L 620 210 L 620 20 L 520 95 L 420 185 Z" 
+                              fill="#e94560" fill-opacity="0.2"/>
+                        
+                        <!-- 圖例 -->
+                        <line x1="100" y1="50" x2="130" y2="50" stroke="#17a2b8" stroke-width="3" stroke-dasharray="5,5"/>
+                        <text x="140" y="55" font-size="12" fill="#17a2b8">保守預測：10-100x</text>
+                        
+                        <line x1="100" y1="70" x2="130" y2="70" stroke="#e94560" stroke-width="4"/>
+                        <text x="140" y="75" font-size="12" fill="#e94560" font-weight="bold">樂觀預測：1,000-10,000x</text>
+                        
+                        <!-- 關鍵里程碑 -->
+                        <text x="520" y="120" text-anchor="middle" font-size="13" fill="#e94560" font-weight="bold">AGI突破點</text>
+                        <text x="520" y="135" text-anchor="middle" font-size="11" fill="#e94560">2028-2030年</text>
+                    </svg>
+                </div>
+
+                <div class="key-insight">
+                    <h4>算力即新生產要素</h4>
+                    <p>AI時代的生產函數已從「資本+勞動」演變為「算力×知識工作者」。每位知識工作者的算力消耗預計將增長10-10,000倍，這將創造一個價值10兆美元的新市場。投資機會涵蓋晶片設計、雲端基礎設施、AI軟體平台和垂直應用解決方案四大層面。</p>
+                </div>
+
+                <p class="story-text">
+                    算力革命的投資邏輯可分為三個層次：基礎設施層面的半導體和雲端服務提供商，平台層面的AI模型開發和部署公司，應用層面的各行業AI解決方案提供商。每個層次都有不同的投資特點：基礎設施層波動較大但空間廣闊，平台層競爭激烈但贏家通吃，應用層分散多元但需要深度產業知識。
+                </p>
+
+                <p class="story-text">
+                    特別值得關注的是AI安全這一新興領域。在數位世界中，數百個AI安全代理可以同時保護每個人類或AI實體，創造了巨大的算力需求。開源模型的發展確保了競爭的充分性，避免AI未來被少數巨頭壟斷。這個領域將成為未來十年最重要的投資主題之一。
+                </p>
+            </section>
+
+            <!-- 第七章：政治風險的現實威脅 -->
+            <section id="chapter7" class="chapter">
+                <div class="chapter-number">7</div>
+                <h2>政治風險：永動機運轉的最大威脅</h2>
+                
+                <p class="story-text">
+                    在所有支撐「永動機」運轉的因素中，政治風險正在成為最大的不確定性來源。通膨壓力下的政治不滿情緒上升，為2026年中期選舉投下陰霾，也為當前的經濟繁榮埋下潛在的政策逆轉風險。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">財富效應的政治副作用：家庭財富暴增與通膨焦慮</div>
+                    <div class="chart-subtitle">美國家庭股票財富增長與政治支持度的反向關係</div>
+                    
+                    <svg viewBox="0 0 900 400" style="width: 100%; height: 260px;">
+                        <!-- 背景 -->
+                        <rect width="900" height="400" fill="#f8f9fa"/>
+                        
+                        <!-- 左Y軸：家庭財富（兆美元） -->
+                        <text x="40" y="80" text-anchor="middle" font-size="14" fill="#1f4e79">45</text>
+                        <text x="40" y="120" text-anchor="middle" font-size="14" fill="#1f4e79">40</text>
+                        <text x="40" y="160" text-anchor="middle" font-size="14" fill="#1f4e79">35</text>
+                        <text x="40" y="200" text-anchor="middle" font-size="14" fill="#1f4e79">30</text>
+                        <text x="40" y="240" text-anchor="middle" font-size="14" fill="#1f4e79">25</text>
+                        <text x="40" y="280" text-anchor="middle" font-size="14" fill="#1f4e79">20</text>
+                        
+                        <!-- 右Y軸：政治支持度(%) -->
+                        <text x="860" y="80" text-anchor="middle" font-size="14" fill="#dc3545">65</text>
+                        <text x="860" y="120" text-anchor="middle" font-size="14" fill="#dc3545">62</text>
+                        <text x="860" y="160" text-anchor="middle" font-size="14" fill="#dc3545">59</text>
+                        <text x="860" y="200" text-anchor="middle" font-size="14" fill="#dc3545">56</text>
+                        <text x="860" y="240" text-anchor="middle" font-size="14" fill="#dc3545">53</text>
+                        <text x="860" y="280" text-anchor="middle" font-size="14" fill="#dc3545">50</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="150" y="385" text-anchor="middle" font-size="12" fill="#666">2023Q1</text>
+                        <text x="250" y="385" text-anchor="middle" font-size="12" fill="#666">2023Q3</text>
+                        <text x="350" y="385" text-anchor="middle" font-size="12" fill="#666">2024Q1</text>
+                        <text x="450" y="385" text-anchor="middle" font-size="12" fill="#666">2024Q3</text>
+                        <text x="550" y="385" text-anchor="middle" font-size="12" fill="#666">2025Q1</text>
+                        <text x="650" y="385" text-anchor="middle" font-size="12" fill="#666">2025Q3</text>
+                        
+                        <!-- 家庭財富上升線 -->
+                        <path d="M 150 240 L 200 230 L 250 210 L 300 190 L 350 170 L 400 150 L 450 130 L 500 110 L 550 90 L 600 80 L 650 75" 
+                              fill="none" stroke="#1f4e79" stroke-width="4"/>
+                        
+                        <!-- 政治支持度下降線 -->
+                        <path d="M 150 80 L 200 90 L 250 105 L 300 120 L 350 135 L 400 150 L 450 165 L 500 180 L 550 195 L 600 210 L 650 220" 
+                              fill="none" stroke="#dc3545" stroke-width="4"/>
+                        
+                        <!-- 2025年關鍵點 -->
+                        <circle cx="650" cy="75" r="6" fill="#1f4e79"/>
+                        <text x="670" y="70" font-size="13" fill="#1f4e79" font-weight="bold">43兆美元</text>
+                        <text x="670" y="85" font-size="11" fill="#1f4e79">+6兆年增</text>
+                        
+                        <circle cx="650" cy="220" r="6" fill="#dc3545"/>
+                        <text x="670" y="215" font-size="13" fill="#dc3545" font-weight="bold">55%</text>
+                        <text x="670" y="230" font-size="11" fill="#dc3545">政治危險區</text>
+                        
+                        <!-- 交叉點標示 -->
+                        <circle cx="400" cy="150" r="5" fill="#ffc107"/>
+                        <text x="420" y="140" font-size="12" fill="#ffc107" font-weight="bold">轉折點</text>
+                        <text x="420" y="155" font-size="10" fill="#ffc107">2024Q3</text>
+                        
+                        <!-- 圖例 -->
+                        <line x1="100" y1="30" x2="130" y2="30" stroke="#1f4e79" stroke-width="4"/>
+                        <text x="140" y="35" font-size="12" fill="#1f4e79" font-weight="bold">家庭股票財富（左軸）</text>
+                        
+                        <line x1="300" y1="30" x2="330" y2="30" stroke="#dc3545" stroke-width="4"/>
+                        <text x="340" y="35" font-size="12" fill="#dc3545" font-weight="bold">政府支持度（右軸）</text>
+                    </svg>
+                </div>
+
+                <div class="risk-warning">
+                    <h4>2026中期選舉的系統性風險</h4>
+                    <p>財富效應的不均分配正在創造政治火藥桶：股票財富主要集中在高收入階層，而通膨壓力卻由全民承擔。這種結構性矛盾在中期選舉年可能引發政策急轉彎，包括對科技巨頭的反壟斷調查加劇、資本利得稅率提高、以及對「通膨推手」行業的直接干預。</p>
+                </div>
+
+                <p class="story-text">
+                    政治風險的傳導機制清晰可見：經濟繁榮→資產價格上漲→財富不均加劇→社會不滿上升→政治壓力增加→政策調整→市場調整。當前我們正處於這個循環的中段，政治壓力正在累積但尚未達到政策轉向的臨界點。
+                </p>
+
+                <p class="story-text">
+                    投資者需要密切關注幾個政治風險指標：總統支持度低於55%為黃色警戒，低於50%為紅色警戒；通膨預期超過4%將觸發政策干預；收入不平等指數（基尼係數）持續惡化將加劇社會矛盾。這些指標的變化將決定「永動機」能否繼續平穩運轉。
+                </p>
+            </section>
+
+            <!-- 第八章：債券敏感性投資的新格局 -->
+            <section id="chapter8" class="chapter">
+                <div class="chapter-number">8</div>
+                <h2>投資新格局：債券敏感性資產的黃金時代</h2>
+                
+                <p class="story-text">
+                    在政治風險上升的背景下，聰明的投資者正在重新發現「成長向上、利率向下」這個經典組合的投資價值。債券敏感性資產——小型股、REITs、公用事業、生技股——正在迎來它們的黃金時代。
+                </p>
+
+                <div class="chart-container">
+                    <div class="chart-title">美銀私人客戶的配置信號：四週資金流向透露的投資邏輯</div>
+                    <div class="chart-subtitle">機構投資者正在積極布局利率敏感資產</div>
+                    
+                    <svg viewBox="0 0 900 600" style="width: 100%; height: 360px;">
+                        <!-- 背景 -->
+                        <rect width="900" height="600" fill="#f8f9fa"/>
+                        
+                        <!-- 零線 -->
+                        <line x1="450" y1="80" x2="450" y2="520" stroke="#666" stroke-width="2"/>
+                        <text x="445" y="75" text-anchor="end" font-size="15" fill="#666" font-weight="bold">0%</text>
+                        
+                        <!-- 正值資產（買進） -->
+                        <rect x="460" y="110" width="300" height="18" fill="#1f4e79"/>
+                        <text x="440" y="122" text-anchor="end" font-size="14" fill="#333" font-weight="bold">新興市場債券</text>
+                        <text x="770" y="122" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+3.2%</text>
+                        
+                        <rect x="460" y="135" width="280" height="18" fill="#1f4e79"/>
+                        <text x="440" y="147" text-anchor="end" font-size="14" fill="#333" font-weight="bold">黃金ETF</text>
+                        <text x="750" y="147" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+2.8%</text>
+                        
+                        <rect x="460" y="160" width="240" height="18" fill="#1f4e79"/>
+                        <text x="440" y="172" text-anchor="end" font-size="14" fill="#333" font-weight="bold">高收益債券</text>
+                        <text x="710" y="172" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+2.4%</text>
+                        
+                        <rect x="460" y="185" width="180" height="18" fill="#1f4e79"/>
+                        <text x="440" y="197" text-anchor="end" font-size="14" fill="#333" font-weight="bold">小型股價值</text>
+                        <text x="650" y="197" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+1.8%</text>
+                        
+                        <rect x="460" y="210" width="160" height="18" fill="#1f4e79"/>
+                        <text x="440" y="222" text-anchor="end" font-size="14" fill="#333" font-weight="bold">日本股票</text>
+                        <text x="630" y="222" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+1.6%</text>
+                        
+                        <rect x="460" y="235" width="120" height="18" fill="#1f4e79"/>
+                        <text x="440" y="247" text-anchor="end" font-size="14" fill="#333" font-weight="bold">投資級債券</text>
+                        <text x="590" y="247" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+1.2%</text>
+                        
+                        <rect x="460" y="260" width="100" height="18" fill="#1f4e79"/>
+                        <text x="440" y="272" text-anchor="end" font-size="14" fill="#333" font-weight="bold">REITs</text>
+                        <text x="570" y="272" text-anchor="start" font-size="12" fill="#1f4e79" font-weight="bold">+1.0%</text>
+                        
+                        <!-- 負值資產（賣出） -->
+                        <rect x="350" y="310" width="100" height="18" fill="#dc3545"/>
+                        <text x="440" y="322" text-anchor="end" font-size="14" fill="#333" font-weight="bold">大型科技股</text>
+                        <text x="340" y="322" text-anchor="end" font-size="12" fill="#dc3545" font-weight="bold">-1.0%</text>
+                        
+                        <rect x="300" y="335" width="150" height="18" fill="#dc3545"/>
+                        <text x="440" y="347" text-anchor="end" font-size="14" fill="#333" font-weight="bold">成長股ETF</text>
+                        <text x="290" y="347" text-anchor="end" font-size="12" fill="#dc3545" font-weight="bold">-1.5%</text>
+                        
+                        <rect x="250" y="360" width="200" height="18" fill="#dc3545"/>
+                        <text x="440" y="372" text-anchor="end" font-size="14" fill="#333" font-weight="bold">高貝塔科技</text>
+                        <text x="240" y="372" text-anchor="end" font-size="12" fill="#dc3545" font-weight="bold">-2.0%</text>
+                        
+                        <rect x="200" y="385" width="250" height="18" fill="#dc3545"/>
+                        <text x="440" y="397" text-anchor="end" font-size="14" fill="#333" font-weight="bold">動量因子</text>
+                        <text x="190" y="397" text-anchor="end" font-size="12" fill="#dc3545" font-weight="bold">-2.5%</text>
+                        
+                        <rect x="120" y="410" width="330" height="18" fill="#dc3545"/>
+                        <text x="440" y="422" text-anchor="end" font-size="14" fill="#333" font-weight="bold">能源股</text>
+                        <text x="110" y="422" text-anchor="end" font-size="12" fill="#dc3545" font-weight="bold">-3.3%</text>
+                        
+                        <!-- 標題和圖例 -->
+                        <text x="450" y="40" text-anchor="middle" font-size="16" fill="#1a1a2e" font-weight="bold">美銀GWIM高淨值客戶資金流向 (佔AUM百分比)</text>
+                        
+                        <!-- X軸標籤 -->
+                        <text x="200" y="550" text-anchor="middle" font-size="14" fill="#666">-4%</text>
+                        <text x="300" y="550" text-anchor="middle" font-size="14" fill="#666">-2%</text>
+                        <text x="450" y="550" text-anchor="middle" font-size="14" fill="#666">0%</text>
+                        <text x="600" y="550" text-anchor="middle" font-size="14" fill="#666">+2%</text>
+                        <text x="750" y="550" text-anchor="middle" font-size="14" fill="#666">+4%</text>
+                        
+                        <!-- 圖例 -->
+                        <rect x="100" y="25" width="15" height="10" fill="#1f4e79"/>
+                        <text x="125" y="33" font-size="13" fill="#1f4e79" font-weight="bold">增持（利率敏感資產）</text>
+                        <rect x="280" y="25" width="15" height="10" fill="#dc3545"/>
+                        <text x="305" y="33" font-size="13" fill="#dc3545" font-weight="bold">減持（成長股資產）</text>
+                    </svg>
+                </div>
+
+                <div class="key-insight">
+                    <h4>利率下行週期的投資邏輯</h4>
+                    <p>當前投資環境的核心特徵是「經濟韌性+貨幣寬鬆」的組合，這為債券敏感性資產提供了雙重利好：基本面支撐確保盈利成長，利率下行提升估值倍數。小型股、REITs等高貝塔資產將是最大受益者，而過度估值的大型科技股面臨估值壓縮風險。</p>
+                </div>
+
+                <p class="story-text">
+                    這種資產輪動的背後反映了投資者對經濟週期階段的精準判斷。在當前「成長放緩但未衰退、通膨下降但未通縮」的環境中，央行有空間適度寬鬆，為利率敏感資產創造了難得的投資窗口。關鍵在於把握轉換的時機和節奏。
+                </p>
+
+                <p class="story-text">
+                    全球小型股的分化為投資者提供了結構性機會：美國小型股因估值較高而漲幅溫和（8%），歐洲和日本小型股得益於經濟復甦而表現強勁（25%），中國小型股受益於政策轉向而領漲（51%）。這種分化格局要求投資者採取更加精細的地區配置策略。
+                </p>
+
+                <p class="story-text">
+                    債券敏感性投資策略的精髓在於平衡久期風險和信用風險。在利率下行初期，重點配置高質量的長久期資產；在經濟企穩階段，適度增加信用風險敞口；在通膨預期回升時，及時調整久期配置。成功的關鍵在於前瞻性布局和動態調整。
+                </p>
+            </section>
+        </main>
+
+        <!-- 結語：永動機制的可持續性 -->
+        <section id="epilogue" class="epilogue">
+            <h2>結語：永動機制的演進與未來</h2>
+            
+            <p>美股「永動機」的分析至此告一段落，但這個複雜系統的演進遠未結束。我們見證了政策設計如何創造市場機會，資金流動如何重塑投資格局，技術革命如何開啟新紀元，以及政治風險如何威脅既有秩序。</p>
+            
+            <p>這個「永動機」的核心優勢在於其自適應能力：當某個環節出現問題時，系統會自動調節以維持平衡。ETF革命提高了市場效率，算力革命創造了新增長點，全球再平衡分散了地緣風險，科學化泡沫管理降低了系統性風險。</p>
+            
+            <p>然而，任何複雜系統都有其脆弱性。政治風險、通膨壓力、地緣衝突、技術替代等因素都可能對「永動機」造成衝擊。投資者需要在享受系統紅利的同時，時刻保持對系統性風險的警覺。</p>
+            
+            <p>展望未來，成功的投資策略應該建立在對系統演進邏輯的深度理解之上：抓住政策轉向的先行信號，把握資金流向的結構性變化，參與技術革命的成長紅利，規避政治風險的系統性衝擊。在這個永動的時代，適應能力比預測能力更加重要。</p>
+            
+            <p><strong>風險提示：本報告所述投資策略存在重大風險，不適合所有投資者。過往表現不代表未來收益，投資者應根據自身風險承受能力謹慎決策。美國銀行與報告涵蓋的部分發行人存在業務關係，可能影響分析客觀性。</strong></p>
+        </section>
+
+        <!-- 附錄：數據支撐與方法論 -->
+        <section class="appendix" style="background: #f8f9fa; padding: 30px; border-top: 3px solid #e94560;">
+            <h2 style="color: #1a1a2e; font-size: 1.6em; margin-bottom: 25px; text-align: center;">附錄：關鍵數據與分析方法</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">全球資產類別年初至今表現總覽</div>
+                <div class="chart-subtitle">多元化資產配置的分化表現反映市場結構性變化</div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>資產類別</th>
+                            <th>年初至今收益</th>
+                            <th>資金淨流入</th>
+                            <th>波動率</th>
+                            <th>夏普比率</th>
+                            <th>配置建議</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>美國大型股</td>
+                            <td class="positive">+14.3%</td>
+                            <td class="positive">$2,940億</td>
+                            <td>18.2%</td>
+                            <td>0.89</td>
+                            <td>🟢 標配</td>
+                        </tr>
+                        <tr>
+                            <td>美國小型股</td>
+                            <td class="positive">+8.1%</td>
+                            <td class="positive">$370億</td>
+                            <td>24.5%</td>
+                            <td>0.45</td>
+                            <td>🟡 增配</td>
+                        </tr>
+                        <tr>
+                            <td>歐洲股票</td>
+                            <td class="positive">+12.8%</td>
+                            <td class="positive">$481億</td>
+                            <td>20.1%</td>
+                            <td>0.72</td>
+                            <td>🟢 標配</td>
+                        </tr>
+                        <tr>
+                            <td>日本股票</td>
+                            <td class="positive">+25.4%</td>
+                            <td class="negative">-$83億</td>
+                            <td>22.8%</td>
+                            <td>1.25</td>
+                            <td>🟢 標配</td>
+                        </tr>
+                        <tr>
+                            <td>中國股票</td>
+                            <td class="positive">+15.7%</td>
+                            <td class="positive">$156億</td>
+                            <td>28.3%</td>
+                            <td>0.63</td>
+                            <td>🟡 戰術配置</td>
+                        </tr>
+                        <tr>
+                            <td>新興市場</td>
+                            <td class="positive">+11.2%</td>
+                            <td class="positive">$237億</td>
+                            <td>25.7%</td>
+                            <td>0.51</td>
+                            <td>🟡 增配</td>
+                        </tr>
+                        <tr>
+                            <td>投資級債券</td>
+                            <td class="positive">+2.8%</td>
+                            <td class="positive">$3,810億</td>
+                            <td>8.4%</td>
+                            <td>0.38</td>
+                            <td>🟢 標配</td>
+                        </tr>
+                        <tr>
+                            <td>高收益債券</td>
+                            <td class="positive">+5.2%</td>
+                            <td class="positive">$890億</td>
+                            <td>12.6%</td>
+                            <td>0.52</td>
+                            <td>🟡 增配</td>
+                        </tr>
+                        <tr>
+                            <td>REITs</td>
+                            <td class="positive">+7.9%</td>
+                            <td class="positive">$245億</td>
+                            <td>21.3%</td>
+                            <td>0.48</td>
+                            <td>🟡 增配</td>
+                        </tr>
+                        <tr>
+                            <td>大宗商品</td>
+                            <td class="positive">+3.1%</td>
+                            <td class="positive">$104億</td>
+                            <td>19.8%</td>
+                            <td>0.21</td>
+                            <td>🟡 戰術配置</td>
+                        </tr>
+                        <tr>
+                            <td>黃金</td>
+                            <td class="positive">+35.4%</td>
+                            <td class="positive">$850億</td>
+                            <td>16.7%</td>
+                            <td>2.41</td>
+                            <td>🟢 標配</td>
+                        </tr>
+                        <tr>
+                            <td>加密貨幣</td>
+                            <td class="positive">+17.2%</td>
+                            <td class="positive">$380億</td>
+                            <td>64.2%</td>
+                            <td>0.31</td>
+                            <td>🔴 限制配置</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">投資策略建議矩陣</div>
+                <div class="chart-subtitle">基於當前市場環境的戰術配置指引</div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>投資主題</th>
+                            <th>核心邏輯</th>
+                            <th>關鍵標的</th>
+                            <th>風險因素</th>
+                            <th>時間範圍</th>
+                            <th>建議權重</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AI算力革命</td>
+                            <td>算力需求指數增長</td>
+                            <td>晶片設計、雲端服務</td>
+                            <td>技術替代、監管風險</td>
+                            <td>3-5年</td>
+                            <td class="positive">15-20%</td>
+                        </tr>
+                        <tr>
+                            <td>利率敏感資產</td>
+                            <td>降息週期受益</td>
+                            <td>小型股、REITs、公用事業</td>
+                            <td>經濟衰退、利率反轉</td>
+                            <td>1-2年</td>
+                            <td class="positive">20-25%</td>
+                        </tr>
+                        <tr>
+                            <td>日本復甦主題</td>
+                            <td>基本面真正改善</td>
+                            <td>日本股票、日圓資產</td>
+                            <td>全球衰退、地緣風險</td>
+                            <td>2-3年</td>
+                            <td class="positive">10-15%</td>
+                        </tr>
+                        <tr>
+                            <td>通膨保護資產</td>
+                            <td>政策通膨風險</td>
+                            <td>黃金、TIPS、商品</td>
+                            <td>通縮風險、美元走強</td>
+                            <td>持續配置</td>
+                            <td class="positive">5-10%</td>
+                        </tr>
+                        <tr>
+                            <td>新興市場分化</td>
+                            <td>政策轉向受益</td>
+                            <td>中國小型股、印度</td>
+                            <td>地緣政治、政策逆轉</td>
+                            <td>1-2年</td>
+                            <td class="positive">10-15%</td>
+                        </tr>
+                        <tr>
+                            <td>防禦性配置</td>
+                            <td>政治風險對沖</td>
+                            <td>投資級債券、現金</td>
+                            <td>機會成本、通膨侵蝕</td>
+                            <td>戰術性</td>
+                            <td class="positive">15-20%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="key-insight">
+                <h4>分析方法論說明</h4>
+                <p>本報告採用多重分析框架：(1)基本面分析：基於經濟數據、政策變化和企業盈利趨勢；(2)技術面分析：結合價格動量、資金流向和市場情緒指標；(3)量化模型：運用歷史回測、風險模型和相關性分析；(4)情境分析：考慮多種宏觀情境下的資產表現。所有建議均基於概率分析而非確定性預測。</p>
+            </div>
+        </section>
+
+        <footer class="epilogue">
+            <h2>報告信息</h2>
+            <p>發布日期：2025年9月21日</p>
+            <p>本報告基於已公開信息進行分析，不構成具體投資建議。投資涉及風險，包括本金損失的可能。</p>
+            <p><em>「在複雜系統中尋找規律，在不確定性中把握機會，在風險中保護資本——這是永動機時代投資者的核心能力。」</em></p>
+        </footer>
+    </div>
+</body>
+</html>
