@@ -1,0 +1,1532 @@
+<html lang="zh-TW"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyYmFmNDIwZTY0YmFhOTkyN2M0YTgwNDQ3MTQzMmFiMTc2OGMxMDkiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2M1ZDU5NDEwMWEwNjQ1NTFfYnJva2Vyc19yZXBvcnRfbmV3X2xheW91dC5odG1sLTIzOCJ9LCJleHAiOjE3NjExODE0NzAsImlhdCI6MTc2MTE3Nzg3MCwiYWxnIjoiUlMyNTYifQ.ao0HdDsPL1imLtJ6wtem5mJM_-EUHAYolyBTrLn20pSnUxjO85OzFI0IPvxP_6zwwjednQ3nKCNRzayR-DPG2yr-JEshrkC6XD5Lb3tGljnAd8YWgVZJZuqkGB23Mvw29qSJAIp5qUbxWEryiNk7ecn5icF3dVhjSp5kAAEiaE6u-BxPOQ-PGun865y30VfeHkP_0AxNhVViN-EuL-Dcc3frmT4nyyD3xCm3VHFsD-jU9aDZDPYpfC9tBn8fN5ie2sqtDpeGw2s1jhL_J11X4-a4ilhH0_jh05kM8Ylx3uboAdOLcIrUa_6jp-AmOgys0Vk5JCznmnMolvqPJFnH7w","c_c5d594101a064551_brokers_report_new_layout.html-238")</script><script>'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash-preview-09-2025","imageModelName":"imagen-3.0-generate-002","imageEditModelName":"gemini-2.5-flash-image-preview","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20"]})</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&amp;G 2025年Q3 投資組合分析</title>
+    <meta name="description" content="基於 M&amp;G (Lux) Income Allocation Fund 2025年10月報告的客觀分析與圖表重製。">
+    
+    <!-- 外部資源載入 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.1.0" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8f9fa; /* 更中性的淺灰色背景 */
+            color: #212529; /* 深黑文字 */
+            line-height: 1.75;
+        }
+        
+        .container {
+            max-width: 1100px;
+        }
+
+        /* 報告卡片樣式 */
+        .report-card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6; /* 更柔和的邊框 */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            transition: all 0.3s ease;
+        }
+        .report-card:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+        }
+        
+        /* 報告主標題 */
+        .report-title {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 報告副標題 */
+        .report-subtitle {
+            font-size: 1.25rem; /* 20px */
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+
+        /* 章節大標題 */
+        .section-title {
+            font-size: 1.75rem; /* 28px */
+            font-weight: 700;
+            color: #0d6efd; /* 主題藍色 */
+            border-bottom: 3px solid #0d6efd;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        /* 圖表標題 */
+        .chart-title {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* 圖表容器 */
+        .chart-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        /* 客觀分析/洞察區塊 */
+        .analyst-insight {
+            background-color: #e6f7ff; /* 淺藍色背景 */
+            border-left: 5px solid #0d6efd; /* 主題藍色邊框 */
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.375rem;
+        }
+        .analyst-insight p {
+            color: #1a568c; /* 深藍色文字 */
+        }
+        
+        /* 下載按鈕 */
+        .download-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+        .download-button:hover {
+            background-color: #0a58ca;
+            transform: scale(1.05);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-12{margin-top:3rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-t{border-top-width:1px}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.p-4{padding:1rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:p-8{padding:2rem}}</style></head>
+
+<body class="bg-gray-50">
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <!-- 報告標題區 -->
+        <header class="text-center mb-10">
+            <h1 class="report-title">M&amp;G 2025年Q3 多元資產分析報告</h1>
+            <p class="report-subtitle">觀點彙整與投資組合重製</p>
+            <div class="text-sm text-gray-500">
+                <span>報告日期：2025年10月25日</span> | 
+                <span>資料來源：M&amp;G (Lux) Income Allocation Fund Q3 Update</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- 執行摘要 -->
+            <section class="mb-10">
+                <h2 class="section-title">執行摘要：三大核心觀點</h2>
+                <div class="report-card">
+                    <p class="text-lg text-gray-700 mb-6">
+                        M&amp;G 投資公司發布的2025年第三季報告，提出了一個清晰且與市場主流共識（追捧美股與信用債）相異的觀點。報告認為，在當前的金融環境下，投資者應採取更為防禦性且注重估值的策略。
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-4 bg-gray-50 rounded-lg border">
+                            <h3 class="font-bold text-lg text-blue-700 mb-2">觀點一：減持美股，轉向非美</h3>
+                            <p class="text-sm text-gray-600">美國股票相對於全球其他市場（特別是新興市場）的估值已達極端昂貴水平。盈餘殖利率顯示美股吸引力偏低。</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border">
+                            <h3 class="font-bold text-lg text-blue-700 mb-2">觀點二：長債具「不對稱價值」</h3>
+                            <p class="text-sm text-gray-600">在高實質殖利率下，長天期政府公債（如美國30年期）提供了「上檔有限、下檔豐厚」的不對稱報酬，是極佳的避險工具。</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border">
+                            <h3 class="font-bold text-lg text-blue-700 mb-2">觀點三：新興市場債優於信用債</h3>
+                            <p class="text-sm text-gray-600">已開發市場的信用利差已收窄至歷史低點，風險補償不足。相比之下，新興市場本地債券提供高實質殖利率，是更優的收益來源。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 市場概覽 -->
+            <section class="mb-10">
+                <h2 class="section-title">市場概覽：2025年資產表現</h2>
+                <div class="report-card">
+                    <h3 class="chart-title">2025年Q3主要資產回報</h3>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="q3ReturnsChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 910px;" width="1820"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center">資料來源：M&amp;G, Bloomberg (2025/09/30)。Q3股市普遍上漲，由歐洲銀行股和黃金領漲。</p>
+                </div>
+                
+                <div class="report-card">
+                    <h3 class="chart-title">2025年迄今主要資產回報 (YTD)</h3>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="ytdReturnsChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 910px;" width="1820"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center">資料來源：M&amp;G, Bloomberg (2025/09/30)。此圖顯示日本股票(TOPIX)與黃金表現突出，而美元指數與英國公債表現落後。</p>
+                </div>
+            </section>
+
+            <!-- 投資組合建議 -->
+            <section class="mb-10">
+                <h2 class="section-title">目前建議投資組合 (Fund Positioning)</h2>
+                <div class="report-card">
+                    <p>報告的分析觀點，最終體現在基金的實際資產配置上。以下圖表顯示了 M&amp;G (Lux) Income Allocation Fund 在2025年第三季末的詳細佈局。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                        <div>
+                            <h3 class="chart-title">資產類別配置 (圓餅圖)</h3>
+                            <div class="chart-container" style="height: 450px;">
+                                <canvas id="assetAllocationDonutChart" height="900" style="display: block; box-sizing: border-box; height: 450px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。顯示基金主要配置於股票 (45.5%) 和已開發市場債券 (32.9%)。</p>
+                        </div>
+                        <div>
+                            <h3 class="chart-title">高層次主動權重 (Active Weight)</h3>
+                            <div class="chart-container" style="height: 450px;">
+                                <canvas id="activeWeightChart" height="900" style="display: block; box-sizing: border-box; height: 450px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。此圖清晰顯示基金大幅增持政府債券 (+8.2%)、減持股票 (-8.9%) 及信用債 (-14.3%)。</p>
+                        </div>
+                        <div>
+                            <h3 class="chart-title">詳細資產類別配置 (堆疊圖)</h3>
+                            <div class="chart-container" style="height: 450px;">
+                                <canvas id="assetAllocationChart" height="900" style="display: block; box-sizing: border-box; height: 450px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。圖表顯示基金大幅減持信用債，並增持政府債券（特別是新興市場本地債）和多元化的股票部位。</p>
+                        </div>
+                        <div>
+                            <h3 class="chart-title">貨幣曝險 (% 總基金曝險)</h3>
+                            <div class="chart-container" style="height: 450px;">
+                                <canvas id="currencyExposureChart" height="900" style="display: block; box-sizing: border-box; height: 450px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。基礎貨幣(歐元)佔 71.6%。此圖顯示前十大非歐元貨幣曝險，以美元、巴西里拉為首。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基金績效圖 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                    <div class="report-card">
+                        <h3 class="chart-title">基金Q3績效 vs 基準</h3>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="fundQ3PerformanceChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 414px;" width="828"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。Q3期間，基金(TCB)表現落後於基準，報告歸因於對美股的減持。</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="chart-title">基金成立以來績效 vs 基準</h3>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="fundLaunchPerformanceChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 414px;" width="828"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/09/30)。自2024年7月成立以來，基金(TCB)與基準表現貼近。</p>
+                    </div>
+                </div>
+
+            </section>
+            
+            <!-- 主軸一 -->
+            <section class="mb-10">
+                <h2 class="section-title">觀點一：減持美股，轉向非美</h2>
+                <div class="report-card">
+                    <p class="text-gray-700 mb-4">報告的第一個關鍵，是基於估值考量，建議減持美國股票。基金目前對北美股票的配置僅 11.5%，相較於基準的 33.8%，是高達 -22.3% 的大幅減持 (Underweight)。</p>
+                    <p class="text-gray-700 mb-4">相對地，基金增持 (Overweight) 了已開發歐洲 (+4.6%) 和已開發亞洲 (+8.4%)。此決策的依據是美股相對於其他市場的估值已達極端水平。</p>
+                    
+                    <h3 class="chart-title mt-6">估值分析：美股 vs. 全球 (盈餘殖利率)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="usVsWorldExUsChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">美股(藍線)的盈餘殖利率持續低於全球(不含美)(綠線)，利差(紫色區域)接近歷史高點。</p>
+                        </div>
+                        <div>
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="usVsEmChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">新興市場(綠線)的盈餘殖利率顯著高於美國(藍線)，估值優勢明顯。</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="report-card">
+                            <h3 class="chart-title">MSCI ACWI vs 高股息 (YTD)</h3>
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="acwiVsHighDividendYtdChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 393px;" width="786"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：Bloomberg (2025/09/15)。年初以來，高股息(藍線)表現落後於大盤(綠線)。</p>
+                        </div>
+                        <div class="report-card">
+                            <h3 class="chart-title">MSCI ACWI vs 高股息 (自4月2日起)</h3>
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="acwiVsHighDividendSinceAprChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 393px;" width="786"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：Bloomberg (2025/09/15)。自4月以來，高股息(藍線)的防禦性使其表現相對穩定。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 主軸二 -->
+            <section class="mb-10">
+                <h2 class="section-title">觀點二：長天期債券浮現不對稱價值</h2>
+                
+                <div class="report-card">
+                    <h3 class="chart-title">跨資產實質殖利率 vs 中立水平</h3>
+                    <div class="chart-container" style="height: 500px;">
+                        <canvas id="crossAssetValuationsChart" height="1000" style="display: block; box-sizing: border-box; height: 500px; width: 910px;" width="1820"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">資料來源：Bloomberg (2025/10/01)。此圖表為報告核心。長條圖代表當前實質殖利率，灰色區域代表「中立/公允價值」區間。美股(US Equity)明顯低於中立區間（估值昂貴），而多數債券和新興市場股票則處於或高於中立區間（估值合理或便宜）。</p>
+                </div>
+
+                <div class="report-card">
+                    <p class="text-gray-700 mb-4">報告的第二個關鍵，是認為長天期債券（Long Dated Duration）的價值浮現。M&amp;G 指出，美國30年期公債殖利率若維持在 5% 水平，未來12個月殖利率每下降 1%（價格上漲），將帶來 +14.3% 的總回報；若殖利率不幸上漲 1%（價格下跌），損失則僅為 -14.1%。</p>
+                    <p class="text-gray-700 mb-4">然而，若殖利率下降至 2%，總回報將高達 +53.1%。這種「上檔有限、下檔豐厚」的特性，即為「不對稱報酬」，使長天期債券在當前成為極具吸引力的避險與潛在收益資產。</p>
+
+                    <h3 class="chart-title mt-6">美國30年期公債未來12個月回報情境</h3>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="ust30yScenarioChart" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 910px;" width="1820"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G, Bloomberg (2025/10/13)。此圖表顯示了不同殖利率情境下的預期總回報。</p>
+
+                    <div class="analyst-insight">
+                        <p><strong>客觀分析</strong>：「報告認為，在當前殖利率水平上，長天期債券的風險報酬已變得極具吸引力。它們不僅可以在經濟增長放緩時提供保護，同時也具備顯著的資本利得潛力。」</p>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <h3 class="chart-title">已開發市場30年期殖利率結構</h3>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="developedRealYieldsChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 910px;" width="1820"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G, LSEG Datastream (2025/05/31)。此圖顯示名目殖利率(紫線)由實質殖利率(藍色區域)和通膨預期(綠色區域)組成。近期實質殖利率(藍色)的大幅攀升是長債具吸引力的主因。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="report-card">
+                        <h3 class="chart-title">固定收益配置歷史</h3>
+                        <div class="chart-container" style="height: 350px;">
+                            <canvas id="fixedIncomeAllocationHistoryChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 418px;" width="836"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/06/18)。顯示基金在6月增加了通膨連結債券(Linkers)和德國公債的配置。</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="chart-title">存續期貢獻歷史</h3>
+                        <div class="chart-container" style="height: 350px;">
+                            <canvas id="durationContributionHistoryChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 418px;" width="836"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G (2025/06/18)。顯示基金的總存續期貢獻(Duration)隨著配置調整而變化。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 主軸三 -->
+            <section class="mb-10">
+                <h2 class="section-title">觀點三：新興市場債優於信用債</h2>
+                <div class="report-card">
+                    <p class="text-gray-700 mb-4">報告的第三個關鍵是，在尋求收益的資產中，新興市場本地債券（EM Local Debt）的吸引力遠高於已開發市場的信用債券（包括高收益債）。</p>
+                    
+                    <h3 class="font-semibold text-lg text-gray-800 mt-4">信用債的吸引力下降</h3>
+                    <p class="text-gray-700 mb-4">分析指出，美國和歐洲的高收益債券利差（Credit Spreads）已收窄至接近歷史低位（約 250-300 基點）。這意味著投資者承擔信用風險所能獲得的額外補償非常有限，信用債已變得相對昂貴。</p>
+
+                    <h3 class="font-semibold text-lg text-gray-800 mt-4">新興市場債的高實質殖利率</h3>
+                    <p class="text-gray-700 mb-4">相比之下，許多新興市場國家（如巴西、墨西哥、哥倫比亞）的本地債券殖利率仍處於高位，提供了遠高於其通膨率的「實質殖利率」。</p>
+                    <p class="text-gray-700 mb-4">此觀點強烈反映在基金配置上：該基金對信用債採取了 -14.3% 的大幅減持，同時對新興市場政府債券（EM Government Bonds）進行了 +8.2% 的大幅增持。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                        <div>
+                            <h3 class="chart-title">主要新興市場債券殖利率 (%)</h3>
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="emBondYieldsChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G, Bloomberg (2025/09/01)。巴西、哥倫比亞等國的殖利率維持在 10% 以上的高位。</p>
+                        </div>
+                        <div>
+                            <h3 class="chart-title">美歐高收益債利差 (基點)</h3>
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="creditSpreadsChart" height="700" style="display: block; box-sizing: border-box; height: 350px; width: 439px;" width="878"></canvas>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 text-center">資料來源：M&amp;G, Bloomberg。利差已收窄至 2021 年以來的低點，顯示信用債的風險補償不足。</p>
+                        </div>
+                    </div>
+
+                    <div class="analyst-insight">
+                        <p><strong>客觀分析</strong>：「報告的核心觀點是『新興市場本地債務比信用債更具吸引力』。高實質殖利率和相對便宜的貨幣，使新興市場債券成為一個具吸引力且能提供多元化的機會。」</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 結論與投資策略 -->
+            <section class="mb-10">
+                <h2 class="section-title">總結與策略觀察</h2>
+                <div class="report-card">
+                    <p class="text-lg text-gray-700 mb-6">
+                        總結而言，M&amp;G 投資公司的報告呈現了一個清晰的資產配置觀點：當前市場存在明顯的估值分歧。策略上應從昂貴的美國股票和信用債券，轉向具有不對稱價值和高實質殖利率的資產。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">對投資者的三點策略觀察</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg border border-blue-200">
+                            <strong class="text-blue-800">1. 債券策略：增持長天期公債與通膨連結債券</strong>
+                            <p class="text-gray-700">鑒於長天期債券（如美國30年期公債）的「不對稱報酬」特性，可視其為核心防禦配置。同時，報告也增加了美國和英國的通膨連結債券（ILB），以對沖潛在的通膨風險。</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-blue-200">
+                            <strong class="text-blue-800">2. 股票策略：減持美股，轉向非美（歐亞）市場</strong>
+                            <p class="text-gray-700">基於美國股票昂貴的估值判斷，策略上應降低美股權重。同時，增持估值合理、基本面穩健的歐洲和亞洲（特別是日本）股票，以實現全球多元化並捕捉相對價值。</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-blue-200">
+                            <strong class="text-blue-800">3. 收益策略：以新興市場債取代信用債</strong>
+                            <p class="text-gray-700">在信用利差極低、吸引力不足的環境下，應大幅減持信用債券。轉而配置於能提供高實質殖利率的新興市場本地債券（如巴西、墨西哥等），作為更優的收益來源。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 報告結尾 -->
+        <footer class="text-center mt-12 border-t border-gray-200 pt-8">
+            <div class="text-sm text-gray-600 mb-4">
+                <p><strong>免責聲明：</strong>本報告內容基於 M&amp;G 投資公司 2025年10月「Q3 Fund Update」報告進行彙整與圖表重製，僅為資訊分享，不構成任何投資建議。所有觀點均為原始報告之客觀呈現。投資有風險，請獨立判斷。</p>
+            </div>
+            <div class="text-xs text-gray-500">
+                <p>© 2025 客觀分析彙整 | 資料來源：M&amp;G Investments</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 下載按鈕 -->
+    <button onclick="downloadReport()" class="download-button" title="下載報告HTML">
+        📥
+    </button>
+
+    <!-- JavaScript 實現 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js 全局配置
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.font.family = '"Noto Sans TC", sans-serif';
+                Chart.defaults.color = '#343a40';
+                // 註冊 datalabels 插件
+                Chart.register(ChartDataLabels);
+                // 全局關閉 datalabels，僅在需要時開啟
+                Chart.defaults.plugins.datalabels.display = false;
+                Chart.defaults.plugins.datalabels.color = '#ffffff';
+                Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 10 };
+            }
+
+            // 安全創建圖表函數
+            function safeCreateChart(canvasId, config) {
+                try {
+                    const canvas = document.getElementById(canvasId);
+                    if (!canvas) {
+                        console.warn('找不到畫布:', canvasId); return;
+                    }
+                    const ctx = canvas.getContext('2d');
+                    // 銷毀可能已存在的圖表實例
+                    const existingChart = Chart.getChart(ctx);
+                    if (existingChart) {
+                        existingChart.destroy();
+                    }
+                    new Chart(ctx, config);
+                } catch (error) {
+                    console.error('創建圖表時出錯:', canvasId, error);
+                }
+            }
+            
+            // --- 圖表數據 (來自 PDF p19) ---
+            // 1. 美股 vs 全球(不含美)
+            safeCreateChart('usVsWorldExUsChart', {
+                type: 'line',
+                data: {
+                    labels: ['Sep-13', 'Sep-15', 'Sep-17', 'Sep-19', 'Sep-21', 'Sep-23', 'Sep-25'],
+                    datasets: [
+                        { label: '美國 (US)', data: [7.2, 6.0, 5.8, 5.0, 4.8, 5.0, 4.5], borderColor: '#0d6efd', tension: 0.3, fill: false },
+                        { label: '全球 (不含美)', data: [7.8, 7.0, 7.5, 7.0, 6.0, 7.5, 6.8], borderColor: '#198754', tension: 0.3, fill: false },
+                        { 
+                            label: '利差', 
+                            data: [-0.6, -1.0, -1.7, -2.0, -1.2, -2.5, -2.3], 
+                            backgroundColor: 'rgba(108, 117, 125, 0.2)', 
+                            borderColor: '#6c757d',
+                            fill: true,
+                            type: 'bar'
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { title: { display: true, text: '盈餘殖利率 (%)' } } }
+                }
+            });
+
+            // 2. 美股 vs 新興市場
+            safeCreateChart('usVsEmChart', {
+                type: 'line',
+                data: {
+                    labels: ['Sep-13', 'Sep-15', 'Sep-17', 'Sep-19', 'Sep-21', 'Sep-23', 'Sep-25'],
+                    datasets: [
+                        { label: '美國 (US)', data: [7.2, 6.0, 5.8, 5.0, 4.8, 5.0, 4.5], borderColor: '#0d6efd', tension: 0.3, fill: false },
+                        { label: '新興市場 (EM)', data: [10.0, 8.5, 8.0, 7.0, 7.5, 8.5, 7.2], borderColor: '#198754', tension: 0.3, fill: false },
+                        { 
+                            label: '利差', 
+                            data: [-2.8, -2.5, -2.2, -2.0, -2.7, -3.5, -2.7], 
+                            backgroundColor: 'rgba(108, 117, 125, 0.2)', 
+                            borderColor: '#6c757d',
+                            fill: true,
+                            type: 'bar'
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { title: { display: true, text: '盈餘殖利率 (%)' } } }
+                }
+            });
+            
+            // 3. 美國30年期公債情境分析 (來自 PDF p20)
+            safeCreateChart('ust30yScenarioChart', {
+                type: 'bar',
+                data: {
+                    labels: ['6% (+100bps)', '5% (Current)', '4% (-100bps)', '3% (-200bps)', '2% (-300bps)'],
+                    datasets: [{
+                        label: '12個月總回報 (%)',
+                        data: [-14.1, -1.0, 14.3, 32.2, 53.1],
+                        backgroundColor: (context) => context.parsed.y >= 0 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)',
+                        borderColor: (context) => context.parsed.y >= 0 ? '#10b981' : '#ef4444',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                            display: true,
+                            color: (context) => context.dataset.data[context.dataIndex] >= 0 ? '#064e3b' : '#991b1b',
+                            anchor: 'end',
+                            align: (context) => context.dataset.data[context.dataIndex] >= 0 ? 'right' : 'left',
+                            padding: { left: 5, right: 5 },
+                            formatter: (value) => value.toFixed(1) + '%',
+                            font: { size: 12 }
+                        }
+                    }
+                }
+            });
+
+            // 4. 新興市場債券殖利率 (來自 PDF p21)
+            safeCreateChart('emBondYieldsChart', {
+                type: 'line',
+                data: {
+                    labels: ['Jan-23', 'Apr-23', 'Jul-23', 'Oct-23', 'Jan-24', 'Apr-24', 'Jul-24', 'Oct-24', 'Jan-25', 'Apr-25', 'Jul-25'],
+                    datasets: [
+                        { label: '巴西', data: [13.2, 12.0, 10.5, 11.2, 10.5, 11.0, 11.8, 12.5, 15.0, 14.0, 14.0], borderColor: '#003f5c', tension: 0.3, fill: false },
+                        { label: '哥倫比亞', data: [13.0, 13.5, 12.0, 10.0, 9.8, 9.5, 11.0, 10.0, 11.5, 12.5, 11.5], borderColor: '#7a5195', tension: 0.3, fill: false },
+                        { label: '墨西哥', data: [8.8, 9.2, 10.2, 9.5, 9.0, 9.2, 10.0, 10.0, 9.5, 9.8, 9.0], borderColor: '#ef5675', tension: 0.3, fill: false },
+                        { label: '南非', data: [10.5, 11.5, 11.0, 12.5, 11.5, 12.2, 11.5, 10.5, 10.0, 11.0, 9.8], borderColor: '#ffa600', tension: 0.3, fill: false },
+                        { label: '印尼', data: [7.0, 6.8, 6.2, 6.8, 6.5, 7.0, 6.8, 7.2, 7.0, 7.0, 6.5], borderColor: '#0d6efd', tension: 0.3, fill: false }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { title: { display: true, text: '10年期公債殖利率 (%)' } } }
+                }
+            });
+
+            // 5. 信用利差 (來自 PDF p21)
+            safeCreateChart('creditSpreadsChart', {
+                type: 'line',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    datasets: [
+                        { label: '美國 HY', data: [320, 300, 480, 500, 420, 350, 300, 280, 300, 350, 280], borderColor: '#198754', tension: 0.4, fill: false, pointRadius: 0 },
+                        { label: '歐洲 HY', data: [350, 280, 500, 650, 500, 380, 320, 300, 320, 400, 300], borderColor: '#0d6efd', tension: 0.4, fill: false, pointRadius: 0 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { title: { display: true, text: '利差 (基點)' } } }
+                }
+            });
+
+            // 6. 年度回報率 (來自 PDF p9)
+            safeCreateChart('ytdReturnsChart', {
+                type: 'bar',
+                data: {
+                    labels: ['S&P 500', 'DAX', 'EuroStoxx Banks', 'TOPIX', 'KOSPI', 'HSCEI', 'US 5y TR', 'UK 7-10y Gilt', 'Global Corp', 'Global HY', 'EM USD Agg', 'Dollar Spot', 'Gold', 'Global 60/40'],
+                    datasets: [{
+                        label: 'YTD 回報 (%)',
+                        data: [15, 18, 20, 67, 15, 35, 4, -7, 9, 10, 7, -10, 47, 10],
+                        backgroundColor: (context) => context.parsed.y >= 0 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)',
+                        borderColor: (context) => context.parsed.y >= 0 ? '#10b981' : '#ef4444',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                            display: true,
+                            anchor: 'end',
+                            align: (context) => context.dataset.data[context.dataIndex] >= 0 ? 'top' : 'bottom',
+                            formatter: (value) => value + '%',
+                        }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: '回報 (%)' } }
+                    }
+                }
+            });
+
+            // 7. 資產類別配置 (來自 PDF p16)
+            safeCreateChart('assetAllocationChart', {
+                type: 'bar',
+                data: {
+                    labels: ['股票', '政府債券', '信用債', '現金'],
+                    datasets: [
+                        // Equities
+                        { label: '北美', data: [11.5, 0, 0, 0], backgroundColor: '#003f5c', stack: 'Equities' },
+                        { label: '已開發歐洲', data: [10.1, 0, 0, 0], backgroundColor: '#2f4b7c', stack: 'Equities' },
+                        { label: '已開發亞洲', data: [12.0, 0, 0, 0], backgroundColor: '#665191', stack: 'Equities' },
+                        { label: '新興亞洲', data: [2.0, 0, 0, 0], backgroundColor: '#a05195', stack: 'Equities' },
+                        { label: '英國', data: [2.6, 0, 0, 0], backgroundColor: '#d45087', stack: 'Equities' },
+                        { label: 'EMEA', data: [1.5, 0, 0, 0], backgroundColor: '#f95d6a', stack: 'Equities' },
+                        { label: '拉丁美洲', data: [1.1, 0, 0, 0], backgroundColor: '#ff7c43', stack: 'Equities' },
+                        // Govt
+                        { label: '核心債券', data: [0, 15.5, 0, 0], backgroundColor: '#00876c', stack: 'Govt' },
+                        { label: '長天期債券', data: [0, 9.3, 0, 0], backgroundColor: '#43a47c', stack: 'Govt' },
+                        { label: '新興市場本地債', data: [0, 17.5, 0, 0], backgroundColor: '#78c08e', stack: 'Govt' },
+                        // Credit
+                        { label: '投資等級 (IG)', data: [0, 0, 2.4, 0], backgroundColor: '#0089ba', stack: 'Credit' },
+                        { label: '高收益 (HY)', data: [0, 0, 1.4, 0], backgroundColor: '#5da0c8', stack: 'Credit' },
+                        // Cash
+                        { label: '現金', data: [0, 0, 0, 6.8], backgroundColor: '#ffa600', stack: 'Cash' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 9 } } },
+                        datalabels: { display: false } // 堆疊圖的標籤太雜亂，故關閉
+                    },
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, title: { display: true, text: '配置比例 (%)' } }
+                    }
+                }
+            });
+
+            // 8. 貨幣曝險 (來自 PDF p25)
+            safeCreateChart('currencyExposureChart', {
+                type: 'bar',
+                data: {
+                    labels: ['USD', 'BRL', 'ZAR', 'TRY', 'JPY', 'MXN', 'PEN', 'INR', 'Other', 'TWD', 'KRW'],
+                    datasets: [{
+                        label: '非歐元貨幣曝險 (%)',
+                        data: [5.1, 4.6, 3.5, 3.1, 3.1, 3.0, 2.8, 1.2, 0.8, 0.7, 0.6],
+                        backgroundColor: '#0d6efd'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                            display: true,
+                            color: '#343a40',
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value) => value + '%',
+                        }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: '曝險比例 (%)' } }
+                    }
+                }
+            });
+
+            // 9. Q3 資產回報 (來自 PDF p8)
+            safeCreateChart('q3ReturnsChart', {
+                type: 'bar',
+                data: {
+                    labels: ['S&P 500', 'DAX', 'EuroStoxx Banks', 'KOSPI', 'HSCEI', 'US 5y TR', 'Global Corp', 'Global HY', 'EM USD Agg', 'Gold', 'Global 60/40'],
+                    datasets: [{
+                        label: 'Q3 回報 (%)',
+                        data: [8, 8, 17, 12, 11, 1, 2, 3, 1, 17, 4],
+                         backgroundColor: (context) => context.parsed.y >= 0 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)',
+                         borderColor: (context) => context.parsed.y >= 0 ? '#10b981' : '#ef4444',
+                         borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        datalabels: {
+                            display: true,
+                            color: '#343a40',
+                            anchor: 'end',
+                            align: (context) => context.dataset.data[context.dataIndex] >= 0 ? 'top' : 'bottom',
+                            formatter: (value) => value + '%',
+                        }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: '回報 (%)' } }
+                    }
+                }
+            });
+
+            // 10. 基金Q3績效 (來自 PDF p10)
+            safeCreateChart('fundQ3PerformanceChart', {
+                type: 'line',
+                data: {
+                    // 簡化標籤以利閱讀
+                    labels: ['Jul 1', 'Jul 15', 'Aug 1', 'Aug 15', 'Sep 1', 'Sep 15', 'Sep 30'],
+                    datasets: [
+                        // 數據點基於圖表形狀估算
+                        { label: '基金 (TCB)', data: [0, -0.5, 0.2, 1.8, 1.5, 2.0, 3.1], borderColor: '#0d6efd', tension: 0.1, fill: false, pointRadius: 2 },
+                        { label: '基準 (50/50)', data: [0, 0.3, 0.8, 2.2, 2.0, 3.5, 4.2], borderColor: '#6c757d', tension: 0.1, fill: false, pointRadius: 2 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+                    scales: { y: { title: { display: true, text: '績效 (%)' } } }
+                }
+            });
+
+            // 11. 基金成立以來績效 (來自 PDF p11)
+            safeCreateChart('fundLaunchPerformanceChart', {
+                type: 'line',
+                data: {
+                    labels: ['Jul-24', 'Sep-24', 'Nov-24', 'Jan-25', 'Mar-25', 'May-25', 'Jul-25', 'Sep-25'],
+                    datasets: [
+                        { label: '基金 (TCB)', data: [0, 4.0, 2.5, 2.0, -1.0, 4.0, 9.0, 11.8], borderColor: '#0d6efd', tension: 0.3, fill: false, pointRadius: 2 },
+                        { label: '基準 (50/50)', data: [0, 3.5, 5.0, 5.0, 3.0, 6.0, 10.0, 13.8], borderColor: '#6c757d', tension: 0.3, fill: false, pointRadius: 2 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+                    scales: { y: { title: { display: true, text: '績效 (%)' } } }
+                }
+            });
+
+            // 12. 資產配置圓餅圖 (來自 PDF p14)
+            safeCreateChart('assetAllocationDonutChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['股票 (Equity)', '已開發市場債 (DM Bonds)', '新興市場本地債 (EM Local)', '信用債 (Credit)', '現金 (Cash)'],
+                    datasets: [{
+                        data: [45.5, 32.9, 14.0, 4.0, 3.6],
+                        backgroundColor: ['#003f5c', '#665191', '#a05195', '#f95d6a', '#ffa600']
+                    }]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { position: 'bottom' }, 
+                        datalabels: {
+                            display: true,
+                            formatter: (value) => value + '%',
+                            color: '#ffffff',
+                            font: { weight: 'bold', size: 12 }
+                        }
+                    }
+                }
+            });
+
+            // 13. 主動權重 (來自 PDF p13)
+            safeCreateChart('activeWeightChart', {
+                type: 'bar',
+                data: {
+                    labels: ['股票', '已開發公債', '新興公債', '信用債', '現金'],
+                    datasets: [
+                        { 
+                            label: '主動權重 (Active)', 
+                            data: [-8.9, 8.2, 8.2, -14.3, 6.7], // Active = Portfolio - Benchmark
+                            backgroundColor: (context) => context.parsed.y >= 0 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)',
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: { 
+                            display: true,
+                            color: '#343a40',
+                            formatter: (value) => value.toFixed(1) + '%',
+                            anchor: 'end',
+                            align: (context) => context.dataset.data[context.dataIndex] >= 0 ? 'top' : 'bottom',
+                        } 
+                    },
+                    scales: {
+                        y: { title: { display: true, text: '相對於基準的增減持 (%)' } }
+                    }
+                }
+            });
+
+            // 14. 跨資產估值 (來自 PDF p18) - 混合圖
+            safeCreateChart('crossAssetValuationsChart', {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Japan Cash', 'Euro Cash', 'US Cash', 'Japan 10Y', 'German 10Y', 'UK 10Y', 'US 10Y', 'India 10Y', 'Mexico 10Y', 'Brazil 10Y',
+                        'Euro BBB', 'UK BBB', 'US BBB', 'Japan Equity', 'UK Equity', 'US Equity', 'Italy Equity', 'Hong Kong Equity', 'India Equity', 'China Equity'
+                    ],
+                    datasets: [
+                        {
+                            label: '當前實質殖利率',
+                            data: [-0.5, 0.2, 1.2, 0.1, 0.5, 1.8, 2.0, 1.0, 4.8, 7.8, 1.5, 2.5, 2.5, 6.2, 6.0, 4.2, 7.2, 8.0, 7.0, 10.5],
+                            backgroundColor: (context) => {
+                                const label = context.chart.data.labels[context.dataIndex];
+                                if (label.includes('Cash')) return '#ffa600';
+                                if (label.includes('BBB')) return '#f95d6a';
+                                if (label.includes('Equity')) return '#003f5c';
+                                if (label.includes('10Y') || label.includes('Gilt')) return '#00876c';
+                                return '#6c757d';
+                            }
+                        },
+                        {
+                            label: '中立水平 (估計)',
+                            data: [1.8, 2.0, 2.2, 2.5, 3.0, 3.5, 3.8, 4.0, 4.5, 5.0, 4.0, 4.2, 4.5, 6.0, 6.2, 6.5, 7.0, 7.5, 8.0, 9.0],
+                            type: 'line',
+                            borderColor: '#4a5568',
+                            backgroundColor: 'rgba(74, 85, 104, 0.2)',
+                            fill: true,
+                            pointRadius: 0,
+                            tension: 0.3,
+                            datalabels: { display: false } // 線圖不需要標籤
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { position: 'top' }, 
+                        datalabels: { 
+                            display: true,
+                            color: '#343a40',
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value) => value.toFixed(1),
+                            font: { size: 8 }
+                        } 
+                    },
+                    scales: {
+                        y: { title: { display: true, text: '實質殖利率 (%)' } }
+                    }
+                }
+            });
+
+            // 15 & 16. ACWI vs High Dividend (來自 PDF p26)
+            safeCreateChart('acwiVsHighDividendYtdChart', {
+                type: 'line',
+                data: {
+                    labels: ['Jan-25', 'Feb-25', 'Mar-25', 'Apr-25', 'May-25', 'Jun-25', 'Jul-25', 'Aug-25', 'Sep-25'],
+                    datasets: [
+                        { label: 'MSCI ACWI', data: [100, 104, 102, 88, 95, 102, 110, 108, 112], borderColor: '#10b981', tension: 0.3, fill: false, pointRadius: 2 },
+                        { label: 'MSCI ACWI High Dividend', data: [100, 102, 106, 102, 104, 105, 108, 112, 113], borderColor: '#3b82f6', tension: 0.3, fill: false, pointRadius: 2 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+                    scales: { y: { title: { display: true, text: '績效 (基期=100)' } } }
+                }
+            });
+            safeCreateChart('acwiVsHighDividendSinceAprChart', {
+                type: 'line',
+                data: {
+                    labels: ['Apr-25', 'May-25', 'Jun-25', 'Jul-25', 'Aug-25', 'Sep-25'],
+                    datasets: [
+                        { label: 'MSCI ACWI', data: [90, 98, 105, 108, 110, 116], borderColor: '#10b981', tension: 0.3, fill: false, pointRadius: 2 },
+                        { label: 'MSCI ACWI High Dividend', data: [100, 101, 105, 103, 106, 108], borderColor: '#3b82f6', tension: 0.3, fill: false, pointRadius: 2 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+                    scales: { y: { title: { display: true, text: '績效 (基期=100)' } } }
+                }
+            });
+
+            // 17. 已開發市場實質殖利率 (來自 PDF p27)
+            safeCreateChart('developedRealYieldsChart', {
+                type: 'line', // Stacked Area
+                data: {
+                    labels: ['Jun-05', 'Jun-08', 'Jun-11', 'Jun-14', 'Jun-17', 'Jun-20', 'Jun-23', 'Dec-24'],
+                    datasets: [
+                        { 
+                            label: '實質殖利率', 
+                            data: [2.0, 2.5, 0.8, 1.0, 0.5, -1.0, 1.5, 2.2], 
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)', 
+                            borderColor: '#3b82f6',
+                            fill: true, 
+                            tension: 0.3 
+                        },
+                        { 
+                            label: '通膨預期', 
+                            data: [2.2, 2.0, 2.2, 2.3, 1.8, 1.8, 2.2, 2.3], 
+                            backgroundColor: 'rgba(16, 185, 129, 0.5)', 
+                            borderColor: '#10b981',
+                            fill: true, 
+                            tension: 0.3 
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+                    scales: { 
+                        x: {}, 
+                        y: { stacked: true, title: { display: true, text: '殖利率 (%)' } }
+                    }
+                }
+            });
+
+            // 18. 債券配置歷史 (來自 PDF p27)
+            safeCreateChart('fixedIncomeAllocationHistoryChart', {
+                type: 'bar',
+                data: {
+                    labels: ['09-Apr-25', '22-Apr-25', '18-Jun-25'],
+                    datasets: [
+                        { label: 'US 5-10y', data: [20, 10, 7], backgroundColor: '#003f5c' },
+                        { label: 'US 25-30y', data: [6, 0, 0], backgroundColor: '#444e86' },
+                        { label: 'US 30y Linker', data: [0, 10, 10], backgroundColor: '#955196' },
+                        { label: 'UK 30y+', data: [17, 10, 0], backgroundColor: '#dd5182' },
+                        { label: 'Ex-US 30y Linkers', data: [0, 0, 5], backgroundColor: '#ff6e54' },
+                        { label: 'GER 25-30y', data: [0, 0, 10], backgroundColor: '#ffa600' },
+                        { label: 'EM Govt Bonds', data: [5, 20, 18], backgroundColor: '#a05195' },
+                        { label: 'Credit', data: [3, 3, 3], backgroundColor: '#6c757d' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 9 } } },
+                        datalabels: { display: false }
+                    },
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, title: { display: true, text: '配置比例 (%)' } }
+                    }
+                }
+            });
+
+            // 19. 存續期貢獻歷史 (來自 PDF p27)
+            safeCreateChart('durationContributionHistoryChart', {
+                type: 'bar',
+                data: {
+                    labels: ['09-Apr-25', '22-Apr-25', '18-Jun-25'],
+                    datasets: [
+                        { label: 'US 5-10y', data: [1.2, 0.6, 0.4], backgroundColor: '#003f5c' },
+                        { label: 'US 25-30y', data: [1.0, 0, 0], backgroundColor: '#444e86' },
+                        { label: 'US 30y Linker', data: [0, 1.0, 1.0], backgroundColor: '#955196' },
+                        { label: 'UK 30y+', data: [1.8, 1.0, 0], backgroundColor: '#dd5182' },
+                        { label: 'Ex-US 30y Linkers', data: [0, 0, 0.5], backgroundColor: '#ff6e54' },
+                        { label: 'GER 25-30y', data: [0, 0, 1.0], backgroundColor: '#ffa600' },
+                        { label: 'EM Govt Bonds', data: [0.3, 1.2, 1.0], backgroundColor: '#a05195' },
+                        { label: 'Credit', data: [0.1, 0.1, 0.1], backgroundColor: '#6c757d' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false }, // 標籤同上，可省略
+                        datalabels: { display: false }
+                    },
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, title: { display: true, text: '存續期 (年)' } }
+                    }
+                }
+            });
+
+        });
+
+        // 下載功能
+        function downloadReport() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const fileName = `${year}${month}${day}_brokers_report_new_layout.html`;
+
+            // 獲取當前頁面的完整HTML內容
+            const content = document.documentElement.outerHTML;
+            const file = new Blob([content], {type: 'text/html;charset=utf-8'});
+            
+            const element = document.createElement('a');
+            element.href = URL.createObjectURL(file);
+            element.download = fileName;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            URL.revokeObjectURL(element.href);
+        }
+    </script>
+
+
+
+
+</body></html>
