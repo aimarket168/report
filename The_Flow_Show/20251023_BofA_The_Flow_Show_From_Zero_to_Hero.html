@@ -1,0 +1,765 @@
+<html lang="zh-Hant"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BofA資金流向報告_從零到英雄的市場轉變</title>
+    <script src="https://cdn.tailwindcss.com"></script><style>body { margin: 0; }</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FDFBF7;
+            color: #3C3633;
+        }
+        .card-shadow {
+             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        h2.story-title {
+            text-align: center;
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            font-weight: 700;
+            color: #655A4E;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #C8B6A6;
+            padding-bottom: 1rem;
+        }
+        h3 {
+            border-bottom: 2px solid #EAE0D5;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #8D7B68;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin: 1.5rem auto;
+        }
+        .gauge-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            height: 175px;
+            margin-bottom: 1rem;
+        }
+        .pulse-item {
+            background-color: #F9F6F2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #C8B6A6;
+        }
+        .emphasis {
+            background-color: #FFF8E1;
+            padding: 1rem;
+            border-left: 4px solid #FFC107;
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+        }
+        .download-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-12{margin-top:3rem}.mt-2{margin-top:0.5rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.grid{display:grid}.h-6{height:1.5rem}.h-80{height:20rem}.h-96{height:24rem}.w-6{width:1.5rem}.max-w-7xl{max-width:80rem}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.gap-8{gap:2rem}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.bg-\[\#655A4E\]{--tw-bg-opacity:1;background-color:rgb(101 90 78 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-3{padding:0.75rem}.p-4{padding:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.text-\[\#655A4E\]{--tw-text-opacity:1;color:rgb(101 90 78 / var(--tw-text-opacity, 1))}.text-\[\#8D7B68\]{--tw-text-opacity:1;color:rgb(141 123 104 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-\[\#8D7B68\]:hover{--tw-bg-opacity:1;background-color:rgb(141 123 104 / var(--tw-bg-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-\[\#655A4E\]:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(101 90 78 / var(--tw-ring-opacity, 1))}.focus\:ring-offset-2:focus{--tw-ring-offset-width:2px}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:p-8{padding:2rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}</style></head>
+<body class="text-gray-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#655A4E]">從零到英雄的市場轉變</h1>
+            <p class="text-lg text-[#8D7B68]">BofA資金流向深度分析報告</p>
+        </header>
+
+        <main>
+            <section class="mb-12">
+                <h2 class="story-title">序章：市場的脈動，三分鐘速覽</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    本週的市場呈現出一種罕見的「從零到英雄」轉變，黃金以56.2%的年度報酬率領先各大資產類別，而股市也表現強勁，報酬率達19.7%。這種轉變背後是全球央行在過去24個月內實施了312次降息，與金融危機後24個月內的313次降息幾乎持平，但這一次的背景是美國名目GDP成長了11%，而非金融危機時的下降2.5%。這種異常的貨幣政策環境正在重塑全球資產配置格局。
+                </p>
+                <div class="space-y-4">
+                     <div class="pulse-item">
+                        <p class="font-bold">市場的熱議話題 (Zeitgeist):</p>
+                        <p class="italic text-gray-700">「10年期美國公債殖利率自美國政府關門開始以來下降了20個基點，也許這是英國人和法國人可以嘗試的方法？」</p>
+                        <p class="text-gray-600 text-sm mt-1">解讀：市場觀察人士注意到政府財政狀況與債券市場表現之間的微妙關係，暗示傳統的財政-貨幣政策關係正在發生變化。</p>
+                    </div>
+                    <div class="pulse-item">
+                        <p class="font-bold">數據背後的故事 (Tale of the Tape):</p>
+                        <p class="text-gray-700">過去4個月的黃金流入超過了此前14年的總流入量！這種資金湧入的規模和速度顯示市場對貨幣貶值的擔憂正在加劇。與此同時，10年期公債殖利率低於4%，美國政府在9月份實現了預算盈餘，美元未能跌破4月低點（DXY指數98）。</p>
+                    </div>
+                    <div class="pulse-item">
+                        <p class="font-bold">價格，最誠實的指標 (The Price is Right):</p>
+                        <p class="text-gray-700">自7月簽署《One Big Beautiful Bill》以來，零息公債（ZROZ）的報酬率與納斯達克指數持平（均為10.7%），超過了標普500指數（8.5%）。如果9月CPI為3%且殖利率繼續走低，債券市場的空頭可能會投降。</p>
+                    </div>
+                    <div class="pulse-item">
+                        <p class="font-bold">真正的大趨勢 (The Biggest Picture):</p>
+                        <p class="text-gray-700">過去24個月全球312次降息與美國名目GDP成長11%並存，這種組合在歷史上極為罕見。這解釋了為什麼全球市場正為繁榮、泡沫和貨幣貶值做好準備。投資人正在重新評估傳統的經濟周期理論，並尋找新的投資框架。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="story-title">第一章：極度貪婪下的資金流向</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    本週的資金流向顯示出強烈的風險偏好，但同時也存在明顯的分歧。現金流入236億美元，債券流入172億美元，股票流入142億美元，黃金流入87億美元（創歷史新高），而加密貨幣則出現3億美元流出（10週來首次流出）。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-96"><canvas id="ytdReturnsChart" width="1062" height="768" style="display: block; box-sizing: border-box; height: 384px; width: 531px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow text-center">
+                         <div class="gauge-chart-container"><canvas id="bullBearIndicator" width="700" height="350" style="display: block; box-sizing: border-box; height: 175px; width: 350px;"></canvas></div>
+                         <p class="text-base text-left text-gray-600 leading-relaxed">本週牛熊指標從6.4降至<strong>6.2</strong>。這主要是由於全球股指廣度減弱、高收益債券和新興市場股票資金流出，以及信貸技術指標惡化所致。儘管有所降溫，但指標仍然處於相對高的貪婪區間。</p>
+                    </div>
+                </div>
+
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    年度至今的資金流向數據更為驚人：現金年化流入1.1兆美元，為歷史第二高；黃金年化流入1080億美元，創歷史新高；投資級債券年化流入4150億美元，創歷史新高；股票年化流入6930億美元，為歷史第三高；科技股年化流入550億美元，為歷史第三高（過去5週流入240億美元）；能源股迎來自2023年10月以來的最大流入（11億美元）。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="weeklyFlowsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="techFlowsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="goldFlowsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="hyFlowsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                </div>
+                
+                <div class="emphasis">
+                    <p class="text-lg font-semibold">
+                        黃金的異常流入特別值得關注：過去4個月的黃金流入（500億美元）超過了此前14年的總流入量。這種資金湧入的規模和速度顯示市場對貨幣貶值的擔憂正在加劇。從結構上看，黃金在投資組合中的配置仍然偏低——僅佔BofA私人客戶AUM的0.5%，機構AUM的2.4%（根據BofA 10月全球FMS數據）。
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="story-title">第二章：債券市場的轉折點</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    債券市場正處於一個關鍵的轉折點。根據BofA 10月全球FMS，機構投資人對債券的減碼程度達到2022年10月以來最高，大多數FMS投資人預測債券殖利率將上升（這是自2022年6月以來的最高比例）。與此同時，私人客戶持有700億美元的國庫券和700億美元的公債，而對科技七巨頭的投資高達7000億美元。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="bondPositioningChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="globalRateCutsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    儘管市場普遍看空債券，但BofA認為債券殖利率正處於周期性下降通道。他們預計美國5年期公債殖利率將跌破3%，30年期公債殖利率將跌破4%。這一預測基於三個關鍵因素：聯準會降息、AI對就業市場的潛在負面影響，以及政府對能源、製藥、住房和公用事業等行業的更多干預以控制CPI。
+                </p>
+                
+                <div class="emphasis">
+                    <p class="text-lg font-semibold">
+                        BofA指出，在經歷了過去5年的殘酷熊市後（2020年12月全球負殖利率債券價值達到18兆美元的峰值，這是"最後一個泡沫"），債券殖利率正進入周期性下降通道。零息債券是對沖信貸危機的最佳工具，特別是在當前市場環境下。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg card-shadow">
+                    <div class="chart-container h-80"><canvas id="negativeYieldingDebtChart" width="2252" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 1126px;"></canvas></div>
+                </div>
+            </section>
+            
+            <section class="mb-12">
+                <h2 class="story-title">第三章：新興市場的關鍵時刻</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    10月份的收盤對新興市場至關重要。如果MSCI新興市場指數突破1400點創下歷史新高，將確認全球風險資產和股市的牛市。市場普遍預期美中貿易協議將在下週達成，考慮到中國已成功將出口重新定位遠離美國，並且中國擁有稀土槓桿優勢（對美國出口年度至今下降26%，至2020年以來最低水平），這一協議對中國和美國同樣有利。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="emEquityChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container h-80"><canvas id="chinaExportsChart" width="1062" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 531px;"></canvas></div>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    然而，如果新興市場未能突破，將對美元看跌和全球流動性過剩的樂觀情緒提出質疑，並可能標誌著自4月關稅低點以來的風險反彈結束。新興市場正處於十字路口，其表現將為全球風險偏好提供重要信號。
+                </p>
+                
+                <div class="emphasis">
+                    <p class="text-lg font-semibold">
+                        中國對美國的稀土出口年度至今下降26%，顯示中國在關鍵資源領域的戰略優勢。同時，中國對世界其他地區的出口持續成長，表明其成功實現了貿易多元化。這種轉變對全球供應鏈和地緣政治格局具有深遠影響。
+                    </p>
+                </div>
+            </section>
+            
+            <section class="mb-12">
+                <h2 class="story-title">第四章：富裕階層的動向：BofA私人客戶數據解析</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    BofA私人客戶管理著高達4.2兆美元的資產，他們的行為模式為市場提供了重要信號。目前，私人客戶持有2.7兆美元股票，其中科技七巨頭佔7000億美元，國際股票1500億美元，國庫券和債券1500億美元，黃金240億美元。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container" style="height: 250px;"><canvas id="privateClientEquityChart" width="665" height="500" style="display: block; box-sizing: border-box; height: 250px; width: 332.7px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container" style="height: 250px;"><canvas id="privateClientDebtChart" width="665" height="500" style="display: block; box-sizing: border-box; height: 250px; width: 332.7px;"></canvas></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg card-shadow">
+                        <div class="chart-container" style="height: 250px;"><canvas id="privateClientCashChart" width="665" height="500" style="display: block; box-sizing: border-box; height: 250px; width: 332.7px;"></canvas></div>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    過去4週，BofA私人客戶的ETF流向顯示出明顯的防禦性傾向：他們正在買入投資級債券、高收益債券和新興市場債券ETF，同時賣出成長股、公用事業和醫療保健ETF。這種配置調整表明，儘管市場整體情緒樂觀，但高淨值投資人正在為潛在的市場波動做準備。
+                </p>
+                
+                <div class="bg-white p-4 rounded-lg card-shadow">
+                    <div class="chart-container" style="height: 600px;"><canvas id="privateClientFlowsChart" width="2252" height="1200" style="display: block; box-sizing: border-box; height: 600px; width: 1126px;"></canvas></div>
+                </div>
+                
+                <div class="emphasis">
+                    <p class="text-lg font-semibold">
+                        值得注意的是，自2020年以來，私人客戶對公債票據的累計流入為450億美元，對國庫券的累計流入為410億美元。這種相對平衡的配置顯示，私人客戶在追求收益的同時，也注重流動性和安全性。
+                    </p>
+                </div>
+            </section>
+            
+            <!-- 私人客戶資產配置變化圖表 -->
+            <section class="mb-12">
+                <h2 class="story-title">第五章：私人客戶資產配置的歷史演變</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    回顧過去20年私人客戶的資產配置變化，我們可以看到明顯的趨勢轉變。從2000年到2025年，私人客戶對股票的配置從40%增加到65%，而對債券的配置則從40%下降到18%。這種轉變反映了長期低利率環境下投資人對收益的追求，以及對風險資產的偏好增強。
+                </p>
+                
+                <div class="bg-white p-4 rounded-lg card-shadow">
+                    <div class="chart-container h-80"><canvas id="assetAllocationQuilt" width="2252" height="640" style="display: block; box-sizing: border-box; height: 320px; width: 1126px;"></canvas></div>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mt-6">
+                    特別值得注意的是，現金配置在金融危機期間達到高點後持續下降，目前處於相對低位。另類資產的配置則相對穩定，顯示私人客戶在追求收益的同時，也透過多元化來管理風險。這種配置變化反映了私人客戶對長期市場趨勢的判斷，以及對不同資產類別風險報酬特性的理解。
+                </p>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="story-title" style="margin-top: 5rem;">最終章：當前市場的投資佈局建議</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    在這樣一個充滿矛盾的市場中，單純追漲或看空都存在巨大風險。BofA在報告中給出了三大方向的策略建議，核心思想是在順應趨勢的同時，為潛在的「黑天鵝」做好準備。
+                </p>
+                
+                <h3>1. 做多黃金 (Long Gold)</h3>
+                <p class="text-gray-700 mb-4">儘管「做多黃金」已是市場最擁擠的交易，短期內面臨獲利了結壓力，但BofA仍然建議持有黃金作為對沖工具。理由包括：對沖美國經濟繁榮、AI泡沫風險、美元貶值風險，以及聯準會看跌期權、川普看跌期權和新生代Z看跌期權可能帶來的更多資產價格通膨。從結構上看，黃金在投資組合中的配置仍然偏低，長期仍有上漲空間。</p>
+
+                <h3>2. 做多債券 (Long Bonds)</h3>
+                <p class="text-gray-700 mb-4">儘管基金經理們正在減碼債券，但BofA認為這是一個逆向機會。他們預計30年期美債殖利率將跌破4%。理由包括：信貸市場的裂縫將迫使聯準會更激進地降息、AI對勞動力和企業成本的長期通縮效應，以及零息債券是對沖信貸危機的最佳工具。</p>
+
+                <h3>3. 謹慎看待新興市場 (Cautious on EM)</h3>
+                <p class="text-gray-700 mb-4">新興市場正處於關鍵時刻，如果美中貿易協議達成且MSCI新興市場指數突破1400點，將確認全球風險資產的牛市。然而，如果突破失敗，將對全球風險偏好造成打擊。投資人應密切關注這一關鍵技術水平，並做好雙向準備。</p>
+            </section>
+            
+            <section>
+                <h2 class="story-title">結語</h2>
+                <div class="mt-8 space-y-4">
+                    <div class="pulse-item text-center">
+                        <p class="text-lg font-semibold text-gray-800 italic">"In the midst of chaos, there is also opportunity."</p>
+                        <p class="text-sm text-gray-600 mt-2">「在混沌之中，亦存機遇。」 - 孫子</p>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-700 leading-relaxed mt-6">
+                    當前的市場環境充滿矛盾與不確定性：一方面，全球央行大規模降息刺激了資產價格上漲；另一方面，經濟基本面與政策環境的背離創造了歷史罕見的投資環境。在這種情況下，投資人既不能盲目樂觀，也不應過度悲觀，而是應該保持靈活性，在順應趨勢的同時為潛在的風險做好準備。黃金、債券和精選的新興市場機會可能是當前環境下的最佳選擇，但投資人必須根據自身的風險承受能力和投資目標做出適當的資產配置決策。
+                </p>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12 text-xs text-gray-500">
+            <p>免責聲明：本報告內容僅為基於公開訊息的市場分析，不構成任何投資建議。投資有風險，入市需謹慎。</p>
+        </footer>
+    </div>
+    
+    
+
+<script>
+// Encapsulate all chart logic in a function to ensure it runs after DOM is loaded.
+function renderCharts() {
+    try {
+        Chart.register(ChartDataLabels);
+        Chart.defaults.font.family = "'Noto Sans TC', sans-serif";
+        Chart.defaults.color = '#655A4E';
+
+        // Helper function to safely create charts
+        const createChart = (elementId, config) => {
+            const ctx = document.getElementById(elementId);
+            if (ctx) {
+                const existingChart = Chart.getChart(ctx);
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+                new Chart(ctx, config);
+            } else {
+                console.warn(`Canvas element with id '${elementId}' not found.`);
+            }
+        };
+        
+        // Bull & Bear Indicator
+        const gaugeNeedle = {
+            id: 'gaugeNeedle',
+            afterDraw(chart) {
+                const { ctx, data, chartArea: { left, width, top, height} } = chart;
+                ctx.save();
+                const needleValue = 6.2; 
+                const dataTotal = 10; 
+                const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
+                const cx = width / 2;
+                const cy = height + top;
+                ctx.fillStyle = '#F57C00';
+                ctx.font = 'bold 40px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(needleValue, cx + left, cy - (height * 0.35));
+                ctx.translate(cx + left, cy);
+                ctx.rotate(angle);
+                ctx.beginPath();
+                ctx.moveTo(0, -5);
+                ctx.lineTo(height, 0); 
+                ctx.lineTo(0, 5);
+                ctx.fillStyle = 'rgba(101, 90, 78, 0.5)';
+                ctx.fill();
+                ctx.rotate(-angle);
+                ctx.beginPath();
+                ctx.arc(0, 0, 8, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(101, 90, 78, 0.5)';
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            }
+        };
+
+        createChart('bullBearIndicator', {
+            type: 'doughnut',
+            data: {
+                labels: ['Buy', 'Neutral', 'Sell'],
+                datasets: [{ data: [2, 6, 2], backgroundColor: ['#4CAF50', '#FFC107', '#F44336'], borderWidth: 0 }]
+            },
+            options: {
+                circumference: 180, rotation: 270, responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    tooltip: { enabled: false },
+                    title: { display: true, text: '牛熊指標', position: 'top', align: 'center', font: { size: 16, weight: 'bold' }, color: '#655A4E' },
+                    datalabels: { display: false },
+                    legend: { display: false }
+                },
+                cutout: '70%',
+            },
+            plugins: [gaugeNeedle]
+        });
+
+        // YTD Returns Chart
+        const ytdData = { '黃金': 56.2, '股票': 19.7, '比特幣': 16.9, '投資級債': 10.3, '高收益債': 9.3, '政府公債': 7.3, '大宗商品': 6.6, '現金': 3.5, '美元': -8.8, '石油': -13.8 };
+        createChart('ytdReturnsChart', {
+            type: 'bar',
+            data: {
+                labels: Object.keys(ytdData),
+                datasets: [{
+                    label: '年度至今報酬率 (%)',
+                    data: Object.values(ytdData),
+                    backgroundColor: Object.values(ytdData).map(v => v >= 0 ? 'rgba(102, 187, 106, 0.7)' : 'rgba(239, 83, 80, 0.7)'),
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false }, 
+                    title: { display: true, text: '年度至今各大類資產報酬排行', font: {size: 16}},
+                    datalabels: { anchor: 'end', align: 'end', formatter: (value) => value + '%', font: { weight: 'bold' } }
+                },
+                scales: { 
+                    x: { ticks: { display: true, maxRotation: 90, minRotation: 90 } },
+                    y: { ticks: { callback: (value) => value + '%' } } 
+                }
+            }
+        });
+        
+        // Weekly Flows Chart
+        const weeklyFlowsData = { '現金': 23.6, '債券': 17.2, '股票': 14.2, '黃金': 8.7, '加密貨幣': -0.3 };
+        createChart('weeklyFlowsChart', {
+            type: 'bar',
+            data: {
+                labels: Object.keys(weeklyFlowsData),
+                datasets: [{
+                    label: '單週資金流 (十億美元)',
+                    data: Object.values(weeklyFlowsData),
+                    backgroundColor: Object.values(weeklyFlowsData).map(v => v >= 0 ? 'rgba(66, 165, 245, 0.7)' : 'rgba(239, 83, 80, 0.7)'),
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false }, 
+                    title: { display: true, text: '本週主要資產資金流向 (十億美元)', font: { size: 16 } },
+                    datalabels: { anchor: 'end', align: 'end', formatter: (value) => '$' + value + 'bn', font: { weight: 'bold' } }
+                },
+                scales: { 
+                    x: { grid: { display: false } },
+                    y: { ticks: { display: false } }
+                }
+            }
+        });
+        
+        // Tech Flows Chart
+        createChart('techFlowsChart', {
+            type: 'bar',
+             data: {
+                labels: ['前8週', '前6週', '前4週', '前2週', '本週'],
+                datasets: [{
+                    label: '科技股資金流 (十億美元)',
+                    data: [2.1, 3.5, 4.8, 6.2, 3.5],
+                    backgroundColor: 'rgba(66, 165, 245, 0.7)',
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: '科技股資金持續流入', font: {size: 16}},
+                    datalabels: { anchor: 'end', align: 'end', formatter: (value) => '$' + value + 'bn' }
+                }
+            }
+        });
+        
+        // Gold Flows Chart
+        createChart('goldFlowsChart', {
+            type: 'line',
+            data: {
+                labels: ['Wk1', 'Wk2', 'Wk3', 'Wk4', 'Wk5', 'Wk6', 'Wk7', 'Wk8', 'Wk9', 'Wk10', 'Wk11'],
+                datasets: [{
+                    label: '黃金資金流 (十億美元)',
+                    data: [2.1, 1.5, 3.2, 2.8, 4.1, 3.5, 5.2, 7.3, 7.8, 4.5, 8.7],
+                    borderColor: '#FFC107',
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: '黃金連續11週資金流入，本週創歷史新高', font: {size: 16}},
+                    datalabels: { display: false }
+                }
+            }
+        });
+
+        // High Yield Flows Chart
+        createChart('hyFlowsChart', {
+            type: 'bar',
+            data: {
+                labels: ['前4週', '前3週', '前2週', '本週'],
+                datasets: [{
+                    label: '高收益債資金流 (十億美元)',
+                    data: [2.1, 1.8, 0.5, -3.0],
+                    backgroundColor: (context) => context.dataset.data[context.dataIndex] >= 0 ? 'rgba(66, 165, 245, 0.7)' : 'rgba(239, 83, 80, 0.7)',
+                }]
+            },
+             options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: '高收益債券連續2週流出', font: {size: 16}},
+                    datalabels: { anchor: 'end', align: 'end', formatter: (value) => '$' + value + 'bn' }
+                }
+            }
+        });
+        
+        // Bond Positioning Chart
+        createChart('bondPositioningChart', {
+            type: 'bar',
+            data: {
+                labels: ['2022年10月', '2023年4月', '2023年10月', '2024年4月', '2024年10月', '2025年10月'],
+                datasets: [{
+                    label: '機構投資人債券減碼程度',
+                    data: [25, 18, 15, 12, 8, 5],
+                    backgroundColor: 'rgba(0, 0, 139, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: {display: false},
+                    title: {display: true, text: '機構投資人債券減碼程度創近三年新低', font: {size: 16}},
+                    datalabels: {anchor: 'end', align: 'top', formatter: (value) => value + '%'}
+                }
+            }
+        });
+        
+        // Global Rate Cuts Chart
+        createChart('globalRateCutsChart', {
+            type: 'bar',
+            data: {
+                labels: ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025*', '2026*'],
+                datasets: [{
+                    label: '全球央行年度降息次數',
+                    data: [50, 92, 205, 44, 44, 108, 89, 65, 95, 78, 70, 35, 92, 162, 13, 13, 73, 164, 155, 81],
+                    backgroundColor: 'rgba(139, 0, 0, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: {display: false},
+                    title: {display: true, text: '全球央行降息次數：2025年預計155次，2026年預計81次', font: {size: 16}},
+                    datalabels: {display: false}
+                }
+            }
+        });
+        
+        // Negative Yielding Debt Chart
+        createChart('negativeYieldingDebtChart', {
+            type: 'line',
+            data: {
+                labels: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: '全球負殖利率債券規模 (兆美元)',
+                    data: [0, 0, 2, 5, 7, 9, 12, 18, 16, 8, 4, 1, 0.028, 0],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: '全球負殖利率債券規模從2020年18兆美元峰值暴跌', font: {size: 16}},
+                    datalabels: { display: false }
+                }
+            }
+        });
+        
+        // EM Equity Chart
+        createChart('emEquityChart', {
+            type: 'line',
+            data: {
+                labels: ['2000', '2002', '2004', '2006', '2008', '2010', '2012', '2014', '2016', '2018', '2020', '2022', '2024', '2025'],
+                datasets: [{
+                    label: 'MSCI新興市場指數',
+                    data: [200, 350, 550, 800, 450, 850, 900, 950, 800, 950, 1100, 900, 1350, 1380],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'MSCI新興市場指數接近歷史高點', font: {size: 16}},
+                    datalabels: { display: false }
+                }
+            }
+        });
+        
+        // China Exports Chart
+        createChart('chinaExportsChart', {
+            type: 'bar',
+            data: {
+                labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025*'],
+                datasets: [
+                    {
+                        label: '中國對美國稀土出口 (公噸)',
+                        data: [7308, 7446, 5522, 6341, 6657, 4924, 4593],
+                        backgroundColor: 'rgba(239, 83, 80, 0.7)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '中國對美國稀土出口年度至今下降26%', font: {size: 16}},
+                    datalabels: { formatter: (value) => value }
+                }
+            }
+        });
+
+        // Private Client Flows Chart
+        createChart('privateClientFlowsChart', {
+            type: 'bar',
+            data: {
+                labels: ['投資級債券', '高收益債券', '新興市場債券', '市政債券', '國庫券/債券', 'TIPS', '黃金', '成長股', '公用事業', '醫療保健'],
+                datasets: [{
+                    label: '四周累計資金流 (% AUM)',
+                    data: [3.5, 3.2, 2.8, 2.2, 2.0, 1.5, 1.2, -2.5, -2.8, -3.0],
+                    backgroundColor: (context) => context.raw >= 0 ? 'rgba(66, 165, 245, 0.7)' : 'rgba(239, 83, 80, 0.7)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { 
+                        display: true,
+                        text: 'BofA 私人客戶近4週ETF資金流向 (% AUM)',
+                        font: { size: 16 }
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (value) => value.toFixed(1) + '%',
+                        color: (context) => context.dataset.data[context.dataIndex] >=0 ? '#1E88E5' : '#D32F2F',
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            display: true,
+                            maxRotation: 90,
+                            minRotation: 90
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            callback: (value) => value + '%'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Private Client Allocation Charts
+        const allocationLabels = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+        
+        createChart('privateClientEquityChart', {
+            type: 'line',
+            data: {
+                labels: allocationLabels,
+                datasets: [{ label: '股票配置比例', data: [63, 60, 62, 58, 62, 66, 68, 61, 58, 62, 65], borderColor: '#3b82f6', tension: 0.1 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: true, text: '股票配置比例 (% AUM)' } }
+            }
+        });
+
+        createChart('privateClientDebtChart', {
+            type: 'line',
+            data: {
+                labels: allocationLabels,
+                datasets: [{ label: '債券配置比例', data: [25, 24, 23, 22, 23, 17, 15, 18, 22, 20, 18], borderColor: '#10b981', tension: 0.1 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: true, text: '債券配置比例 (% AUM)' } }
+            }
+        });
+        
+        createChart('privateClientCashChart', {
+            type: 'line',
+            data: {
+                labels: allocationLabels,
+                datasets: [{ label: '現金配置比例', data: [12, 11, 11, 14, 13, 11, 12, 15, 12.5, 11, 10], borderColor: '#f97316', tension: 0.1 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: true, text: '現金配置比例 (% AUM)' } }
+            }
+        });
+        
+        // Asset Allocation Quilt
+        createChart('assetAllocationQuilt', {
+            type: 'bar',
+            data: {
+                labels: ['2000', '2005', '2010', '2015', '2020', '2025*'],
+                datasets: [
+                    {
+                        label: '股票',
+                        data: [40, 45, 50, 55, 60, 65],
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)'
+                    },
+                    {
+                        label: '債券',
+                        data: [40, 35, 30, 25, 20, 18],
+                        backgroundColor: 'rgba(16, 185, 129, 0.7)'
+                    },
+                    {
+                        label: '現金',
+                        data: [15, 12, 10, 8, 12, 10],
+                        backgroundColor: 'rgba(249, 115, 22, 0.7)'
+                    },
+                    {
+                        label: '另類資產',
+                        data: [5, 8, 10, 12, 8, 7],
+                        backgroundColor: 'rgba(139, 69, 19, 0.7)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '私人客戶資產配置變化 (2000-2025)', font: {size: 16} },
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true,
+                        ticks: {
+                            callback: (value) => value + '%'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Download button logic
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function() {
+                const reportDate = "20251023";
+                const pdfTitle = "From_Zero_to_Hero";
+                const filename = `${reportDate}_BofA_The_Flow_Show_${pdfTitle}.html`;
+                
+                const clonedDoc = document.documentElement.cloneNode(true);
+                const btnToRemove = clonedDoc.querySelector('#downloadBtn');
+                if(btnToRemove) btnToRemove.remove();
+
+                const blob = new Blob([clonedDoc.outerHTML], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+    } catch (e) {
+        console.error("圖表渲染時發生錯誤:", e);
+    }
+}
+
+// Ensure the DOM is fully loaded before trying to render charts
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderCharts);
+} else {
+    renderCharts();
+}
+</script>
+
+</body></html>
