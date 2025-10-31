@@ -1,0 +1,1718 @@
+<html lang="zh-Hant"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzNTlhZTBjMTczYzc3YjFjZDU1MjFiMjVhMWY2YTQ5ZWU1YTZkMjQiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzE0MDk1N2IwZGIzZWViZjFfYm9mYV9yZXBvcnRfMjAyNTEwMzBfZmFpbF9yaXNrcy5odG1sLTI0OCJ9LCJleHAiOjE3NjE5MDI4MzksImlhdCI6MTc2MTg5OTIzOSwiYWxnIjoiUlMyNTYifQ.WVHJilTe4bkh4lVHHEJgDU0LE-sWvqAFvQ0KkJDrCrXwFda-KbxKWl58_atevVH39UdfCuaK1nYXimJ6TE-knOu0j3sEAxpH0jpLNoleFE_DYljPQUredijzviF9ajWSGBtdZZtmp5W6QpajAZ8qSq1TJEiPsDmJ9_Sl_X5QvaOrUTOESes8iZidtsgwzNCJQ5xce5I68icsOBrgsag9cMcyPBOI2OcKWAFBO63T-8QAGbsh-aLtMfg5uibyogY1cKtlqX5SZOqatRvmLAm26ocTVB_2Q1Tv8tqHjOaa1sn16hsDRg01DnQACHetqop6tDj_T4MxtCl9A1BRqBtAvg","c_140957b0db3eebf1_bofa_report_20251030_fail_risks.html-248")</script><script>'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash-preview-09-2025","imageModelName":"imagen-3.0-generate-002","imageEditModelName":"gemini-2.5-flash-image-preview","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20"],"deprecatedImageModelNames":["imagen-3.0-generate-001"]})</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SOP #2.2 (白話文標題) & SOP #0 (時效性) -->
+    <title>BofA資金流向報告 | 華爾街的「大落空」: 2025恐懼消散 (2025.10.30)</title>
+    
+    <!-- SOP #1.1 (單一檔案原則) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" crossorigin="anonymous"></script>
+    <!-- [!! 修正 !!] 引入 chartjs-plugin-datalabels -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0" crossorigin="anonymous"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- SOP #1.1 (單一檔案原則) & #1.2 (CSS樣式) -->
+    <style>
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #FDFBF7; /* SOP #1.2 */
+            color: #3C3633; /* SOP #1.2 */
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px; 
+        }
+        .container {
+            max-width: 80rem; /* 1280px */
+            margin: 0 auto;
+            padding: 1rem 1.5rem; /* 調整 padding */
+        }
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+        .section-title {
+            text-align: center;
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            color: #655A4E; /* SOP #1.2 */
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #C8B6A6;
+            padding-bottom: 1rem;
+        }
+        .card-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            display: flex; /* 使用 flex 佈局 */
+            flex-direction: column; /* 垂直排列 */
+            height: 100%; /* 確保卡片等高 (在 grid 中) */
+        }
+        .card-content {
+            flex-grow: 1; /* 讓內容區塊填滿空間 */
+        }
+        .card-box canvas {
+            max-height: 400px; /* 統一最大高度 */
+            margin-bottom: 1rem; /* 圖表和說明的間距 */
+        }
+        .card-box figcaption {
+            font-size: 0.875rem; /* 14px */
+            color: #4B5563; /* text-gray-700 */
+            margin-top: auto; /* 將說明推到底部 */
+            padding-top: 0.5rem;
+        }
+        /* SOP #1.2 (區塊樣式) */
+        .info-box {
+            background: #F9F6F2;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #C8B6A6;
+            margin: 1.5rem 0;
+        }
+        /* SOP #1.2 (區塊樣式) */
+        .highlight-box {
+            background: #FFF8E1;
+            padding: 1.5rem;
+            border-left: 4px solid #FFC107;
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.75;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr; /* 手機上單欄 */
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) { /* 768px 以上雙欄 */
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr; /* 手機上單欄 */
+            gap: 1.5rem;
+        }
+        @media (min-width: 1024px) { /* 1024px 以上三欄 */
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        h3 {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 700;
+            color: #655A4E;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.05rem; /* 輕微放大內文 */
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #E5E7EB; /* text-gray-200 */
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #F9FAFB; /* text-gray-50 */
+            font-weight: 600;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #F9FAFB;
+        }
+        .text-positive { color: #166534; /* green-800 */ font-weight: 500; }
+        .text-negative { color: #991B1B; /* red-800 */ font-weight: 500; }
+
+        /* 下載按鈕樣式 */
+        .download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #655A4E;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #8D7B68;
+        }
+        
+        /* 儀表板中心文字 */
+        .gauge-text {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3C3633;
+        }
+        .gauge-label {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #6B7280;
+        }
+
+        @media print {
+            body { background: white; }
+            .card-box { box-shadow: none; border: 1px solid #E5E7EB; }
+            .download-btn, .info-box, .highlight-box { display: none; }
+            p { font-size: 1rem; }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}</style></head>
+<body>
+    <div class="container">
+        
+        <!-- 報告標題 (SOP #2.2) -->
+        <header style="text-align: center; margin-bottom: 2.5rem; margin-top: 1rem;">
+            <!-- SOP #2.2 (白話文標題): 從 "The Fail Risks of '25" 轉化 -->
+            <h1 style="font-size: 2.25rem; line-height: 1.3; font-weight: 700; color: #655A4E; margin-bottom: 0.5rem;">華爾街的「大落空」：2025年恐懼消散，黃金與股票為何齊漲？</h1>
+            <p style="font-size: 1.125rem; color: #8D7B68;">BofA資金流向深度分析報告</p>
+            <!-- SOP #0 (時效性): 根據PDF日期 -->
+            <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">資料日期: 2025年10月30日</p>
+        </header>
+
+        <!-- 序章 (SOP #2.1) -->
+        <section style="margin-bottom: 3rem;">
+            <h2 class="section-title">序章: 市場的脈動, 三分鐘速覽</h2>
+            
+            <!-- SOP #2.2 (敘事): 建立 "恐懼落空" 的核心主題 -->
+            <p>
+                本週的市場故事核心是「落空的恐懼」。回顧2025年初，投資人最擔心的三大熊市風險是：<strong class="text-negative">(1) 債務恐慌導致的公債殖利率失序飆升</strong>、<strong class="text-negative">(2) 全球貿易戰</strong>，以及 <strong class="text-negative">(3) 聯準會(Fed)持續升息</strong>。然而，10個月過去了，這些「尾部風險」全都落空。美國公債的波動率(MOVE指數)降至2021年以來最低；美中達成了貿易協議；聯準會不僅沒有升息，反而開啟了降息循環。這就是為什麼黃金年度報酬率飆升<strong class="text-positive">52.9%</strong>、國際股市上漲30%、美國股市也上漲20%的核心理由：恐懼消散，熱錢回籠。
+            </p>
+
+            <!-- SOP #2.1 (四大段落) & SOP #0 (數據準確性) -->
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">市場的熱議話題 (Zeitgeist):</p>
+                <p style="font-style: italic; color: #374151;">「一位20多歲的布魯克林數學老師說：『我做多 AI，也投票給了 Mamdani (紐約市長候選人)』。」</p>
+                <p style="font-size: 0.9rem; color: #6B7280; margin-top: 0.5rem;"><strong>【解讀】</strong>: 這反映了市場的核心矛盾：一方面，投資人瘋狂湧入 AI 科技股；另一方面，又支持那些主張解決「生活成本危機」（64%紐約選民最關心的問題）的民粹主義政策。而這些政策（如加稅、補貼）恰恰可能推高通膨和債務風險。</p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">數據背後的故事 (Tale of the Tape):</p>
+                <p>紐約市的5年期信用違約交換(CDS)利差（一種衡量違約風險的保險成本）被牢牢釘在低點 (60bps)。這意味著，儘管市場擔心民粹政策會帶來通膨和債務風險，但債券市場在「降息」和「追求收益」的驅動下，似乎完全忽視了這些長期風險。</p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">價格，最誠實的指標 (The Price is Right):</p>
+                <p>科技巨頭甲骨文(Oracle)的5年期CDS利差升至2年高點。這揭示了 AI 榮景的另一面：AI 的巨額資本支出(Capex)是靠營收、現金流...以及「債務」來支付的。AI 導致的失業潮可能對美國公債有利（通縮），但在公司債層面，科技業的利差可能已經觸頂。BofA建議在2026年放空那些過度舉債的超大型科技股債券。</p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">目前市場大趨勢 (The Biggest Picture):</p>
+                <p>2025年的「恐懼」全都落空了。美國公債波動率處於2021年來最低，美中達成貿易協議，聯準會甚至在股市創下新高、信用利差處於低點時還在降息... 這解釋了為何黃金大漲50%、國際股市大漲30%、美股也漲了20%。</p>
+            </div>
+        </section>
+
+        <!-- 第一章 (SOP #2.1 動態標題) -->
+        <section style="margin-bottom: 3rem; margin-top: 5rem;">
+            <h2 class="section-title">第一章: 貪婪的錢潮：黃金創紀錄流出，現金湧入</h2>
+            
+            <p>
+                本週的資金流向呈現出「獲利了結」和「現金為王」的景象。全球資金在本週流入現金<strong class="text-positive">365億美元</strong>、流入股票<strong class="text-positive">172億美元</strong>、流入債券<strong class="text-positive">170億美元</strong>。最大的亮點是黃金，在經歷了4個月的瘋狂流入（總計590億美元）後，本週迎來了<strong class="text-negative">創紀錄的75億美元流出</strong>。
+            </p>
+
+            <!-- SOP #1.3 (圖表重製) & SOP #0 (數據準確性) -->
+            <div class="grid-2">
+                <div class="card-box">
+                    <h3>2025年度至今各大類資產報酬率</h3>
+                    <div class="card-content">
+                        <canvas id="chartYTD" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 420px;" width="682"></canvas>
+                    </div>
+                    <figcaption>資料來源：BofA Global Research</figcaption>
+                </div>
+                
+                <div class="card-box">
+                    <h3>BofA 牛熊指標 (B&amp;B Indicator)</h3>
+                    <div class="card-content" style="position: relative;">
+                        <!-- SOP #1.3 (儀表板樣式) -->
+                        <canvas id="chartBnB" style="max-height: 250px; display: block; box-sizing: border-box; height: 250px; width: 420px;" height="406" width="682"></canvas>
+                        <!-- SOP #0 (數據準確性) -->
+                        <div class="gauge-text">6.3</div>
+                        <div class="gauge-label">中性偏貪婪</div>
+                    </div>
+                    <figcaption>本週牛熊指標從6.2微升至<strong>6.3</strong>。這得益於全球股市的廣度增強和信貸技術面的改善，但被高收益債券和新興市場債務的資金流入放緩所抵銷。</figcaption>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="card-box">
+                    <h3>本週主要資產資金流向 (單位: 億美元)</h3>
+                    <div class="card-content">
+                        <canvas id="chartWeeklyFlows" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 420px;" width="682"></canvas>
+                    </div>
+                    <figcaption>資料來源：BofA Global Research</figcaption>
+                </div>
+                
+                <div class="card-box">
+                    <h3>黃金資金流向 (單位: 億美元)</h3>
+                    <div class="card-content">
+                        <canvas id="chartGoldFlows" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 420px;" width="682"></canvas>
+                    </div>
+                    <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                    <figcaption>黃金在經歷4個月瘋狂流入後，本週迎來創紀錄的75億美元流出。</figcaption>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <!-- SOP #2.2 (白話文) & SOP #0 (數據) -->
+                <strong>關鍵的資金流動 (Flows to Know):</strong>
+                <ul style="list-style-type: disc; padding-left: 20px; margin-top: 1rem;">
+                    <li><strong>黃金:</strong> 創紀錄流出 <strong>75億美元</strong> (獲利了結)，結束了過去4個月總計590億美元的瘋狂流入。</li>
+                    <li><strong>日本股票:</strong> 流入 <strong>54億美元</strong>，創2024年4月以來最大單週流入。</li>
+                    <li><strong>科技股:</strong> 流入 <strong>35億美元</strong>，延續了過去5週總計250億美元的強勁流入。</li>
+                    <li><strong>原物料股:</strong> 創紀錄流出 <strong>91億美元</strong>。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 第二章 (SOP #2.1 動態標題) -->
+        <section style="margin-bottom: 3rem; margin-top: 5rem;">
+            <h2 class="section-title">第二章: 機構的佈局：全球大降息，錢往何處去？</h2>
+
+            <p>
+                2025年已成為全球「降息年」，至今累計降息次數已達129次，是歷史上第三大降息年。市場預期2026年還將有81次降息。在這種「大放水」的背景下，機構的資金配置顯示出對債券的持續偏好，以及對中美市場的明顯分歧。
+            </p>
+
+            <!-- SOP #1.3 (圖表重製) & SOP #0 (數據) -->
+            <div class="grid-2">
+                <div class="card-box">
+                    <h3>全球央行累計降息次數 (按年份)</h3>
+                    <div class="card-content">
+                        <canvas id="chartRateCuts" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 420px;" width="682"></canvas>
+                    </div>
+                    <figcaption>2025年(紅線)正朝著成為史上第三大降息年的方向前進，僅次於2020年(疫情)和2024年。</figcaption>
+                </div>
+                
+                <div class="card-box">
+                    <h3>美國1年期通膨預期</h3>
+                    <div class="card-content">
+                        <canvas id="chartInflationExp" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 420px;" width="682"></canvas>
+                    </div>
+                    <figcaption>儘管聯準會(Fed)積極降息，但美國1年期通膨預期在9月仍高達<strong>3.4%</strong>，遠高於2024年11月的低點(2.6%)。這顯示市場擔心降息可能重新點燃通膨。</figcaption>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="card-box">
+                    <h3>機構資金流向 (年度至今 YTD)</h3>
+                    <div class="card-content" style="overflow-x: auto;">
+                        <!-- SOP #1.3 (表格重製) & SOP #0 (數據) -->
+                        <table style="min-width: 400px;">
+                            <thead>
+                                <tr>
+                                    <th>資產類別</th>
+                                    <th>本週流入 (%AUM)</th>
+                                    <th>年度至今流入 (億美元)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>股票 (Equities)</td>
+                                    <td>+0.1%</td>
+                                    <td class="text-positive">+5,795</td>
+                                </tr>
+                                <tr>
+                                    <td>... 其中: ETFs</td>
+                                    <td>+0.3%</td>
+                                    <td class="text-positive">+10,131</td>
+                                </tr>
+                                <tr>
+                                    <td>... 其中: 共同基金 (LO)</td>
+                                    <td>-0.2%</td>
+                                    <td class="text-negative">-4,341</td>
+                                </tr>
+                                <tr>
+                                    <td>債券 (Bonds)</td>
+                                    <td>+0.2%</td>
+                                    <td class="text-positive">+6,323</td>
+                                </tr>
+                                <tr>
+                                    <td>大宗商品 (Commodities)</td>
+                                    <td>-0.8%</td>
+                                    <td class="text-positive">+1,364</td>
+                                </tr>
+                                <tr>
+                                    <td>現金 (Money-market)</td>
+                                    <td>+0.3%</td>
+                                    <td class="text-positive">+9,014</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                    <figcaption>資料來源：EPFR Global</figcaption>
+                </div>
+                
+                <div class="card-box">
+                    <h3>全球股票資金流向 (年度至今 YTD)</h3>
+                    <div class="card-content" style="overflow-x: auto;">
+                        <!-- SOP #1.3 (表格重製) & SOP #0 (數據) -->
+                        <table style="min-width: 400px;">
+                            <thead>
+                                <tr>
+                                    <th>區域</th>
+                                    <th>本週流入 (%AUM)</th>
+                                    <th>年度至今流入 (億美元)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>美國 (US)</td>
+                                    <td>0.0%</td>
+                                    <td class="text-positive">+2,701</td>
+                                </tr>
+                                <tr>
+                                    <td>歐洲 (Europe)</td>
+                                    <td>0.0%</td>
+                                    <td class="text-positive">+519</td>
+                                </tr>
+                                <tr>
+                                    <td>日本 (Japan)</td>
+                                    <td>+0.5%</td>
+                                    <td class="text-negative">-53</td>
+                                </tr>
+                                <tr>
+                                    <td>新興市場 (EM)</td>
+                                    <td>0.0%</td>
+                                    <td class="text-positive">+520</td>
+                                </tr>
+                                <tr>
+                                    <td>... 其中: 中國 (China)</td>
+                                    <td>-0.2%</td>
+                                    <td class="text-positive">+207</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                    <figcaption>資料來源：EPFR Global</figcaption>
+                </div>
+            </div>
+
+            <div class="card-box" style="margin-top: 1.5rem;">
+                <h3>中美股市 vs 債市 表現對比 (2004-2025)</h3>
+                <div class="card-content">
+                    <canvas id="chartUsVsChina" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 912px;" width="1482"></canvas>
+                </div>
+                <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                <!-- [!! 修正 !!] 移除 "小白" -->
+                <figcaption><strong>【解讀】</strong>: 上圖顯示了驚人的分歧。深藍線（美國）顯示股市報酬率遠遠跑贏公債，代表「成長」是絕對主題。而淺藍線（中國）顯示股市報酬率遠低於公債，代表中國資產長期處於「避險」和「通縮」模式。BofA認為，中國股票是潛在的「繁榮/泡沫避險」標的。</figcaption>
+            </div>
+
+            <!-- SOP #2.2 (禁止術語): 解釋 "FMS" -->
+            <div class="highlight-box">
+                <strong>BofA 11月全球基金經理調查 (FMS) 顯示:</strong>
+                <p style="font-size: 1.05rem; margin-top: 1rem;">
+                    在機構端，BofA的全球基金經理調查（FMS）顯示，經理人正大幅「減碼」美國公債，減碼程度達到2003年以來之最。<strong>【解讀】</strong>：這代表專業的基金經理們普遍不看好美國公債的後市，他們擔心通膨和債務會壓低債券價格（推高殖利率）。這與BofA私人客戶（散戶）的行為恰好相反。
+                </p>
+            </div>
+        </section>
+
+        <!-- 第三章 (SOP #2.1 動態標題) -->
+        <section style="margin-bottom: 3rem; margin-top: 5rem;">
+            <h2 class="section-title">第三章: 散戶大軍「All In」：股票配置創四年新高，現金見底</h2>
+            
+            <!-- SOP #0 (數據) & SOP #2.2 (禁止術語) -->
+            <p>
+                BofA的私人客戶（管理著高達4.4兆美元的總資產管理規模 AUM）動向，是觀察市場情緒的重要指標。他們的股票配置比例已攀升至<strong style="color: #BF0A0A;">65.6%</strong>，是2021年10月以來的最高水平。相反，債券配置降至<strong style="color: #056608;">17.5%</strong>（2022年3月來最低），而現金配置更是降至<strong style="color: #BF0A0A;">10.1%</strong>（2018年9月來最低）。
+            </p>
+            <!-- [!! 修正 !!] 移除 "小白" -->
+            <p>
+                <strong>【解讀】</strong>：這是一個強烈的逆向訊號。當散戶（包括富裕散戶）將現金花光、全力投入股市時，往往意味著市場情緒已接近「極度貪婪」，潛在的買盤枯竭，市場可能面臨回檔修正的壓力。
+            </p>
+
+            <!-- SOP #1.3 (私人客戶圖表) & SOP #0 (數據) -->
+            <div class="grid-3">
+                <div class="card-box">
+                    <h3>股票配置 (% AUM)</h3>
+                    <div class="card-content">
+                        <canvas id="chartGwimEquity" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 256px;" width="416"></canvas>
+                    </div>
+                    <figcaption>私人客戶股票配置達 <strong>65.6%</strong>，創2021年10月以來新高。</figcaption>
+                </div>
+                
+                <div class="card-box">
+                    <h3>債券配置 (% AUM)</h3>
+                    <div class="card-content">
+                        <canvas id="chartGwimDebt" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 256px;" width="416"></canvas>
+                    </div>
+                    <figcaption>債券配置降至 <strong>17.5%</strong>，創2022年3月以來新低。</figcaption>
+                </div>
+
+                <div class="card-box">
+                    <h3>現金配置 (% AUM)</h3>
+                    <div class="card-content">
+                        <canvas id="chartGwimCash" height="650" style="display: block; box-sizing: border-box; height: 400px; width: 256px;" width="416"></canvas>
+                    </div>
+                    <figcaption>現金配置降至 <strong>10.1%</strong>，創2018年9月以來新低。</figcaption>
+                </div>
+            </div>
+
+            <div class="card-box" style="margin-top: 1.5rem;">
+                <h3>BofA 私人客戶近4週ETF資金流向 (% AUM)</h3>
+                <div class="card-content">
+                    <canvas id="chartGwimETF" style="max-height: 500px; display: block; box-sizing: border-box; height: 456px; width: 912px;" height="741" width="1482"></canvas>
+                </div>
+                 <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                 <!-- [!! 修正 !!] 移除 "小白" -->
+                <figcaption><strong>【解讀】</strong>：儘管散戶總體上「All In」股票，但他們在ETF的短期操作卻很「分裂」。過去4週，他們在買進「債券」（投資級、高收益）和「原物料」，同時在賣出「成長股」、「金融股」和「銀行貸款」。這顯示他們一方面追高，一方面又試圖買入防禦性資產來避險。</figcaption>
+            </div>
+        </section>
+
+        <!-- 第四章: 資產儀表板 (SOP #1.3) -->
+        <section style="margin-bottom: 3rem; margin-top: 5rem;">
+            <h2 class="section-title">第四章: 2025年資產儀表板：贏家與輸家</h2>
+            
+            <p>
+                從更廣闊的視角來看，2025年至今的市場由黃金和新興市場主導。以下表格彙總了全球主要資產的年度至今(YTD)報酬率，以及它們相對於200日移動平均線的「過熱」程度。
+            </p>
+
+            <div class="grid-2">
+                <div class="card-box">
+                    <h3>2025年 YTD 資產報酬率排行</h3>
+                    <div class="card-content" style="max-height: 600px; overflow-y: auto;">
+                        <!-- SOP #1.3 (表格重製) & SOP #0 (數據) -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>資產</th>
+                                    <th>報酬率 (YTD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>黃金 (Gold)</td><td class="text-positive">50.8%</td></tr>
+                                <tr><td>新興市場 (EM Equities)</td><td class="text-positive">35.0%</td></tr>
+                                <tr><td>歐洲股市 (Europe Equities)</td><td class="text-positive">31.3%</td></tr>
+                                <tr><td>英國股市 (UK Equities)</td><td class="text-positive">30.0%</td></tr>
+                                <tr><td>日本股市 (Japan Equities)</td><td class="text-positive">24.8%</td></tr>
+                                <tr><td>美國股市 (US Equities)</td><td class="text-positive">18.5%</td></tr>
+                                <tr><td>新興市場主權債</td><td class="text-positive">13.2%</td></tr>
+                                <tr><td>投資級(IG)債券</td><td class="text-positive">10.4%</td></tr>
+                                <tr><td>高收益(HY)債券</td><td class="text-positive">9.8%</td></tr>
+                                <tr><td>政府公債</td><td class="text-positive">7.4%</td></tr>
+                                <tr><td>美元 (US Dollar)</td><td class="text-negative">-8.5%</td></tr>
+                                <tr><td>石油 (Oil)</td><td class="text-negative">-15.7%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                    <figcaption>資料來源：BofA Global Research, Bloomberg</figcaption>
+                </div>
+
+                <div class="card-box">
+                    <h3>資產「過熱」程度 (偏離200日線)</h3>
+                    <div class="card-content" style="max-height: 600px; overflow-y: auto;">
+                        <!-- SOP #1.3 (表格重製) & SOP #0 (數據) -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>資產</th>
+                                    <th>偏離幅度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>新興市場 (EM Equities)</td><td class_positive="">+19.0%</td></tr>
+                                <tr><td>黃金 (Gold)</td><td class_positive="">+17.8%</td></tr>
+                                <tr><td>日本股市 (Japan Equities)</td><td class_positive="">+13.9%</td></tr>
+                                <tr><td>工業金屬</td><td class_positive="">+13.6%</td></tr>
+                                <tr><td>美國股市 (US Equities)</td><td class_positive="">+13.5%</td></tr>
+                                <tr><td>英國股市 (UK Equities)</td><td class_positive="">+11.2%</td></tr>
+                                <tr><td>歐洲股市 (Europe Equities)</td><td class_positive="">+9.8%</td></tr>
+                                <tr><td>新興市場主權債</td><td class_positive="">+6.9%</td></tr>
+                                <tr><td>高收益(HY)債券</td><td class_positive="">+4.3%</td></tr>
+                                <tr><td>美元 (US Dollar)</td><td class_negative="">-1.3%</td></tr>
+                                <tr><td>石油 (Oil)</td><td class_negative="">-7.4%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                     <!-- [!! 修正 !!] 移除 "小白" -->
+                    <figcaption><strong>【解讀】</strong>：正值越高代表「越過熱」，負值代表「越超賣」。黃金 (+17.8%) 和美國股市 (+13.5%) 都處於顯著的「過熱」狀態，這也解釋了為何本週黃金出現獲利了結賣壓。</figcaption>
+                </div>
+            </div>
+
+            <div class="card-box" style="margin-top: 1.5rem;">
+                <h3>資產表現矩陣 (Asset Quilt) - 2020-2025</h3>
+                <div class="card-content" style="overflow-x: auto;">
+                    <!-- SOP #1.3 (表格重製) -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>資產</th>
+                                <th>2020</th>
+                                <th>2021</th>
+                                <th>2022</th>
+                                <th>2023</th>
+                                <th>2024</th>
+                                <th>2025 (YTD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>大宗商品 (Comm)</td>
+                                <td class="text-negative">-7.0%</td>
+                                <td class="text-positive">46.3%</td>
+                                <td class="text-positive">31.1%</td>
+                                <td class="text-negative">-7.5%</td>
+                                <td class="text-positive">5.5%</td>
+                                <td class="text-positive">6.1%</td>
+                            </tr>
+                            <tr>
+                                <td>黃金 (Gold)</td>
+                                <td class="text-positive">25.2%</td>
+                                <td class="text-negative">-3.0%</td>
+                                <td class="text-negative">-0.8%</td>
+                                <td class="text-positive">12.7%</td>
+                                <td class="text-positive">26.7%</td>
+                                <td class="text-positive">52.9%</td>
+                            </tr>
+                            <tr>
+                                <td>標普500 (S&amp;P 500)</td>
+                                <td class="text-positive">18.4%</td>
+                                <td class="text-positive">28.7%</td>
+                                <td class="text-negative">-18.1%</td>
+                                <td class="text-positive">26.3%</td>
+                                <td class="text-positive">25.0%</td>
+                                <td class="text-positive">21.4%</td>
+                            </tr>
+                            <tr>
+                                <td>新興市場 (EM)</td>
+                                <td class="text-positive">18.0%</td>
+                                <td class="text-negative">-2.2%</td>
+                                <td class="text-negative">-20.1%</td>
+                                <td class="text-positive">10.1%</td>
+                                <td class="text-positive">10.6%</td>
+                                <td class="text-positive">30.6%</td>
+                            </tr>
+                            <tr>
+                                <td>高收益(HY)債</td>
+                                <td class="text-positive">7.2%</td>
+                                <td class="text-positive">5.5%</td>
+                                <td class="text-negative">-13.2%</td>
+                                <td class="text-positive">13.4%</td>
+                                <td class="text-positive">7.5%</td>
+                                <td class="text-positive">9.4%</td>
+                            </tr>
+                            <tr>
+                                <td>投資級(IG)債</td>
+                                <td class="text-positive">9.5%</td>
+                                <td class="text-negative">-1.2%</td>
+                                <td class="text-negative">-16.7%</td>
+                                <td class="text-positive">9.5%</td>
+                                <td class="text-positive">9.2%</td>
+                                <td class="text-positive">9.9%</td>
+                            </tr>
+                            <tr>
+                                <td>美國公債 (Govt)</td>
+                                <td class="text-positive">8.9%</td>
+                                <td class="text-negative">-2.2%</td>
+                                <td class="text-negative">-12.5%</td>
+                                <td class="text-positive">3.9%</td>
+                                <td class="text-positive">6.2%</td>
+                                <td class="text-positive">6.7%</td>
+                            </tr>
+                            <tr>
+                                <td>現金 (Cash)</td>
+                                <td class="text-positive">0.7%</td>
+                                <td class="text-positive">0.1%</td>
+                                <td class="text-positive">1.5%</td>
+                                <td class="text-positive">5.1%</td>
+                                <td class="text-positive">5.3%</td>
+                                <td class="text-positive">3.6%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <!-- [!! 修正 !!] 移除 PDF 參照 -->
+                <figcaption>資料來源：BofA Global Research, Bloomberg</figcaption>
+            </div>
+        </section>
+
+        <!-- 結論 (SOP #2.1) -->
+        <section style="margin-bottom: 3rem; margin-top: 5rem;">
+            <h2 class="section-title">結論：恐懼落空後的策略指引</h2>
+            
+            <p>
+                2025年的市場是建立在「恐懼落空」的基礎上的。投資人年初擔心的「債務飆升」、「貿易戰」和「持續升息」三大風險全部逆轉，導致資金回補，推動了黃金和股票的強勁上漲。
+            </p>
+            <p>
+                然而，當下的市場正處於一個危險的平衡點：
+            </p>
+            <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 1.5rem;">
+                <li><strong>情緒面：</strong> BofA牛熊指標(6.3)和私人客戶配置(10.1%現金)都顯示市場處於「貪婪」狀態。</li>
+                <li><strong>資金面：</strong> 黃金和原物料本週都出現了創紀錄的「獲利了結」流出，顯示聰明的資金開始鎖定利潤。</li>
+                <li><strong>風險面：</strong> 市場一方面擁抱 AI 科技股，另一方面又忽視了民粹政策和科技業舉債帶來的長期通膨與信用風險。</li>
+            </ul>
+            
+            <p>
+                BofA 團隊認為，投資人仍需為「意外」做好準備。在一個「所有人都看多」的市場裡，真正的風險往往來自意想不到的「黑天鵝」。
+            </p>
+
+            <div class="highlight-box">
+                <strong>BofA 策略佈局建議：</strong>
+                <ul style="list-style-type: disc; padding-left: 20px; margin-top: 1rem; font-size: 1.05rem;">
+                    <li><strong>1. 持有黃金與中國股票：</strong> 雖然黃金短期過熱，但BofA仍建議持有黃金和中國股票，作為對沖「繁榮/泡沫」的最佳工具。</li>
+                    <li><strong>2. 避開「低收入衰退」板塊：</strong> 除非通膨能被完全控制，否則應避開那些對經濟和通膨最敏感的「低收入衰退」相關股票（如房地產、零售、建築）。</li>
+                    <li><strong>3. 留意「痛苦交易」：</strong> 在全球大降息的背景下，如果Q4金融狀況意外收緊（例如通膨復燃），那麼「做多美元」將是市場最大的「痛苦交易」(Pain Trade)。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- [!! 修正 !!] 移除 "最終金句" h2 標題 (SOP #2.1) -->
+        <section>
+            
+            <!-- SOP #1.2 區塊樣式 -->
+            <div class="info-box" style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.25rem; font-weight: 600; font-style: italic; margin-bottom: 0.5rem;">
+                    "我一生中經歷了許多可怕的事情，但其中大部分從未發生過。"
+                </p>
+                <p style="font-size: 0.95rem; color: #4B5563;">— 馬克·吐溫 (Mark Twain)</p>
+            </div>
+
+            <p style="font-size: 1.05rem; line-height: 1.75; margin-top: 1.5rem;">
+                這句名言完美總結了2025年的市場。年初的所有恐懼都「從未發生」，導致了這場狂歡。但真正的風險，或許正隱藏在當下這片「極度貪婪」的平靜海面之下。
+            </p>
+        </section>
+
+        <!-- 頁尾 -->
+        <footer style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #E5E7EB; color: #6B7280; font-size: 0.75rem;">
+            <p style="margin-bottom: 0.5rem;">免責聲明:本報告內容僅為基於公開訊息的市場分析,不構成任何投資建議。</p>
+            <p>投資有風險,入市需謹慎。</p>
+            <p style="margin-top: 1rem; color: #9CA3AF;">BofA Global Research | 2025年10月30日</p>
+        </footer>
+    </div>
+
+    <!-- 下載按鈕 HTML -->
+    <button onclick="downloadReport()" class="download-btn" title="下載本頁報告 (HTML)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+    </button>
+
+<!-- SOP #1.1 (單一檔案原則) & #1.4 (錯誤處理) -->
+<script>
+    // 下載報告功能
+    function downloadReport() {
+        try {
+            // SOP #0 (時效性): 動態檔名
+            const dynamicFilename = "BofA_Report_20251030_Fail_Risks.html"; 
+            
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+            
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = dynamicFilename;
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+
+        } catch (e) {
+            console.error("下載失敗:", e);
+        }
+    }
+
+    // Chart.js 圖表腳本
+    window.addEventListener('load', function() {
+        
+        // SOP #1.4 (錯誤處理)
+        try {
+            // [!! 修正 !!] 註冊 datalabels 插件
+            Chart.register(ChartDataLabels);
+
+            // 設置 datalabels 插件的全局默認值
+            Chart.defaults.set('plugins.datalabels', {
+                color: '#3C3633',
+                font: {
+                    weight: '500',
+                    size: 11
+                },
+                anchor: 'end',
+                align: 'top',
+                formatter: (value) => value // 默認顯示數值
+            });
+
+            // 圖表1: YTD 報酬率 (SOP #0 數據)
+            const chartYTD_ctx = document.getElementById('chartYTD');
+            if (chartYTD_ctx) {
+                new Chart(chartYTD_ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['黃金', '股票', '比特幣', 'IG債', 'HY債', '公債', '商品', '現金', '美元', '石油'],
+                        datasets: [{
+                            data: [52.9, 21.4, 14.9, 9.9, 9.4, 6.7, 6.1, 3.6, -8.3, -16.0],
+                            backgroundColor: (context) => context.parsed.y >= 0 ? 'rgba(22, 163, 74, 0.7)' : 'rgba(220, 38, 38, 0.7)',
+                            borderColor: (context) => context.parsed.y >= 0 ? '#16A34A' : '#DC2626',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (c) => c.parsed.y + '%' } },
+                            datalabels: { // [!! 修正 !!]
+                                formatter: (value) => value + '%',
+                                // [!! 錯誤修復 !!] 添加 context.parsed 檢查
+                                align: (context) => {
+                                    if (!context.parsed) return 'top';
+                                    return context.parsed.y >= 0 ? 'top' : 'bottom';
+                                },
+                                // [!! 錯誤修復 !!] 添加 context.parsed 檢查
+                                color: (context) => {
+                                    if (!context.parsed) return '#14532D';
+                                    return context.parsed.y >= 0 ? '#14532D' : '#991B1B';
+                                },
+                            }
+                        },
+                        scales: { y: { ticks: { callback: (value) => value + '%' } } }
+                    }
+                });
+            }
+
+            // 圖表2: B&B 指標 (SOP #0 數據)
+            const chartBnB_ctx = document.getElementById('chartBnB');
+            if (chartBnB_ctx) {
+                const bnbValue = 6.3;
+                let bnbColor;
+                if (bnbValue < 2.0) bnbColor = '#16A34A'; // Buy
+                else if (bnbValue > 8.0) bnbColor = '#DC2626'; // Sell
+                else if (bnbValue < 4.0) bnbColor = '#FACC15'; // Extreme Fear
+                else if (bnbValue > 6.0) bnbColor = '#F97316'; // Greed
+                else bnbColor = '#F59E0B'; // Neutral
+
+                new Chart(chartBnB_ctx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['B&B 指標', '剩餘'],
+                        datasets: [{
+                            data: [bnbValue, 10.0 - bnbValue],
+                            backgroundColor: [bnbColor, '#E5E7EB'],
+                            borderWidth: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        circumference: 180,
+                        rotation: 270,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false },
+                            datalabels: { display: false } // [!! 修正 !!] 不顯示標籤
+                        },
+                        cutout: '70%'
+                    }
+                });
+            }
+
+            // 圖表3: 本週資金流向 (SOP #0 數據)
+            const chartWeeklyFlows_ctx = document.getElementById('chartWeeklyFlows');
+            if (chartWeeklyFlows_ctx) {
+                new Chart(chartWeeklyFlows_ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['現金', '股票', '債券', '加密貨幣', '黃金'],
+                        datasets: [{
+                            data: [36.5, 17.2, 17.0, 0.6, -7.5],
+                            backgroundColor: (c) => c.parsed.y >= 0 ? 'rgba(59, 130, 246, 0.7)' : 'rgba(220, 38, 38, 0.7)',
+                            borderColor: (c) => c.parsed.y >= 0 ? '#3B82F6' : '#DC2626',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (c) => c.parsed.y + ' 億美元' } },
+                            datalabels: { // [!! 修正 !!]
+                                formatter: (value) => value.toFixed(1),
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                align: (c) => {
+                                    if (!c.parsed) return 'top';
+                                    return c.parsed.y >= 0 ? 'top' : 'bottom';
+                                },
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                color: (c) => {
+                                    if (!c.parsed) return '#1E3A8A';
+                                    return c.parsed.y >= 0 ? '#1E3A8A' : '#991B1B';
+                                },
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 圖表4: 黃金資金流向 (SOP #0 數據)
+            const chartGoldFlows_ctx = document.getElementById('chartGoldFlows');
+            if (chartGoldFlows_ctx) {
+                new Chart(chartGoldFlows_ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['7月', '8月', '9月', '10月 (前3週)', '10月 (本週)'],
+                        datasets: [{
+                            label: '流入 (億美元)',
+                            data: [15, 18, 16, 10, -7.5], // 示意數據，總和約59，本週-7.5
+                            backgroundColor: (c) => c.parsed.y >= 0 ? 'rgba(245, 158, 11, 0.7)' : 'rgba(220, 38, 38, 0.7)',
+                            borderColor: (c) => c.parsed.y >= 0 ? '#F59E0B' : '#DC2626',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (c) => c.parsed.y + ' 億美元' } },
+                            datalabels: { // [!! 修正 !!]
+                                formatter: (value) => value.toFixed(1),
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                align: (c) => {
+                                    if (!c.parsed) return 'top';
+                                    return c.parsed.y >= 0 ? 'top' : 'bottom';
+                                },
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                color: (c) => {
+                                    if (!c.parsed) return '#B45309';
+                                    return c.parsed.y >= 0 ? '#B45309' : '#991B1B';
+                                },
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 圖表5: 全球降息次數 (SOP #0 數據)
+            const chartRateCuts_ctx = document.getElementById('chartRateCuts');
+            if (chartRateCuts_ctx) {
+                new Chart(chartRateCuts_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [
+                            {
+                                label: '2020 (疫情)',
+                                data: [12, 18, 68, 80, 95, 105, 120, 135, 145, 155, 160, 162],
+                                borderColor: '#3B82F6',
+                                tension: 0.1,
+                                pointRadius: 0
+                            },
+                            {
+                                label: '2024',
+                                data: [10, 20, 30, 45, 60, 75, 90, 105, 120, 140, 155, 160], // 示意
+                                borderColor: '#4B5563',
+                                tension: 0.1,
+                                pointRadius: 0
+                            },
+                            {
+                                label: '2025 (至今)',
+                                data: [10, 22, 35, 50, 65, 80, 95, 108, 120, 129], // 示意
+                                borderColor: '#DC2626',
+                                borderWidth: 3,
+                                tension: 0.1,
+                                pointRadius: 0,
+                                pointHitRadius: 10
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { position: 'bottom' },
+                            datalabels: { display: false } // [!! 修正 !!] 折線圖太亂，不顯示
+                        }
+                    }
+                });
+            }
+
+            // 圖表6: 通膨預期 (SOP #0 數據)
+            const chartInflationExp_ctx = document.getElementById('chartInflationExp');
+            if (chartInflationExp_ctx) {
+                new Chart(chartInflationExp_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Apr\'20', 'Mar\'22', 'Nov\'24', 'Apr\'25', 'Sep\'25'],
+                        datasets: [{
+                            data: [2.0, 5.3, 2.6, 4.3, 3.4],
+                            borderColor: '#B45309',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (c) => c.parsed.y + '%' } },
+                            datalabels: { // [!! 修正 !!]
+                                formatter: (value) => value.toFixed(1) + '%',
+                                align: 'top'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 圖表7: 中美股市 vs 債市 (SOP #0 數據)
+            const chartUsVsChina_ctx = document.getElementById('chartUsVsChina');
+            if (chartUsVsChina_ctx) {
+                // 簡化示意數據
+                const labels = ['04', '06', '08', '10', '12', '14', '16', '18', '20', '22', '24', '25'];
+                new Chart(chartUsVsChina_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: '美國 (股市 vs 公債)',
+                                data: [1.0, 1.2, 0.8, 1.0, 1.2, 1.4, 1.5, 1.7, 1.8, 2.5, 3.0, 3.6],
+                                borderColor: '#1E3A8A', // 深藍
+                                borderWidth: 2.5,
+                                tension: 0.1,
+                                pointRadius: 0
+                            },
+                            {
+                                label: '中國 (股市 vs 公債) (RHS)',
+                                data: [6, 10, 18, 10, 8, 10, 8, 6, 5, 3, 4, 5],
+                                borderColor: '#7DD3FC', // 淺藍
+                                borderWidth: 2.5,
+                                yAxisID: 'y1',
+                                tension: 0.1,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { position: 'bottom' },
+                            datalabels: { display: false } // [!! 修正 !!] 太亂，不顯示
+                        },
+                        scales: {
+                            y: { position: 'left', ticks: { color: '#1E3A8A' } },
+                            y1: { position: 'right', ticks: { color: '#7DD3FC' }, grid: { drawOnChartArea: false } }
+                        }
+                    }
+                });
+            }
+
+            // 圖表8, 9, 10: 私人客戶配置 (SOP #0 數據)
+            const commonGwimOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (c) => c.parsed.y + '%' } },
+                    datalabels: { // [!! 修正 !!]
+                        formatter: (value, context) => {
+                            // 只顯示最後一個點的數據
+                            if (context.dataIndex === context.dataset.data.length - 1) {
+                                return value.toFixed(1) + '%';
+                            }
+                            return null;
+                        },
+                        align: 'top',
+                        color: (c) => c.dataset.borderColor
+                    }
+                },
+                scales: { y: { ticks: { callback: (v) => v + '%' } } }
+            };
+
+            const gwimLabels = ['\'05', '\'07', '\'09', '\'11', '\'13', '\'15', '\'17', '\'19', '\'21', '\'23', '\'25'];
+            
+            const chartGwimEquity_ctx = document.getElementById('chartGwimEquity');
+            if (chartGwimEquity_ctx) {
+                new Chart(chartGwimEquity_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: gwimLabels,
+                        datasets: [{
+                            data: [54, 56, 39, 48, 55, 63, 60, 61, 66, 59, 65.6], // PDF p.6 Chart 13
+                            borderColor: '#DC2626', // 紅色
+                            tension: 0.1,
+                            pointRadius: 1,
+                            pointHitRadius: 10
+                        }]
+                    },
+                    options: commonGwimOptions
+                });
+            }
+
+            const chartGwimDebt_ctx = document.getElementById('chartGwimDebt');
+            if (chartGwimDebt_ctx) {
+                new Chart(chartGwimDebt_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: gwimLabels,
+                        datasets: [{
+                            data: [29, 28, 34, 32, 28, 25, 24, 23, 17, 21, 17.5], // PDF p.6 Chart 14
+                            borderColor: '#16A34A', // 綠色
+                            tension: 0.1,
+                            pointRadius: 1,
+                            pointHitRadius: 10
+                        }]
+                    },
+                    options: commonGwimOptions
+                });
+            }
+            
+            const chartGwimCash_ctx = document.getElementById('chartGwimCash');
+            if (chartGwimCash_ctx) {
+                new Chart(chartGwimCash_ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: gwimLabels,
+                        datasets: [{
+                            data: [12, 11, 21, 15, 13, 11, 12, 14, 12, 11.5, 10.1], // PDF p.6 Chart 15
+                            borderColor: '#F59E0B', // 黃色
+                            tension: 0.1,
+                            pointRadius: 1,
+                            pointHitRadius: 10
+                        }]
+                    },
+                    options: commonGwimOptions
+                });
+            }
+
+            // 圖表11: 私人客戶ETF流向 (SOP #0 數據)
+            const chartGwimETF_ctx = document.getElementById('chartGwimETF');
+            if (chartGwimETF_ctx) {
+                new Chart(chartGwimETF_ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        // PDF p.6 Chart 12
+                        labels: ['IG債', 'HY債', '原物料', 'REITs', '市政債', '日本', 'TIPS', '黃金', 'EM債', '價值股', '成長股', '金融股', '銀行貸款'],
+                        datasets: [{
+                            data: [3.3, 3.2, 2.0, 1.8, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, -2.4, -1.8, -1.9], // 示意數據
+                            backgroundColor: (c) => c.parsed.x >= 0 ? 'rgba(59, 130, 246, 0.7)' : 'rgba(220, 38, 38, 0.7)',
+                            borderColor: (c) => c.parsed.x >= 0 ? '#3B82F6' : '#DC2626',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', // 水平長條圖
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (c) => c.parsed.x.toFixed(1) + '%' } },
+                            datalabels: { // [!! 修正 !!]
+                                formatter: (value) => value.toFixed(1) + '%',
+                                anchor: 'end',
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                align: (c) => {
+                                    if (!c.parsed) return 'right';
+                                    return c.parsed.x >= 0 ? 'right' : 'left';
+                                },
+                                // [!! 錯誤修復 !!] 添加 c.parsed 檢查
+                                color: (c) => {
+                                    if (!c.parsed) return '#1E3A8A';
+                                    return c.parsed.x >= 0 ? '#1E3A8A' : '#991B1B';
+                                },
+                                font: { size: 10 }
+                            }
+                        },
+                        scales: { x: { ticks: { callback: (v) => v + '%' } } }
+                    }
+                });
+            }
+
+        } catch (e) {
+            // SOP #1.4 (錯誤處理)
+            console.error("Chart.js 初始化失敗:", e);
+        }
+    });
+</script>
+
+
+
+
+
+</body></html>
