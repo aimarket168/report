@@ -1,0 +1,1305 @@
+<html lang="zh-Hant"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6ImI4Y2EzODU1OTU1ZmQ1MTMxOGFmNzI2ZTM0YzZjYWUzZmYyYWY4N2YiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxNjYxMzcwODIyMTk2MTMzMDQ1MyIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzdmYjEwMmQ5MzhhYjkzZTdfYm9mYS1yZXBvcnQtZmluYWwuaHRtbC0zNTEifSwiZXhwIjoxNzYzMTA3MDkzLCJpYXQiOjE3NjMxMDM0OTMsImFsZyI6IlJTMjU2In0.F2pLtWUdySaiERz5lrbiMQnf4al6zoa0dgAAzPjo9V2dOBiRQbT7xWg8VevJl35SBlg_3DkVZRCBOpvIuPhzlHvEDJdPc8yu7p8Mq-BCpBrk5cVWKrjMfDfqszlcOdEr0spv-NAOBl7lfvND20BgDjJc7tnwwaLUhHq7fwDuq4zbcYztExNn2A15Mq-GNitnjnCOSaeCgkD-QSSGgGPdxBqZ2VC68vgM1KJrtKMKacYbj1PXtpAdqulBBkDSgjGNvj5WG6WwTv2AiCcB0aYdzI5dEvrxXkNsUeOtp9aIyr1wlhYE5E_heazE5H6zUAIKHgRGrVS6lJk0-2scjYn7-w","c_7fb102d938ab93e7_bofa-report-final.html-351")</script><script>'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash-preview-09-2025","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-2.5-flash-image-preview","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BofA資金流向報告_三大交易劇本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #FDFBF7; 
+            color: #3C3633; /* SOP 1.2 內文顏色 */
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px; 
+        }
+        .container {
+            max-width: 80rem; /* 範本 container 寬度 */
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #655A4E; /* SOP 1.2 標題顏色 */
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #C8B6A6; /* 範本樣式 */
+            padding-bottom: 1rem;
+        }
+        .card-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .info-box {
+            background: #F9F6F2; /* SOP 1.2 速覽區塊背景 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #C8B6A6; /* SOP 1.2 速覽區塊邊框 */
+            margin: 1rem 0;
+        }
+        .highlight-box {
+            background: #FFF8E1; /* SOP 1.2 重點摘要背景 */
+            padding: 1.5rem;
+            border-left: 4px solid #FFC107; /* SOP 1.2 重點摘要邊框 */
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+        }
+        /* SOP 1.2 響應式佈局 (grid-2) */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* 默認單欄 */
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) { /* md: breakpoint */
+            .grid-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)); /* 桌面雙欄 */
+            }
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* 默認單欄 */
+            gap: 1.5rem;
+        }
+        @media (min-width: 1024px) { /* lg: breakpoint for 3 cols */
+             .grid-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)); /* 桌面三欄 */
+            }
+        }
+
+        h3 {
+            font-weight: 700;
+            color: #655A4E;
+            margin-bottom: 1rem;
+        }
+        
+        /* 範本中的下載按鈕樣式 (SOP 1.1 視覺複製) */
+        .download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #655A4E;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #8D7B68;
+        }
+
+        /* 複製範本的表格樣式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #F9F6F2;
+            color: #655A4E;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #fdfbf7;
+        }
+
+        @media print {
+            body { background: white; }
+            .card-box { box-shadow: none; border: 1px solid #E5E7EB; }
+            .download-btn { display: none; }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}</style></head>
+<body>
+    <div class="container">
+        
+        <!-- 報告標題 (SOP 2.2 白話文標題, 數據來自 PDF p.1) -->
+        <header style="text-align: center; margin-bottom: 2.5rem;">
+            <h1 style="font-size: 2.5rem; font-weight: 700; color: #655A4E; margin-bottom: 0.5rem;">市場交易的三大劇本：寬鬆見頂、成長加速、通膨降溫</h1>
+            <p style="font-size: 1.125rem; color: #8D7B68;">BofA資金流向深度分析報告</p>
+            <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">2025年11月13日</p>
+        </header>
+
+        <!-- 序章 (SOP 2.1 結構, 數據來自 PDF p.1-2) -->
+        <section style="margin-bottom: 3rem;">
+            <h2 class="section-title">序章:市場的脈動,三分鐘速覽</h2>
+            
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-bottom: 1.5rem;">
+                本週的市場圍繞著三個核心主題：金融狀況 (FCI)、製造業景氣 (PMI) 和通貨膨脹 (CPI)。BofA 團隊認為，這三者正在定義接下來的交易劇本。市場似乎正處於一個關鍵轉折點：金融狀況的極度寬鬆可能已經見頂，而實體經濟的成長卻準備加速，同時通膨可能帶來意外的下行驚喜。
+            </p>
+
+            <!-- SOP 2.1 四大段落, 內容來自 PDF p.1-2 -->
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">市場的熱議話題 (Zeitgeist):</p>
+                <p>市場的敘事充滿了對 AI 泡沫、政府將出手「國安級」救市的期待。投資人甚至預期聯準會不僅會在高點降息，還可能在明年上半年就啟動新一輪的量化寬鬆 (QE)，並發放 2,000 美元的刺激支票... <strong>這種對「利多」的極端期待，正是為什麼風險資產在近期高點掙扎的原因。</strong></p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">數據背後的故事 (Tale of the Tape):</p>
+                <p>今年是創紀錄的一年：資金流入股票 ETF (年化 1.3 兆美元)、投資級債券 (4300 億美元) 和科技股 (720 億美元) 均創下歷史紀錄。同時，貨幣市場基金 (1.2 兆美元) 也迎來史上第二大流入。但另一面是：小型股 (流出 640 億美元) 和房地產 (流出 150 億美元) 正經歷創紀錄的資金外逃。</p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">價格，最誠實的指標 (The Price is Right):</p>
+                <p>市場正呈現「華爾街」與「主街」的巨大分裂。金融狀況的極度寬鬆為華爾街帶來了盛宴，但「主街」(實體經濟) 的借貸成本仍然「高不可攀」：美國政府借貸成本 4%，投資級企業 5%，但房貸超過 6%，小型企業信貸 7%，信用卡利率更是高達 20%。</p>
+            </div>
+
+            <div class="info-box">
+                <p style="font-weight: 700; margin-bottom: 0.5rem;">目前市場大趨勢 (The Biggest Picture):</p>
+                <p><strong>金融寬鬆的高峰 = 信用利差的低谷。</strong>BofA 警告，隨著科技巨頭 (華爾街的領頭羊) 為了 AI 資本競賽而需要更多現金，其信用利差和違約風險正在擴大 (如 Oracle 的 5 年期 CDS 利差飆升)，這可能預示著信用市場的麻煩即將到來。</p>
+            </div>
+        </section>
+
+        <!-- 第一章 (SOP 2.1 結構, 數據來自 PDF p.1, p.2, p.9) -->
+        <section style="margin-bottom: 3rem;">
+            <!-- SOP 2.1 動態標題 -->
+            <h2 class="section-title">第一章: 黃金領跑、美股分化：市場情緒與資金流向解讀</h2>
+            
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-bottom: 1.5rem;">
+                從年度報酬率來看，市場分化極為嚴重。黃金以 <strong>58.6%</strong> 的驚人報酬率遙遙領先，國際股市 (27.5%) 的表現也遠超美國股市 (14.6%)。這顯示資金在追逐特定題材，而非全面看漲。本週的牛熊指標也反映了這種謹慎，從 6.4 微幅下降至 <strong>6.3</strong>，顯示市場熱情有所降溫。
+            </p>
+
+            <div class="grid-2">
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.1 "Scores on the Doors" -->
+                <div class="card-box">
+                    <h3>2025 年度至今各大類資產報酬排行</h3>
+                    <canvas id="chartYtdReturns" style="max-height: 350px; display: block; box-sizing: border-box; height: 350px; width: 420px;" width="420" height="350"></canvas>
+                </div>
+                
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.1 "Bull & Bear Indicator" -->
+                <div class="card-box">
+                    <h3>BofA 牛熊指標 (降至 6.3)</h3>
+                    <canvas id="chartBullAndBear" style="max-height: 200px; display: block; box-sizing: border-box; height: 200px; width: 420px;" width="420" height="200"></canvas>
+                    <p style="margin-top: 1rem; color: #4B5563; font-size: 0.95rem;">本週牛熊指標從 6.4 降至 <strong>6.3</strong> (SOP 2.2 粗體)。這主要是由於高收益債券流出、新興市場股票流入放緩、信用利差擴大以及避險基金轉向看空美國公債。</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem; font-size: 1.5rem; color: #655A4E;">本週與關鍵資金流向</h3>
+            <p style="font-size: 1.125rem; line-height: 1.75; margin: 1.5rem 0;">
+                本週資金流向顯示出避險與追逐風險並存的矛盾現象。債券流入 187 億美元，股票流入 183 億美元，現金流入 77 億美元，黃金也流入 29 億美元。值得注意的是「關鍵資金流」(Flows to Know)：
+                <strong>韓國股市</strong>出現史上第二大單週流入 (20 億美元)，創下 4 週最大流入紀錄 (38 億美元)。
+                <strong>醫療保健</strong>類股迎來 2021 年 1 月以來的最大單週流入 (19 億美元)。
+                <strong>能源</strong>類股也創下近 5 個月最大流入 (9 億美元)。
+                然而，<strong>日本股市</strong>卻出現近 5 週最大流出 (9 億美元)。
+            </p>
+
+            <div class="grid-2">
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.2 "Weekly Flows" -->
+                <div class="card-box">
+                    <h3>本週主要資產資金流向 (億美元)</h3>
+                    <canvas id="chartWeeklyFlows" style="max-height: 300px; display: block; box-sizing: border-box; height: 300px; width: 420px;" width="420" height="300"></canvas>
+                </div>
+                
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.5 Chart 11 & 12 -->
+                <div class="card-box">
+                    <h3>關鍵類股：韓國與醫療保健 (億美元)</h3>
+                    <canvas id="chartKoreaHealthcare" style="max-height: 300px; display: block; box-sizing: border-box; height: 300px; width: 420px;" width="420" height="300"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 第二章 (SOP 2.1 結構, 數據來自 PDF p.6) -->
+        <section style="margin-bottom: 3rem;">
+            <!-- SOP 2.1 動態標題 -->
+            <h2 class="section-title">第二章: 機構資金流向全解析 (股、債、商品)</h2>
+            
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-bottom: 1.5rem;">
+                深入探討機構資金的配置，我們可以看到更清晰的趨勢。在固定收益領域，資金正湧入 <strong>TIPS (抗通膨債券)</strong>、黃金和商品，同時從高收益債券流出，顯示市場正在為通膨和避險做準備。在股票方面，美國和新興市場是今年最大的贏家，而日本則出現小幅流出。
+            </p>
+
+            <div class="grid-2">
+                <!-- SOP 1.3 重製圖表 (表格), 數據來自 PDF p.6 Table 2 -->
+                <div class="card-box">
+                    <h3>年度至今各資產類別資金流 (百萬美元)</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>資產類別</th>
+                                    <th>年度至今 (YTD)</th>
+                                    <th>YTD % AUM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>股票 (Equities)</td>
+                                    <td>$637,178</td>
+                                    <td>2.7%</td>
+                                </tr>
+                                <tr>
+                                    <td>債券 (Bonds)</td>
+                                    <td>$669,841</td>
+                                    <td>7.8%</td>
+                                </tr>
+                                <tr>
+                                    <td>商品 (Commodities)</td>
+                                    <td>$137,172</td>
+                                    <td>19.7%</td>
+                                </tr>
+                                <tr>
+                                    <td>貨幣市場 (Money-market)</td>
+                                    <td>$1,026,444</td>
+                                    <td>10.4%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- SOP 1.3 重製圖表 (表格), 數據來自 PDF p.6 Table 3 -->
+                <div class="card-box">
+                    <h3>年度至今各區域股票資金流 (百萬美元)</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>股票區域</th>
+                                    <th>年度至今 (YTD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>美國 (US)</td>
+                                    <td>$296,121</td>
+                                </tr>
+                                <tr>
+                                    <td>歐洲 (Europe)</td>
+                                    <td>$50,893</td>
+                                </tr>
+                                <tr>
+                                    <td>日本 (Japan)</td>
+                                    <td>-$4,062</td>
+                                </tr>
+                                <tr>
+                                    <td>新興市場 (EM)</td>
+                                    <td>$69,930</td>
+                                </tr>
+                                <tr>
+                                    <td>國際 (International)</td>
+                                    <td>$197,552</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOP 1.3 重製圖表, 數據來自 PDF p.6 Chart 15 -->
+            <div class="card-box" style="margin-top: 1.5rem;">
+                <h3>本週固定收益與商品資金流 (FICC) (% AUM)</h3>
+                <canvas id="chartFiccFlows" style="max-height: 350px; display: block; box-sizing: border-box; height: 350px; width: 912px;" width="912" height="350"></canvas>
+            </div>
+        </section>
+
+        <!-- 第三章 (SOP 2.1 結構, 數據來自 PDF p.2, p.7) -->
+        <section style="margin-bottom: 3rem;">
+            <!-- SOP 2.1 動態標題 -->
+            <h2 class="section-title">第三章: 富豪的算盤：BofA 私人客戶增持成長股、減持銀行貸款</h2>
+            
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-bottom: 1.5rem;">
+                BofA 私人客戶管理著高達 <strong>4.2 兆美元</strong> 的龐大資產 (SOP 2.2 AUM -&gt; 總資產管理規模)，他們的動向極具參考價值。目前，這些高淨值客戶的資產配置為：<strong>64.6% 股票、18.0% 債券、10.3% 現金</strong>。股票配置 (65%) 遠高於長期平均 (56%)，而債券 (18%) 和現金 (10%) 則低於長期平均 (25% 和 12%)，顯示他們對市場保持著相對樂觀的態度。
+            </p>
+
+            <div class="grid-3">
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.7 Chart 17 -->
+                <div class="card-box">
+                    <h3>私人客戶股票配置 (% AUM)</h3>
+                    <canvas id="chartGwimEquity" style="max-height: 250px; display: block; box-sizing: border-box; height: 250px; width: 256px;" width="256" height="250"></canvas>
+                </div>
+                
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.7 Chart 18 -->
+                <div class="card-box">
+                    <h3>私人客戶債券配置 (% AUM)</h3>
+                    <canvas id="chartGwimDebt" style="max-height: 250px; display: block; box-sizing: border-box; height: 250px; width: 256px;" width="256" height="250"></canvas>
+                </div>
+                
+                <!-- SOP 1.3 重製圖表, 數據來自 PDF p.7 Chart 19 -->
+                <div class="card-box">
+                    <h3>私人客戶現金配置 (% AUM)</h3>
+                    <canvas id="chartGwimCash" style="max-height: 250px; display: block; box-sizing: border-box; height: 250px; width: 256px;" width="256" height="250"></canvas>
+                </div>
+            </div>
+
+            <p style="font-size: 1.125rem; line-height: 1.75; margin: 1.5rem 0;">
+                然而，在近 4 週的 ETF 資金流向中，我們看到了更細微的調整。私人客戶正在積極買入<strong>成長股 (Growth)</strong>、<strong>日本 (Japan)</strong> 和<strong>必需消費品 (Staples)</strong> 相關的 ETF。與此同時，他們在大幅賣出<strong>銀行貸款 (Bank loan)</strong>、<strong>金融 (Financials)</strong> 和<strong>市政債券 (Municipals)</strong> 的 ETF。
+            </p>
+
+            <!-- SOP 1.3 重製圖表, 數據來自 PDF p.7 Chart 16 -->
+            <div class="card-box">
+                <h3>BofA 私人客戶近4週ETF資金流向 (% AUM)</h3>
+                <canvas id="chartGwim4wFlows" style="max-height: 400px; display: block; box-sizing: border-box; height: 400px; width: 912px;" width="912" height="400"></canvas>
+            </div>
+
+            <div class="highlight-box">
+                <p style="font-size: 1.125rem; font-weight: 600;">
+                    <strong>解讀：</strong>這種操作顯示，高淨值客戶一方面仍在追逐市場的成長趨勢 (買入成長股和日本)，另一方面也在增加防禦性部位 (買入必需消費品)。同時，他們對利率敏感和潛在信用風險的領域 (如銀行貸款和金融股) 保持高度警惕，選擇獲利了結。
+                </p>
+            </div>
+        </section>
+
+        <!-- 最終章 (SOP 2.1 結構, 數據來自 PDF p.2-3) -->
+        <section style="margin-bottom: 3rem;">
+            <!-- SOP 2.1 結論章節 -->
+            <h2 class="section-title">最終章: 投資展望與三大策略指引 (FCI, PMI, CPI)</h2>
+            
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-bottom: 1.5rem;">
+                基於「大趨勢」(金融寬鬆見頂) 和「本週資金流」(分歧與避險)，BofA 團隊提出了三大核心交易劇本，這也是他們對未來的具體投資建議：
+            </p>
+
+            <!-- SOP 2.1 結論維度 3: BofA 關鍵現象與風險提示 -->
+            <div class="card-box">
+                <h3 style="border-bottom: 2px solid #EAE0D5; padding-bottom: 0.5rem;">1. 金融寬鬆 (FCI) 交易：做空 AI 巨頭債券</h3>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>劇本：</strong>過去一年市場上漲的「秘密武器」(167 次全球降息) 正在減弱，預計未來 12 個月降息次數將銳減至 81 次。金融狀況已經達到「最寬鬆」的高峰，信用利差也來到「最窄」的低谷。
+                </p>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>策略：</strong>隨著 AI 資本競賽升溫，科技巨頭需要巨額融資，他們的信用風險正在上升。因此，最佳的「FCI 交易」是<strong>做空 AI 超大型企業的公司債券</strong>。
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h3 style="border-bottom: 2px solid #EAE0D5; padding-bottom: 0.5rem;">2. 經濟成長 (PMI) 交易：做多商品、國際與小型股</h3>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>劇本：</strong>BofA 認為，在降稅、降息、降關稅以及美國本土製造 (reshoring) 政策的推動下，全球製造業採購經理人指數 (PMI) 將加速邁向 55 的擴張區間。
+                </p>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>策略：</strong>做多<strong>大宗商品</strong> (銅/油比已創 35 年新高)、與 PMI 相關的<strong>國際市場 (如中國、日本、德國)</strong>，以及 2025 年表現嚴重落後、估值處於幾十年低點的<strong>美國小型股</strong>。
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h3 style="border-bottom: 2px solid #EAE0D5; padding-bottom: 0.5rem;">3. 通膨降溫 (CPI) 交易：做多長天期公債</h3>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>劇本：</strong>「誰能解決負擔能力問題，誰就能贏得期中選舉。」BofA 預測美國政府將從「看不見的手」轉向「看得見的拳頭」，更強力地干預市場以控制價格，特別是能源、醫療、住房和公用事業。
+                </p>
+                <p style="margin-top: 1rem; line-height: 1.75;">
+                    <strong>策略：</strong>如果通膨 (CPI) 被壓低至 2%，這對長天期公債是極大利多。逆向的「CPI 交易」是<strong>做多長天期零息公債</strong> (SOP 2.2 ZROZ -&gt; 長天期零息公債)，並做空那些利潤可能被政府干預的「抑制通膨」相關類股。
+                </p>
+            </div>
+        </section>
+
+        <!-- 結語 (SOP 2.1 最終金句) -->
+        <section>
+            <h2 class="section-title">結語</h2>
+            
+            <!-- SOP 2.1 最終金句, 需符合主題且為經濟學家 -->
+            <div class="info-box" style="text-align: center;">
+                <p style="font-size: 1.25rem; font-weight: 600; font-style: italic; margin-bottom: 0.5rem;">
+                    "When the facts change, I change my mind. What do you do, sir?"
+                </p>
+                <p style="font-size: 0.95rem; color: #4B5563;">「當事實改變時，我就會改變我的想法。你會怎麼做，先生？」 - 約翰·梅納德·凱因斯 (John Maynard Keynes)</p>
+            </div>
+
+            <p style="font-size: 1.125rem; line-height: 1.75; margin-top: 1.5rem;">
+                當前的市場正處於「事實改變」的關鍵時刻。過去依賴的無限寬鬆 (FCI) 正在退場，而新的經濟現實 (PMI) 和政策現實 (CPI) 正在登場。這份報告揭示了三種截然不同但可能同時發生的劇本。對於投資小白來說，這意味著不能再單純依賴「買入並持有」大盤股。理解這些宏觀力量的轉變，並相應地調整您的資產配置 (無論是增加商品、公債還是小型股的曝險)，將是適應未來市場變局的關鍵。
+            </p>
+        </section>
+
+        <!-- 頁尾 (SOP 1.1 視覺複製) -->
+        <footer style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #E5E7EB; color: #6B7280; font-size: 0.75rem;">
+            <p style="margin-bottom: 0.5rem;">免責聲明:本報告內容僅為基於公開訊息的市場分析,不構成任何投資建議。</p>
+            <p>投資有風險,入市需謹慎。</p>
+            <p style="margin-top: 1rem; color: #9CA3AF;">BofA Global Research | 2025年11月13日</p>
+        </footer>
+    </div>
+
+    <!-- 下載按鈕 (SOP 1.1 視覺複製) -->
+    <button onclick="downloadReport()" class="download-btn" title="下載本頁報告">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+    </button>
+
+<!-- Chart.js 圖表腳本 (SOP 1.3, 1.4, 數據來自 PDF-FCI) -->
+<script>
+
+    // 下載報告功能 (SOP 範本複製)
+    function downloadReport() {
+        try {
+            // 檔名基於新報告主題
+            const dynamicFilename = "20251113_BofA_FlowShow_FCI_PMI_CPI.html"; 
+            
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = dynamicFilename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+
+        } catch (e) {
+            console.error("下載失敗:", e);
+        }
+    }
+
+    // SOP 1.3 儀表板插件 (複製自範本)
+    const gaugeTextPlugin = {
+      id: 'gaugeTextPlugin',
+      afterDraw(chart, args, options) {
+        if (chart.canvas.id !== 'chartBullAndBear') return;
+
+        const { ctx, chartArea: { top, right, bottom, left, width, height } } = chart;
+        ctx.save();
+        
+        const text = chart.data.datasets[0].data[0]; 
+        ctx.font = 'bold 3rem "Noto Sans TC", sans-serif'; 
+        ctx.fillStyle = '#655A4E';
+        ctx.textAlign = 'center';
+        
+        const x = left + width / 2;
+        const y = top + height * 0.9; 
+        
+        ctx.fillText(text, x, y);
+        ctx.restore();
+      }
+    };
+    Chart.register(gaugeTextPlugin);
+
+
+    window.addEventListener('load', function() {
+        
+        // SOP 1.4 try...catch 穩定性要求
+        
+        // 圖表1: 年度至今報酬率 (數據來自 PDF p.1 "Scores...")
+        try {
+            new Chart(document.getElementById('chartYtdReturns').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['黃金', '國際股票', '美股', '投資級債', '高收益債', '商品', '公債', '比特幣', '現金', '美元', '石油'],
+                    // 數據: gold 58.6%, international stocks 27.5%, US stocks 14.6%, IG 9.6%, HY 9.4%, commodities 7.2%, govt bonds 6.7%, bitcoin 5.8%, cash 3.7%, US dollar -8.6%, oil-17.8%
+                    datasets: [{
+                        data: [58.6, 27.5, 14.6, 9.6, 9.4, 7.2, 6.7, 5.8, 3.7, -8.6, -17.8],
+                        backgroundColor: function(context) {
+                            var value = context.parsed.y;
+                            return value >= 0 ? '#66BB6A' : '#EF5350';
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return context.parsed.y + '%'; }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { ticks: { callback: function(value) { return value + '%'; } } }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart YtdReturns Error:', e); }
+
+        // 圖表2: 牛熊指標 (數據來自 PDF p.1)
+        try {
+            const bnbValue = 6.3; // 來自 PDF p.1 "dips to 6.3"
+            let bnbColor = '#FFC107'; // 中性 (黃色)
+            if (bnbValue <= 2.0) bnbColor = '#4CAF50'; // 買進 (綠色)
+            if (bnbValue >= 8.0) bnbColor = '#F44336'; // 賣出 (紅色)
+
+            new Chart(document.getElementById('chartBullAndBear').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['B&B 指標', '剩餘'],
+                    datasets: [{
+                        data: [bnbValue, 10.0 - bnbValue],
+                        backgroundColor: [bnbColor, '#E0E0E0'],
+                        borderWidth: 0,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    circumference: 180,
+                    rotation: 270,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    cutout: '70%'
+                }
+            });
+        } catch (e) { console.error('Chart BullAndBear Error:', e); }
+
+        // 圖表3: 本週資金流向 (數據來自 PDF p.2 "Weekly Flows")
+        try {
+            new Chart(document.getElementById('chartWeeklyFlows').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    // 數據: $18.7bn to bonds, $18.3bn to stocks, $7.7bn to cash, $2.9bn to gold, $22mn to crypto
+                    labels: ['債券', '股票', '現金', '黃金', '加密貨幣'],
+                    datasets: [{
+                        data: [18.7, 18.3, 7.7, 2.9, 0.022], // 單位: 10 億美元
+                        backgroundColor: '#42A5F5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + ' 億美元';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart WeeklyFlows Error:', e); }
+
+        // 圖表4: 關鍵類股：韓國與醫療保健 (數據來自 PDF p.2 "Flows to Know" & p.5)
+        try {
+            new Chart(document.getElementById('chartKoreaHealthcare').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['韓國 (近4週)', '韓國 (本週)', '醫療保健 (本週)', '能源 (本週)'],
+                    // 數據: Korea largest 4-week inflow ever ($3.8bn), 2nd biggest inflow on record ($2.0bn)
+                    // 數據: Healthcare biggest inflow since Jan 21 ($1.9bn)
+                    // 數據: Energy largest inflow past 5 months ($0.9bn)
+                    datasets: [{
+                        data: [3.8, 2.0, 1.9, 0.9],
+                        backgroundColor: ['#42A5F5', '#42A5F5', '#66BB6A', '#FFA726']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return context.parsed.y + ' 億美元'; }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart KoreaHealthcare Error:', e); }
+
+        // 圖表5: 固定收益與商品資金流 (數據來自 PDF p.6 Chart 15)
+        try {
+            new Chart(document.getElementById('chartFiccFlows').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['TIPS', '黃金/白銀', '商品', '銀行貸款', '政府/公債', '投資級債', '新興市場債', '貨幣市場', '高收益債'],
+                    datasets: [{
+                        // 數據來自 p.6 Chart 15 (目測估計 % AUM)
+                        data: [0.38, 0.37, 0.33, 0.32, 0.30, 0.23, 0.12, 0.12, -0.01],
+                        backgroundColor: function(context) {
+                            var value = context.parsed.y;
+                            return value >= 0 ? '#42A5F5' : '#EF5350';
+                        }
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // 橫向柱狀圖
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return (context.parsed.x * 100).toFixed(2) + '% (佔 AUM)'; }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { callback: function(value) { return value * 100 + '%'; } } }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart FiccFlows Error:', e); }
+
+        // 圖表6: 私人客戶股票配置 (數據來自 PDF p.7 Chart 17)
+        try {
+            new Chart(document.getElementById('chartGwimEquity').getContext('2d'), {
+                type: 'line',
+                data: {
+                    // 數據來自 p.7 Chart 17 上的標記
+                    labels: ['2009 (低)', '2015 (高)', '2021 (高)', '2025 (現)'],
+                    datasets: [{
+                        label: '股票配置 %',
+                        data: [39, 63, 66, 65],
+                        borderColor: '#3b82f6',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { callback: function(value) { return value + '%'; } } }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart GwimEquity Error:', e); }
+
+        // 圖表7: 私人客戶債券配置 (數據來自 PDF p.7 Chart 18)
+        try {
+            new Chart(document.getElementById('chartGwimDebt').getContext('2d'), {
+                type: 'line',
+                data: {
+                    // 數據來自 p.7 Chart 18 上的標記
+                    labels: ['2009 (高)', '2022 (低)', '2025 (現)'],
+                    datasets: [{
+                        label: '債券配置 %',
+                        data: [34, 17, 18],
+                        borderColor: '#10b981',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { callback: function(value) { return value + '%'; } } }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart GwimDebt Error:', e); }
+
+        // 圖表8: 私人客戶現金配置 (數據來自 PDF p.7 Chart 19)
+        try {
+            new Chart(document.getElementById('chartGwimCash').getContext('2d'), {
+                type: 'line',
+                data: {
+                    // 數據來自 p.7 Chart 19 上的標記
+                    labels: ['2009 (高)', '2025 (現)'],
+                    datasets: [{
+                        label: '現金配置 %',
+                        data: [21, 10],
+                        borderColor: '#f97316',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { callback: function(value) { return value + '%'; } } }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart GwimCash Error:', e); }
+
+        // 圖表9: 私人客戶ETF流向 (數據來自 PDF p.7 Chart 16)
+        try {
+            new Chart(document.getElementById('chartGwim4wFlows').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['成長', '日本', '必需消費品', '投資級債', '股息', '高收益債', '價值', '房地產', '美國', '... (賣出)', '金融', '銀行貸款'],
+                    // 數據來自 p.7 Chart 16 (目測估計 % AUM)
+                    datasets: [{
+                        data: [2.0, 1.8, 1.2, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6, -1.0, -1.5, -2.8],
+                        backgroundColor: function(context) {
+                            var value = context.parsed.y;
+                            return value >= 0 ? '#42A5F5' : '#EF5350';
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) { return value + '%'; }
+                            },
+                            title: {
+                                display: true,
+                                text: '近4週資金流向 (佔 AUM %)'
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (e) { console.error('Chart Gwim4wFlows Error:', e); }
+
+    });
+</script>
+
+
+</body></html>
