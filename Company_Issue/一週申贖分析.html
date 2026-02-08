@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合庫投信 - 一週申贖彙總分析表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .tcb-green { color: #008751; }
+        .tcb-bg-green { background-color: #008751; }
+        .anue-highlight { background-color: #fff7ed; border: 1px solid #fdba74; }
+        .negative { color: #ef4444; }
+        .positive { color: #22c55e; }
+        table th, table td { border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
+        <!-- Header -->
+        <header class="tcb-bg-green p-6 text-white flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold">一週申贖彙總分析報告 (數據校正版)</h1>
+                <p class="text-sm opacity-90">分析期間：2026/02/02 － 2026/02/06</p>
+            </div>
+            <div class="text-right">
+                <span class="bg-white text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">合庫投信</span>
+                <p class="text-xs mt-1">產出日期：2026/02/08</p>
+            </div>
+        </header>
+
+        <main class="p-6 space-y-8">
+            <!-- 1. 每日資金進出彙總表 -->
+            <section>
+                <div class="flex items-center mb-4">
+                    <div class="w-1 h-6 tcb-bg-green mr-2"></div>
+                    <h2 class="text-lg font-bold text-gray-800">每日資金進出彙總 (百萬 TWD)</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-center border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 border-y border-gray-200">
+                                <th class="p-3 font-semibold">日期</th>
+                                <th class="p-3 font-semibold bg-green-50">一般型 (申/贖/淨)</th>
+                                <th class="p-3 font-semibold bg-blue-50">貨幣型 (申/贖/淨)</th>
+                                <th class="p-3 font-semibold">當日總淨流</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="p-3 font-medium">02/02 (一)</td>
+                                <td class="p-3">37.4 / 65.7 / <span class="negative">-28.4</span></td>
+                                <td class="p-3">55.3 / 330.4 / <span class="negative">-275.1</span></td>
+                                <td class="p-3 font-bold negative">-303.5</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">02/03 (二)</td>
+                                <td class="p-3">31.1 / 100.7 / <span class="negative">-69.6</span></td>
+                                <td class="p-3">74.7 / 252.8 / <span class="negative">-178.1</span></td>
+                                <td class="p-3 font-bold negative">-247.7</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">02/04 (三)</td>
+                                <td class="p-3">41.1 / 59.2 / <span class="negative">-18.1</span></td>
+                                <td class="p-3">89.7 / 1151.6 / <span class="negative">-1061.9</span></td>
+                                <td class="p-3 font-bold negative">-1080.0</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">02/05 (四)</td>
+                                <td class="p-3">38.7 / 74.4 / <span class="negative">-35.7</span></td>
+                                <td class="p-3">83.1 / 598.8 / <span class="negative">-515.7</span></td>
+                                <td class="p-3 font-bold negative">-551.4</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">02/06 (五)</td>
+                                <td class="p-3">111.4 / 56.4 / <span class="positive">55.1</span></td>
+                                <td class="p-3">408.0 / 39.6 / <span class="positive">368.4</span></td>
+                                <td class="p-3 font-bold positive">423.5</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-100 font-bold border-t-2 border-gray-300 text-gray-800">
+                                <td class="p-3 text-center">週總計</td>
+                                <td class="p-3">259.7 / 356.4 / <span class="negative">-96.7</span></td>
+                                <td class="p-3">710.8 / 2373.2 / <span class="negative">-1662.4</span></td>
+                                <td class="p-3 font-extrabold negative">-1759.1</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2. 一般型基金分析 -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 圖表區 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-md font-bold text-gray-700 mb-4">一般型基金週趨勢 (含標籤)</h3>
+                    <canvas id="generalChart" height="200"></canvas>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-md font-bold text-gray-700 mb-4">申購通路來源分析</h3>
+                    <canvas id="channelChart" height="200"></canvas>
+                </div>
+
+                <!-- Top 3 表格 -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-green-700 font-bold mr-2">●</span>
+                            <h4 class="text-sm font-bold text-gray-700">重點申購排名明細 (百萬)</h4>
+                        </div>
+                        <div class="overflow-x-auto border border-gray-200 rounded-lg text-xs">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-green-50 text-gray-600 border-b">
+                                    <tr>
+                                        <th class="p-2 border-r">基金名稱 (代表性數據)</th>
+                                        <th class="p-2 text-right border-r">全週總申購</th>
+                                        <th class="p-2 text-right bg-orange-100 text-orange-800 border-r font-bold">鉅亨專案 (含)</th>
+                                        <th class="p-2 text-right">直銷</th>
+                                        <th class="p-2 text-right">合庫銀</th>
+                                        <th class="p-2 text-right">彰銀</th>
+                                        <th class="p-2 text-right">其他(基富通等)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">16_台灣高科技</td>
+                                        <td class="p-2 text-right font-bold border-r">74.0</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">5.3</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                        <td class="p-2 text-right">58.2</td>
+                                        <td class="p-2 text-right">1.5</td>
+                                        <td class="p-2 text-right">14.3</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">01_台灣基金</td>
+                                        <td class="p-2 text-right font-bold border-r">27.0</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">5.8</td>
+                                        <td class="p-2 text-right">1.5</td>
+                                        <td class="p-2 text-right">16.4</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                        <td class="p-2 text-right">9.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">30_全球複合收益債</td>
+                                        <td class="p-2 text-right font-bold border-r">79.0</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">0.0</td>
+                                        <td class="p-2 text-right">72.7</td>
+                                        <td class="p-2 text-right">4.1</td>
+                                        <td class="p-2 text-right">2.2</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-red-700 font-bold mr-2">●</span>
+                            <h4 class="text-sm font-bold text-gray-700">重點贖回排名明細 (百萬)</h4>
+                        </div>
+                        <div class="overflow-x-auto border border-gray-200 rounded-lg text-xs">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-red-50 text-gray-600 border-b">
+                                    <tr>
+                                        <th class="p-2 border-r">基金名稱 (代表性數據)</th>
+                                        <th class="p-2 text-right border-r">全週總贖回</th>
+                                        <th class="p-2 text-right bg-orange-100 text-orange-800 border-r font-bold">鉅亨專案 (含)</th>
+                                        <th class="p-2 text-right">直銷</th>
+                                        <th class="p-2 text-right">合庫銀</th>
+                                        <th class="p-2 text-right">彰銀</th>
+                                        <th class="p-2 text-right">其他(玉山等)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">30_全球複合收益債</td>
+                                        <td class="p-2 text-right font-bold border-r">133.8</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">0.0</td>
+                                        <td class="p-2 text-right">12.1</td>
+                                        <td class="p-2 text-right">70.3</td>
+                                        <td class="p-2 text-right">41.4</td>
+                                        <td class="p-2 text-right">10.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">01_台灣基金</td>
+                                        <td class="p-2 text-right font-bold border-r">47.4</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">8.8</td>
+                                        <td class="p-2 text-right">5.1</td>
+                                        <td class="p-2 text-right">12.5</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                        <td class="p-2 text-right">29.8</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-medium border-r">16_台灣高科技</td>
+                                        <td class="p-2 text-right font-bold border-r">11.1</td>
+                                        <td class="p-2 text-right text-orange-600 anue-highlight border-r font-bold">8.4</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                        <td class="p-2 text-right">2.7</td>
+                                        <td class="p-2 text-right">0.0</td>
+                                        <td class="p-2 text-right">8.4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 貨幣型基金分析 -->
+            <section class="border-t pt-8">
+                <div class="flex items-center mb-4">
+                    <div class="w-1 h-6 bg-blue-600 mr-2"></div>
+                    <h2 class="text-lg font-bold text-gray-800">貨幣市場基金分析 (合庫貨幣市場基金)</h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1 bg-gray-50 p-4 rounded-lg text-center">
+                        <h4 class="text-xs font-bold text-gray-500 mb-2">週淨流動趨勢</h4>
+                        <canvas id="mmChart" height="250"></canvas>
+                    </div>
+                    <div class="lg:col-span-2 overflow-hidden border border-gray-200 rounded-lg">
+                        <table class="w-full text-sm text-left border-collapse">
+                            <thead class="bg-blue-50 text-gray-700">
+                                <tr>
+                                    <th class="p-3">通路結構</th>
+                                    <th class="p-3 text-right">申購額</th>
+                                    <th class="p-3 text-right">贖回額</th>
+                                    <th class="p-3 text-right">淨申贖</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr>
+                                    <td class="p-3 font-medium">直銷通路</td>
+                                    <td class="p-3 text-right">0.0</td>
+                                    <td class="p-3 text-right">1642.0</td>
+                                    <td class="p-3 text-right negative">-1642.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">合庫銀行</td>
+                                    <td class="p-3 text-right">651.3</td>
+                                    <td class="p-3 text-right">185.5</td>
+                                    <td class="p-3 text-right positive">+465.8</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">其他通路</td>
+                                    <td class="p-3 text-right">59.5</td>
+                                    <td class="p-3 text-right">545.7</td>
+                                    <td class="p-3 text-right negative">-486.2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-gray-50 p-6 text-center text-xs text-gray-400 border-t border-gray-100">
+            數據來源：2026/02/02-02/06 每日交易彙總郵件。註：鉅亨專案無複合債交易記錄。
+        </footer>
+    </div>
+
+    <script>
+        Chart.register(ChartDataLabels);
+        Chart.defaults.set('plugins.datalabels', {
+            anchor: 'end', align: 'top', offset: 4,
+            font: { size: 10, weight: 'bold' },
+            formatter: (v) => v.toFixed(1)
+        });
+
+        new Chart(document.getElementById('generalChart'), {
+            type: 'bar',
+            data: {
+                labels: ['02/02', '02/03', '02/04', '02/05', '02/06'],
+                datasets: [
+                    { label: '申購', data: [37.4, 31.1, 41.1, 38.7, 111.4], backgroundColor: '#22c55e' },
+                    { label: '贖回', data: [65.7, 100.7, 59.2, 74.4, 56.4], backgroundColor: '#ef4444' }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { grace: '15%' } } }
+        });
+
+        new Chart(document.getElementById('channelChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['合庫銀', '直銷', '其他'],
+                datasets: [{
+                    data: [78.7, 74.2, 106.8],
+                    backgroundColor: ['#008751', '#10b981', '#cbd5e1']
+                }]
+            },
+            options: { responsive: true, plugins: { datalabels: { color: '#fff' } } }
+        });
+
+        new Chart(document.getElementById('mmChart'), {
+            type: 'line',
+            data: {
+                labels: ['02/02', '02/03', '02/04', '02/05', '02/06'],
+                datasets: [{
+                    label: '淨申贖 (MM)',
+                    data: [-275.1, -178.1, -1061.9, -515.7, 368.4],
+                    borderColor: '#2563eb', pointBackgroundColor: '#2563eb', tension: 0.1, pointRadius: 5
+                }]
+            },
+            options: { responsive: true, plugins: { datalabels: { align: (c) => c.dataset.data[c.dataIndex] > 0 ? 'top' : 'bottom' } } }
+        });
+    </script>
+</body>
+</html>
