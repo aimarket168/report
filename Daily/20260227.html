@@ -1,0 +1,2082 @@
+<html lang="zh-TW"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjdiNWFlNDg4ZGU5NDlkNmY0OGJhYzU1ZmMwYTE1NzJlZTJmNjExMzciLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzExMTZkZTFjMzE5OTI2MTlfZmluYW5jaWFsX3JlcG9ydC5odG1sLTY2In0sImV4cCI6MTc3MjE1Mjc2MiwiaWF0IjoxNzcyMTQ5MTYyLCJhbGciOiJSUzI1NiJ9.DT7R6imK3SU6zEgh_A18yeRwhus6MS7mZFd891724W2Sss3b4bDtEKxh6YKy8fQq0K534JqQEZma70zG_kHRrHUJuPWBeG4JHEhaW0EU22hoXY89Mr6syp7BKk8a83snQ8lJ6VIqQ7KKtpivi8OPa3scZ_NjaXvM0d1GP9D5TiD7SEP6M8pINBNV43gSrBotJdFQ4Tq2aOXha-gxU3Oj9FhArfhyVqfoYcp38bndBtxVHYqUYocd_MZSGV4NED4zFIIxzyxM1xpRQNbVLDnrBYzJ_8sLcipA2bvHJXCoEJ9eaiLtcGsCOpUUqJh70uv7UVvydWjTKfypgMH4ticeaw","c_1116de1c31992619_financial_report.html-66")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年02月27日 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026年02月27日 金融市場日報|洞察•解構•透視全球資產">
+
+    <style>
+        /* 系統字體堆疊 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 標題階層 - 字體大小已調換 */
+        .main-title {
+            font-size: 2.5rem; /* 原為 3.125rem */
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4f46e5, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* --- v3.1.1 修正: 移除 max-width --- */
+        .sub-title {
+            font-size: 3.125rem; /* 原為 2.5rem */
+            font-weight: 600;
+            color: #2563eb;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            /* 移除 max-width */
+        }
+
+        @media (max-width: 768px) {
+             /* 響應式字體大小已調換 */
+            .main-title { font-size: 1.5rem; } /* 原為 1.875rem */
+            .sub-title { font-size: 1.875rem; } /* 原為 1.5rem */
+        }
+
+        /* 章節與容器 */
+        section { scroll-margin-top: 120px; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        h3.table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: left;
+            color: #374151;
+        }
+
+        .container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        @media (min-width: 768px) {
+            .container { padding: 2rem; }
+        }
+
+        /* 表格樣式 */
+        .table-styled {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+        .table-styled caption {
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            caption-side: top;
+        }
+        .table-styled thead th {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            text-align: center;
+        }
+        .table-styled thead th:first-child {
+            text-align: left;
+        }
+        .table-styled tbody td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 400; /* 強制所有表格內容為正常字重 */
+            text-align: center;
+        }
+        .table-styled tbody td:first-child {
+            text-align: left;
+            font-weight: 500; /* 第一欄稍加強調 */
+        }
+        /* 強制表格內容非粗體 */
+        .table-styled tbody td strong {
+             font-weight: normal !important;
+        }
+        /* 允許特定行加粗 */
+         .table-styled tbody tr.summary-row td {
+            font-weight: 600 !important; /* 針對總計行加粗 */
+            border-top: 2px solid #e5e7eb;
+         }
+
+
+        /* 漲跌顏色 */
+        .text-up { color: #dc2626; font-weight: 600; }
+        .text-down { color: #059669; font-weight: 600; }
+        .text-flat { color: #6b7280; font-weight: 500; }
+
+        /* 熱度條 */
+        .heat-container {
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .heat-item {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 2.5rem;
+        }
+        .heat-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 文字靠左 */
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            height: 100%;
+            border-radius: 8px 0 0 8px; /* 只有左邊圓角 */
+            transition: all 0.3s ease;
+            white-space: nowrap; /* 防止文字換行 */
+            overflow: hidden; /* 隱藏超出部分 */
+            text-overflow: ellipsis; /* 超出部分顯示省略號 */
+        }
+        .heat-bar-1 { background: #dc2626; width: 100%; border-radius: 8px; } /* 100% 兩邊都圓角 */
+        .heat-bar-2 { background: #dc2626; width: 92%; }
+        .heat-bar-3 { background: #ea580c; width: 84%; }
+        .heat-bar-4 { background: #ea580c; width: 76%; }
+        .heat-bar-5 { background: #d97706; width: 68%; }
+        .heat-bar-6 { background: #d97706; width: 60%; }
+        .heat-bar-7 { background: #eab308; width: 52%; color: #1f2937; }
+        .heat-bar-8 { background: #eab308; width: 44%; color: #1f2937; }
+        .heat-bar-9 { background: #84cc16; width: 36%; color: #1f2937; }
+        .heat-bar-10 { background: #84cc16; width: 28%; color: #1f2937; }
+
+        /* 卡片 */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .section-card:first-child { margin-top: 0.5rem; }
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-left-color: #4f46e5;
+        }
+
+        /* 導覽列 */
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .nav-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+        }
+        .nav-content::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
+        .nav-links-group {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            align-items: center;
+            min-width: fit-content;
+        }
+        .nav-links-group a {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: #dc2626;
+            color: white;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .nav-links-group a:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+        .nav-links-group .download-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .nav-links-group .download-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+
+        /* 時間軸標籤 */
+        .timeline-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.75rem;
+            vertical-align: top;
+        }
+        .timeline-tag-taiwan { background: #f1f5f9; color: #1e293b; }
+        .timeline-tag-us { background: #f1f5f9; color: #dc2626; }
+        .timeline-container p {
+            margin: 0;
+            padding: 0.125rem 0;
+            line-height: 1.4;
+             /* 字數控制由JS確保, CSS不強制 */
+        }
+
+        /* --- v3.1.9 保持 v3.1.8 的深度分析格式 --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的深度分析格式 --- */
+        .analysis-block {
+            background: #fffbeb; /* 淺黃色背景 */
+            border-left: 4px solid #f59e0b; /* 琥珀色左邊框 */
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .analysis-block h4 { /* v2.8 "深度分析:" 標題樣式 */
+            font-weight: 600;
+            color: #92400e; /* 深琥珀色 */
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+        .structured-analysis p { /* v2.8 分析段落樣式 */
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .structured-analysis p:last-child {
+            margin-bottom: 0;
+        }
+        .structured-analysis strong { /* v2.8 段落內粗體標題樣式 */
+             display: inline; /* 與內容同行 */
+             margin-right: 0.5em; /* 和內容稍微隔開 */
+             color: #92400e; /* 深琥珀色 */
+             font-size: 1rem;
+             font-weight: 700;
+        }
+         /* v2.8 不使用 br 換行 */
+         .structured-analysis br {
+            display: none;
+         }
+
+        /* 市場數據卡片 */
+        .market-overview-custom { margin: 1.5rem 0; }
+        .market-overview-row-1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        /* --- v3.1.3 修正: 並排斷點改為 lg --- */
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } /* For Top10/Timeline */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); } /* Default for small screens */
+        @media (min-width: 1024px) { /* lg breakpoint */
+          .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        .market-overview-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 3fr; /* 保持1:3比例 */
+            gap: 1.5rem;
+        }
+        .market-card-new {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            display: flex; /* 使用 Flexbox 布局 */
+            flex-direction: column; /* 垂直排列 */
+            justify-content: space-between; /* 內容均勻分布 */
+            min-height: 120px; /* 設定最小高度 */
+        }
+        .market-card-new:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .market-card-new.us-stock { border-left: 4px solid #dc2626; }
+        .market-card-new.tw-stock { border-left: 4px solid #059669; }
+        .market-card-new.bond { border-left: 4px solid #2563eb; }
+        .market-card-new.commodity { border-left: 4px solid #f59e0b; }
+        .market-card-new.fx { border-left: 4px solid #0891b2; }
+        .market-card-title-new {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        .market-card-value-new {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.2rem;
+        }
+         .market-card-value-new strong { font-weight: 700 !important; } /* 確保卡片數值加粗 */
+        .market-card-change-new {
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: auto; /* 將描述文字推到底部 */
+        }
+         .market-card-change-new strong { font-weight: bold !important; } /* 確保卡片漲跌幅加粗 */
+
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章表格樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章表格樣式 --- */
+        .analysis-table { /* v2.8 style */
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-spacing: 0;
+            table-layout: fixed;
+        }
+        .analysis-table th:first-child, .analysis-table td:first-child {
+            width: 30%; /* v2.8 寬度 */
+            padding-left: 0.75rem;
+            vertical-align: top;
+        }
+        .analysis-table th:last-child, .analysis-table td:last-child {
+            width: 70%; /* v2.8 寬度 */
+            padding-right: 0.75rem;
+            vertical-align: top;
+        }
+        .analysis-table td { /* v2.8 style */
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            word-wrap: break-word;
+            text-align: left; /* v2.8 靠左對齊 */
+            font-weight: 400 !important; /* 強制非粗體 */
+        }
+        .analysis-table th { /* v2.8 style */
+            background: #f8fafc;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+            color: #374151;
+        }
+        .analysis-table td strong { font-weight: normal !important; } /* 強制非粗體 */
+        .analysis-table .font-semibold { font-weight: 600 !important; } /* 允許維度名稱加粗 */
+
+
+        /* 個股推薦卡片 */
+        .stock-recommendation {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的 class name (修改買進/賣出為看多/看空) --- */
+        .stock-recommendation.bullish { border-left: 4px solid #059669; } /* 改為 bullish */
+        .stock-recommendation.bearish { border-left: 4px solid #dc2626; } /* 改為 bearish */
+        .recommendation-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) の class name (修改買進/賣出為看多/看空) --- */
+        .recommendation-title.bullish { color: #059669; } /* 改為 bullish */
+        .recommendation-title.bearish { color: #dc2626; } /* 改為 bearish */
+
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章按鈕樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章按鈕樣式 --- */
+        .link-button-container { /* v2.8 container */
+             display: flex;
+             flex-direction: column;
+             gap: 0.5rem;
+             width: 100%; /* 確保容器寬度 */
+             align-items: flex-start; /* 按鈕靠左 */
+        }
+        .link-button { /* v2.8 style */
+            display: block; /* 改回 block */
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+            width: 95%; /* 調整寬度 */
+            max-width: 150px; /* 最大寬度 */
+            margin: 0; /* 移除 auto margin */
+            font-size: 0.875rem;
+            box-sizing: border-box; /* 包含 padding */
+        }
+        .link-button.fundamental { background: #2563eb; color: white; }
+        .link-button.fundamental:hover { background: #1d4ed8; }
+        .link-button.technical { background: #374151; color: white; }
+        .link-button.technical:hover { background: #111827; }
+        .link-button-subtitle {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+
+        /* 回頂按鈕 */
+        .back-to-top {
+            position: fixed;
+            left: 1.5rem;
+            bottom: 1.5rem;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.125rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 40;
+            transition: all 0.2s ease;
+        }
+        .back-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 進度條 */
+        .progress-bar {
+            height: 3px;
+            background: #4f46e5;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        /* 網格佈局 (通用) */
+        .grid { display: grid; }
+        .gap-8 { gap: 2rem; }
+
+        /* TL;DR區塊 */
+        .tldr-block {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .tldr-block ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+        }
+        /* --- v3.1.1 修正: 移除 max-width --- */
+        .tldr-block li {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            position: relative;
+            /* 移除 max-width */
+        }
+        .tldr-block li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+         /* --- v3.1.10 修正: TL;DR 區塊內的 strong 標籤改為粗體 --- */
+         .tldr-block li strong {
+            font-weight: 700 !important;
+         }
+
+        /* 響應式 */
+        @media (max-width: 1024px) {
+            .market-overview-row-1 { grid-template-columns: repeat(2, 1fr); }
+            /* lg斷點以下 (平板) Top10/時間軸垂直排列已由上方 grid-cols-1 處理 */
+        }
+        @media (max-width: 768px) {
+            .grid-cols-2, .lg\:grid-cols-2 { grid-template-columns: 1fr; } /* 手機全部垂直排列 */
+            .market-overview-row-1,
+            .market-overview-row-2 { grid-template-columns: 1fr; }
+            .back-to-top { left: 1rem; bottom: 5rem; }
+            /* --- v3.1.9 維持 v3.1.8 的手機表格寬度 --- */
+            /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章手機表格寬度 --- */
+            .analysis-table th:first-child, .analysis-table td:first-child {
+                width: 40%; /* v2.8 手機版寬度 */
+            }
+            .analysis-table th:last-child, .analysis-table td:last-child {
+                width: 60%; /* v2.8 手機版寬度 */
+            }
+
+            .nav-content {
+                justify-content: flex-start;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .nav-links-group { gap: 0.75rem; }
+        }
+
+        /* 工具類 */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-semibold { font-weight: 600; }
+        .text-xs { font-size: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .overflow-x-auto { overflow-x: auto; }
+
+        @media print {
+            .nav-sticky, .back-to-top, .download-btn, .progress-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 進度條 -->
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; transition: opacity 0.5s ease-out; display: none;"></div>
+
+<!-- 導覽工具列 -->
+<div class="nav-sticky">
+    <div class="nav-content">
+        <div class="nav-links-group">
+            <a href="#sec-1">市場總覽</a>
+            <a href="#sec-2">歐美股市</a>
+            <a href="#sec-3">債券市場</a>
+            <a href="#sec-4">大宗商品</a>
+            <a href="#sec-5">台股解析</a>
+            <a href="#sec-6">匯率市場</a>
+            <a href="#sec-7">產業展望</a>
+            <button class="download-btn" id="smartDownloadBtn">🔥 下載日報</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- 標題 -->
+    <header style="text-align: center; margin: 0;">
+        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026年02月27日 金融市場日報</h1>
+        <p class="sub-title" style="margin: 0;">節前賣壓台股平盤震盪 美光財測失利重挫半導體</p>
+    </header>
+
+    <!-- 第1章:市場總覽與重點 -->
+    <section id="sec-1" class="section-card">
+        <h2 style="color: #015fb4;"><span style="margin-right: 0.75rem;">📋</span>第1章｜市場總覽與重點</h2>
+
+        <div class="tldr-block" style="background: #f0f9ff;">
+            <h3 class="table-title">市場三大要點</h3>
+            <ul>
+                <li style="color: #015fb4;"><strong>美光財測失利：</strong>PC與手機需求疲軟拖累半導體板塊，費半指數面臨顯著修正</li>
+                <li style="color: #015fb4;"><strong>台股節前觀望：</strong>長假前夕獲利了結賣壓出籠，大盤呈現高檔震盪最終平盤作收</li>
+                <li style="color: #015fb4;"><strong>通膨數據發布：</strong>美國PCE指數符合市場預期，投資人重新評估聯準會降息路徑</li>
+            </ul>
+        </div>
+
+        <div class="market-overview-custom">
+            <h3 class="table-title">市場核心數據速覽</h3>
+            <div class="market-overview-row-1">
+                <div class="market-card-new us-stock">
+                    <div class="market-card-title-new">美股市場</div>
+                    <div class="market-card-value-new">標普500 <strong>6,908.86</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-0.54%</strong> • 美光財測拖累科技股，大盤面臨獲利了結賣壓。</div>
+                </div>
+                <div class="market-card-new tw-stock">
+                    <div class="market-card-title-new">台股市場</div>
+                    <div class="market-card-value-new">加權 <strong>35,414.49</strong></div>
+                    <div class="market-card-change-new text-flat">— <strong>0.00%</strong> • 節前觀望氣氛極濃厚，指數高檔震盪平盤作收。</div>
+                </div>
+                <div class="market-card-new bond">
+                    <div class="market-card-title-new">債券市場</div>
+                    <div class="market-card-value-new">10年期殖利率 <strong>3.96%</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-2.5 bps</strong> • 數據符合市場降息預期，十年期殖利率微幅下行。</div>
+                </div>
+                <div class="market-card-new commodity">
+                    <div class="market-card-title-new">大宗商品</div>
+                    <div class="market-card-value-new">黃金期貨 <strong>5,200.70</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-0.68%</strong> • 降息預期降溫推升美元，金價面臨多頭獲利了結。</div>
+                </div>
+            </div>
+            <div class="market-overview-row-2">
+                <div class="market-card-new fx">
+                    <div class="market-card-title-new">匯率市場</div>
+                    <div class="market-card-value-new">美元指數 <strong>97.78</strong></div>
+                    <div class="market-card-change-new text-up">▲ <strong>+0.08%</strong> • 通膨數據展現強大韌性，支撐美元指數微幅反彈。</div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+
+         <!-- --- v3.1.3 修正: 並排斷點改為 lg --- -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+                <h3 class="table-title">Top 10 市場熱點事件榜</h3>
+                <div class="heat-container">
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">美光財測降</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">費半重挫三</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">台股節前拋</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">比特幣跌破</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">PCE符預期</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">長榮逆勢揚</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">微策略拋售</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">外資加空單</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">網飛併購戰</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">ASML量產成</div></div>
+                </div>
+                <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
+            </div>
+            <div>
+                <h3 class="table-title">市場關鍵時間軸</h3>
+                <div class="structured-analysis space-y-4 timeline-container">
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 07:15</span>聯發科宣布推出新一代AI晶片，積極搶攻邊緣運算市場以擴大其在全球晶片設計領域的市占率。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 09:30</span>台股面臨長假前夕的獲利了結賣壓，早盤指數一度急殺逾兩百點回測支撐，市場交投轉趨謹慎。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:15</span>航運族群受惠於運價看漲的預期心理，長榮與陽明等指標股展現逆勢抗跌力道，成為盤中避風港。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 15:00</span>期貨市場數據顯示外資顯著加碼台指期空單部位，引發市場對於長假過後向下變盤的擔憂情緒。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 17:30</span>金管會正式啟動權證提前下市機制，逾三百檔流動性低迷的殭屍權證順利退場，提升市場效率。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 20:30</span>美國公布個人消費支出(PCE)物價指數符合預期，投資人根據數據重新評估通膨路徑與降息可能。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 21:15</span>設備廠ASML宣布其次世代EUV設備已可正式用於量產階段，為AI高階晶片製造迎來關鍵性轉折。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:30</span>串流巨頭網飛在收購派拉蒙的競爭中面臨華納出價挑戰，引發媒體板塊資金在兩強之間重新分配。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 02:00</span>虛擬貨幣市場延續拋售潮，比特幣跌破九萬美元關卡，拖累微策略等相關概念股持續大幅下挫。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤後 05:30</span>記憶體大廠美光發布疲軟財測，示警消費性電子復甦步調緩慢，引爆半導體板塊盤後停損賣壓。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第2章:歐美股市 -->
+    <section id="sec-2" class="section-card">
+        <h2 style="color: #dc2626;"><span style="margin-right: 0.75rem;">📈</span>第2章｜歐美股市</h2>
+
+        <div class="tldr-block" style="background: #fef2f2;">
+            <ul>
+                <li style="color: #dc2626;"><strong>半導體遭重擊：</strong>美光財測揭露終端消費電子復甦乏力，引發資金撤出科技股，費半重挫逾3%</li>
+                <li style="color: #dc2626;"><strong>資金輪動避險：</strong>在大型科技股估值面臨考驗之際，部分資金轉入羅素2000等中小型與防禦板塊</li>
+                <li style="color: #dc2626;"><strong>併購題材發酵：</strong>媒體串流業整併戰白熱化，華納與網飛爭奪派拉蒙引發相關個股股價劇烈波動</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">歐美主要股市行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>歐美主要股市指數漲跌概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新收盤價</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>道瓊工業指數</td>
+                        <td><strong>49,499.20</strong></td>
+                        <td class="text-up"><strong>+0.03%</strong></td>
+                        <td class="text-down"><strong>-0.33%</strong></td>
+                        <td class="text-up"><strong>+0.82%</strong></td>
+                        <td class="text-up"><strong>+5.07%</strong></td>
+                        <td class="text-up"><strong>+2.99%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>標普500</td>
+                        <td><strong>6,908.86</strong></td>
+                        <td class="text-down"><strong>-0.54%</strong></td>
+                        <td class="text-up"><strong>+0.40%</strong></td>
+                        <td class="text-down"><strong>-0.10%</strong></td>
+                        <td class="text-up"><strong>+2.11%</strong></td>
+                        <td class="text-up"><strong>+0.93%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>那斯達克</td>
+                        <td><strong>22,878.38</strong></td>
+                        <td class="text-down"><strong>-1.18%</strong></td>
+                        <td class="text-up"><strong>+0.55%</strong></td>
+                        <td class="text-down"><strong>-2.65%</strong></td>
+                        <td class="text-down"><strong>-0.64%</strong></td>
+                        <td class="text-down"><strong>-1.56%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>費城半導體指數</td>
+                        <td><strong>8,197.26</strong></td>
+                        <td class="text-down"><strong>-3.19%</strong></td>
+                        <td class="text-down"><strong>-0.21%</strong></td>
+                        <td class="text-up"><strong>+3.01%</strong></td>
+                        <td class="text-up"><strong>+22.09%</strong></td>
+                        <td class="text-up"><strong>+15.73%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>羅素2000</td>
+                        <td><strong>2,677.29</strong></td>
+                        <td class="text-up"><strong>+0.52%</strong></td>
+                        <td class="text-up"><strong>+0.70%</strong></td>
+                        <td class="text-up"><strong>+0.30%</strong></td>
+                        <td class="text-up"><strong>+8.57%</strong></td>
+                        <td class="text-up"><strong>+7.87%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>道瓊歐洲50</td>
+                        <td><strong>6,161.56</strong></td>
+                        <td class="text-down"><strong>-0.19%</strong></td>
+                        <td class="text-up"><strong>+0.95%</strong></td>
+                        <td class="text-up"><strong>+3.59%</strong></td>
+                        <td class="text-up"><strong>+10.54%</strong></td>
+                        <td class="text-up"><strong>+6.30%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                 <p><strong>美光財測重擊半導體</strong><br>美光科技釋出遠遜於預期的財報指引，揭露PC與智慧型手機等終端消費性電子復甦步調依然疲弱。此消息猶如震撼彈，直接引發資金全面撤出晶片股，導致費城半導體指數重挫3.19%，成為盤面最弱勢的重災區。市場正重新評估AI以外硬體市場的真實需求。</p>
+                 <p><strong>資金轉向低基期板塊</strong><br>此情勢下最大的風險是AI高估值遭遇獲利了結，而機會在於資金輪動至具備補漲潛力的防禦性標的。盤面上，羅素2000指數逆勢上漲0.52%，顯示部分熱錢正由大型科技權值股流出轉向中小型股。後續需密切觀察就業數據，作為研判美國經濟是否面臨放緩風險的核心指標。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第3章:債券市場 -->
+    <section id="sec-3" class="section-card">
+        <h2 style="color: #2563eb;"><span style="margin-right: 0.75rem;">🏛️</span>第3章｜債券市場</h2>
+
+        <div class="tldr-block" style="background: #eff6ff;">
+            <ul>
+                <li style="color: #2563eb;"><strong>通膨數據落定：</strong>美國PCE物價指數符合預期，消除了市場對通膨失控的疑慮，美債殖利率下探</li>
+                <li style="color: #2563eb;"><strong>降息路徑明朗：</strong>穩定的物價數據為聯準會維持漸進式寬鬆政策提供支撐，長天期公債買盤湧現</li>
+                <li style="color: #2563eb;"><strong>信用債具韌性：</strong>儘管股市科技板塊大幅回檔，但高收益債券跌幅有限，顯示企業違約風險偏低</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">主要債券與殖利率行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>主要債券與殖利率變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新殖利率/價格</th>
+                        <th>日變動</th>
+                        <th>五日變動</th>
+                        <th>月變動</th>
+                        <th>季變動</th>
+                        <th>年初至今變動</th>
+                    </tr>
+                </thead>
+                <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>美國3月期殖利率</td>
+                        <td><strong>3.59%</strong></td>
+                        <td class="text-flat"><strong>+0.0 bps</strong></td>
+                        <td class="text-down"><strong>-2.2 bps</strong></td>
+                        <td class="text-up"><strong>+0.8 bps</strong></td>
+                        <td class="text-down"><strong>-14.7 bps</strong></td>
+                        <td class="text-up"><strong>+4.1 bps</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國5年期殖利率</td>
+                        <td><strong>3.53%</strong></td>
+                        <td class="text-down"><strong>-3.6 bps</strong></td>
+                        <td class="text-down"><strong>-13.6 bps</strong></td>
+                        <td class="text-down"><strong>-29.0 bps</strong></td>
+                        <td class="text-down"><strong>-6.2 bps</strong></td>
+                        <td class="text-down"><strong>-15.3 bps</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國10年期殖利率</td>
+                        <td><strong>3.96%</strong></td>
+                        <td class="text-down"><strong>-2.5 bps</strong></td>
+                        <td class="text-down"><strong>-12.7 bps</strong></td>
+                        <td class="text-down"><strong>-23.4 bps</strong></td>
+                        <td class="text-down"><strong>-8.7 bps</strong></td>
+                        <td class="text-down"><strong>-17.1 bps</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國30年期殖利率</td>
+                        <td><strong>4.65%</strong></td>
+                        <td class="text-down"><strong>-2.2 bps</strong></td>
+                        <td class="text-down"><strong>-8.2 bps</strong></td>
+                        <td class="text-down"><strong>-14.3 bps</strong></td>
+                        <td class="text-down"><strong>-5.9 bps</strong></td>
+                        <td class="text-down"><strong>-16.7 bps</strong></td>
+                    </tr>
+                    <tr>
+                        <td>高收益債券ETF(HYG)</td>
+                        <td><strong>80.85</strong></td>
+                        <td class="text-down"><strong>-0.09%</strong></td>
+                        <td class="text-down"><strong>-0.07%</strong></td>
+                        <td class="text-down"><strong>-0.36%</strong></td>
+                        <td class="text-down"><strong>-0.02%</strong></td>
+                        <td class="text-up"><strong>+0.27%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>新興市場美元債ETF(EMB)</td>
+                        <td><strong>97.68</strong></td>
+                        <td class="text-down"><strong>-0.06%</strong></td>
+                        <td class="text-up"><strong>+0.02%</strong></td>
+                        <td class="text-up"><strong>+0.99%</strong></td>
+                        <td class="text-up"><strong>+1.12%</strong></td>
+                        <td class="text-up"><strong>+1.45%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>通膨數據鞏固降息預期</strong><br>美國最新個人消費支出(PCE)物價指數完全符合市場預期，消除了通膨意外反撲的隱憂。此數據促使美國10年期公債殖利率進一步下探2.5個基點至3.96%。穩定的通膨路徑為聯準會維持漸進式降息提供了堅實的數據支撐，帶動資金回流債市。</p>
+                <p><strong>信用利差維持相對穩定</strong><br>此情勢下最大的風險是聯準會官員在會後釋出過度保守的言論，而機會在於資金轉入高評級公司債鎖定長期固定收益。盤面上，新興市場美元債與高收益債券ETF跌幅微小，反映全球流動性充裕且企業違約風險並未攀升。未來需觀察聯準會利率點陣圖的變化以確認方向。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第4章:大宗商品 -->
+    <section id="sec-4" class="section-card">
+        <h2 style="color: #cc4e01;"><span style="margin-right: 0.75rem;">🔥</span>第4章｜大宗商品</h2>
+
+        <div class="tldr-block" style="background: #fffbeb;">
+            <ul>
+                <li style="color: #cc4e01;"><strong>金價面臨修正：</strong>降息預期未能進一步發酵，配合美元反彈，黃金期貨遭遇多頭獲利了結</li>
+                <li style="color: #cc4e01;"><strong>原油走勢分化：</strong>布蘭特原油微幅收高，但WTI原油受制於美國庫存疑慮而呈現小幅下跌</li>
+                <li style="color: #cc4e01;"><strong>加密貨幣跳水：</strong>比特幣失守九萬美元大關，引爆高槓桿投機資金的大規模多殺多踩踏</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">能源與商品市場行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>能源與商品市場價格變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新價格</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>WTI原油</td>
+                        <td><strong>65.24</strong></td>
+                        <td class="text-down"><strong>-0.28%</strong></td>
+                        <td class="text-up"><strong>+0.08%</strong></td>
+                        <td class="text-up"><strong>+6.83%</strong></td>
+                        <td class="text-up"><strong>+12.58%</strong></td>
+                        <td class="text-up"><strong>+13.62%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>布蘭特原油</td>
+                        <td><strong>70.86</strong></td>
+                        <td class="text-up"><strong>+0.01%</strong></td>
+                        <td class="text-up"><strong>+0.72%</strong></td>
+                        <td class="text-up"><strong>+7.56%</strong></td>
+                        <td class="text-up"><strong>+11.23%</strong></td>
+                        <td class="text-up"><strong>+16.45%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>黃金期貨</td>
+                        <td><strong>5,200.70</strong></td>
+                        <td class="text-down"><strong>-0.68%</strong></td>
+                        <td class="text-up"><strong>+0.01%</strong></td>
+                        <td class="text-up"><strong>+4.98%</strong></td>
+                        <td class="text-up"><strong>+26.11%</strong></td>
+                        <td class="text-up"><strong>+20.12%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>基礎金屬ETF (DBB)</td>
+                        <td><strong>23.36</strong></td>
+                        <td class="text-down"><strong>-0.47%</strong></td>
+                        <td class="text-down"><strong>-0.17%</strong></td>
+                        <td class="text-down"><strong>-1.02%</strong></td>
+                        <td class="text-up"><strong>+9.21%</strong></td>
+                        <td class="text-up"><strong>+1.85%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>降息預期降溫壓抑金價</strong><br>由於PCE數據並未顯示美國經濟有加速放緩的跡象，市場對聯準會激進降息的預期隨之降溫。配合美元指數微幅反彈，導致黃金期貨面臨顯著的多頭獲利了結賣壓，單日下跌0.68%。這顯示貴金屬在突破歷史高點後，正進入實質性的技術面修正與籌碼沉澱階段。</p>
+                <p><strong>地緣變數牽動能源市場</strong><br>此情勢下最大的風險是加密貨幣崩跌引發流動性危機，而機會在於逢低佈局具備長期供需緊平衡的工業基礎金屬。盤面上，原油價格受到美伊談判進展的不確定性影響而呈現窄幅震盪。後續需持續關注全球製造業PMI數據，作為評估大宗商品實質需求復甦的關鍵指標。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第5章:台股解析 -->
+    <section id="sec-5" class="section-card">
+        <h2 style="color: #059669;"><span style="margin-right: 0.75rem;">🗻</span>第5章｜台股解析</h2>
+
+        <div class="tldr-block" style="background: #f0fdf4;">
+            <ul>
+                <li style="color: #059669;"><strong>節前賣壓湧現：</strong>長假前夕投資人避險意識升高，台股早盤遭遇急殺後收斂跌幅平盤作收</li>
+                <li style="color: #059669;"><strong>外資終止連買：</strong>熱錢匯入暫歇，外資單日轉為賣超逾八十億元，籌碼面呈現轉弱跡象</li>
+                <li style="color: #059669;"><strong>航運逆勢抗跌：</strong>在全球科技股回檔與運價看漲的雙重效應下，資金轉入航運族群避險</li>
+            </ul>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>亞洲主要股市指數漲跌概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新收盤價</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>台灣加權指數</td>
+                        <td><strong>35,414.49</strong></td>
+                        <td class="text-flat"><strong>+0.00%</strong></td>
+                        <td class="text-up"><strong>+5.38%</strong></td>
+                        <td class="text-up"><strong>+12.29%</strong></td>
+                        <td class="text-up"><strong>+35.37%</strong></td>
+                        <td class="text-up"><strong>+22.28%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>日經225</td>
+                        <td><strong>57,639.26</strong></td>
+                        <td class="text-down"><strong>-0.10%</strong></td>
+                        <td class="text-up"><strong>+0.21%</strong></td>
+                        <td class="text-up"><strong>+6.47%</strong></td>
+                        <td class="text-up"><strong>+19.26%</strong></td>
+                        <td class="text-up"><strong>+14.62%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>香港恆生指數</td>
+                        <td><strong>27,273.81</strong></td>
+                        <td class="text-flat"><strong>+0.00%</strong></td>
+                        <td class="text-up"><strong>+3.16%</strong></td>
+                        <td class="text-up"><strong>+2.53%</strong></td>
+                        <td class="text-up"><strong>+8.54%</strong></td>
+                        <td class="text-up"><strong>+6.40%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>韓國KOSPI</td>
+                        <td><strong>6,056.40</strong></td>
+                        <td class="text-up"><strong>+0.74%</strong></td>
+                        <td class="text-up"><strong>+9.07%</strong></td>
+                        <td class="text-up"><strong>+20.95%</strong></td>
+                        <td class="text-up"><strong>+55.74%</strong></td>
+                        <td class="text-up"><strong>+42.66%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>印度SENSEX</td>
+                        <td><strong>83,728.84</strong></td>
+                        <td class="text-up"><strong>+0.35%</strong></td>
+                        <td class="text-up"><strong>+0.79%</strong></td>
+                        <td class="text-up"><strong>+1.48%</strong></td>
+                        <td class="text-down"><strong>-2.15%</strong></td>
+                        <td class="text-down"><strong>-2.09%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+
+        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-02-27)</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>台股三大法人買賣超統計</caption>
+                <thead>
+                    <tr>
+                        <th>法人別</th>
+                        <th>當日淨額(億)</th>
+                        <th>5日累計(億)</th>
+                        <th>20日累計(億)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>外資</td>
+                        <td class="text-down"><strong>-83.52</strong></td>
+                        <td class="text-up"><strong>+1340.39</strong></td>
+                        <td class="text-up"><strong>+563.67</strong></td>
+                    </tr>
+                    <tr>
+                        <td>投信</td>
+                        <td class="text-down"><strong>-15.42</strong></td>
+                        <td class="text-up"><strong>+137.32</strong></td>
+                        <td class="text-down"><strong>-288.01</strong></td>
+                    </tr>
+                    <tr>
+                        <td>自營商</td>
+                        <td class="text-up"><strong>+34.20</strong></td>
+                        <td class="text-down"><strong>-154.79</strong></td>
+                        <td class="text-down"><strong>-852.80</strong></td>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>總計</td>
+                        <td class="text-down"><strong>-64.74</strong></td>
+                        <td class="text-up"><strong>+1322.92</strong></td>
+                        <td class="text-down"><strong>-577.14</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 交易所資料整理</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>長假效應引發獲利了結</strong><br>台股在連續創高後遭遇連假前夕的龐大賣壓，外資終結連日狂買轉為賣超83.52億元。大盤盤中一度急殺逾兩百點，隨後在低接買盤進駐下收斂跌幅，終場以平盤作收。籌碼面顯示內外資同步偏空操作進行部位調整，整體市場觀望氣氛極度濃厚。</p>
+                <p><strong>期貨空單增加防禦變盤</strong><br>此情勢下最大的風險是美股科技板塊在長假期間持續重挫，而機會在於低接具備實質基本面支撐的傳產航運族群。盤面上，領跌的板塊為半導體設備，領漲的為受惠運價看漲的長榮與陽明。後續需密切觀察外資在台指期的淨空單部位變化，以防範節後的向下變盤風險。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第6章:匯率市場 -->
+    <section id="sec-6" class="section-card">
+        <h2 style="color: #0891b2;"><span style="margin-right: 0.75rem;">💱</span>第6章｜匯率市場</h2>
+
+        <div class="tldr-block" style="background: #ecfeff;">
+            <ul>
+                <li style="color: #0891b2;"><strong>台幣無懼震盪：</strong>儘管股市逢賣壓，前期外資熱錢的遞延效應仍推升新台幣強勢升值</li>
+                <li style="color: #0891b2;"><strong>美元微幅反彈：</strong>美國PCE數據展現經濟韌性，支撐美元指數在低檔獲得買盤承接</li>
+                <li style="color: #0891b2;"><strong>歐元逆勢走強：</strong>歐洲央行官員釋放穩定訊號，帶動歐元兌美元在非美貨幣中表現亮眼</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">主要貨幣兌美元匯率</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>主要貨幣兌美元匯率變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新匯率</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>美元指數</td>
+                        <td><strong>97.78</strong></td>
+                        <td class="text-up"><strong>+0.08%</strong></td>
+                        <td class="text-up"><strong>+0.08%</strong></td>
+                        <td class="text-up"><strong>+0.19%</strong></td>
+                        <td class="text-down"><strong>-1.88%</strong></td>
+                        <td class="text-down"><strong>-0.51%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美元兌台幣</td>
+                        <td><strong>31.2460</strong></td>
+                        <td class="text-down"><strong>-0.42%</strong></td>
+                        <td class="text-down"><strong>-0.41%</strong></td>
+                        <td class="text-down"><strong>-1.07%</strong></td>
+                        <td class="text-down"><strong>-0.57%</strong></td>
+                        <td class="text-up"><strong>+0.01%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>歐元兌美元</td>
+                        <td><strong>1.1802</strong></td>
+                        <td class="text-up"><strong>+0.23%</strong></td>
+                        <td class="text-down"><strong>-0.42%</strong></td>
+                        <td class="text-up"><strong>+0.40%</strong></td>
+                        <td class="text-up"><strong>+2.45%</strong></td>
+                        <td class="text-up"><strong>+0.47%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美元兌日圓</td>
+                        <td><strong>155.9850</strong></td>
+                        <td class="text-up"><strong>+0.07%</strong></td>
+                        <td class="text-up"><strong>+1.85%</strong></td>
+                        <td class="text-down"><strong>-1.59%</strong></td>
+                        <td class="text-down"><strong>-0.61%</strong></td>
+                        <td class="text-down"><strong>-0.27%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>台幣無懼賣壓逆勢走升</strong><br>儘管台股外資轉為賣超且面臨長假震盪，但前期龐大熱錢匯入的遞延效應依然存在，推升新台幣兌美元強勢升值0.42%至31.2460。台幣在亞幣中的相對強勢，反映了台灣在全球AI供應鏈中的核心戰略地位，正持續吸引國際長期資本駐留與佈局。</p>
+                <p><strong>美元震盪等待方向指引</strong><br>此情勢下最大的風險是聯準會利率點陣圖意外上調，而機會在於順勢操作具備經濟復甦題材的歐洲貨幣。盤面上，領漲的貨幣為歐元，美元指數則因PCE數據無意外而呈現狹幅震盪。未來需觀察美國非農就業報告，作為研判全球資金流向的關鍵指標。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- v3.1.9 替換: 整個第7章區塊使用 v2.8 格式 --- -->
+    <!-- --- v3.1.10 修正: 將 [買進] 改為 [看多], [賣出] 改為 [看空], class buy -> bullish, sell -> bearish --- -->
+    <section id="sec-7" class="section-card">
+        <h2 style="color: #7c3aed;">
+            <span style="margin-right: 0.75rem;">🏭</span>第7章｜產業多空展望
+        </h2>
+
+        <!-- TL;DR -->
+        <div class="tldr-block" style="background: #faf5ff;">
+            <ul>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> 航運物流受惠運價看漲與高殖利率護體，成為科技股回檔時的資金避風港</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> ASML次世代設備量產進度報捷，鞏固晶圓代工龍頭在先進製程的絕對優勢</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 記憶體財測暴雷戳破消費性電子復甦幻象，標準型晶片廠面臨沉重估值修正</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 虛擬資產崩跌引爆連鎖平倉效應，高槓桿加密貨幣概念股遭遇恐慌性逃命波</li>
+            </ul>
+        </div>
+
+        <!-- 看多推薦第一檔 -->
+        <div class="stock-recommendation bullish">
+            <h3 class="recommendation-title bullish">[看多]:航運物流 (以長榮為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">運價預期</td>
+                            <td>紅海危機與缺船效應支撐長線運價處於高檔不墜</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">殖利率</td>
+                            <td>挾帶龐大自由現金流具備極具吸引力的高股息題材</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">避險屬性</td>
+                            <td>在全球科技股高檔震盪時成為資金最佳防禦型避風港</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=航運股+基本面" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                第一季獲利預估將大幅優於過往淡季傳統表現
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=長榮海運+技術分析" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                股價突破長期整理區間並呈現均線多頭發散排列
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>高息護體吸引避險資金</strong><br>在全球科技股因美光財報暴雷而面臨估值修正之際，具備實質高殖利率與強勁現金流的航運板塊，迅速成為避險資金的首選。紅海地緣政治衝突的常態化，實質上改變了全球運力的供需結構，使得運價易漲難跌。在台股面臨長假變盤風險的背景下，投資人可將資金部分轉移至此類具備低本益比與高防禦性的傳產龍頭，以降低整體投資組合的波動率。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看多推薦第二檔 -->
+        <div class="stock-recommendation bullish">
+            <h3 class="recommendation-title bullish">[看多]:晶圓代工 (以TSMC為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">設備進展</td>
+                            <td>ASML次世代EUV量產將大幅提升未來先進製程良率</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">訂單能見度</td>
+                            <td>AI高階晶片需求不墜無懼消費性電子復甦放緩</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">產業護城河</td>
+                            <td>在二奈米與先進封裝領域徹底甩開所有全球競爭對手</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/TSMC/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                不受終端消費市場疲弱影響維持強勁毛利率擴張軌跡
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/TSMC/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                大盤回檔時展現強大抗跌韌性穩守兩千元大關關鍵支撐
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>技術突破鞏固長期優勢</strong><br>ASML宣布次世代EUV設備可投入量產，這對台積電的先進製程推進無疑是一劑強心針。儘管短期半導體板塊受到美光財測拖累，但必須嚴格區分「消費性電子記憶體」與「AI高效能運算晶片」的兩極化基本面差異。台積電憑藉其無可替代的晶圓代工壟斷地位，在市場恐慌性錯殺回檔時，反而浮現了絕佳的長線佈局買點。其長期估值增長邏輯並未因單一記憶體廠的財報而產生動搖。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看空推薦第一檔 -->
+        <div class="stock-recommendation bearish">
+            <h3 class="recommendation-title bearish">[看空]:記憶體模組 (以Micron為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">財測展望</td>
+                            <td>最新財測嚴重低於市場預期揭露終端需求嚴冬</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">PC與手機</td>
+                            <td>傳統消費性電子換機潮落空導致庫存去化嚴重受阻</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">報價趨勢</td>
+                            <td>標準型記憶體報價面臨上漲動能衰竭的轉折風險</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MU/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                高頻寬記憶體的成長無法完全彌補傳統業務龐大衰退
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MU/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                發布財報後盤後重挫逾8%向下摜破重要中長期均線
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                 <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>終端疲軟戳破復甦幻象</strong><br>美光慘淡的財測正式戳破了市場對PC與智慧型手機迎來全面換機潮的樂觀幻想。數據顯示，儘管AI題材火熱，但高通膨持續壓抑一般消費者的換機意願，導致傳統記憶體庫存去化再度面臨挑戰。由於標準型產品的營收佔比依然龐大，HBM的獲利完全無法填補缺口。投資人應高度警惕此類高度依賴消費性週期的零組件標的，防範法人籌碼的持續性鬆動與估值下修風險。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看空推薦第二檔 -->
+        <div class="stock-recommendation bearish">
+            <h3 class="recommendation-title bearish">[看空]:加密貨幣概念股 (以MicroStrategy為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">資產價格</td>
+                            <td>比特幣跌破九萬美元大關引發大規模多殺多踩踏</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">槓桿反噬</td>
+                            <td>極端槓桿購幣策略在資產下跌時面臨流動性枯竭</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">溢價收斂</td>
+                            <td>股價相對於所持比特幣淨值的高昂溢價正快速縮水</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MSTR/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                本業獲利完全無法支撐當前因投機資金堆疊的荒謬市值
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MSTR/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                股價連續崩跌並爆出天量呈現極度恐慌的逃命波走勢
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>泡沫破裂引爆連鎖平倉</strong><br>比特幣跌破重要心理關卡，引發了加密貨幣市場的連鎖平倉潮。對於微策略這類將整間公司命運綁定在高槓桿加密資產上的企業而言，底層資產的劇烈波動將帶來毀滅性的打擊。過去數月因投機狂熱所累積的荒謬估值溢價正在快速崩塌，技術面呈現極度恐慌的逃命波走勢。強烈建議投資人徹底避開此類缺乏實質現金流且面臨流動性危機的高風險投機標的，以防範資產泡沫破裂的系統性風險。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 頁尾 -->
+    <footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+        <p class="text-xs" style="color: #64748b;">© 2026 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+        <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享,不構成任何投資建議,投資人應秉持獨立判斷,審慎評估並自負投資風險。</p>
+    </footer>
+
+</div>
+
+<!-- 回頂按鈕 -->
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部" style="display: none;">↑</button>
+
+<script>
+// 進度條功能
+function updateProgressBar() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById("progressBar");
+    if (progressBar) { // Check if progressBar exists
+        progressBar.style.width = scrolled + "%";
+        // Show progress bar only when scrolling starts
+        progressBar.style.opacity = scrolled > 0 ? "1" : "0";
+    }
+}
+window.onscroll = function() { updateProgressBar(); };
+
+
+// --- 穩健性: 確保 DOM 載入後才綁定事件 ---
+window.addEventListener('load', function() {
+
+    // 智能下載功能
+    const smartDownloadBtn = document.getElementById('smartDownloadBtn');
+    if (smartDownloadBtn) {
+        smartDownloadBtn.addEventListener('click', function() {
+            const element = document.createElement('a');
+            // --- v3.1.8 Use placeholder for date string ---
+            const dateStr = '20260227'; // Use placeholder
+            // CRITICAL: Download filename MUST be in 'yyyymmdd.html' format.
+            const filename = dateStr + '.html'; // 強制要求 yyyymmdd.html 格式
+
+            // Temporarily hide elements that shouldn't be in the downloaded file
+            const progressBar = document.getElementById('progressBar');
+            const backToTopButton = document.querySelector('.back-to-top');
+            const originalProgressBarStyle = progressBar ? progressBar.style.display : '';
+            const originalBackToTopStyle = backToTopButton ? backToTopButton.style.display : '';
+
+            if (progressBar) progressBar.style.display = 'none';
+            if (backToTopButton) backToTopButton.style.display = 'none';
+
+            // Get the HTML content AFTER hiding elements
+            const content = document.documentElement.outerHTML;
+
+            // Restore elements
+            if (progressBar) progressBar.style.display = originalProgressBarStyle;
+            if (backToTopButton) backToTopButton.style.display = originalBackToTopStyle;
+
+
+            const file = new Blob([content], {type: 'text/html;charset=utf-8'});
+            element.href = URL.createObjectURL(file);
+            element.download = filename; // Use dynamic filename
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            URL.revokeObjectURL(element.href);
+        });
+    } // end if(smartDownloadBtn)
+
+    // 平滑滾動導航
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = 120; // Adjusted offset for sticky nav
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = target.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 載入完成後隱藏進度條 (fade out effect)
+    const progressBar = document.getElementById("progressBar");
+     if (progressBar) { // Check if progressBar exists
+        progressBar.style.transition = 'opacity 0.5s ease-out'; // Add fade out transition
+        setTimeout(function() {
+            progressBar.style.opacity = "0";
+        }, 500); // Start fade out after 500ms
+     }
+}); // end window.load
+</script>
+
+
+</body></html>
