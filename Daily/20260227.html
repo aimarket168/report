@@ -1,560 +1,295 @@
-<html lang="zh-TW"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
-        window.__firebase_config = firebaseConfig;
-        window.__initial_auth_token = initialAuthToken;
-        window.__app_id = appId;
-            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjdiNWFlNDg4ZGU5NDlkNmY0OGJhYzU1ZmMwYTE1NzJlZTJmNjExMzciLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzExMTZkZTFjMzE5OTI2MTlfZmluYW5jaWFsX3JlcG9ydC5odG1sLTI3NyJ9LCJleHAiOjE3NzIxNTUwNTQsImlhdCI6MTc3MjE1MTQ1NCwiYWxnIjoiUlMyNTYifQ.CUv7S1D_5_pd4H2EHqBPauTVSevC1wfZbeYSS4hU6zKCC-gYkzsekrIp2AvAxAIFsMpBT02ORQko_SHP9I_59iXCG8_doOuED0hc8L5pXd5sxUNbsPSRvwaBp3loVks9YPDPMKABgCV6qaRUsjnSNWUX4dYLnZzgSIUOPT7Z0tv-BzHAe9gMjXdmORGG05spSDw07tMjvq7uNmWbEKrxKR5cJTXY7W-JV8j2K4w-tZfplzP_fxF57eKgy1Dnq7wr8I_Kek2gpB5721ktTBRLmsFEL-DxiFnSBM1BMPtT_ajpxdOumTp0dhaNkzzecZtKtyJzU6FGFiZBWLhLCajsCg","c_1116de1c31992619_financial_report.html-277")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
-function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
-p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
-
- MIT License
-
- Copyright (c) 2017-2023 W.Y.
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
-*/
-function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
-function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
-function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
-function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
-var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
-function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
-function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
-function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
-function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
-return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
-function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
-function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
-c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
-function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
-function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
-function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
-function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
-function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
-function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
-d.lastIndex;b.push(e[0])}return b}
-function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
-{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
-function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
-function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
-function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
-16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
-function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
-function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
-window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
-})();</script><script>(function() {
-  // Ensure this script is executed only once
-  if (window.firebaseAuthBridgeScriptLoaded) {
-    return;
-  }
-  window.firebaseAuthBridgeScriptLoaded = true;
-
-  let nextTokenPromiseId = 0;
-
-  // Stores { resolve, reject } for ongoing token requests
-  const pendingTokenPromises = {};
-
-  // Listen for messages from the Host Application
-  window.addEventListener('message', function(event) {
-
-    const messageData = event.data;
-
-  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
-      const { success, token, error, promiseId } = messageData ?? {};
-      if (pendingTokenPromises[promiseId]) {
-        if (success) {
-          pendingTokenPromises[promiseId].resolve(token);
-        } else {
-          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
-        }
-        delete pendingTokenPromises[promiseId];
-      }
-    }
-  });
-
-  // Expose a function for the Generated App to request a new Firebase token
-  window.requestNewFirebaseToken = function() {
-    const currentPromiseId = nextTokenPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingTokenPromises[currentPromiseId] = { resolve, reject };
-    });
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({
-        type: 'REQUEST_NEW_FIREBASE_TOKEN',
-        promiseId: currentPromiseId
-      }, '*');
-    } else {
-      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
-      delete pendingTokenPromises[currentPromiseId];
-    }
-    return promise;
-  };
-})();</script><script>
-let realOriginalGetUserMedia = null;
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-}
-
-(function() {
-  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
-    try {
-      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
-        get: function() {
-          return undefined; // Or throw an error
-        },
-        configurable: false
-      });
-    } catch (error) {
-      console.error("Error defining prototype getter:", error);
-    }
-  }
-})();
-
-(function() {
-  const pendingMediaResolvers = {};
-  let nextMediaPromiseId = 0;
-
-  function requestMediaPermissions(constraints) {
-    const mediaPromiseId = nextMediaPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingMediaResolvers[mediaPromiseId] = (granted) => {
-        delete pendingMediaResolvers[mediaPromiseId];
-        resolve(granted);
-      };
-    });
-
-    window.parent.postMessage({
-      type: 'requestMediaPermission',
-      constraints: constraints,
-      promiseId: mediaPromiseId,
-    }, '*');
-
-    return promise;
-  }
-
-  let originalGetUserMedia = realOriginalGetUserMedia;
-
-  function interceptGetUserMedia() {
-    if (navigator.mediaDevices) {
-      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
-        value: function(constraints) {
-          return requestMediaPermissions(constraints).then((granted) => {
-            if (granted) {
-              if (originalGetUserMedia) {
-                return originalGetUserMedia(constraints);
-              } else {
-                throw new Error("Original getUserMedia not available.");
-              }
-            } else {
-              throw new DOMException('Permission denied', 'NotAllowedError');
-            }
-          });
-        },
-        writable: false,
-        configurable: false
-      });
-    }
-  }
-
-  interceptGetUserMedia();
-
-  const observer = new MutationObserver(function(mutationsList, observer) {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'childList' && mutation.addedNodes) {
-        mutation.addedNodes.forEach(node => {
-          if (node === navigator.mediaDevices) {
-            interceptGetUserMedia();
+<html lang="zh-TW"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      (function() {
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
           }
-        });
-      }
-    }
-  });
-
-  function interceptSpeechRecognition() {
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-      return;
-    }
-
-    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const SpeechRecognitionWrapper = function(...args) {
-      const recognizer = new OriginalSpeechRecognition(...args);
-      const originalStart = recognizer.start.bind(recognizer);
-
-      recognizer.start = function() {
-        requestMediaPermissions({ audio: true }).then(granted => {
-          if (granted) {
-            originalStart();
-          } else {
-            const errorEvent = new SpeechRecognitionErrorEvent('error');
-            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
-            recognizer.dispatchEvent(errorEvent);
-          }
-        });
-      };
-
-      return recognizer;
-    };
-
-    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
-    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
-
-    if (window.SpeechRecognition) {
-      window.SpeechRecognition = SpeechRecognitionWrapper;
-    }
-    if (window.webkitSpeechRecognition) {
-      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
-    }
-  }
-
-  interceptSpeechRecognition();
-
-  window.addEventListener('message', function(event) {
-    if (event.data) {
-      if (event.data.type === 'resolveMediaPermission') {
-        const { promiseId, granted } = event.data;
-        if (pendingMediaResolvers[promiseId]) {
-          pendingMediaResolvers[promiseId](granted);
-        }
-      }
-    }
-  });
-
-})();</script><script>((function(modelInformation) {
-  const originalFetch = window.fetch;
-  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
-  let googleLlmBaseApiUrls = [
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
-  ];
-  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
-    );
-  });
-  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
-    );
-  });
-
-  const pendingFetchResolvers = {};
-  let nextPromiseId = 0;
-
-  function handleStringInput(input, optionsArgument) {
-    const actualUrl = input;
-    const fetchCallArgs = [actualUrl, optionsArgument];
-    const effectiveOptions = optionsArgument || {};
-    const bodyForApiKeyCheck = effectiveOptions.body;
-    const bodyForPostMessage = effectiveOptions.body;
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  function handleRequestInput(input, optionsArgument) {
-    const actualUrl = input.url;
-    const fetchCallArgs = [input, optionsArgument];
-    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (optionsArgument) {
-      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
-      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
-      if ('body' in optionsArgument) {
-        bodyForApiKeyCheck = optionsArgument.body;
-        bodyForPostMessage = optionsArgument.body;
-      } else {
-        bodyForApiKeyCheck = undefined;
-        bodyForPostMessage = input.body;
-      }
-    } else {
-      bodyForApiKeyCheck = undefined;
-      bodyForPostMessage = input.body;
-    }
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  window.fetch = function(input, optionsArgument) {
-    let actualUrl;
-    let fetchCallArgs;
-    let effectiveOptions = {};
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (typeof input === 'string') {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
-    } else if (input instanceof Request) {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
-    } else {
-      return originalFetch.apply(window, [input, optionsArgument]);
-    }
-
-    effectiveOptions.method = effectiveOptions.method || 'GET';
-    if (!effectiveOptions.headers) {
-      effectiveOptions.headers = new Headers();
-    }
-
-
-    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
-      let apiKeyIsNull = true;
-
-      const regex = new RegExp("models/([^:]+)");
-      const modelNameMatch = actualUrl.match(regex);
-      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
-
-
-      try {
-        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
-        const apiKeyParam = urlObject.searchParams.get('key');
-        if (apiKeyParam) {
-          apiKeyIsNull = false;
-        }
-      } catch (e) {
-        // Continue checks even if URL parsing fails
-      }
-
-      if (apiKeyIsNull && effectiveOptions.headers) {
-        const h = new Headers(effectiveOptions.headers);
-        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
-        if (apiKeyHeaderValue) {
-          apiKeyIsNull = false;
-          return originalFetch.apply(window, fetchCallArgs);
-        }
-      }
-
-      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
-        try {
-          const bodyData = JSON.parse(bodyForApiKeyCheck);
-          if (bodyData && bodyData.apiKey) {
-            apiKeyIsNull = false;
-            return originalFetch.apply(window, fetchCallArgs);
-          }
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      if(apiKeyIsNull) {
-        const promiseId = nextPromiseId++;
-        const promise = new Promise((resolve) => {
-          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
-            delete pendingFetchResolvers[promiseId];
-            resolve(resolvedResponse);
-          };
-        });
-
-        let serializedBodyForPostMessage;
-        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
-            serializedBodyForPostMessage = bodyForPostMessage;
-        } else if (bodyForPostMessage instanceof ReadableStream) {
-            serializedBodyForPostMessage = null;
-        } else {
-            try {
-                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
-            } catch (e) {
-                serializedBodyForPostMessage = null;
-            }
-        }
-
-        const messageOptions = {
-            method: effectiveOptions.method,
-            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
-            body: serializedBodyForPostMessage
         };
 
-        window.parent.postMessage({
-          type: 'requestFetch',
-          url: actualUrl,
-          modelName: modelName,
-          options: messageOptions,
-          promiseId: promiseId,
-        }, '*');
-
-        return promise;
-      }
-      return originalFetch.apply(window, fetchCallArgs);
-    }
-    return originalFetch.apply(window, fetchCallArgs);
-  };
-
-  window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'resolveFetch') {
-      const { promiseId, response } = event.data;
-      if (pendingFetchResolvers[promiseId]) {
-        try {
-          const reconstructedResponse = new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: new Headers(response.headers),
-          });
-          pendingFetchResolvers[promiseId](reconstructedResponse);
-        } catch (error) {
-          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
-        }
-      }
-    }
-  });
-
-}))({"textModelName":"gemini-2.5-flash","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
-</script><script>(function() {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-
-    /**
-   * Normalizes an error event or a promise rejection reason into a structured error object.
-   * @param {*} errorEventOrReason The error object or reason.
-   * @return {object} Structured error data { message, name, stack }.
-   */
-  function getErrorObject(errorEventOrReason) {
-    if (errorEventOrReason instanceof Error) {
-      return {
-        message: errorEventOrReason.message,
-        name: errorEventOrReason.name,
-        stack: errorEventOrReason.stack,
-      };
-    }
-    // Fallback for non-Error objects.
-    try {
-      return {
-        message: JSON.stringify(errorEventOrReason),
-        name: 'UnknownErrorType',
-        stack: null,
-      };
-    } catch (e) {
-      return {
-        message: String(errorEventOrReason),
-        name: 'UnknownErrorTypeNonStringifiable',
-        stack: null,
-      };
-    }
-  }
-
-  /**
-   * Converts an array of arguments (from log/error) into a single string.
-   * Handles Error objects specially to include their message and stack.
-   * @param {Array<*>} args - Arguments passed to console methods.
-   * @return {string} A string representation of the arguments.
-   */
-  function stringifyArgs(args) {
-    return args
-      .map((arg) => {
-        if (arg instanceof Error) {
-          const {message, stack} = arg;
-          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
-        }
-        if (typeof arg === 'object' && arg !== null) {
-          try {
-            return JSON.stringify(arg);
-          } catch (error) {
-            return '[Circular Object]';
+        let requestId = 0;
+        let callbacksMap = new Map();
+        let streamControllers = new Map();
+        
+        window.claude = {
+          complete: (prompt) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
+            });
           }
-        } else {
-          return String(arg);
-        }
-      })
-      .join(' ');
-  }
+        };
 
-  console.log = function(...args) {
-    const logString = stringifyArgs(args);
-    window.parent.postMessage({ type: 'log', message: logString }, '*');
-    originalConsoleLog.apply(console, args);
-  };
+        window.storage = {
+          get: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageGet', id, key, shared }, '*');
+            });
+          },
+          set: (key, value, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
+            });
+          },
+          delete: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
+            });
+          },
+          list: (prefix, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
+            });
+          }
+        };
 
-  console.error = function(...args) {
-    let errorData;
-    if (args.length > 0 && args[0] instanceof Error) {
-      const err = args[0];
-      // If the first arg is an Error, capture its details.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        ...getErrorObject(err),
-        rawArgsString: stringifyArgs(args.slice(1)),
-        timestamp: new Date().toISOString(),
-      };
-    } else {
-      // If not an Error object, treat all args as a general error message.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        message: stringifyArgs(args),
-        name: 'ConsoleLoggedError',
-        stack: null,
-        timestamp: new Date().toISOString(),
-      };
-    }
-    window.parent.postMessage(errorData, '*');
-    originalConsoleError.apply(console, args);
-  };
+        let pendingBlobs = new Map();
+        URL.createObjectURL = (blob) => {
+          // Store the blob and create an ID and URL for it
+          const blobId = `blob-${Date.now()}-${Math.random()}`;
+          pendingBlobs.set(blobId, blob);
+          return `blob-request://${blobId}`;
+        };
 
-  // Listen for global unhandled synchronous errors.
-  window.addEventListener('error', function(event) {
-    const errorDetails = event.error ? getErrorObject(event.error) : {
-      message: event.message,
-      name: 'GlobalError',
-      stack: null,
-      filename: event.filename,
-      lineno: event.lineno,
-      colno: event.colno,
-    };
+        URL.revokeObjectURL = (url) => {
+          // Remove the blob from our store
+          const blobId = url.replace("blob-request://", "");
+          pendingBlobs.delete(blobId);
+        };
 
-    window.parent.postMessage({
-      type: 'error',
-      source: 'global',
-      ...errorDetails,
-      message: errorDetails.message || event.message,
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
+        const getBlobFromURL = (url) => {
+          const blobId = url.replace("blob-request://", "");
+          return pendingBlobs.get(blobId);
+        };
 
-  // Listen for unhandled promise rejections (asynchronous errors).
-  window.addEventListener('unhandledrejection', function(event) {
-    const errorDetails = getErrorObject(event.reason);
+        // Override global fetch with streaming support
+        window.fetch = (url, init = {}) => {
+          return new Promise((resolve, reject) => {
+            const id = requestId++;
+            const channelId = `fetch-${id}-${Date.now()}`;
+            
+            callbacksMap.set(id, { 
+              resolve: (response) => {
+                // Create a ReadableStream for the response body
+                const stream = new ReadableStream({
+                  start(controller) {
+                    streamControllers.set(channelId, controller);
+                  },
+                  cancel() {
+                    streamControllers.delete(channelId);
+                  }
+                });
+                
+                // Create and return the Response with the stream
+                resolve(new Response(stream, {
+                  status: response.status,
+                  statusText: response.statusText,
+                  headers: response.headers
+                }));
+              },
+              reject,
+              channelId
+            });
+            
+            window.parent.postMessage({
+              type: 'proxyFetch',
+              id,
+              url,
+              init,
+              channelId
+            }, '*');
+          });
+        };
 
-    window.parent.postMessage({
-      type: 'error',
-      source: 'unhandledrejection',
-      ...errorDetails,
-      message: errorDetails.message || 'Unhandled Promise Rejection',
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
+        window.addEventListener('message', async (event) => {
+          if (event.data.type === 'takeScreenshot') {
+            const rootElement = document.getElementById('artifacts-component-root-html');
+            if (!rootElement) {
+              window.parent.postMessage({
+                type: 'screenshotError',
+                error: new Error('Root element not found'),
+              }, '*');
+            }
+            const screenshot = await htmlToImage.toPng(rootElement, {
+              imagePlaceholder:
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
+            });
+            window.parent.postMessage({
+              type: 'screenshotData',
+              data: screenshot,
+            }, '*');
+          } else if (event.data.type === 'claudeComplete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.completion);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'proxyFetchResponse') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+              callbacksMap.delete(event.data.id);
+            } else {
+              // Initial response with headers, status, etc.
+              callback.resolve({
+                status: event.data.status,
+                statusText: event.data.statusText,
+                headers: event.data.headers
+              });
+              // Don't delete the callback yet if streaming
+              if (!event.data.body) {
+                callbacksMap.delete(event.data.id);
+              }
+            }
+          } else if (event.data.type === 'proxyFetchStream') {
+            // Handle streaming data chunks
+            const controller = streamControllers.get(event.data.channelId);
+            if (controller) {
+              if (event.data.error) {
+                controller.error(new Error(event.data.error));
+                streamControllers.delete(event.data.channelId);
+              } else if (event.data.done) {
+                controller.close();
+                streamControllers.delete(event.data.channelId);
+                // Clean up the callback
+                const callback = Array.from(callbacksMap.entries()).find(
+                  ([_, value]) => value.channelId === event.data.channelId
+                );
+                if (callback) {
+                  callbacksMap.delete(callback[0]);
+                }
+              } else if (event.data.chunk) {
+                controller.enqueue(new Uint8Array(event.data.chunk));
+              }
+            }
+          } else if (event.data.type === 'storageGet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageSet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageDelete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageList') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          }
+        });
 
-})();</script>
+        window.addEventListener('click', (event) => {
+          const isEl = event.target instanceof HTMLElement;
+          if (!isEl) return;
+    
+          // find ancestor links
+          const linkEl = event.target.closest("a");
+          if (!linkEl || !linkEl.href) return;
+    
+          event.preventDefault();
+          event.stopImmediatePropagation();
+    
+          if (linkEl.href.startsWith("blob-request:")) {
+            const blob = getBlobFromURL(linkEl.href);
+            if (!blob) return;
+            void blob.arrayBuffer().then((data) => {
+              window.parent.postMessage({
+                type: "downloadFile",
+                filename: linkEl.download,
+                data,
+                mimeType: blob.type || "application/octet-stream",
+              });
+            });
+          } else if (linkEl.href.startsWith("data:")) {
+            const [header, base64Data] = linkEl.href.split(",");
+            const mimeMatch = header.match(/data:([^;]+)/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+            const binaryString = atob(base64Data);
+            const data = Uint8Array.from(binaryString, (c) =>
+              c.charCodeAt(0),
+            ).buffer;
+            window.parent.postMessage({
+              type: "downloadFile",
+              filename: linkEl.download,
+              data,
+              mimeType,
+            });
+          } else {
+            let linkUrl;
+            try {
+              linkUrl = new URL(linkEl.href);
+            } catch (error) {
+              return;
+            }
+    
+            if (linkUrl.hostname === window.location.hostname) return;
+      
+            window.parent.postMessage({
+              type: 'openExternal',
+              href: linkEl.href,
+            }, '*');
+          }
+      });
+
+        const originalOpen = window.open;
+        window.open = function (url) {
+          window.parent.postMessage({
+            type: "openExternal",
+            href: url,
+          }, "*");
+        };
+
+        window.addEventListener('error', (event) => {
+          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年02月27日 金融市場日報|洞察•解構•透視全球資產</title>
-    <meta name="description" content="2026年02月27日 金融市場日報|洞察•解構•透視全球資產">
+    <title>2026年02月27日（五） 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026年02月27日（五） 金融市場日報|洞察•解構•透視全球資產">
 
     <style>
         /* 系統字體堆疊 */
@@ -1128,10 +863,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         }
     </style>
 </head>
-<body>
+<body id="artifacts-component-root-html">
 
 <!-- 進度條 -->
-<div class="progress-bar" id="progressBar" style="width: 9.37879%; opacity: 1; transition: opacity 0.5s ease-out; display: none;"></div>
+<div class="progress-bar" id="progressBar" style="width: 1.23186%; opacity: 1; transition: opacity 0.5s ease-out; display: none;"></div>
 
 <!-- 導覽工具列 -->
 <div class="nav-sticky">
@@ -1153,8 +888,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
     <!-- 標題 -->
     <header style="text-align: center; margin: 0;">
-        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026年02月27日 金融市場日報</h1>
-        <p class="sub-title" style="margin: 0;">節前賣壓台股平盤震盪 美光財測失利重挫半導體</p>
+        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026年02月27日（五） 金融市場日報</h1>
+        <p class="sub-title" style="margin: 0;">外資轉賣台積跌破兩千平收　Nvidia利多出盡費半急挫3%</p>
     </header>
 
     <!-- 第1章:市場總覽與重點 -->
@@ -1164,9 +899,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="tldr-block" style="background: #f0f9ff;">
             <h3 class="table-title">市場三大要點</h3>
             <ul>
-                <li style="color: #015fb4;"><strong>美光財測失利：</strong>PC與手機需求疲軟拖累半導體板塊，費半指數面臨顯著修正</li>
-                <li style="color: #015fb4;"><strong>台股節前觀望：</strong>長假前夕獲利了結賣壓出籠，大盤呈現高檔震盪最終平盤作收</li>
-                <li style="color: #015fb4;"><strong>通膨數據發布：</strong>美國PCE指數符合市場預期，投資人重新評估聯準會降息路徑</li>
+                <li style="color: #015fb4;"><strong>Nvidia利多出盡遭震波：</strong>輝達Q4營收680億美元年增逾七成、雙雙超出預期，卻因市場門檻持續墊高而觸發「利多出盡」賣壓，股價收跌5.49%、市值一夕蒸發逾2590億美元。費城半導體指數連帶急挫3.19%，台積電ADR同步跌逾2.8%，AI基礎建設投資的本益比合理性首度受到交易員大規模質疑。</li>
+                <li style="color: #015fb4;"><strong>台股爆歷史天量平收：</strong>台股盤中再創35,579點歷史新高，成交量衝上1.13兆元改寫歷史紀錄，信驊盤中突破萬元大關成台股首檔萬元股王。惟外資中止連六日買超，轉為賣超105.63億元（依新聞資料），三大法人同步轉賣，大盤最終收斂為近平盤。MSCI季調尾盤效應亦加劇甩尾格局。</li>
+                <li style="color: #015fb4;"><strong>ASML里程碑強化供應鏈：</strong>荷蘭艾司摩爾技術長Marco Pieters宣布，高數值孔徑EUV（High-NA EUV）設備已完成50萬片晶圓測試、停機時間有限且可用率達80%，正式宣告達到量產成熟門檻。單台設備售價約4億美元（為前代兩倍），對台積電二奈米及後續製程具關鍵推動效益。</li>
             </ul>
         </div>
 
@@ -1175,30 +910,30 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="market-overview-row-1">
                 <div class="market-card-new us-stock">
                     <div class="market-card-title-new">美股市場</div>
-                    <div class="market-card-value-new">標普500 <strong>6,908.86</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-0.54%</strong> • 美光財測拖累科技股，大盤面臨獲利了結賣壓。</div>
+                    <div class="market-card-value-new">那斯達克 <strong>22,878.38</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-1.18%</strong> • Nvidia利多出盡跌5.49%，費半急挫3.19%引爆AI估值重估浪潮。</div>
                 </div>
                 <div class="market-card-new tw-stock">
                     <div class="market-card-title-new">台股市場</div>
                     <div class="market-card-value-new">加權 <strong>35,414.49</strong></div>
-                    <div class="market-card-change-new text-flat">— <strong>0.00%</strong> • 節前觀望氣氛極濃厚，指數高檔震盪平盤作收。</div>
+                    <div class="market-card-change-new text-flat">— <strong>+0.00%</strong> • 爆量1.13兆創歷史天量，信驊封神萬元股王，惟外資中止連買收平盤。</div>
                 </div>
                 <div class="market-card-new bond">
                     <div class="market-card-title-new">債券市場</div>
-                    <div class="market-card-value-new">10年期殖利率 <strong>3.96%</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-2.5 bps</strong> • 數據符合市場降息預期，十年期殖利率微幅下行。</div>
+                    <div class="market-card-value-new">10年期殖利率 <strong>4.02%</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-3.1 bps</strong> • AI焦慮交易壓低長債殖利率，十年期創去年十一月以來新低點。</div>
                 </div>
                 <div class="market-card-new commodity">
                     <div class="market-card-title-new">大宗商品</div>
-                    <div class="market-card-value-new">黃金期貨 <strong>5,200.70</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-0.68%</strong> • 降息預期降溫推升美元，金價面臨多頭獲利了結。</div>
+                    <div class="market-card-value-new">黃金期貨 <strong>5,196.20</strong></div>
+                    <div class="market-card-change-new text-flat">— <strong>-0.20%</strong> • 美伊第三輪核談前夕市場觀望，金價在5200美元關卡下方震盪整理。</div>
                 </div>
             </div>
             <div class="market-overview-row-2">
                 <div class="market-card-new fx">
                     <div class="market-card-title-new">匯率市場</div>
                     <div class="market-card-value-new">美元指數 <strong>97.78</strong></div>
-                    <div class="market-card-change-new text-up">▲ <strong>+0.08%</strong> • 通膨數據展現強大韌性，支撐美元指數微幅反彈。</div>
+                    <div class="market-card-change-new text-up">▲ <strong>+0.08%</strong> • 美元指數窄幅回升，風險情緒偏保守推動少量資金回流美元資產。</div>
                 </div>
                 <div></div>
             </div>
@@ -1209,32 +944,32 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div>
                 <h3 class="table-title">Top 10 市場熱點事件榜</h3>
                 <div class="heat-container">
-                    <div class="heat-item"><div class="heat-bar heat-bar-1">美光財測降</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-2">費半重挫3%</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-3">台股節前拋售</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-4">比特幣跌破九萬</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-5">PCE符預期</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-6">長榮逆勢揚</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-7">微策略股價挫</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-8">外資加空單</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-9">網飛併購戰</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-10">ASML量產成功</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">Nvidia利多出盡跌5.5%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">費半指數急挫3.19%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">信驊封神萬元股王</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">外資中止連六買轉賣</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">Netflix棄標漲逾10%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">Block裁半員工飆漲20%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">ASML量產里程碑</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">IDC手機萎縮13%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">台積失守2000元</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">AI焦慮交易壓債息</div></div>
                 </div>
                 <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
             </div>
             <div>
                 <h3 class="table-title">市場關鍵時間軸</h3>
                 <div class="structured-analysis space-y-4 timeline-container">
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 07:15</span>聯發科宣布推出新一代AI晶片，積極搶攻邊緣運算市場以擴大其在全球晶片設計領域的市占率。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 09:30</span>台股面臨長假前夕的獲利了結賣壓，早盤指數一度急殺逾兩百點回測支撐，市場交投轉趨謹慎。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:15</span>航運族群受惠於運價看漲的預期心理，長榮與陽明等指標股展現逆勢抗跌力道，成為盤中避風港。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 15:00</span>期貨市場數據顯示外資顯著加碼台指期空單部位，引發市場對於長假過後向下變盤的擔憂情緒。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 17:30</span>金管會正式啟動權證提前下市機制，逾三百檔流動性低迷的殭屍權證順利退場，提升市場效率。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 20:30</span>美國公布個人消費支出(PCE)物價指數符合預期，投資人根據數據重新評估通膨路徑與降息可能。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 21:15</span>設備廠ASML宣布其次世代EUV設備已可正式用於量產階段，為AI高階晶片製造迎來關鍵性轉折。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:30</span>串流巨頭網飛在收購派拉蒙的競爭中面臨華納出價挑戰，引發媒體板塊資金在兩強之間重新分配。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 02:00</span>虛擬貨幣市場延續拋售潮，比特幣跌破九萬美元關卡，拖累微策略等相關概念股持續大幅下挫。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤後 05:30</span>記憶體大廠美光發布疲軟財測，示警消費性電子復甦步調緩慢，引爆半導體板塊盤後停損賣壓。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 06:54</span>艾司摩爾技術長Pieters於聖荷西技術會議宣布，High-NA EUV設備已完成50萬片晶圓測試，可用率達80%，正式達到量產成熟門檻，為台積電先進製程推進迎來關鍵里程碑。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 08:00</span>輝達盤後股價確認收跌5.49%，市值一夕蒸發逾2590億美元，台積電ADR同步跌逾2.8%，引發市場預期台股半導體族群開盤將面臨顯著的外部賣壓衝擊。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:35</span>是方電信公布2025年每股純益15.75元創高，AI資料中心進駐率突破六成；信驊盤中強勢突破萬元大關，最高觸及10,275元，寫下台股史上首檔萬元股王紀錄。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 17:59</span>三大法人合計賣超139.86億元，外資中止連六日買超轉為賣超，2月累計賣超台積電6.1萬張；MSCI季調生效引發尾盤爆量，集中市場成交量改寫1.13兆元歷史新天量。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 18:11</span>央行公布1月M1B與M2年增率重現黃金交叉（自2022年8月以來首次），散戶成交占比升至56.2%創近兩年高；新台幣月線終結連四黑，收31.251元創逾兩個月新高。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 03:00</span>聯準會理事米蘭（Stephen Miran）表示，現階段「並不認為存在通膨問題」，今年合計降息四次（累計100個基點）是適當的，且偏向提早行動而非延後，態度明顯偏鴿。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:00</span>Netflix宣布退出競購華納兄弟探索，共同執行長聲明稱若跟進派拉蒙全現金31美元出價，「此交易已不再具備財務吸引力」，消息激勵Netflix盤後股價飆漲逾10%。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 01:00</span>支付科技公司Block（前Square）宣布裁撤逾4,000名員工，規模達全體員工的近半數，執行長多西直言此為擁抱AI自動化的主動調整，消息刺激股價盤後急漲逾20%。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤後 05:37</span>輝達「親兒子」CoreWeave公布第四季財報，營收年增110%惟淨損擴大至4.52億美元，利息支出年增160%達3.88億美元，本季財測不如預期，盤後股價重挫約8.8%。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤後 09:10</span>多家研究機構上調輝達目標價（法巴銀行上調至270美元、Factset共識中位估250美元），惟市場的第二個「房間」正由分析師背書轉向交易員全面壓力測試AI整體經濟模型。</p>
                 </div>
             </div>
         </div>
@@ -1246,9 +981,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #fef2f2;">
             <ul>
-                <li style="color: #dc2626;"><strong>半導體遭重擊：</strong>美光財測揭露終端消費電子復甦乏力，引發資金撤出科技股，費半重挫逾3%</li>
-                <li style="color: #dc2626;"><strong>資金輪動避險：</strong>在大型科技股估值面臨考驗之際，部分資金轉入羅素2000等中小型與防禦板塊</li>
-                <li style="color: #dc2626;"><strong>併購題材發酵：</strong>媒體串流業整併戰白熱化，華納與網飛爭奪派拉蒙引發相關個股股價劇烈波動</li>
+                <li style="color: #dc2626;"><strong>Nvidia利多出盡費半崩跌：</strong>輝達Q4繳出資料中心營收年增75%、季整體營收680億美元的亮眼成績，然Futurum執行長Newman直指「現在已沒有『夠好』這回事」。受資金出逃衝擊，費半指數急挫3.19%，道瓊逆勢小漲0.03%，顯示資金出現明顯轉防禦板塊的輪動格局。</li>
+                <li style="color: #dc2626;"><strong>Netflix棄標轉為反彈：</strong>媒體整併戰出現重大轉折，Netflix宣布退出競購華納兄弟，主因派拉蒙全現金出價31美元（附70億美元分手費保護）已超出Netflix財務吸引力門檻。Netflix股價盤後飆漲逾10%，反映市場認為財務紀律優於盲目擴張。</li>
+                <li style="color: #dc2626;"><strong>AI裁員效應引爆就業焦慮：</strong>Block執行長多西宣布裁撤近半員工（逾4,000人），直接將原因歸因於AI效率提升，並預言「多數企業在一年內都會做出類似決定」。此言論與LPL Financial策略師所稱的「AI焦慮交易」共振，推動長債殖利率下行，引發市場對勞動市場結構性轉變的深層憂慮。</li>
             </ul>
         </div>
 
@@ -1325,14 +1060,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 </tbody>
             </table>
         </div>
-        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
         <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                 <p><strong>美光財測重擊半導體</strong><br>美光科技釋出遠遜於預期的財報指引，揭露PC與智慧型手機等終端消費性電子復甦步調依然疲弱。此消息猶如震撼彈，直接引發資金全面撤出晶片股，導致費城半導體指數重挫3.19%，成為盤面最弱勢的重災區。市場正重新評估AI以外硬體市場的真實需求。</p>
-                 <p><strong>資金轉向低基期板塊</strong><br>此情勢下最大的風險是AI高估值遭遇獲利了結，而機會在於資金輪動至具備補漲潛力的防禦性標的。盤面上，羅素2000指數逆勢上漲0.52%，顯示部分熱錢正由大型科技權值股流出轉向中小型股。後續需密切觀察就業數據，作為研判美國經濟是否面臨放緩風險的核心指標。</p>
+                 <p><strong>Nvidia遭遇「沒有夠好」的估值天花板</strong>輝達第四季資料中心營收年增75%，帶動整體季營收達680億美元，雙雙優於市場預期，分析師普遍上調目標價（法巴銀行上調至270美元、Wedbush以「看喬丹打球」比喻讚嘆財報品質）。然而市場的反應令人錯愕——股價收跌5.49%，市值一夕蒸發逾2590億美元。Futurum執行長Newman一語道破：「現在已沒有『夠好』這回事。」CoreWeave跟進公布財報，儘管營收年增110%，但淨損擴大且利息支出年增160%，盤後再重挫8.8%，顯示AI雲端基礎建設的高財務槓桿正受到市場更為嚴格的審視。</p>
+                 <p><strong>資金輪動：從AI龍頭轉向財務紀律</strong>今日盤面的最大贏家反而是展現財務紀律的企業。Netflix宣布放棄高價收購華納兄弟，執行長聲明在財務上無法跟進派拉蒙的31美元全現金出價，盤後飆漲逾10%；Block以AI效率為由裁撤近半員工，股價同樣飆漲逾20%。這兩個案例共同傳達一個清晰訊號：本波市場調整的核心邏輯，是對AI估值泡沫的主動去化，資金正從「概念驅動型高本益比」流向「現金流驅動型價值股」。後續需持續觀察聯準會官員發言，以確認鴿派理事米蘭所主張的今年四次降息是否能獲得更廣泛共識。</p>
             </div>
         </div>
     </section>
@@ -1343,9 +1078,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #eff6ff;">
             <ul>
-                <li style="color: #2563eb;"><strong>通膨數據落定：</strong>美國PCE物價指數符合預期，消除了市場對通膨失控的疑慮，美債殖利率下探</li>
-                <li style="color: #2563eb;"><strong>降息路徑明朗：</strong>穩定的物價數據為聯準會維持漸進式寬鬆政策提供支撐，長天期公債買盤湧現</li>
-                <li style="color: #2563eb;"><strong>信用債具韌性：</strong>儘管股市科技板塊大幅回檔，但高收益債券跌幅有限，顯示企業違約風險偏低</li>
+                <li style="color: #2563eb;"><strong>AI焦慮交易壓低長債殖利率：</strong>LPL Financial策略師Gillum直指「AI焦慮交易」成為近期美債買盤的隱性推手：市場開始擔憂AI大規模取代就業，帶動通膨降溫預期，壓低長天期殖利率。10年期公債殖利率跌破4.02%，創去年11月底以來新低；30年期也跌破4.7%，同創三個月低點。</li>
+                <li style="color: #2563eb;"><strong>房貸利率跌破6%近三年半新低：</strong>長天期殖利率走低的效應已傳導至實體房市。據Freddie Mac最新數據，30年期固定房貸利率降至6%以下，為約三年半來首見，對美國房市的負擔能力形成實質性支撐，也進一步鞏固市場對聯準會漸進式寬鬆的信心。</li>
+                <li style="color: #2563eb;"><strong>信用債維持韌性等待方向：</strong>儘管科技板塊遭遇AI估值重估衝擊，高收益債券ETF（HYG）跌幅僅約0.09%，新興市場美元債ETF（EMB）同步僅小跌0.06%，顯示企業違約風險評估並未同步惡化，信用市場的承壓能力相對完整。</li>
             </ul>
         </div>
 
@@ -1386,8 +1121,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </tr>
                     <tr>
                         <td>美國10年期殖利率</td>
-                        <td><strong>3.96%</strong></td>
-                        <td class="text-down"><strong>-2.5 bps</strong></td>
+                        <td><strong>4.02%</strong></td>
+                        <td class="text-down"><strong>-3.1 bps</strong></td>
                         <td class="text-down"><strong>-12.7 bps</strong></td>
                         <td class="text-down"><strong>-23.4 bps</strong></td>
                         <td class="text-down"><strong>-8.7 bps</strong></td>
@@ -1423,14 +1158,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 </tbody>
             </table>
         </div>
-        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
         <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>通膨數據鞏固降息預期</strong><br>美國最新個人消費支出(PCE)物價指數完全符合市場預期，消除了通膨意外反撲的隱憂。此數據促使美國10年期公債殖利率進一步下探2.5個基點至3.96%。穩定的通膨路徑為聯準會維持漸進式降息提供了堅實的數據支撐，帶動資金回流債市。</p>
-                <p><strong>信用利差維持相對穩定</strong><br>此情勢下最大的風險是聯準會官員在會後釋出過度保守的言論，而機會在於資金轉入高評級公司債鎖定長期固定收益。盤面上，新興市場美元債與高收益債券ETF跌幅微小，反映全球流動性充裕且企業違約風險並未攀升。未來需觀察聯準會利率點陣圖的變化以確認方向。</p>
+                <p><strong>AI焦慮交易：新的長債壓低機制</strong>此波美債殖利率走低的驅動邏輯與過去明顯不同。LPL Financial策略師Gillum直接將其定名為「AI焦慮交易」：市場擔憂AI取代就業、壓低薪資與通膨，驅使資金提前布局長債以鎖定利率。目前企業雖尚無大規模裁員，但Block今日宣布裁撤近半員工且直接歸因於AI效率，成為最具代表性的案例。10年期殖利率已自去年11月的高點下滑超過40個基點，若此焦慮情緒持續升溫，債市買盤有望延續。</p>
+                <p><strong>房貸市場受益，信用利差守穩</strong>長債殖利率走低的效應已向下傳導：Freddie Mac數據顯示30年期固定房貸利率降至6%以下，為約三年半首見，對美國房市的購屋負擔能力形成正面支撐。信用市場方面，HYG與EMB跌幅均不超過0.1%，顯示儘管股市承壓，市場並未認定企業違約風險攀升。後續需觀察聯準會理事米蘭所主張的今年四次降息論點，是否能獲得更多票委背書以確認政策路徑。</p>
             </div>
         </div>
     </section>
@@ -1441,9 +1176,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #fffbeb;">
             <ul>
-                <li style="color: #cc4e01;"><strong>金價面臨修正：</strong>降息預期未能進一步發酵，配合美元反彈，黃金期貨遭遇多頭獲利了結</li>
-                <li style="color: #cc4e01;"><strong>原油走勢分化：</strong>布蘭特原油微幅收高，但WTI原油受制於美國庫存疑慮而呈現小幅下跌</li>
-                <li style="color: #cc4e01;"><strong>加密貨幣跳水：</strong>比特幣失守九萬美元大關，引爆高槓桿投機資金的大規模多殺多踩踏</li>
+                <li style="color: #cc4e01;"><strong>金價觀望美伊核談結果：</strong>黃金在5,200美元附近呈現膠著，投資人在美伊第三輪日內瓦間接核談前夕選擇按兵不動。FOREX.com分析師Hilal指出，金銀均在嘗試突破阻力位，但若短期地緣政治協議達成，回檔風險將明顯升高，多頭暫時維持觀望心態。</li>
+                <li style="color: #cc4e01;"><strong>油價緊盯美伊談判進展：</strong>美伊核談判進展成為今日原油市場最重要的定價變數。WTI原油在65美元附近窄幅震盪，布蘭特原油略強，雙方均處於敏感的地緣政治觀望期，若核協議取得實質進展，伊朗石油供應回歸預期將帶來下行壓力。</li>
+                <li style="color: #cc4e01;"><strong>半導體晶片原料成本持續墊高：</strong>中國多家半導體龍頭宣布產品漲價10%至80%，主因銅、銀、錫等金屬原料成本大幅攀升；銅價自2025年來累計漲幅已超過40%。此一成本轉嫁趨勢疊加AI對高階記憶體的需求排擠，使消費性電子成本壓力持續惡化。</li>
             </ul>
         </div>
 
@@ -1484,8 +1219,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </tr>
                     <tr>
                         <td>黃金期貨</td>
-                        <td><strong>5,200.70</strong></td>
-                        <td class="text-down"><strong>-0.68%</strong></td>
+                        <td><strong>5,196.20</strong></td>
+                        <td class="text-down"><strong>-0.20%</strong></td>
                         <td class="text-up"><strong>+0.01%</strong></td>
                         <td class="text-up"><strong>+4.98%</strong></td>
                         <td class="text-up"><strong>+26.11%</strong></td>
@@ -1498,19 +1233,19 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <td class="text-down"><strong>-0.17%</strong></td>
                         <td class="text-down"><strong>-1.02%</strong></td>
                         <td class="text-up"><strong>+9.21%</strong></td>
-                        <td class="text-up"><strong>+1.85%</strong></td>
+                        <td class="text-up"><strong>+5.41%</strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
         <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>降息預期降溫壓抑金價</strong><br>由於PCE數據並未顯示美國經濟有加速放緩的跡象，市場對聯準會激進降息的預期隨之降溫。配合美元指數微幅反彈，導致黃金期貨面臨顯著的多頭獲利了結賣壓，單日下跌0.68%。這顯示貴金屬在突破歷史高點後，正進入實質性的技術面修正與籌碼沉澱階段。</p>
-                <p><strong>地緣變數牽動能源市場</strong><br>此情勢下最大的風險是加密貨幣崩跌引發流動性危機，而機會在於逢低佈局具備長期供需緊平衡的工業基礎金屬。盤面上，原油價格受到美伊談判進展的不確定性影響而呈現窄幅震盪。後續需持續關注全球製造業PMI數據，作為評估大宗商品實質需求復甦的關鍵指標。</p>
+                <p><strong>美伊核談判成金價最大定價變數</strong>Zaner Metals副總裁Grant直指「無論美伊核談結果如何，市場充斥著不確定性」。黃金在5,200美元關卡下方陷入拉鋸，多頭雖受制於地緣政治談判不確定性而暫停攻勢，但Grant仍預期金價最終將挑戰5,340美元乃至5,400美元。FOREX.com分析師Hilal則提醒，若短期達成核協議，緊張情緒緩解將帶動金價出現明顯回檔，投資人宜留意下行風險。</p>
+                <p><strong>記憶體排擠消費電子，基礎金屬成本攀升</strong>IDC報告顯示，受AI對高階記憶體需求排擠生產產能影響，2026年全球智慧手機出貨量恐萎縮12.9%至約11億支，創史上最大單年跌幅，IDC資深研究總監Popal直言「平價智慧手機時代已終結」。在基礎金屬端，銅價年漲逾40%帶動中國A股半導體廠集體漲價，漲幅普遍達10%至80%。後續需關注美伊核談進展是否影響能源通道安全，以及全球PMI能否釋出工業金屬需求回升訊號。</p>
             </div>
         </div>
     </section>
@@ -1521,9 +1256,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #f0fdf4;">
             <ul>
-                <li style="color: #059669;"><strong>節前賣壓湧現：</strong>長假前夕投資人避險意識升高，台股早盤遭遇急殺後收斂跌幅平盤作收</li>
-                <li style="color: #059669;"><strong>外資終止連買：</strong>熱錢匯入暫歇，外資單日轉為賣超逾八十億元，籌碼面呈現轉弱跡象</li>
-                <li style="color: #059669;"><strong>航運逆勢抗跌：</strong>在全球科技股回檔與運價看漲的雙重效應下，資金轉入航運族群避險</li>
+                <li style="color: #059669;"><strong>天量記錄外資中止連買：</strong>台股盤中再度改寫歷史，指數最高衝上35,579.34點、成交量突破1.13兆元雙創歷史紀錄，信驊更成台股首檔萬元股王。惟外資中止連六日買超，三大法人同步轉賣，尾盤MSCI季調生效引發甩尾，大盤以35,414.49點幾乎平盤作收，呈現「天量不天價」的分歧格局。</li>
+                <li style="color: #059669;"><strong>半導體設備外圍承壓：</strong>台積電盤中失守2,000元大關收1,995元，鴻海收243元同步翻黑。外資2月累計賣超台積電達6.1萬張，顯示外資在連日大買後正進行部位調節。AI資料中心題材股（信驊、是方等）維持強勢，形成「AI直接受益者強、半導體組裝代工承壓」的結構性分化格局。</li>
+                <li style="color: #059669;"><strong>散戶能量創高M1B黃金交叉：</strong>央行公布1月M1B年增率5.59%超越M2年增率5.16%，重現黃金交叉（自2022年8月以來首次），散戶成交比重躍升至56.2%創近兩年新高。新台幣月線終結連四黑，外國人新台幣存款單月增加509億元創近半年新高，顯示外資熱錢匯入動能雖自高峰稍退，仍持續進駐台灣資本市場。</li>
             </ul>
         </div>
 
@@ -1555,7 +1290,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tr>
                         <td>日經225</td>
                         <td><strong>57,639.26</strong></td>
-                        <td class="text-down"><strong>-0.10%</strong></td>
+                        <td class="text-up"><strong>+0.29%</strong></td>
                         <td class="text-up"><strong>+0.21%</strong></td>
                         <td class="text-up"><strong>+6.47%</strong></td>
                         <td class="text-up"><strong>+19.26%</strong></td>
@@ -1564,7 +1299,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tr>
                         <td>香港恆生指數</td>
                         <td><strong>27,273.81</strong></td>
-                        <td class="text-flat"><strong>+0.00%</strong></td>
+                        <td class="text-down"><strong>-1.44%</strong></td>
                         <td class="text-up"><strong>+3.16%</strong></td>
                         <td class="text-up"><strong>+2.53%</strong></td>
                         <td class="text-up"><strong>+8.54%</strong></td>
@@ -1586,14 +1321,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <td class="text-up"><strong>+0.79%</strong></td>
                         <td class="text-up"><strong>+1.48%</strong></td>
                         <td class="text-down"><strong>-2.15%</strong></td>
-                        <td class="text-down"><strong>-2.09%</strong></td>
+                        <td class="text-down"><strong>-3.49%</strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
-        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-02-27)</h3>
+        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-02-26)</h3>
         <div class="overflow-x-auto">
             <table class="table-styled">
                 <caption>台股三大法人買賣超統計</caption>
@@ -1639,8 +1374,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>長假效應引發獲利了結</strong><br>台股在連續創高後遭遇連假前夕的龐大賣壓，外資終結連日狂買轉為賣超83.52億元。大盤盤中一度急殺逾兩百點，隨後在低接買盤進駐下收斂跌幅，終場以平盤作收。籌碼面顯示內外資同步偏空操作進行部位調整，整體市場觀望氣氛極度濃厚。</p>
-                <p><strong>期貨空單增加防禦變盤</strong><br>此情勢下最大的風險是美股科技板塊在長假期間持續重挫，而機會在於低接具備實質基本面支撐的傳產航運族群。盤面上，領跌的板塊為半導體設備，領漲的為受惠運價看漲的長榮與陽明。後續需密切觀察外資在台指期的淨空單部位變化，以防範節後的向下變盤風險。</p>
+                <p><strong>外資中止連六買，台積失守2000元</strong>外資終結連六日買超大幅轉為賣超，2月累計已賣超台積電6.1萬張，台積電盤中因此跌破2,000元心理關卡收1,995元。法人分析師黃漢成指出，台股金馬年開年漲逾2,000點，技術指標已至高點，大幅震盪難以避免，惟逢回應以CPO、ABF等AI直接受益族群為承接重點。盤面結構顯示「外資整理部位、散戶接棒」的籌碼移轉態勢，散戶成交比重已升至56.2%、創近兩年高。</p>
+                <p><strong>天量天價分歧，MSCI尾盤加劇震盪</strong>台股今日爆出1.13兆元歷史新天量，惟指數未能同步創新高收盤，呈現「量大不漲」的潛在警訊。MSCI季調於尾盤生效，引發大量被動型資金的再平衡買賣，加劇終場甩尾走勢。正面亮點為信驊盤中突破萬元成台股首檔萬元股王，以及是方電信、眾達-KY等AI資料中心受益股持續展現強勢。後續需觀察Nvidia衝擊能否使外資再度轉回積極買盤，以及台幣月線轉紅後是否帶來新一波資金流入效應。</p>
             </div>
         </div>
     </section>
@@ -1651,9 +1386,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #ecfeff;">
             <ul>
-                <li style="color: #0891b2;"><strong>台幣無懼震盪：</strong>儘管股市逢賣壓，前期外資熱錢的遞延效應仍推升新台幣強勢升值</li>
-                <li style="color: #0891b2;"><strong>美元微幅反彈：</strong>美國PCE數據展現經濟韌性，支撐美元指數在低檔獲得買盤承接</li>
-                <li style="color: #0891b2;"><strong>歐元逆勢走強：</strong>歐洲央行官員釋放穩定訊號，帶動歐元兌美元在非美貨幣中表現亮眼</li>
+                <li style="color: #0891b2;"><strong>台幣月線終結連四黑：</strong>新台幣今日盤中一度升至31.203元、央行適時介入調節後收31.251元，單日成交量爆出30.61億美元。月線終結連四黑，本周累計升值0.85%。外國人新台幣存款單月增加509億元創2025年8月以來新高，顯示熱錢仍在持續匯入，台幣的中期升值趨勢並未逆轉。</li>
+                <li style="color: #0891b2;"><strong>人民幣強勢突破6.83：</strong>人民幣今日強勢大漲0.42%，離岸價突破6.83大關，升抵近三年新高，在亞幣中表現最為亮眼。此走勢與中國科技板塊近期受重視及中美貿易摩擦邊際緩和的預期有關，對台幣形成間接的比價跟升壓力。</li>
+                <li style="color: #0891b2;"><strong>美元指數小幅反彈觀望：</strong>美元指數在風險情緒偏保守的背景下小幅走高0.08%，但整體維持窄幅震盪。聯準會理事米蘭的鴿派發言（今年應降息四次）略微限制了美元的反彈力道，市場目前維持觀望，等待下周重要經濟數據以確認方向。</li>
             </ul>
         </div>
 
@@ -1685,10 +1420,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </tr>
                     <tr>
                         <td>美元兌台幣</td>
-                        <td><strong>31.2460</strong></td>
-                        <td class="text-down"><strong>-0.42%</strong></td>
-                        <td class="text-down"><strong>-0.41%</strong></td>
-                        <td class="text-down"><strong>-1.07%</strong></td>
+                        <td><strong>31.2510</strong></td>
+                        <td class="text-down"><strong>-0.28%</strong></td>
+                        <td class="text-down"><strong>-0.85%</strong></td>
+                        <td class="text-down"><strong>-0.69%</strong></td>
                         <td class="text-down"><strong>-0.57%</strong></td>
                         <td class="text-up"><strong>+0.01%</strong></td>
                     </tr>
@@ -1713,14 +1448,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 </tbody>
             </table>
         </div>
-        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 指數整理表</p>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
         <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>台幣無懼賣壓逆勢走升</strong><br>儘管台股外資轉為賣超且面臨長假震盪，但前期龐大熱錢匯入的遞延效應依然存在，推升新台幣兌美元強勢升值0.42%至31.2460。台幣在亞幣中的相對強勢，反映了台灣在全球AI供應鏈中的核心戰略地位，正持續吸引國際長期資本駐留與佈局。</p>
-                <p><strong>美元震盪等待方向指引</strong><br>此情勢下最大的風險是聯準會利率點陣圖意外上調，而機會在於順勢操作具備經濟復甦題材的歐洲貨幣。盤面上，領漲的貨幣為歐元，美元指數則因PCE數據無意外而呈現狹幅震盪。未來需觀察美國非農就業報告，作為研判全球資金流向的關鍵指標。</p>
+                <p><strong>央行護盤下台幣月線翻紅，熱錢仍在</strong>新台幣今日盤中一度強升至31.203元，單日股匯外匯成交量爆出30.61億美元的巨量，央行適時進場調節後終場收31.251元。月線終結連四黑意義重大，顯示前期壓制台幣的外部因素（美元強勢、資金觀望）正在邊際改善。外國人新台幣存款單月增加509億元創近半年新高，央行官員指出主要與外資淨匯入及企業股利增加有關，台幣升值趨勢仍具基本面支撐。</p>
+                <p><strong>人民幣升破6.83，亞幣比價跟升</strong>人民幣離岸價大漲0.42%突破6.83大關，創近三年新高，在亞幣中強勢領漲，且幅度顯著優於新台幣（+0.28%）、韓元（+0.28%）與新加坡幣（+0.14%），日圓則獨自走弱（-0.08%）。人民幣升值背後隱含市場對中國科技產業競爭力的重新定價，此趨勢若延續將帶動亞幣整體比價跟升，台幣的進一步升值空間值得關注。後續需觀察台灣是否持續出現外資資金淨匯入，以確認台幣的結構性升值動能。</p>
             </div>
         </div>
     </section>
@@ -1735,16 +1470,16 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <!-- TL;DR -->
         <div class="tldr-block" style="background: #faf5ff;">
             <ul>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> 航運物流受惠運價看漲與高殖利率護體，成為科技股回檔時的資金避風港</li>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> ASML次世代設備量產進度報捷，鞏固晶圓代工龍頭在先進製程的絕對優勢</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 記憶體財測暴雷戳破消費性電子復甦幻象，標準型晶片廠面臨沉重估值修正</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 虛擬資產崩跌引爆連鎖平倉效應，高槓桿加密貨幣概念股遭遇恐慌性逃命波</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> ASML High-NA EUV達量產成熟門檻，台積電二奈米製程推進確定性大幅提升，供應鏈長線訂單能見度強化</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> Meta簽署數十億美元Google TPU使用協議，AI晶片供應多元化趨勢確立，台積電、聯發科、欣興等全面受惠</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> Nvidia「利多出盡」遭重挫5.49%，市場對AI硬體估值的容忍度已達天花板，高本益比科技股估值修正風險上升</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> IDC預測2026年全球智慧手機出貨萎縮12.9%創史上最大跌幅，平價手機時代終結，消費性電子供應鏈面臨持續估值下修壓力</li>
             </ul>
         </div>
 
         <!-- 看多推薦第一檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:航運物流 (以長榮為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:晶圓代工（先進製程） (以台積電（TSMC）為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1756,37 +1491,37 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">運價預期</td>
-                            <td>紅海危機與缺船效應支撐長線運價處於高檔不墜</td>
+                            <td class="font-semibold text-slate-600">ASML技術突破直接受益</td>
+                            <td>ASML技術長Pieters宣布High-NA EUV設備已完成50萬片晶圓測試，可用率達80%（目標年底90%），正式具備量產成熟度。ASML數據顯示，新設備能以單一道製程取代現有EUV多個步驟，直接降低台積電先進製程成本並提升良率，二奈米及後續節點的製程推進確定性因此大幅增強。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">殖利率</td>
-                            <td>挾帶龐大自由現金流具備極具吸引力的高股息題材</td>
+                            <td class="font-semibold text-slate-600">AI需求與消費性電子分化</td>
+                            <td>台積電的客戶結構決定其在本波AI估值重估中的相對優勢：資料中心AI晶片（Nvidia、AMD、Google TPU、Apple等）需求強勁且持續，完全不受IDC所揭示的智慧手機萎縮13%負面影響。Meta宣布與Google簽署數十億美元TPU租用協議，也進一步確認AI算力投資的長期必要性，台積電作為唯一先進製程提供者的壟斷地位不受動搖。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">避險屬性</td>
-                            <td>在全球科技股高檔震盪時成為資金最佳防禦型避風港</td>
+                            <td class="font-semibold text-slate-600">外資短線調節後的再進場機會</td>
+                            <td>外資2月累計賣超台積電6.1萬張，盤中股價因此跌破2,000元收1,995元，短線超賣跡象浮現。法人分析師指出，此為外資在連日大幅買超後的正常部位調節，並非基本面惡化。Nvidia財報的「利多出盡」震盪實質上並未改變台積電的訂單能見度，反而創造了相對更具吸引力的再進場時機。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=航運股+基本面" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/TWSE-2330/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                第一季獲利預估將大幅優於過往淡季傳統表現
+                                台積電毛利率維持在57%以上高位，資料中心AI晶片需求保持強勁，Nvidia財測上修代表下游需求不減，台積電先進製程產能持續供不應求，全年EPS成長能見度高。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=長榮海運+技術分析" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/TWSE-2330/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                股價突破長期整理區間並呈現均線多頭發散排列
+                                股價盤中跌破2,000元整數關卡至1,995元，但此處為前期整理區上緣，短線技術面形成有效支撐；週線均線多頭排列結構完整，回測後若能收復2,000元將確認多頭格局延續。
                             </td>
                         </tr>
                     </tbody>
@@ -1797,14 +1532,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>高息護體吸引避險資金</strong><br>在全球科技股因美光財報暴雷而面臨估值修正之際，具備實質高殖利率與強勁現金流的航運板塊，迅速成為避險資金的首選。紅海地緣政治衝突的常態化，實質上改變了全球運力的供需結構，使得運價易漲難跌。在台股面臨長假變盤風險的背景下，投資人可將資金部分轉移至此類具備低本益比與高防禦性的傳產龍頭，以降低整體投資組合的波動率。</p>
+                    <p><strong>ASML里程碑重構供應鏈投資邏輯</strong><br>ASML High-NA EUV量產宣言，是本週最具戰略意義的產業訊號。這意味著台積電在二奈米後的下一代製程，已取得唯一可用量產設備的供應保證，競爭護城河進一步加深。在Nvidia因「利多出盡」而受到資金懲罰的同時，台積電的投資邏輯恰好相反——它是那個「所有人都需要它但沒人能複製它」的唯一存在。外資短線調節所造成的股價回檔，對長期持有者而言是難得的分批布局機會。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看多推薦第二檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:晶圓代工 (以TSMC為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:半導體設備 (以ASML為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1816,37 +1551,37 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">設備進展</td>
-                            <td>ASML次世代EUV量產將大幅提升未來先進製程良率</td>
+                            <td class="font-semibold text-slate-600">High-NA EUV量產里程碑</td>
+                            <td>技術長Pieters宣布High-NA EUV設備已完成50萬片晶圓測試，可用率達80%並持續提升，正式宣告進入量產成熟階段。這意味著英特爾、台積電等客戶可以開始制定將High-NA EUV整合至實際製程的明確時間表，ASML的未來訂單能見度因此大幅躍升。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">訂單能見度</td>
-                            <td>AI高階晶片需求不墜無懼消費性電子復甦放緩</td>
+                            <td class="font-semibold text-slate-600">完全壟斷的護城河</td>
+                            <td>ASML是全球唯一商業化EUV設備製造商，High-NA EUV的單台售價約4億美元（為前代兩倍），每台設備的建置需耗費2至3年的客戶測試與驗證週期。這種技術壟斷加上超長銷售週期，使ASML的營收能見度與競爭優勢在所有半導體設備廠中無可匹敵，Factset共識估計其目標價已上調至1,737美元（幅度約3.73%）。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">產業護城河</td>
-                            <td>在二奈米與先進封裝領域徹底甩開所有全球競爭對手</td>
+                            <td class="font-semibold text-slate-600">AI晶片需求推動多年升級週期</td>
+                            <td>現有EUV設備在製造複雜AI晶片方面逐漸逼近技術極限，High-NA EUV的導入是AI基礎建設持續擴張的必要條件而非可選升級。ChatGPT等AI服務對更強大晶片的持續需求，確保了ASML設備銷售的長期需求端底部，形成長達數年的設備更新換代週期。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/TSMC/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-ASML/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                不受終端消費市場疲弱影響維持強勁毛利率擴張軌跡
+                                ASML高達50%以上毛利率受益於技術壟斷定價力，High-NA EUV量產宣言意味著新一波高單價設備採購週期即將啟動，未來2至3年的訂單積壓量可望大幅增長，本益比溢價具備基本面支撐。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/TSMC/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-ASML/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                大盤回檔時展現強大抗跌韌性穩守兩千元大關關鍵支撐
+                                ASML近期在Factset目標價上調至1,737美元（+3.73%）的消息支撐下，股價技術面維持強勢格局；逢費半指數急挫帶來的連帶回檔，反而是趁勢介入此一長線壟斷標的的有利時機。
                             </td>
                         </tr>
                     </tbody>
@@ -1857,14 +1592,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>技術突破鞏固長期優勢</strong><br>ASML宣布次世代EUV設備可投入量產，這對台積電的先進製程推進無疑是一劑強心針。儘管短期半導體板塊受到美光財測拖累，但必須嚴格區分「消費性電子記憶體」與「AI高效能運算晶片」的兩極化基本面差異。台積電憑藉其無可替代的晶圓代工壟斷地位，在市場恐慌性錯殺回檔時，反而浮現了絕佳的長線佈局買點。其長期估值增長邏輯並未因單一記憶體廠的財報而產生動搖。</p>
+                    <p><strong>壟斷技術的里程碑，開啟新定價週期</strong><br>ASML技術長的公開聲明，在戰略意義上等同於「開閘放水」——客戶此前對High-NA EUV量產時機的不確定性消除，大型晶片廠的資本支出規劃可以正式納入這一新世代設備。每台4億美元的設備售價，疊加全球唯一供應商地位，使ASML在每一輪AI基礎建設升級中都是最確定性的受益者。台積電、英特爾的採購增加將直接轉化為ASML的多年高能見度營收，是當前市場中少數能夠確定性成長的長線配置標的。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看空推薦第一檔 -->
         <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:記憶體模組 (以Micron為例)</h3>
+            <h3 class="recommendation-title bearish">[看空]:AI繪圖晶片（高估值風險） (以Nvidia為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1876,37 +1611,37 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">財測展望</td>
-                            <td>最新財測嚴重低於市場預期揭露終端需求嚴冬</td>
+                            <td class="font-semibold text-slate-600">利多出盡的估值天花板</td>
+                            <td>輝達Q4資料中心營收年增75%、整體季營收達680億美元雙雙超出預期，卻引發股價重挫5.49%、市值蒸發逾2590億美元。Futurum執行長Newman一語道破：「現在已沒有『夠好』這回事了。」多家機構（Wedbush、Wolfe、William Blair）雖上調目標價，但交易員已從「背書AI故事」轉向「壓力測試整個AI經濟體的財務合理性」，預示估值壓縮風險已至。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">PC與手機</td>
-                            <td>傳統消費性電子換機潮落空導致庫存去化嚴重受阻</td>
+                            <td class="font-semibold text-slate-600">AI雲端過度資本化疑慮浮現</td>
+                            <td>輝達的「親兒子」CoreWeave Q4營收雖年增110%，但淨損擴大至4.52億美元（遠超分析師估值3.42億美元），利息支出年增160%達3.88億美元，財測亦不如預期，盤後重挫8.8%。這一案例揭示，大量採購輝達GPU所構建的AI雲端基礎建設，正面臨「借貸擴張→利息負擔沉重→財務不可持續」的內在矛盾，可能引發對輝達下游需求可持續性的重新評估。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">報價趨勢</td>
-                            <td>標準型記憶體報價面臨上漲動能衰竭的轉折風險</td>
+                            <td class="font-semibold text-slate-600">《大賣空》貝瑞的警告</td>
+                            <td>麥克·貝瑞針對輝達財報再度發出嚴厲警告，指出採購承諾飆升恐面臨「災難性」打擊。此外，Anthropic更新Claude模型的消息也曾引發市場對AI需求的短暫恐慌。從「需要更多算力」到「模型效率提升使同量算力能做更多事」的典範轉移，正在成為壓制輝達高本益比的新敘事風險。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MU/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                高頻寬記憶體的成長無法完全彌補傳統業務龐大衰退
+                                輝達雖維持約75%的高毛利率，但從「可用率稀缺」到「算力逐漸充裕」的轉變將侵蝕其定價權。Wedbush雖以「看喬丹打球」比喻本季財報，但市場已不再為驚喜買單，估值溢價空間正在收窄。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MU/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                發布財報後盤後重挫逾8%向下摜破重要中長期均線
+                                輝達收184.89美元急跌5.49%，形成明顯的量大下跌型態；費半指數同日重挫3.19%，技術面破壞了近期的盤整結構，空頭動能尚未完全釋放，均線支撐位能否守住是後續關鍵觀察點。
                             </td>
                         </tr>
                     </tbody>
@@ -1917,14 +1652,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                  <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>終端疲軟戳破復甦幻象</strong><br>美光慘淡的財測正式戳破了市場對PC與智慧型手機迎來全面換機潮的樂觀幻想。數據顯示，儘管AI題材火熱，但高通膨持續壓抑一般消費者的換機意願，導致傳統記憶體庫存去化再度面臨挑戰。由於標準型產品的營收佔比依然龐大，HBM的獲利完全無法填補缺口。投資人應高度警惕此類高度依賴消費性週期的零組件標的，防範法人籌碼的持續性鬆動與估值下修風險。</p>
+                    <p><strong>定價權巔峰後的第一道裂縫</strong><br>輝達的財報品質從未令人失望，但市場的問題已不再是「輝達有多強」，而是「整個AI投資生態系的商業模式是否成立」。CoreWeave的鉅額利息負擔、大型雲端業者的「先建後賺」模式、模型效率提升帶來的算力需求壓縮——這三個邏輯正逐步侵蝕輝達的高本益比基礎。在市場尋找「再平衡點」的過程中，輝達股價的每一次財報後反彈強度都可能遞減，不宜追高。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看空推薦第二檔 -->
         <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:加密貨幣概念股 (以MicroStrategy為例)</h3>
+            <h3 class="recommendation-title bearish">[看空]:AI雲端基礎建設（高財務槓桿） (以CoreWeave為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1936,37 +1671,37 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">資產價格</td>
-                            <td>比特幣跌破九萬美元大關引發大規模多殺多踩踏</td>
+                            <td class="font-semibold text-slate-600">財務槓桿侵蝕獲利能力</td>
+                            <td>CoreWeave Q4營收年增110%，但淨損達4.52億美元，遠超市場預估的3.42億美元。更關鍵的是，第四季淨利息費用達3.88億美元（年增160%），2025全年利息費用高達12.3億美元（年增240%）。為了擴張資料中心而大量舉債的策略，在低利率時代可行，但在當前利率環境下正快速侵蝕本已薄弱的利潤空間。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">槓桿反噬</td>
-                            <td>極端槓桿購幣策略在資產下跌時面臨流動性枯竭</td>
+                            <td class="font-semibold text-slate-600">本季財測不如預期引爆賣壓</td>
+                            <td>儘管積壓訂單從556億美元增至668億美元（為2025年初的四倍），但CoreWeave的本季財測指引仍低於分析師預期，顯示龐大訂單轉換為實際營收的能力受到建設成本與資本結構的制約。執行長Intrator雖強調輝達GPU持續短缺、需求依然強勁，但在盈利路徑不明確的背景下，市場給予了截然不同的定價判斷。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">溢價收斂</td>
-                            <td>股價相對於所持比特幣淨值的高昂溢價正快速縮水</td>
+                            <td class="font-semibold text-slate-600">母公司輝達同步遭拋售</td>
+                            <td>CoreWeave是輝達重金入股的「親兒子」，兩者股價高度相關。當輝達本身已因「利多出盡」而重挫5.49%之際，CoreWeave作為輝達最大的外部GPU采購商之一，面臨雙重壓力：上游算力成本高企，以及市場整體對AI高槓桿商業模式的重新定價。今年年初至今雖仍累計上漲36%，但此一漲幅在當前盈利模式下難以維繫。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MSTR/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-CRWV/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                本業獲利完全無法支撐當前因投機資金堆疊的荒謬市值
+                                CoreWeave歷史上最快達到50億美元年營收的雲端公司，但2025全年淨損11.7億美元超越2024年的8.63億元，在算力成本與利息雙重壓頂下，短期轉虧為盈時間表高度不確定。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://www.google.com/search?q=https://tw.tradingview.com/symbols/MSTR/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-CRWV/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                股價連續崩跌並爆出天量呈現極度恐慌的逃命波走勢
+                                CoreWeave周四終場收97.63美元，財報後盤後急挫8.8%至約89美元附近，形成缺口下跌形態；若明日正式開盤確認缺口，技術面將形成顯著下行趨勢訊號，動能指標轉弱風險高。
                             </td>
                         </tr>
                     </tbody>
@@ -1977,7 +1712,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>泡沫破裂引爆連鎖平倉</strong><br>比特幣跌破重要心理關卡，引發了加密貨幣市場的連鎖平倉潮。對於微策略這類將整間公司命運綁定在高槓桿加密資產上的企業而言，底層資產的劇烈波動將帶來毀滅性的打擊。過去數月因投機狂熱所累積的荒謬估值溢價正在快速崩塌，技術面呈現極度恐慌的逃命波走勢。強烈建議投資人徹底避開此類缺乏實質現金流且面臨流動性危機的高風險投機標的，以防範資產泡沫破裂的系統性風險。</p>
+                    <p><strong>AI雲端高槓桿模式接受壓力測試</strong><br>CoreWeave代表的是AI基礎建設投資最激進的一端：用大量舉債購買輝達GPU，再以雲端服務方式出租算力。這個模式在需求端高速成長、資金成本低廉時成立，但現在兩個前提都在弱化——利息費用年增240%侵蝕獲利，模型效率提升可能降低未來算力租賃需求。更重要的是，Meta已轉向租用Google TPU以分散對輝達依賴，顯示CoreWeave的核心市場正面臨大客戶的自主替代風險。此類高槓桿AI算力概念股，在市場進行估值重整的當下，宜迴避。</p>
                 </div>
             </div>
         </div>
@@ -1986,7 +1721,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
     <!-- 頁尾 -->
     <footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
-        <p class="text-xs" style="color: #64748b;">© 2026 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+        <p class="text-xs" style="color: #64748b;">© 2025 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
         <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享,不構成任何投資建議,投資人應秉持獨立判斷,審慎評估並自負投資風險。</p>
     </footer>
 
@@ -2077,6 +1812,8 @@ window.addEventListener('load', function() {
      }
 }); // end window.load
 </script>
+
+
 
 
 </body></html>
