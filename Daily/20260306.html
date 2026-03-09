@@ -1,10 +1,295 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
+<html lang="zh-TW"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      (function() {
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
+          }
+        };
+
+        let requestId = 0;
+        let callbacksMap = new Map();
+        let streamControllers = new Map();
+        
+        window.claude = {
+          complete: (prompt) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
+            });
+          }
+        };
+
+        window.storage = {
+          get: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageGet', id, key, shared }, '*');
+            });
+          },
+          set: (key, value, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
+            });
+          },
+          delete: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
+            });
+          },
+          list: (prefix, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
+            });
+          }
+        };
+
+        let pendingBlobs = new Map();
+        URL.createObjectURL = (blob) => {
+          // Store the blob and create an ID and URL for it
+          const blobId = `blob-${Date.now()}-${Math.random()}`;
+          pendingBlobs.set(blobId, blob);
+          return `blob-request://${blobId}`;
+        };
+
+        URL.revokeObjectURL = (url) => {
+          // Remove the blob from our store
+          const blobId = url.replace("blob-request://", "");
+          pendingBlobs.delete(blobId);
+        };
+
+        const getBlobFromURL = (url) => {
+          const blobId = url.replace("blob-request://", "");
+          return pendingBlobs.get(blobId);
+        };
+
+        // Override global fetch with streaming support
+        window.fetch = (url, init = {}) => {
+          return new Promise((resolve, reject) => {
+            const id = requestId++;
+            const channelId = `fetch-${id}-${Date.now()}`;
+            
+            callbacksMap.set(id, { 
+              resolve: (response) => {
+                // Create a ReadableStream for the response body
+                const stream = new ReadableStream({
+                  start(controller) {
+                    streamControllers.set(channelId, controller);
+                  },
+                  cancel() {
+                    streamControllers.delete(channelId);
+                  }
+                });
+                
+                // Create and return the Response with the stream
+                resolve(new Response(stream, {
+                  status: response.status,
+                  statusText: response.statusText,
+                  headers: response.headers
+                }));
+              },
+              reject,
+              channelId
+            });
+            
+            window.parent.postMessage({
+              type: 'proxyFetch',
+              id,
+              url,
+              init,
+              channelId
+            }, '*');
+          });
+        };
+
+        window.addEventListener('message', async (event) => {
+          if (event.data.type === 'takeScreenshot') {
+            const rootElement = document.getElementById('artifacts-component-root-html');
+            if (!rootElement) {
+              window.parent.postMessage({
+                type: 'screenshotError',
+                error: new Error('Root element not found'),
+              }, '*');
+            }
+            const screenshot = await htmlToImage.toPng(rootElement, {
+              imagePlaceholder:
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
+            });
+            window.parent.postMessage({
+              type: 'screenshotData',
+              data: screenshot,
+            }, '*');
+          } else if (event.data.type === 'claudeComplete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.completion);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'proxyFetchResponse') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+              callbacksMap.delete(event.data.id);
+            } else {
+              // Initial response with headers, status, etc.
+              callback.resolve({
+                status: event.data.status,
+                statusText: event.data.statusText,
+                headers: event.data.headers
+              });
+              // Don't delete the callback yet if streaming
+              if (!event.data.body) {
+                callbacksMap.delete(event.data.id);
+              }
+            }
+          } else if (event.data.type === 'proxyFetchStream') {
+            // Handle streaming data chunks
+            const controller = streamControllers.get(event.data.channelId);
+            if (controller) {
+              if (event.data.error) {
+                controller.error(new Error(event.data.error));
+                streamControllers.delete(event.data.channelId);
+              } else if (event.data.done) {
+                controller.close();
+                streamControllers.delete(event.data.channelId);
+                // Clean up the callback
+                const callback = Array.from(callbacksMap.entries()).find(
+                  ([_, value]) => value.channelId === event.data.channelId
+                );
+                if (callback) {
+                  callbacksMap.delete(callback[0]);
+                }
+              } else if (event.data.chunk) {
+                controller.enqueue(new Uint8Array(event.data.chunk));
+              }
+            }
+          } else if (event.data.type === 'storageGet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageSet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageDelete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageList') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          }
+        });
+
+        window.addEventListener('click', (event) => {
+          const isEl = event.target instanceof HTMLElement;
+          if (!isEl) return;
+    
+          // find ancestor links
+          const linkEl = event.target.closest("a");
+          if (!linkEl || !linkEl.href) return;
+    
+          event.preventDefault();
+          event.stopImmediatePropagation();
+    
+          if (linkEl.href.startsWith("blob-request:")) {
+            const blob = getBlobFromURL(linkEl.href);
+            if (!blob) return;
+            void blob.arrayBuffer().then((data) => {
+              window.parent.postMessage({
+                type: "downloadFile",
+                filename: linkEl.download,
+                data,
+                mimeType: blob.type || "application/octet-stream",
+              });
+            });
+          } else if (linkEl.href.startsWith("data:")) {
+            const [header, base64Data] = linkEl.href.split(",");
+            const mimeMatch = header.match(/data:([^;]+)/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+            const binaryString = atob(base64Data);
+            const data = Uint8Array.from(binaryString, (c) =>
+              c.charCodeAt(0),
+            ).buffer;
+            window.parent.postMessage({
+              type: "downloadFile",
+              filename: linkEl.download,
+              data,
+              mimeType,
+            });
+          } else {
+            let linkUrl;
+            try {
+              linkUrl = new URL(linkEl.href);
+            } catch (error) {
+              return;
+            }
+    
+            if (linkUrl.hostname === window.location.hostname) return;
+      
+            window.parent.postMessage({
+              type: 'openExternal',
+              href: linkEl.href,
+            }, '*');
+          }
+      });
+
+        const originalOpen = window.open;
+        window.open = function (url) {
+          window.parent.postMessage({
+            type: "openExternal",
+            href: url,
+          }, "*");
+        };
+
+        window.addEventListener('error', (event) => {
+          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年03月06日 金融市場日報|洞察•解構•透視全球資產</title>
-    <meta name="description" content="2026年03月06日 金融市場日報|洞察•解構•透視全球資產">
+    <title>2026年03月06日（五） 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026年03月06日（五） 金融市場日報|洞察•解構•透視全球資產">
 
     <style>
         /* 系統字體堆疊 */
@@ -258,27 +543,20 @@
         /* 時間軸標籤 */
         .timeline-tag {
             display: inline-block;
-            padding: 0.3rem 0.75rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 600;
             margin-right: 0.75rem;
-            white-space: nowrap;
-            min-width: 7.5rem;
-            min-height: 2rem;
-            line-height: 1.4rem;
-            vertical-align: middle;
-            flex-shrink: 0;
+            vertical-align: top;
         }
         .timeline-tag-taiwan { background: #f1f5f9; color: #1e293b; }
         .timeline-tag-us { background: #f1f5f9; color: #dc2626; }
         .timeline-container p {
-            display: flex;
-            align-items: flex-start;
-            gap: 0;
             margin: 0;
-            padding: 0.35rem 0;
-            line-height: 1.6;
+            padding: 0.125rem 0;
+            line-height: 1.4;
+             /* 字數控制由JS確保, CSS不強制 */
         }
 
         /* --- v3.1.9 保持 v3.1.8 的深度分析格式 --- */
@@ -585,10 +863,10 @@
         }
     </style>
 </head>
-<body>
+<body id="artifacts-component-root-html">
 
 <!-- 進度條 -->
-<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; transition: opacity 0.5s ease-out; display: none;"></div>
 
 <!-- 導覽工具列 -->
 <div class="nav-sticky">
@@ -610,8 +888,8 @@
 
     <!-- 標題 -->
     <header style="text-align: center; margin: 0;">
-        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026年03月06日 金融市場日報</h1>
-        <p class="sub-title" style="margin: 0;">台股強彈逾800點 油價飆漲通膨憂慮再起道瓊重挫</p>
+        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026年03月06日（五） 金融市場日報</h1>
+        <p class="sub-title" style="margin: 0;">外資大賣台股走低 荷姆茲封鎖推升油價美股全線重挫</p>
     </header>
 
     <!-- 第1章:市場總覽與重點 -->
@@ -621,9 +899,9 @@
         <div class="tldr-block" style="background: #f0f9ff;">
             <h3 class="table-title">市場三大要點</h3>
             <ul>
-                <li style="color: #015fb4;"><strong>油價飆漲引爆通膨擔憂，美股上演股債雙殺：</strong>中東戰事升溫推升WTI原油價格暴漲逾6.5%，再度點燃市場對通膨的憂慮，導致美債殖利率攀升、股市承壓，道瓊指數重挫近800點，上演股債雙殺的悲觀行情。</li>
-                <li style="color: #015fb4;"><strong>台股報復性反彈逾800點，外資賣壓仍未停歇：</strong>在經歷前一日的史詩級崩跌後，台股展開報復性反彈，大漲844點收復月線。然而，外資仍持續賣超514億元，呈現連5日賣超，顯示籌碼面壓力仍未完全解除。</li>
-                <li style="color: #015fb4;"><strong>美元重拾避險地位，黃金因殖利率攀升承壓：</strong>市場對中東衝突的擔憂再起，推動美元指數上漲0.28%，重獲避險資金青睞。然而，美債殖利率同步攀升，增加了持有黃金的機會成本，導致金價承壓回落0.43%。</li>
+                <li style="color: #015fb4;"><strong>油價急漲通膨疑慮主導全球市場：</strong>油價急漲通膨疑慮主導全球市場：WTI週漲35%創1983年以來最大漲幅，美股四大指數週線全黑，停滯性通膨疑慮推升市場避險情緒。</li>
+                <li style="color: #015fb4;"><strong>邁威爾財報超預期逆勢大漲22%：</strong>邁威爾財報超預期逆勢大漲22%：Marvell Q4 EPS 0.80美元優於預期，資料中心年增46%，為本週美股空頭市場中少見的正面亮點。</li>
+                <li style="color: #015fb4;"><strong>外資賣超352億台股本週累跌5%：</strong>外資賣超352億台股本週累跌5%：外資單日賣超352.36億，五日累計賣超3,168.94億，台股加權指數週跌5.12%，相對全球市場仍相對抗跌。</li>
             </ul>
         </div>
 
@@ -632,30 +910,30 @@
             <div class="market-overview-row-1">
                 <div class="market-card-new us-stock">
                     <div class="market-card-title-new">美股市場</div>
-                    <div class="market-card-value-new">道瓊工業 <strong>47,954.74</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-1.61%</strong> • 油價飆漲引發通膨擔憂，道瓊重挫近800點，股債市場雙殺。</div>
+                    <div class="market-card-value-new">S&amp;P 500 <strong>6,740.02</strong></div>
+                    <div class="market-card-change-new down">▼ <strong>-1.33%</strong> • 非農爆冷疊加油價飆升，週線四大指數全數重挫。</div>
                 </div>
                 <div class="market-card-new tw-stock">
                     <div class="market-card-title-new">台股市場</div>
-                    <div class="market-card-value-new">加權 <strong>33,672.94</strong></div>
-                    <div class="market-card-change-new text-up">▲ <strong>+2.57%</strong> • 前日崩跌後，台股報復性強彈逾800點，成功收復月線。</div>
+                    <div class="market-card-value-new">加權 <strong>33,599.54</strong></div>
+                    <div class="market-card-change-new down">▼ <strong>-0.22%</strong> • 油價衝擊外溢，外資單日賣超352億拖累走低。</div>
                 </div>
                 <div class="market-card-new bond">
                     <div class="market-card-title-new">債券市場</div>
-                    <div class="market-card-value-new">10年期殖利率 <strong>4.15%</strong></div>
-                    <div class="market-card-change-new text-up">▲ <strong>+7.0 bps</strong> • 油價飆升點燃通膨憂慮，美10年期殖利率攀升7個基點。</div>
+                    <div class="market-card-value-new">10年期殖利率 <strong>4.13%</strong></div>
+                    <div class="market-card-change-new down">▼ <strong>-1 bps</strong> • 油價推升通膨預期，美債創近一年最大單週跌幅。</div>
                 </div>
                 <div class="market-card-new commodity">
                     <div class="market-card-title-new">大宗商品</div>
-                    <div class="market-card-value-new">黃金期貨 <strong>5,098.10</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-0.43%</strong> • 美元走強壓抑金價回落，另，WTI原油暴漲逾6.5%。</div>
+                    <div class="market-card-value-new">黃金期貨 <strong>5,146.10</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+1.60%</strong> • 弱勢非農帶動避險買盤小幅走升，另，布蘭特原油週漲27.88%。</div>
                 </div>
             </div>
             <div class="market-overview-row-2">
                 <div class="market-card-new fx">
                     <div class="market-card-title-new">匯率市場</div>
-                    <div class="market-card-value-new">美元指數 <strong>99.05</strong></div>
-                    <div class="market-card-change-new text-up">▲ <strong>+0.28%</strong> • 中東戰事擔憂再起，避險需求推升美元指數重回99關卡之上。</div>
+                    <div class="market-card-value-new">美元指數 <strong>98.99</strong></div>
+                    <div class="market-card-change-new down">▼ <strong>-0.33%</strong> • 非農數據疲弱致美元當日走軟，但週線因避險需求上揚1.41%。</div>
                 </div>
                 <div></div>
             </div>
@@ -666,32 +944,32 @@
             <div>
                 <h3 class="table-title">Top 10 市場熱點事件榜</h3>
                 <div class="heat-container">
-                    <div class="heat-item"><div class="heat-bar heat-bar-1">道瓊重挫近800點</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-2">台股強彈844點</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-3">WTI原油飆漲6.5%</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-4">美債殖利率攀升</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-5">外資連5日賣超</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-6">通膨憂慮再起</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-7">博通財報亮眼</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-8">記憶體族群漲停</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-9">荷姆茲海峽危機</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-10">AI晶片出口管制</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">荷姆茲封鎖油價飆升</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">非農減少9.2萬</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">停滯性通膨疑慮</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">Marvell大漲22%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">美股週線全黑</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">Fed降息預期推後</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">外資單日賣超352億</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">台幣貶逾0.87%</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">美債創年內最大週跌</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">甲骨文裁員數千人</div></div>
                 </div>
                 <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
             </div>
             <div>
                 <h3 class="table-title">市場關鍵時間軸</h3>
                 <div class="structured-analysis space-y-4 timeline-container">
-                    <p><span class="timeline-tag timeline-tag-taiwan"><span class='timeline-tag tag-pre'>台股盤前 05:10</span></span>台股累積三日崩跌2586點後市場關注反彈機會，同時記憶體業者看好第二季DRAM價格將出現跳漲，為盤勢增添多空交戰的變數，市場氣氛謹慎。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan"><span class='timeline-tag tag-during'>台股盤中 09:37</span></span>台股開盤後展開報復性反彈，指數一度飆漲1491點，刷下史上第二大漲點紀錄，成功重返3萬4千點大關。記憶體族群由南亞科領軍多檔亮燈漲停，成為反攻主力。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan"><span class='timeline-tag tag-after'>台股盤後 14:18</span></span>台股終場上漲844.06點，為史上第五大漲點，但K線留下長達646點的上影線，顯示高檔解套賣壓沉重。台積電股價反彈重返1900元大關，成為穩盤關鍵力量。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan"><span class='timeline-tag tag-after'>台股盤後 15:02</span></span>三大法人籌碼公布，外資在台股強彈之際仍持續賣超514.95億元，呈現連續第五天賣超，投信則逆勢買超146.03億元，呈現土洋對作的籌碼格局，市場信心仍顯分歧。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan"><span class='timeline-tag tag-after'>台股盤後 17:49</span></span>外資賣超細項顯示，台積電遭提款187億元，已連續六個交易日賣超，顯示外資對權值股的調節壓力未減。航空雙雄華航、長榮航也因油價上漲成為法人減碼標的。</p>
-                    <p><span class="timeline-tag timeline-tag-us"><span class='timeline-tag tag-us-pre'>美股盤前 22:10</span></span>美國公布上週初領失業金人數持平於21.3萬人，低於市場預期，而2月企業裁員人數大減55%，顯示勞動市場依然強韌，強化了聯準會短期內不急於降息的預期。</p>
-                    <p><span class="timeline-tag timeline-tag-us"><span class='timeline-tag tag-us-pre'>美股盤前 22:44</span></span>美股開盤走低，主因中東戰事推升布蘭特原油升破每桶84美元，加劇通膨回升疑慮，同時美債殖利率攀升，拖累股市表現，道瓊開盤一度下跌約300點，市場轉趨觀望。</p>
-                    <p><span class="timeline-tag timeline-tag-us"><span class='timeline-tag tag-us-during'>美股盤中 03:09</span></span>彭博報導，美國官員已草擬法規，擬將AI晶片出口限制擴大至全球範圍，要求輝達、AMD等公司幾乎所有訂單都須取得許可，消息傳出後拖累晶片股盤中走跌。</p>
-                    <p><span class="timeline-tag timeline-tag-us"><span class='timeline-tag tag-us-after'>美股盤後 06:11</span></span>美股收盤上演股債雙殺，中東戰事升溫推動油價突破每桶80美元，加劇通膨壓力，道瓊指數終場重挫近800點，抹去今年以來全部漲幅，市場信心再度轉趨薄弱。</p>
-                    <p><span class="timeline-tag timeline-tag-us"><span class='timeline-tag tag-us-after'>美股盤後 06:27</span></span>邁威爾科技(Marvell)盤後公布財報與財測均超乎預期，受惠於AI資料中心客製化晶片需求強勁，激勵其盤後股價大漲約14%，為疲弱的科技股帶來一絲亮點。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan"><span class="timeline-tag tag-pre">台股盤前 08:07</span></span>卡達能源部長卡比警告，若荷姆茲海峽封鎖持續，布蘭特原油可能在兩至三週內突破每桶150美元，全球能源出口商恐被迫宣布不可抗力。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan"><span class="timeline-tag tag-pre">台股盤前 08:20</span></span>聯準會今年全年不降息機率升至25%，債券選擇權交易員加碼押注油價持續攀升將壓抑降息空間，年底降息預期幅度縮減至約35個基點。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan"><span class="timeline-tag tag-during">台股盤中 10:13</span></span>甲骨文宣布計畫裁減數千名員工，以因應大規模擴建AI資料中心帶來的資金壓力，裁員範圍涵蓋多個部門，最快本月開始實施。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan"><span class="timeline-tag tag-after">台股盤後 21:40</span></span>美國勞工統計局公布2月非農就業意外減少9.2萬人，遠低於預期新增5.9萬人，失業率升至4.4%，利率期貨顯示6月降息機率升至49%。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan"><span class="timeline-tag tag-after">台股盤後 22:20</span></span>國際能源總署執行長比羅爾表示，目前全球石油供應仍相對充裕，現階段屬物流運輸中斷而非實質供應短缺，暫無釋出戰略石油儲備計畫。</p>
+                    <p><span class="timeline-tag timeline-tag-us"><span class="timeline-tag tag-us-pre">美股盤前 22:41</span></span>Marvell Technology公布2027財年第一季財測，預估營收24億美元（±5%），高於華爾街預估22.7億美元，資料中心2026財年營收年增46%。</p>
+                    <p><span class="timeline-tag timeline-tag-us"><span class="timeline-tag tag-us-during">美股盤中 00:58</span></span>聯合海事資訊中心確認荷姆茲海峽商業航運幾乎全面暫停，歐洲低硫柴油期貨本週漲幅突破50%，創下歷史最大單週漲幅紀錄。</p>
+                    <p><span class="timeline-tag timeline-tag-us"><span class="timeline-tag tag-us-during">美股盤中 01:00</span></span>IEA執行長比羅爾在布魯塞爾表示，暫無計畫協調會員國釋出戰略石油儲備，目前能源市場供應充裕甚至存在「相當大的過剩」。</p>
+                    <p><span class="timeline-tag timeline-tag-us"><span class="timeline-tag tag-us-during">美股盤中 01:10</span></span>BMO Capital Markets利率主管Ian Lyngen指出，中東衝突帶來的通膨風險使美債市場難以出現明顯反彈，10年期殖利率週線升幅達22個基點。</p>
+                    <p><span class="timeline-tag timeline-tag-us"><span class="timeline-tag tag-us-after">美股盤後 03:50</span></span>美銀策略師Hartnett警告，若中東衝突演變為長期戰事，能源依賴度較高的日本與歐洲股市將面臨資金持續流出，能源與國防板塊為主要受益方向。</p>
                 </div>
             </div>
         </div>
@@ -703,9 +981,9 @@
 
         <div class="tldr-block" style="background: #fef2f2;">
             <ul>
-                <li style="color: #dc2626;"><strong>油價飆漲通膨憂慮再起，道瓊重挫近800點：</strong>中東戰事升溫推動WTI原油價格暴漲逾6.5%，再度點燃市場對通膨的憂慮，導致美債殖利率攀升、股市承壓，道瓊指數重挫近800點，上演股債雙殺的悲觀行情。</li>
-                <li style="color: #dc2626;"><strong>AI晶片出口管制疑慮升溫，費半指數承壓：</strong>市場傳出川普政府擬對AI晶片實施全球出口許可制，引發市場對輝達、AMD等大廠未來營運的擔憂，拖累費城半導體指數下跌1.17%，成為科技股的領跌族群。</li>
-                <li style="color: #dc2626;"><strong>財報優異個股逆勢突圍，市場聚焦基本面：</strong>儘管大盤重挫，但部分企業財報表現亮眼。博通預測AI晶片營收將迎來爆發性成長，邁威爾盤後財測亦超預期，顯示具備強勁基本面的個股仍能吸引資金青睞。</li>
+                <li style="color: #dc2626;"><strong>非農爆冷疊加油價飆升美股重挫：</strong>非農爆冷疊加油價飆升美股重挫：2月非農減少9.2萬人衝擊市場，標普500週跌2.02%，費半週跌7.21%領跌科技板塊。</li>
+                <li style="color: #dc2626;"><strong>停滯性通膨疑慮壓抑Fed降息空間：</strong>停滯性通膨疑慮壓抑Fed降息空間：就業轉弱與油價飆升同步出現，市場2024年底降息預期縮減至35個基點，Fed政策兩難加劇。</li>
+                <li style="color: #dc2626;"><strong>Marvell財報強勁逆勢大漲領航AI：</strong>Marvell財報強勁逆勢大漲領航AI：Marvell Q4 EPS 0.80美元超預期，資料中心年增46%，股價逆勢大漲22%成為本週美股最大亮點。</li>
             </ul>
         </div>
 
@@ -727,57 +1005,57 @@
                 <tbody>
                     <tr>
                         <td>道瓊工業指數</td>
-                        <td><strong>47,954.74</strong></td>
-                        <td class="text-down"><strong>-1.61%</strong></td>
-                        <td class="text-down"><strong>-3.12%</strong></td>
-                        <td class="text-down"><strong>-1.95%</strong></td>
-                        <td class="text-flat"><strong>-0.00%</strong></td>
-                        <td class="text-down"><strong>-0.23%</strong></td>
+                        <td><strong>47,501.55</strong></td>
+                        <td class="text-down"><strong>-0.95%</strong></td>
+                        <td class="text-down"><strong>-3.01%</strong></td>
+                        <td class="text-down"><strong>-5.22%</strong></td>
+                        <td class="text-down"><strong>-0.95%</strong></td>
+                        <td class="text-down"><strong>-1.17%</strong></td>
                     </tr>
                     <tr>
                         <td>標普500</td>
-                        <td><strong>6,830.71</strong></td>
-                        <td class="text-down"><strong>-0.56%</strong></td>
-                        <td class="text-down"><strong>-1.13%</strong></td>
-                        <td class="text-up"><strong>+0.48%</strong></td>
-                        <td class="text-down"><strong>-0.58%</strong></td>
-                        <td class="text-down"><strong>-0.22%</strong></td>
+                        <td><strong>6,740.02</strong></td>
+                        <td class="text-down"><strong>-1.33%</strong></td>
+                        <td class="text-down"><strong>-2.02%</strong></td>
+                        <td class="text-down"><strong>-2.77%</strong></td>
+                        <td class="text-down"><strong>-1.90%</strong></td>
+                        <td class="text-down"><strong>-1.54%</strong></td>
                     </tr>
                     <tr>
                         <td>那斯達克</td>
-                        <td><strong>22,748.99</strong></td>
-                        <td class="text-down"><strong>-0.26%</strong></td>
-                        <td class="text-down"><strong>-0.57%</strong></td>
-                        <td class="text-up"><strong>+0.92%</strong></td>
-                        <td class="text-down"><strong>-3.52%</strong></td>
-                        <td class="text-down"><strong>-2.12%</strong></td>
+                        <td><strong>22,387.68</strong></td>
+                        <td class="text-down"><strong>-1.59%</strong></td>
+                        <td class="text-down"><strong>-1.24%</strong></td>
+                        <td class="text-down"><strong>-2.79%</strong></td>
+                        <td class="text-down"><strong>-5.05%</strong></td>
+                        <td class="text-down"><strong>-3.68%</strong></td>
                     </tr>
                     <tr>
                         <td>費城半導體指數</td>
-                        <td><strong>7,821.76</strong></td>
-                        <td class="text-down"><strong>-1.17%</strong></td>
-                        <td class="text-down"><strong>-4.58%</strong></td>
-                        <td class="text-up"><strong>+2.72%</strong></td>
-                        <td class="text-up"><strong>+7.22%</strong></td>
-                        <td class="text-up"><strong>+10.43%</strong></td>
+                        <td><strong>7,514.74</strong></td>
+                        <td class="text-down"><strong>-3.93%</strong></td>
+                        <td class="text-down"><strong>-7.21%</strong></td>
+                        <td class="text-down"><strong>-6.63%</strong></td>
+                        <td class="text-up"><strong>+3.01%</strong></td>
+                        <td class="text-up"><strong>+6.09%</strong></td>
                     </tr>
                     <tr>
                         <td>羅素2000</td>
-                        <td><strong>2,585.57</strong></td>
-                        <td class="text-down"><strong>-1.91%</strong></td>
-                        <td class="text-down"><strong>-3.43%</strong></td>
-                        <td class="text-up"><strong>+0.31%</strong></td>
-                        <td class="text-up"><strong>+2.54%</strong></td>
-                        <td class="text-up"><strong>+4.18%</strong></td>
+                        <td><strong>2,525.30</strong></td>
+                        <td class="text-down"><strong>-2.33%</strong></td>
+                        <td class="text-down"><strong>-4.07%</strong></td>
+                        <td class="text-down"><strong>-5.43%</strong></td>
+                        <td class="text-up"><strong>+0.15%</strong></td>
+                        <td class="text-up"><strong>+1.75%</strong></td>
                     </tr>
                     <tr>
                         <td>道瓊歐洲50</td>
-                        <td><strong>5,782.89</strong></td>
-                        <td class="text-down"><strong>-1.50%</strong></td>
-                        <td class="text-down"><strong>-6.15%</strong></td>
-                        <td class="text-down"><strong>-2.41%</strong></td>
-                        <td class="text-up"><strong>+1.03%</strong></td>
-                        <td class="text-down"><strong>-0.23%</strong></td>
+                        <td><strong>5,719.90</strong></td>
+                        <td class="text-down"><strong>-1.09%</strong></td>
+                        <td class="text-down"><strong>-6.82%</strong></td>
+                        <td class="text-down"><strong>-4.64%</strong></td>
+                        <td class="text-down"><strong>-0.07%</strong></td>
+                        <td class="text-down"><strong>-1.32%</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -788,8 +1066,12 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                 <p><strong>油價飆漲點燃通膨恐慌，美股上演股債雙殺</strong>中東戰事升溫導致WTI原油價格飆漲逾6.5%，直接觸發市場對通膨捲土重來的深度憂慮，並推升美債殖利率走高，進而對股市估值構成壓力。此一連鎖反應導致道瓊指數重挫1.61%，對經濟前景敏感的工業與材料類股領跌。費城半導體指數(-1.17%)亦受創，反映市場擔憂通膨將侵蝕企業獲利與消費者購買力，整體盤勢呈現典型的風險趨避格局。</p>
-                 <p><strong>AI晶片管制疑慮浮現，科技股避險光環褪色</strong>此情勢下最大風險是油價若持續盤踞高位，將迫使聯準會延後降息，引發停滯性通膨擔憂。市場傳出川普政府擬擴大AI晶片出口管制，為科技股增添不確定性，導致輝達與AMD盤中一度深跌。若中東衝突無法迅速降溫，油價上漲的短期衝擊可能演變為長期趨勢，屆時即使是具備成長題材的科技股也難以倖免，市場可能重演2022年股債齊跌的困境。</p>
+                 <p><strong>非農爆冷疊加油價衝擊導致美股週線全黑</strong>中東衝突引發的荷姆茲海峽封鎖，推升WTI原油週漲35.63%至每桶90.90美元，帶動通膨預期急升，壓抑市場對聯準會降息的期待。與此同時，2月非農就業意外減少9.2萬人，遠低於預期的新增5.9萬人，失業率升至4.4%，使市場同時面臨油價通膨與經濟降溫的雙重壓力，停滯性通膨疑慮成為本週主題。科技與半導體板塊受衝擊最明顯，費城半導體指數週跌7.21%，那斯達克週跌1.24%。
+
+空頭格局下，標普500週跌2.02%、道瓊週跌3.01%，近25日走勢顯示自2月下旬高點6,946點起持續下修，目前已回落至6,740水平，月線跌幅2.77%。羅素2000週跌4.07%反映中小型股對利率更為敏感的弱勢特徵。費半周跌7.21%顯著弱於那斯達克，顯示半導體板塊承受額外的能源成本衝擊。若WTI維持90美元以上，需關注通膨預期是否導致Fed維持利率不變的機率進一步提升至30%以上。</p>
+                 <p><strong>歐股能源依賴疊加美歐貿易摩擦加速資金外逃</strong>道瓊EURO STOXX50週跌6.82%，跌幅顯著大於美股，反映歐洲對中東能源的高度依賴。美銀策略師Hartnett指出，若衝突演變為長期戰事，歐洲因能源企業比重偏低且進口依賴度高，將面臨更嚴峻的資金流出壓力。此外，美國與以色列軍事行動後，美歐政治裂痕進一步加深，德法英明確表示不參與行動，德國憲法法院正式制裁赫格塞斯的軍事外交言論，使歐洲防禦股與能源股的分歧走勢更加明顯。
+
+空頭格局下，歐洲市場本週資金流出壓力持續，EURO STOXX50月跌4.64%，近期亦低於季線支撐。相對而言，費半與那斯達克中仍有Marvell逆勢大漲22%的個股分化，顯示AI資料中心需求仍具韌性。後市需觀察荷姆茲海峽是否出現商業航運逐步恢復的跡象；若每周通過量能從近乎停滯回升至50%以上，油價回落將是歐美股市最關鍵的觸發條件。</p>
             </div>
         </div>
     </section>
@@ -800,9 +1082,9 @@
 
         <div class="tldr-block" style="background: #eff6ff;">
             <ul>
-                <li style="color: #2563eb;"><strong>油價飆升點燃通膨憂慮，美債殖利率全線走高：</strong>中東衝突加劇推升油價，引發市場對通膨捲土重來的擔憂，促使投資人拋售美國公債。10年期公債殖利率單日上揚7個基點至4.15%，創下數週以來新高，反映市場正重新定價利率前景。</li>
-                <li style="color: #2563eb;"><strong>市場下修降息預期，交易員押注全年不降息：</strong>隨著通膨預期升溫，利率交換市場顯示，交易員預估年底前降息幅度已從上週的60個基點下修至約35個基點。更有選擇權交易員押注聯準會今年完全不降息的機率已攀升至25%。</li>
-                <li style="color: #2563eb;"><strong>信用利差擴大，高收益債券同步承壓：</strong>市場避險情緒升溫，資金從風險較高的信用債市場流出，轉向美元等避險資產。高收益債券ETF(HYG)下跌0.40%，顯示在不確定性增加的環境下，投資人對信用風險的要求正在提高。</li>
+                <li style="color: #2563eb;"><strong>油價衝擊通膨預期美債創年內最大週跌：</strong>油價衝擊通膨預期美債創年內最大週跌：10年期殖利率週線升22個基點，創2025年4月以來最大週線漲幅，債價壓力顯著。</li>
+                <li style="color: #2563eb;"><strong>就業弱短端殖利率仍溫和回落：</strong>就業弱短端殖利率仍溫和回落：2年期殖利率回落約2個基點，短長端背離反映市場同時定價停滯性通膨的複雜預期。</li>
+                <li style="color: #2563eb;"><strong>高收益與新興市場債券雙雙走弱：</strong>高收益與新興市場債券雙雙走弱：HYG週跌1.28%、EMB週跌2.03%，信用利差擴大顯示風險偏好持續降溫。</li>
             </ul>
         </div>
 
@@ -825,57 +1107,57 @@
                 <tbody>
                     <tr>
                         <td>美國3月期殖利率</td>
-                        <td><strong>3.59%</strong></td>
-                        <td class="text-down"><strong>-1.0 bps</strong></td>
-                        <td class="text-flat"><strong>+0.0 bps</strong></td>
-                        <td class="text-up"><strong>+1.0 bps</strong></td>
-                        <td class="text-down"><strong>-1.0 bps</strong></td>
-                        <td class="text-up"><strong>+4.0 bps</strong></td>
+                        <td><strong>3.57%</strong></td>
+                        <td class="text-down"><strong>-0.02</strong></td>
+                        <td class="text-down"><strong>-0.01</strong></td>
+                        <td class="text-down"><strong>-0.02</strong></td>
+                        <td class="text-down"><strong>-0.03</strong></td>
+                        <td class="text-up"><strong>+0.02</strong></td>
                     </tr>
                     <tr>
                         <td>美國5年期殖利率</td>
-                        <td><strong>3.74%</strong></td>
-                        <td class="text-up"><strong>+8.0 bps</strong></td>
-                        <td class="text-up"><strong>+16.0 bps</strong></td>
-                        <td class="text-down"><strong>-1.0 bps</strong></td>
-                        <td class="text-up"><strong>+3.0 bps</strong></td>
-                        <td class="text-up"><strong>+2.0 bps</strong></td>
+                        <td><strong>3.71%</strong></td>
+                        <td class="text-down"><strong>-0.03</strong></td>
+                        <td class="text-up"><strong>+0.20</strong></td>
+                        <td class="text-down"><strong>-0.04</strong></td>
+                        <td class="text-flat"><strong>+0.00</strong></td>
+                        <td class="text-down"><strong>-0.01</strong></td>
                     </tr>
                     <tr>
                         <td>美國10年期殖利率</td>
-                        <td><strong>4.15%</strong></td>
-                        <td class="text-up"><strong>+7.0 bps</strong></td>
-                        <td class="text-up"><strong>+13.0 bps</strong></td>
-                        <td class="text-down"><strong>-6.0 bps</strong></td>
-                        <td class="text-up"><strong>+1.0 bps</strong></td>
-                        <td class="text-down"><strong>-2.0 bps</strong></td>
+                        <td><strong>4.13%</strong></td>
+                        <td class="text-down"><strong>-0.01</strong></td>
+                        <td class="text-up"><strong>+0.17</strong></td>
+                        <td class="text-down"><strong>-0.07</strong></td>
+                        <td class="text-down"><strong>-0.01</strong></td>
+                        <td class="text-down"><strong>-0.03</strong></td>
                     </tr>
                     <tr>
                         <td>美國30年期殖利率</td>
-                        <td><strong>4.75%</strong></td>
-                        <td class="text-up"><strong>+4.0 bps</strong></td>
-                        <td class="text-up"><strong>+8.0 bps</strong></td>
-                        <td class="text-down"><strong>-11.0 bps</strong></td>
-                        <td class="text-down"><strong>-4.0 bps</strong></td>
-                        <td class="text-down"><strong>-9.0 bps</strong></td>
+                        <td><strong>4.76%</strong></td>
+                        <td class="text-flat"><strong>+0.00</strong></td>
+                        <td class="text-up"><strong>+0.12</strong></td>
+                        <td class="text-down"><strong>-0.10</strong></td>
+                        <td class="text-down"><strong>-0.04</strong></td>
+                        <td class="text-down"><strong>-0.09</strong></td>
                     </tr>
                     <tr>
                         <td>高收益債券ETF(HYG)</td>
-                        <td><strong>80.08</strong></td>
-                        <td class="text-down"><strong>-0.40%</strong></td>
-                        <td class="text-down"><strong>-0.95%</strong></td>
-                        <td class="text-down"><strong>-0.56%</strong></td>
-                        <td class="text-down"><strong>-0.83%</strong></td>
-                        <td class="text-down"><strong>-0.68%</strong></td>
+                        <td><strong>79.69</strong></td>
+                        <td class="text-down"><strong>-0.49%</strong></td>
+                        <td class="text-down"><strong>-1.28%</strong></td>
+                        <td class="text-down"><strong>-1.39%</strong></td>
+                        <td class="text-down"><strong>-1.31%</strong></td>
+                        <td class="text-down"><strong>-1.17%</strong></td>
                     </tr>
                     <tr>
                         <td>新興市場美元債ETF(EMB)</td>
-                        <td><strong>96.38</strong></td>
-                        <td class="text-down"><strong>-0.51%</strong></td>
-                        <td class="text-down"><strong>-1.33%</strong></td>
-                        <td class="text-down"><strong>-0.06%</strong></td>
-                        <td class="text-up"><strong>+0.05%</strong></td>
-                        <td class="text-up"><strong>+0.10%</strong></td>
+                        <td><strong>95.75</strong></td>
+                        <td class="text-down"><strong>-0.65%</strong></td>
+                        <td class="text-down"><strong>-2.03%</strong></td>
+                        <td class="text-down"><strong>-0.97%</strong></td>
+                        <td class="text-down"><strong>-0.60%</strong></td>
+                        <td class="text-down"><strong>-0.55%</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -886,8 +1168,12 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>油價飆升重燃通膨憂慮，美債市場遭遇拋售潮</strong>中東衝突升溫推動油價飆漲，直接導致市場對通膨的擔憂再度升溫，進而引發美國公債市場的拋售潮。投資人擔心能源成本上漲將使通膨更具黏性，迫使聯準會維持高利率更長時間，此預期推動美國10年期公債殖利率單日大幅上揚7個基點至4.15%。這波殖利率的快速攀升，反映出債券市場正迅速消化地緣政治風險所帶來的通膨溢價，並重新定價未來的利率路徑。</p>
-                <p><strong>降息預期大幅降溫，殖利率曲線熊市趨陡</strong>此情勢下，債市最大風險是通膨預期失控，若油價持續高漲，可能迫使聯準會轉鷹，進一步推升殖利率。利率期貨市場已將今年降息預期從60個基點下修至35個基點，顯示市場信心快速轉變。殖利率曲線呈現熊市趨陡，5年期殖利率上漲8個基點，幅度大於長天期，反映市場對短期政策利率預期的調整。若週五非農就業數據依然強勁，恐進一步強化鷹派預期，推動殖利率挑戰前期高點。</p>
+                <p><strong>油價通膨預期主導殖利率曲線陡化走勢</strong>中東衝突引發的荷姆茲海峽航運中斷，推升WTI與布蘭特原油本週分別大漲35.63%與27.88%，帶動市場通膨預期急速升溫，壓抑美債買盤。Janney Montgomery Scott固定收益策略主管Guy LeBas指出，本週非農數據疲弱本應推動降息預期上升、支撐債市，但能源價格的主導影響已壓過就業數據，導致債市未能受惠。10年期殖利率週升22個基點至4.13%，30年期週升12個基點至4.76%，長端升幅大於短端，顯示曲線明顯陡化，市場對長期通膨前景的定價比短期降息路徑更為敏感。
+
+從曲線型態看，3月期與10年期利差雖有所改善，但3月期殖利率仍達3.57%，高於10年期的4.13%倒掛幅度縮窄至僅56個基點，反映市場預期Fed政策利率將長期保持高位。HYG週跌1.28%、EMB週跌2.03%，信用利差擴大。若布蘭特原油維持90美元以上，需關注5月期通膨預期指標是否持續攀升至3%以上。</p>
+                <p><strong>停滯性通膨使Fed政策兩難加劇降息路徑模糊</strong>Annex Wealth Management首席經濟學家Jacobsen指出，非農負值與油價飆升同時出現，是停滯性通膨的典型訊號，使Fed面臨降息支撐就業或維持利率防範通膨的兩難局面。利率期貨市場顯示，Fed今年全年不降息的機率已升至25%，升息機率也從衝突前的8%倍增至16%。儘管如此，整體預期仍偏向年底降息約35個基點，6月降息機率升至49%。TD Securities策略師Brooks提醒，2月就業疲弱部分源自Kaiser Permanente醫療罷工等短期因素，Fed仍需更多數據。
+
+空頭格局下，美債殖利率短期上行壓力維持。若後續油價回落至80美元以下，通膨預期降溫將重新開啟市場對降息的定價；反之若WTI突破100美元，不降息機率可能進一步升至35%以上，屆時長端殖利率將面臨額外上行壓力。關鍵訊號為3月中旬公布的核心CPI，若月增率超過0.4%則確認通膨再升溫趨勢。</p>
             </div>
         </div>
     </section>
@@ -898,9 +1184,9 @@
 
         <div class="tldr-block" style="background: #fffbeb;">
             <ul>
-                <li style="color: #cc4e01;"><strong>中東戰火升溫，油價飆漲近7%：</strong>荷姆茲海峽航運幾近停滯，引發全球供應中斷的嚴重憂慮，推動WTI原油價格飆漲6.52%，布蘭特原油亦大漲3.59%，能源市場風險溢價急劇升高。</li>
-                <li style="color: #cc4e01;"><strong>美元殖利率雙強，金價承壓回落：</strong>儘管地緣政治風險升溫，但因油價上漲加劇通膨擔憂，推升美元與美債殖利率走高，黃金的避險吸引力受到壓抑，價格小幅回落0.43%，跌破5,100美元關卡。</li>
-                <li style="color: #cc4e01;"><strong>供應鏈擔憂加劇，基礎金屬走弱：</strong>市場擔憂能源成本飆升與潛在的全球經濟放緩，將衝擊工業需求，導致基礎金屬ETF(DBB)下跌1.44%，反映出大宗商品市場內部對經濟前景的分歧看法。</li>
+                <li style="color: #cc4e01;"><strong>WTI週漲35%創1983年最大周漲幅：</strong>WTI週漲35%創1983年最大周漲幅：荷姆茲海峽航運幾乎停滯，布蘭特突破每桶92美元，全球能源成本急升。</li>
+                <li style="color: #cc4e01;"><strong>黃金弱勢非農帶動避險需求微升：</strong>黃金弱勢非農帶動避險需求微升：黃金期貨單日收高1.60%至5,146美元，惟美元週線走強限制漲幅，波蘭央行傳出計畫售金。</li>
+                <li style="color: #cc4e01;"><strong>基礎金屬能源需求預期升溫支撐：</strong>基礎金屬能源需求預期升溫支撐：DBB週漲0.54%，地緣政治風險升溫帶動工業用途金屬獲部分避險資金青睞。</li>
             </ul>
         </div>
 
@@ -923,39 +1209,39 @@
                 <tbody>
                     <tr>
                         <td>WTI原油</td>
-                        <td><strong>79.53</strong></td>
-                        <td class="text-up"><strong>+6.52%</strong></td>
-                        <td class="text-up"><strong>+21.96%</strong></td>
-                        <td class="text-up"><strong>+25.66%</strong></td>
-                        <td class="text-up"><strong>+32.37%</strong></td>
-                        <td class="text-up"><strong>+38.51%</strong></td>
+                        <td><strong>90.90</strong></td>
+                        <td class="text-up"><strong>+12.21%</strong></td>
+                        <td class="text-up"><strong>+35.63%</strong></td>
+                        <td class="text-up"><strong>+43.04%</strong></td>
+                        <td class="text-up"><strong>+51.30%</strong></td>
+                        <td class="text-up"><strong>+58.31%</strong></td>
                     </tr>
                     <tr>
                         <td>布蘭特原油</td>
-                        <td><strong>84.32</strong></td>
-                        <td class="text-up"><strong>+3.59%</strong></td>
-                        <td class="text-up"><strong>+19.18%</strong></td>
-                        <td class="text-up"><strong>+24.83%</strong></td>
-                        <td class="text-up"><strong>+32.27%</strong></td>
-                        <td class="text-up"><strong>+38.57%</strong></td>
+                        <td><strong>92.69</strong></td>
+                        <td class="text-up"><strong>+8.52%</strong></td>
+                        <td class="text-up"><strong>+27.88%</strong></td>
+                        <td class="text-up"><strong>+36.21%</strong></td>
+                        <td class="text-up"><strong>+45.40%</strong></td>
+                        <td class="text-up"><strong>+52.33%</strong></td>
                     </tr>
                     <tr>
                         <td>黃金期貨</td>
-                        <td><strong>5,098.10</strong></td>
-                        <td class="text-down"><strong>-0.43%</strong></td>
-                        <td class="text-down"><strong>-1.51%</strong></td>
-                        <td class="text-up"><strong>+4.87%</strong></td>
-                        <td class="text-up"><strong>+21.01%</strong></td>
-                        <td class="text-up"><strong>+17.86%</strong></td>
+                        <td><strong>5,146.10</strong></td>
+                        <td class="text-up"><strong>+1.60%</strong></td>
+                        <td class="text-down"><strong>-1.61%</strong></td>
+                        <td class="text-up"><strong>+3.94%</strong></td>
+                        <td class="text-up"><strong>+22.15%</strong></td>
+                        <td class="text-up"><strong>+18.97%</strong></td>
                     </tr>
                     <tr>
                         <td>基礎金屬ETF (DBB)</td>
-                        <td><strong>23.90</strong></td>
-                        <td class="text-down"><strong>-1.44%</strong></td>
-                        <td class="text-down"><strong>-1.16%</strong></td>
-                        <td class="text-up"><strong>+2.75%</strong></td>
-                        <td class="text-up"><strong>+6.55%</strong></td>
-                        <td class="text-up"><strong>+4.18%</strong></td>
+                        <td><strong>24.31</strong></td>
+                        <td class="text-up"><strong>+1.72%</strong></td>
+                        <td class="text-up"><strong>+0.54%</strong></td>
+                        <td class="text-up"><strong>+1.97%</strong></td>
+                        <td class="text-up"><strong>+8.38%</strong></td>
+                        <td class="text-up"><strong>+5.97%</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -966,10 +1252,12 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>避險光環失色 金價遭強勢美元壓制</strong>中東衝突升溫理應推升黃金避險需求，但油價飆漲引發的通膨恐慌，反而導致美元與美債殖利率攀升，壓抑金價回落0.43%至5,098.1美元。傳導機制在於，市場預期聯準會降息時程將因通膨壓力而延後，持有不孳息黃金的機會成本上升，削弱其吸引力。此現象衝擊黃金礦業股，顯示市場暫時將美元視為首要避險工具。
-此情勢下最大風險是若油價持續上漲，通膨預期失控將迫使Fed轉鷹，金價恐進一步承壓。然而，若衝突擴大引發系統性金融風險，黃金的終極避險價值仍可能回歸。前瞻觀察重點為，若金價能守住5,000美元整數關卡，且美元指數自高點回落，則多頭仍有機會重整旗鼓，反之則可能測試前波低點。</p>
-                <p><strong>荷姆茲海峽停擺 油價飆升引發危機</strong>美伊衝突擴大導致全球石油運輸命脈荷姆茲海峽航運幾近停滯，直接引爆供應中斷危機，推動WTI與布蘭特原油分別飆漲6.52%及3.59%。伊拉克、卡達等主要產油國已傳出減產或出口遭遇不可抗力，加劇市場恐慌。此供應衝擊已傳導至下游，美國柴油期貨價格飆升，預示全球運輸與製造成本將全面上漲。
-當前油市格局轉為極端多頭，機會在於能源股與油輪運輸類股，但需留意戰爭消息面的劇烈波動風險。市場最大風險是若海峽封鎖超過一週，全球每日近330萬桶供應缺口恐迫使油價挑戰100美元。關鍵訊號為美國海軍護航計畫能否有效恢復部分航運，若下週通行量仍未改善，則油價上行壓力將難以緩解。</p>
+                <p><strong>荷姆茲封鎖推升油價為近40年最大週漲幅</strong>美以對伊朗軍事行動自2月28日起推升地緣政治風險，至3月6日衝突已進入第七天，荷姆茲海峽航運幾乎全面中斷。聯合海事資訊中心確認商業船隻因安全威脅與保險限制而大幅減少通行，推升WTI原油週漲35.63%至90.90美元，布蘭特週漲27.88%至92.69美元，均為1983年以來最大週漲幅。卡達能源部長卡比警告，若衝突持續數週，油價可能在兩至三週內突破每桶150美元。歐洲低硫柴油週漲超過50%，創下歷史最大單週漲幅，顯示精煉油品供應壓力尤為嚴峻。
+
+空頭格局下，全球能源成本急速上升，企業生產成本預期顯著增加。IEA執行長比羅爾表示目前屬物流中斷而非實質供應短缺，且存在「相當大過剩」；高盛預測若中斷延長，油價可能突破每桶100美元，但基本情境仍預期Q2均價約76美元。關鍵訊號為荷姆茲海峽每日通過船隻數量是否回升至正常水準的30%以上。</p>
+                <p><strong>黃金在美元走強壓制下窄幅走升</strong>黃金期貨單日走升1.60%至5,146.10美元，主因2月非農就業意外大幅遜預期帶動避險買盤進場。然而，美元指數同日雖回落0.33%，週線仍上漲1.41%，形成對金價的對沖壓力，限制漲幅。此外，波蘭央行計畫出售最多480億波蘭茲羅提（約130億美元）的黃金儲備以籌措國防支出，消息為潛在的供應面壓力。過去52週，黃金累計大漲約75%，年初至今漲幅達18.97%，反映持續性的避險需求。
+
+盤整格局下，黃金月線仍上漲3.94%，顯示中期多頭結構未變。基礎金屬ETF（DBB）週漲0.54%，受益於工業需求預期。若中東衝突持續且油價維持高檔，黃金受惠於實質利率可能因Fed降息預期降溫而暫時受壓，但地緣政治避險需求持續提供底部支撐。觀察重點：若後續3月CPI數據顯示通膨升溫，實質利率上升將對金價形成壓力，關鍵支撐位在5,050美元附近。</p>
             </div>
         </div>
     </section>
@@ -980,9 +1268,9 @@
 
         <div class="tldr-block" style="background: #f0fdf4;">
             <ul>
-                <li style="color: #059669;"><strong>權值股領軍反彈，指數強彈逾800點：</strong>隨美股前夜止跌回穩，台股展開報復性反彈，在台積電重返1900元帶動下，指數終場大漲844點或2.57%，收復月線。但外資持續賣超，顯示籌碼面仍不穩定。</li>
-                <li style="color: #059669;"><strong>外資連五賣，投信連四買土洋對作：</strong>外資今日再賣超514.95億元，連續五日提款，但本土投信則反向買超146.03億元，呈現土洋法人對作格局。外資期貨淨空單小幅回補，但仍維持4.1萬口高水位。</li>
-                <li style="color: #059669;"><strong>亞股全面反攻，韓股報復性飆漲近10%：</strong>亞股上演絕地大反攻，前一日崩跌的韓股KOSPI指數在政府救市計畫下，報復性飆漲9.63%，日經指數也上漲1.90%，區域市場風險情緒顯著回溫。</li>
+                <li style="color: #059669;"><strong>外資賣超台股跌幅相對抗跌收小黑：</strong>外資賣超台股跌幅相對抗跌收小黑：台灣加權單日跌0.22%，外資賣超352.36億，投信買超67.21億部分緩衝，相對亞洲其他市場較為抗跌。</li>
+                <li style="color: #059669;"><strong>法人籌碼分歧外資五日累賣逾3千億：</strong>法人籌碼分歧外資五日累賣逾3千億：五日外資累計賣超3,168.94億，投信累計買超407.44億，籌碼壓力主要來自外資持續出走。</li>
+                <li style="color: #059669;"><strong>台股月線仍強但短期籌碼面偏空：</strong>台股月線仍強但短期籌碼面偏空：月線仍上漲5.72%，季線大漲20.08%，中期多頭結構未變，惟本週外資賣壓使短期走勢承壓。</li>
             </ul>
         </div>
 
@@ -1004,55 +1292,55 @@
                 <tbody>
                     <tr>
                         <td>台灣加權指數</td>
-                        <td><strong>33,672.94</strong></td>
-                        <td class="text-up"><strong>+2.57%</strong></td>
-                        <td class="text-down"><strong>-4.91%</strong></td>
-                        <td class="text-up"><strong>+5.89%</strong></td>
-                        <td class="text-up"><strong>+20.34%</strong></td>
-                        <td class="text-up"><strong>+16.26%</strong></td>
+                        <td><strong>33,599.54</strong></td>
+                        <td class="text-down"><strong>-0.22%</strong></td>
+                        <td class="text-down"><strong>-5.12%</strong></td>
+                        <td class="text-up"><strong>+5.72%</strong></td>
+                        <td class="text-up"><strong>+20.08%</strong></td>
+                        <td class="text-up"><strong>+16.01%</strong></td>
                     </tr>
                     <tr>
                         <td>日經225</td>
-                        <td><strong>55,278.06</strong></td>
-                        <td class="text-up"><strong>+1.90%</strong></td>
-                        <td class="text-down"><strong>-5.92%</strong></td>
-                        <td class="text-up"><strong>+2.71%</strong></td>
-                        <td class="text-up"><strong>+9.48%</strong></td>
-                        <td class="text-up"><strong>+9.81%</strong></td>
+                        <td><strong>55,620.84</strong></td>
+                        <td class="text-up"><strong>+0.62%</strong></td>
+                        <td class="text-down"><strong>-5.49%</strong></td>
+                        <td class="text-up"><strong>+2.52%</strong></td>
+                        <td class="text-up"><strong>+10.16%</strong></td>
+                        <td class="text-up"><strong>+10.49%</strong></td>
                     </tr>
                     <tr>
                         <td>香港恆生指數</td>
-                        <td><strong>25,321.34</strong></td>
-                        <td class="text-up"><strong>+0.28%</strong></td>
-                        <td class="text-down"><strong>-4.02%</strong></td>
-                        <td class="text-down"><strong>-5.82%</strong></td>
-                        <td class="text-down"><strong>-2.93%</strong></td>
-                        <td class="text-down"><strong>-1.21%</strong></td>
+                        <td><strong>25,757.29</strong></td>
+                        <td class="text-up"><strong>+1.72%</strong></td>
+                        <td class="text-down"><strong>-3.28%</strong></td>
+                        <td class="text-down"><strong>-3.02%</strong></td>
+                        <td class="text-down"><strong>-1.26%</strong></td>
+                        <td class="text-up"><strong>+0.49%</strong></td>
                     </tr>
                     <tr>
                         <td>韓國KOSPI</td>
-                        <td><strong>5,583.90</strong></td>
-                        <td class="text-up"><strong>+9.63%</strong></td>
-                        <td class="text-down"><strong>-8.22%</strong></td>
-                        <td class="text-up"><strong>+8.14%</strong></td>
-                        <td class="text-up"><strong>+36.19%</strong></td>
-                        <td class="text-up"><strong>+32.50%</strong></td>
+                        <td><strong>5,584.87</strong></td>
+                        <td class="text-up"><strong>+0.02%</strong></td>
+                        <td class="text-down"><strong>-11.45%</strong></td>
+                        <td class="text-up"><strong>+9.74%</strong></td>
+                        <td class="text-up"><strong>+36.21%</strong></td>
+                        <td class="text-up"><strong>+32.53%</strong></td>
                     </tr>
                     <tr>
                         <td>印度SENSEX</td>
-                        <td><strong>80,015.90</strong></td>
-                        <td class="text-up"><strong>+1.14%</strong></td>
-                        <td class="text-down"><strong>-2.75%</strong></td>
-                        <td class="text-down"><strong>-3.96%</strong></td>
-                        <td class="text-down"><strong>-6.65%</strong></td>
-                        <td class="text-down"><strong>-6.07%</strong></td>
+                        <td><strong>78,918.90</strong></td>
+                        <td class="text-down"><strong>-1.37%</strong></td>
+                        <td class="text-down"><strong>-4.05%</strong></td>
+                        <td class="text-down"><strong>-5.58%</strong></td>
+                        <td class="text-down"><strong>-7.93%</strong></td>
+                        <td class="text-down"><strong>-7.36%</strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
 
-        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026年03月05日)</h3>
+        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-03-06)</h3>
         <div class="overflow-x-auto">
             <table class="table-styled">
                 <caption>台股三大法人買賣超統計</caption>
@@ -1067,27 +1355,27 @@
                 <tbody>
                     <tr>
                         <td>外資</td>
-                        <td class="text-up"><strong>+499</strong></td>
-                        <td class="text-up"><strong>+499</strong></td>
-                        <td class="text-up"><strong>+499</strong></td>
+                        <td class="text-down"><strong>-352.36億</strong></td>
+                        <td class="text-down"><strong>-3,168.94億</strong></td>
+                        <td class="text-down"><strong>-1,941.65億</strong></td>
                     </tr>
                     <tr>
                         <td>投信</td>
-                        <td class="text-down"><strong>-514.95</strong></td>
-                        <td class="text-down"><strong>-2922.22</strong></td>
-                        <td class="text-down"><strong>-1366.50</strong></td>
+                        <td class="text-up"><strong>+67.21億</strong></td>
+                        <td class="text-up"><strong>+407.44億</strong></td>
+                        <td class="text-up"><strong>+806.64億</strong></td>
                     </tr>
                     <tr>
                         <td>自營商</td>
-                        <td class="text-down"><strong>-87.75</strong></td>
-                        <td class="text-down"><strong>-878.40</strong></td>
-                        <td class="text-down"><strong>-1510.77</strong></td>
+                        <td class="text-down"><strong>-7.48億</strong></td>
+                        <td class="text-down"><strong>-867.89億</strong></td>
+                        <td class="text-down"><strong>-1,571.41億</strong></td>
                     </tr>
                     <tr class="summary-row">
                         <td>總計</td>
-                        <td class="text-down"><strong>-456.67</strong></td>
-                        <td class="text-down"><strong>-3476.63</strong></td>
-                        <td class="text-down"><strong>-2186.50</strong></td>
+                        <td class="text-down"><strong>-292.63億</strong></td>
+                        <td class="text-down"><strong>-3,629.39億</strong></td>
+                        <td class="text-down"><strong>-2,706.42億</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -1098,10 +1386,12 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>外資大賣權值強彈 指數上演軋空行情</strong>外部因素為美股反彈與中東局勢暫緩，觸發台股跌深後的報復性上漲。然而，外資仍大舉賣超514.95億元，投信則買超146.03億元，形成土洋對作。指數最終在權值股拉抬下強彈2.57%，收復月線，呈現外資賣壓下指數仍上漲的軋空手及軋空單行情。此波反彈主要由記憶體與IC封測等跌深電子股帶動。
-外資連續五日賣超，籌碼面仍不穩定，當前最大風險在於若美股反彈僅為曇花一現，外資賣壓恐再度加劇，指數將回測前低。機會則在於投信作帳行情與高股息ETF換股需求，可能為特定中小型股提供支撐。前瞻指引為，若外資現貨賣超能收斂至200億元以下，且新台幣止貶回升，則反彈行情有望延續。</p>
-                <p><strong>融資大減籌碼沉澱 記憶體成反攻先鋒</strong>經歷前兩日恐慌性下殺，融資餘額大幅減少，籌碼有效沉澱，為技術性反彈創造條件。受惠於AI排擠效應與原廠報價看漲，記憶體族群成為反攻總司令，南亞科、旺宏等多檔攻上涨停，帶動相關封測廠南茂同步走強。此現象反映市場資金在指數反彈初期，優先回補具備產業漲價題材且跌幅已深的族群。
-此情勢下，機會在於具備明確漲價趨勢的電子零組件，如記憶體、CCL、被動元件等，風險則在於光通訊等前期漲幅過高族群，面臨獲利了結賣壓。前瞻觀察重點為，記憶體族群能否由點擴散至整個半導體板塊，若聯電等晶圓代工股能接棒上漲，則有利於多頭人氣延續，反之則需提防類股輪動過快導致的反彈力竭。</p>
+                <p><strong>外資大幅賣超油價衝擊壓抑台股空頭走勢</strong>油價飆升與非農就業數據疲弱雙重打壓下，外資單日賣超台股352.36億元，五日累計賣超3,168.94億元，帶動台灣加權指數週跌5.12%至33,599點。儘管投信單日買超67.21億元、五日累計買超407.44億元形成部分支撐，但整體法人籌碼仍顯空頭格局。從近25日走勢觀察，台股自2月26日高點35,414點起連續下修，本週收盤33,599點，已接近2月初31,782點到3月初35,414點震盪區間的下緣支撐。台積電ADR本週跌幅約2.9%，顯示外資對科技供應鏈的態度謹慎。
+
+空頭格局下，外資五日累計賣超3,168.94億為近期最大賣壓。後市觀察重點：若外資單日賣超金額縮減至100億以下，且WTI油價自高點回落至85美元以下，有望帶動外資買盤重返、指數重回34,000點以上。投信若連續五日買超規模擴大至每日100億以上，將為市場提供額外的籌碼支撐條件。</p>
+                <p><strong>月季線強勢支撐中期多頭結構仍在但短線偏空</strong>台灣加權月線仍上漲5.72%、季線大漲20.08%、年初至今漲幅16.01%，顯示中期多頭格局依然穩固。然而，本週週線跌幅5.12%為近半年最大單週跌幅，反映外部衝擊的短期殺傷力。從產業結構看，COMPUTEX 2026於6月舉行，AI伺服器與電源供應相關族群的法說會季成為後市重要催化劑。台灣央行外匯局已入場干預台幣，台幣貶值0.87%至31.91元，顯示匯率壓力有所緩衝。亞洲整體看，日本因高度依賴能源進口，日經週跌5.49%；韓股週跌11.45%受半導體外需與能源雙重壓力。
+
+多頭格局下，台股月線與季線仍提供中期支撐。若外資賣超規模縮減、加之COMPUTEX相關供應鏈訂單題材發酵，台股有望在34,000至35,000點構築底部。風險因素：若荷姆茲海峽封鎖持續超過兩週，能源成本上升將壓縮台灣製造業毛利，屆時需關注相關企業是否啟動財測下修。</p>
             </div>
         </div>
     </section>
@@ -1112,9 +1402,9 @@
 
         <div class="tldr-block" style="background: #ecfeff;">
             <ul>
-                <li style="color: #0891b2;"><strong>通膨擔憂再起，美元指數重拾升勢：</strong>中東衝突推升油價，市場擔憂通膨壓力將迫使聯準會延後降息，帶動美元指數上漲0.28%至99.05。在避險情緒中，美元的流動性與收益率優勢勝過黃金與日圓。</li>
-                <li style="color: #0891b2;"><strong>外資大舉匯出，新台幣貶值壓力沉重：</strong>儘管台股反彈，但外資持續大賣超並匯出資金，導致新台幣兌美元貶值0.13%，收於31.775元。央行雖進場調節，但實質的資金外流仍使台幣承壓。</li>
-                <li style="color: #0891b2;"><strong>日圓走勢分歧，避險地位面臨挑戰：</strong>儘管市場動盪，但美元兌日圓卻小幅回落0.16%，顯示日圓略為走強。然而，日本高度依賴能源進口，油價上漲對其經濟構成壓力，使日圓的傳統避險角色面臨挑戰。</li>
+                <li style="color: #0891b2;"><strong>非農疲弱美元當日走軟週線仍強：</strong>非農疲弱美元當日走軟週線仍強：美元指數當日回落0.33%，週線上漲1.41%，能源通膨疑慮與避險需求支撐美元中期強勢。</li>
+                <li style="color: #0891b2;"><strong>台幣受外資賣股拖累本週貶逾2%：</strong>台幣受外資賣股拖累本週貶逾2%：美元兌台幣本週上漲2.11%至31.91元，台灣央行外匯局已入場干預防止過度貶值。</li>
+                <li style="color: #0891b2;"><strong>亞幣普跌能源進口國貨幣壓力最大：</strong>亞幣普跌能源進口國貨幣壓力最大：印度盧比觸及歷史新低，韓元觸及金融海嘯以來低點，亞洲8兆美元外匯存底進入保衛戰。</li>
             </ul>
         </div>
 
@@ -1137,39 +1427,39 @@
                 <tbody>
                     <tr>
                         <td>美元指數</td>
-                        <td><strong>99.05</strong></td>
-                        <td class="text-up"><strong>+0.28%</strong></td>
-                        <td class="text-up"><strong>+1.28%</strong></td>
-                        <td class="text-up"><strong>+1.25%</strong></td>
-                        <td class="text-up"><strong>+0.06%</strong></td>
-                        <td class="text-up"><strong>+0.78%</strong></td>
+                        <td><strong>98.99</strong></td>
+                        <td class="text-down"><strong>-0.33%</strong></td>
+                        <td class="text-up"><strong>+1.41%</strong></td>
+                        <td class="text-up"><strong>+1.39%</strong></td>
+                        <td class="text-flat"><strong>+0.00%</strong></td>
+                        <td class="text-up"><strong>+0.72%</strong></td>
                     </tr>
                     <tr>
                         <td>美元兌台幣</td>
-                        <td><strong>31.7750</strong></td>
-                        <td class="text-up"><strong>+0.13%</strong></td>
-                        <td class="text-up"><strong>+1.62%</strong></td>
-                        <td class="text-up"><strong>+0.37%</strong></td>
-                        <td class="text-up"><strong>+1.31%</strong></td>
-                        <td class="text-up"><strong>+1.70%</strong></td>
+                        <td><strong>31.9059</strong></td>
+                        <td class="text-up"><strong>+0.87%</strong></td>
+                        <td class="text-up"><strong>+2.11%</strong></td>
+                        <td class="text-up"><strong>+0.81%</strong></td>
+                        <td class="text-up"><strong>+1.72%</strong></td>
+                        <td class="text-up"><strong>+2.12%</strong></td>
                     </tr>
                     <tr>
                         <td>歐元兌美元</td>
-                        <td><strong>1.1610</strong></td>
-                        <td class="text-down"><strong>-0.02%</strong></td>
-                        <td class="text-down"><strong>-1.73%</strong></td>
-                        <td class="text-down"><strong>-1.62%</strong></td>
-                        <td class="text-down"><strong>-0.28%</strong></td>
-                        <td class="text-down"><strong>-1.17%</strong></td>
+                        <td><strong>1.1608</strong></td>
+                        <td class="text-down"><strong>-0.24%</strong></td>
+                        <td class="text-down"><strong>-1.65%</strong></td>
+                        <td class="text-down"><strong>-1.44%</strong></td>
+                        <td class="text-down"><strong>-0.30%</strong></td>
+                        <td class="text-down"><strong>-1.19%</strong></td>
                     </tr>
                     <tr>
                         <td>美元兌日圓</td>
-                        <td><strong>157.5130</strong></td>
-                        <td class="text-down"><strong>-0.16%</strong></td>
-                        <td class="text-up"><strong>+0.84%</strong></td>
-                        <td class="text-up"><strong>+0.38%</strong></td>
-                        <td class="text-up"><strong>+1.53%</strong></td>
-                        <td class="text-up"><strong>+0.70%</strong></td>
+                        <td><strong>157.5340</strong></td>
+                        <td class="text-up"><strong>+0.35%</strong></td>
+                        <td class="text-up"><strong>+1.07%</strong></td>
+                        <td class="text-up"><strong>+0.48%</strong></td>
+                        <td class="text-up"><strong>+1.54%</strong></td>
+                        <td class="text-up"><strong>+0.72%</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -1180,10 +1470,12 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>油價通膨雙引擎 助燃美元強勢格局</strong>中東衝突引發的油價飆漲，直接點燃市場對通膨復燃的憂慮，導致美元指數上漲0.28%。其傳導機制為：市場下修聯準會年內降息預期，美債殖利率攀升，擴大美元與其他貨幣的利差優勢。此輪美元走強與美債殖利率同步上行，顯示市場將美元視為比黃金、日圓更優的避險資產，衝擊新興市場貨幣。
-此情勢下，美元多頭格局確立，但最大風險在於若中東衝突迅速降溫，油價回落將使降息預期重燃，可能引發美元獲利了結賣壓。機會則在於若通膨數據證實具有黏性，將鞏固美元高利率環境。關鍵訊號為本週五的非農就業報告，若數據強勁，美元指數有望挑戰100整數關卡。</p>
-                <p><strong>亞幣普遍承壓 新台幣面臨外資考驗</strong>在強勢美元及外資大舉撤離的雙重壓力下，新台幣兌美元貶值0.13%至31.775元。儘管央行進場調節，但外資單日賣超逾500億台股的實質匯出需求，仍是台幣走弱的主因。此現象與韓元因股市報復性反彈而走強形成對比，凸顯外資籌碼對台幣匯率的絕對影響力，並與外資賣超台股的數據互相驗證。
-新台幣短期格局偏空，風險在於若外資賣超趨勢不變，匯價可能進一步測試32元整數關卡。機會則在於若半導體產業基本面能吸引外資回流，將為匯率提供支撐。前瞻指引為央行態度，央行官員雖稱「最大震盪已過」，但若貶勢失序，不排除採取更積極的干預措施，後續需觀察外資賣超力道是否趨緩。</p>
+                <p><strong>美元週線走強與油價共振引發亞幣全面承壓</strong>中東衝突帶動油價大幅飆升，同步推升美元避險需求，形成美元週線上漲1.41%、亞洲高能源依賴貨幣承壓的雙重格局。美元指數收98.99，日線雖因疲弱非農回落0.33%，但週線升幅仍顯著。歐元兌美元週跌1.65%至1.1608，日圓兌美元週貶1.07%至157.53，印度盧比觸及歷史新低，韓元觸及2008年全球金融危機以來首見低點，印尼盾滑落至六週最低。亞洲央行總計擁有約8兆美元外匯存底，各國相繼進場干預以限制過度貶值，台灣央行外匯局也已採取行動。
+
+空頭格局下，美元週線強勢與亞幣貶值形成正向自我強化。若油價持續走高，亞洲貿易赤字擴大將進一步推動貨幣貶值。惠譽已將印尼信評展望調降至負面。關鍵觀察：若美元指數在99.5阻力位突破確立，日圓可能貶破160關口；若油價開始回落，亞幣貶值壓力將同步緩解。</p>
+                <p><strong>台幣貶值受控但外資賣股籌碼壓力仍存</strong>台幣本週貶值2.11%至31.91元，主要受外資在台股市場累計賣超3,168.94億元的資金匯出壓力驅動，與美元指數週線走強形成雙重壓力。台灣央行外匯局已確認入場干預，在必要時進行拋售美元以支撐台幣，顯示當局對過度貶值的容忍度有限。野村估算油價每漲10%將使亞洲平均經常帳餘額折損約GDP的0.3%，台灣作為能源進口國受到類似影響，但外匯存底充裕提供相對較強的防禦能力。
+
+盤整格局下，台幣的走向與外資在台股的賣買動向高度相關。若外資在週一開盤後恢復買超，台幣有機會反彈至31.50元以下。美元兌日圓持續走高，顯示日本央行對升值壓力的態度仍相對消極，為日圓承壓的主因。關鍵觀察指標：美元指數是否能在100心理關口形成壓力回落，以及台股外資賣超是否縮減至百億以下。</p>
             </div>
         </div>
     </section>
@@ -1198,16 +1490,16 @@
         <!-- TL;DR -->
         <div class="tldr-block" style="background: #faf5ff;">
             <ul>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> AI硬體需求持續爆發，博通與邁威爾財報及財測均超預期，確立客製化晶片(ASIC)與高速網路為主要增長引擎。</li>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> 中東地緣政治風險推升國防與能源板塊價值，但油價飆漲引發的通膨擔憂，也對全球經濟及週期性產業（如礦業）構成壓力。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 企業為應對AI轉型帶來的財務壓力或宏觀不確定性，裁員潮再現，甲骨文與摩根士丹利等巨頭均宣布削減人力。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 內部人信心成為市場重要指標，波克夏新任CEO大舉增持並啟動回購提振股價，而南方銅業董事的拋售則加劇了市場的看空情緒。</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> AI資料中心半導體：Marvell Q4財報強勁、資料中心年增46%確認AI ASIC客製化晶片超週期需求，Nvidia、Broadcom等相關供應鏈延續結構多頭格局。</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> 能源設備與基礎建設：荷姆茲封鎖引發全球能源安全意識升溫，備援發電設備、油田服務與基礎建設機具需求中期受益，Caterpillar等工業機械股機構目標價上調。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 航空運輸：油價週漲逾35%對燃油成本密集型航空業形成直接衝擊，疊加非農就業轉弱削弱消費端需求，美國三大航空短期業績展望面臨下修壓力。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 企業軟體雲端：Oracle裁員數千人揭示AI資料中心擴張對傳統軟體業的資金排擠，分析師目標價下調4.51%，AWS、Azure雙雄壟斷格局持續壓縮第三梯隊雲端的定價空間。</li>
             </ul>
         </div>
 
         <!-- 看多推薦第一檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:半導體 (以Marvell Technology為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:半導體．資料中心AI (以Marvell Technology為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1219,16 +1511,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">財報財測雙雙優於預期</td>
-                            <td>公布2026會計年度第四季財報，營收22.19億美元及調整後EPS 80美分均優於市場預期。更關鍵的是，公司預測本季營收將達24億美元（±5%），高於分析師平均預估的22.7億美元，顯示增長動能強勁。</td>
+                            <td class="font-semibold text-slate-600">Q4財報超預期EPS連續正向驚喜</td>
+                            <td>Marvell 2027財年Q4調整後EPS為0.80美元，高於LSEG分析師共識預期的0.79美元；Q4營收22億美元同樣優於市場預估的21億美元。這是Marvell連續多季維持EPS正向驚喜的延續，顯示管理層對財測的掌控力穩定。2026財年全年來自資料中心的營收突破60億美元，較前一年大幅成長46%，為公司整體業績增長提供持續動能。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">AI客製化晶片需求強勁</td>
-                            <td>執行長Matt Murphy表示，營收增長主要由「強勁的AI需求」帶動。隨著Alphabet、微軟等大型科技公司投入數千億美元建設AI基礎設施，對ASIC的需求激增，使邁威爾直接受益，2026會計年度客製化晶片設計訂單更創下新高。</td>
+                            <td class="font-semibold text-slate-600">資料中心AI晶片需求爆發性成長</td>
+                            <td>Marvell執行長Matt Murphy表示，2027財年各季度的年增率將「逐季加速」，對未來成長前景充滿信心。Q1 2027財測營收24億美元（±5%），高於華爾街預期22.7億美元，超出幅度達5.7%。隨著科技企業與雲端服務供應商持續投入AI運算基礎設施，市場對高速網路晶片與客製化AI ASIC晶片的需求快速上升，Marvell的客製化晶片業務具備長期持續受益的訂單能見度。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">盤後股價大漲反映市場信心</td>
-                            <td>在優異財報與樂觀財測的激勵下，邁威爾盤後股價一度大漲約14%。此一強勁的市場反應，代表投資人高度認同其在AI浪潮中的核心地位，並看好其在與博通等對手的競爭中持續擴大市占率。</td>
+                            <td class="font-semibold text-slate-600">AI半導體產業地位持續鞏固具備技術護城河</td>
+                            <td>Marvell在乙太網路控制器、光學DSP與AI ASIC客製化晶片三大領域均具備領先技術優勢，與主要雲端客戶（微軟、亞馬遜等）建立深度戰略合作關係。相對於Nvidia在通用GPU的主導地位，Marvell定位於客製化專用晶片，專注特定工作負載效能最佳化，形成差異化競爭優勢，客戶轉換成本較高，中長期訂單能見度顯著優於一般半導體同業。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
@@ -1238,7 +1530,7 @@
                                 </a>
                             </td>
                             <td>
-                                基本面極為強勁。公司不僅第四季財報表現優於預期，對下一季的營收指引更超出華爾街共識，顯示其增長動能正加速。AI客製化晶片(ASIC)業務是核心驅動力，直接受惠於大型雲端服務商尋求Nvidia通用型GPU替代方案的趨勢。執行長預期2027會計年度每一季的年增率都將加速，訂單能見度高，基本面展望樂觀。
+                                Marvell 2027財年Q4 EPS 0.80美元（優於預期0.79），營收22億美元（優於預期21億）。資料中心部門全年收入60億美元，年增46%，為公司最大營收來源。Q1 2027財測營收24億美元（±5%），顯著高於市場預估22.7億美元。Murphy執行長明確表示年度各季度增速將逐季加速。財測正向驚喜持續，顯示訂單能見度充足，AI ASIC客製化晶片需求結構性成長趨勢明確。
                             </td>
                         </tr>
                         <tr>
@@ -1249,7 +1541,7 @@
                                 </a>
                             </td>
                             <td>
-                                根據新聞報導，在財報公布後，盤後股價一度大漲約14%，顯示出強烈的多頭動能與突破意圖。此一跳空缺口將形成短期強力支撐。從日漲跌幅數據觀察，市場對其基本面利多給予高度正面評價，技術面呈現向上突破的強勢格局，後續有望挑戰前期高點。
+                                3月6日Marvell股價大漲22%，收盤92.33美元，為近期最大單日漲幅。從月線維度看，月漲跌幅數據顯示本月仍需參閱完整K線確認，惟單日22%的量能爆發搭配財報正向催化，技術面呈現突破性走勢。若後續成交量維持高於近期平均，突破確認後股價有望向前高進一步挑戰。建議參閱TradingView圖表確認近期均線與支撐位置。
                             </td>
                         </tr>
                     </tbody>
@@ -1260,14 +1552,14 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>AI客製化晶片浪潮核心受益者</strong><br>邁威爾科技正處於AI基礎設施軍備競賽的核心位置，其看多邏輯建立在不可逆的產業趨勢上。當大型雲端服務商(CSP)如Google、Amazon為降低對Nvidia的依賴並優化自身AI模型效能，轉向開發客製化ASIC晶片時，邁威爾的設計與整合能力便成為關鍵。最新財報不僅證實了此趨勢，更以超越預期的財測預示了成長的加速。執行長Matt Murphy強調「訂單仍以創紀錄的速度成長」，顯示需求遠未觸頂。相較於通用GPU，ASIC提供更佳的功耗與效能，這在動輒耗資數千億美元的AI資料中心建置中至關重要。邁威爾的風險在於半導體產業的週期性，以及與博通等對手的激烈競爭，但其目前在手訂單與技術領先地位，使其成為AI硬體領域中確定性較高的成長標的。</p>
+                    <p><strong>AI資料中心超週期成長推動估值重評</strong><br>Marvell的核心投資邏輯在於AI資料中心對客製化ASIC晶片的結構性需求正進入超週期成長階段。2026財年資料中心營收60億美元、年增46%，不僅確認了趨勢的存在，更重要的是執行長Murphy「各季度年增率逐季加速」的財測，意味著增速本身仍在提升，而非僅維持高位。Q1財測24億美元超出華爾街預期5.7%，是市場重評估值的重要催化劑。從競爭格局看，Marvell在乙太網路晶片與光學DSP領域具備明顯的技術先行優勢，與頭部雲端客戶的ASIC合作設計週期長達2至3年，轉換成本高，構成可持續的訂單護城河。主要風險在於AI資本支出週期若出現意外轉折，或頭部雲端客戶內部自研晶片成熟度加速，將壓縮外部訂單空間。關鍵可驗證指標：Q2 2027財測營收是否高於25億美元，以確認「逐季加速」承諾的兌現程度。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看多推薦第二檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:金融控股 (以Berkshire Hathaway為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:工業機械．基礎建設 (以Caterpillar為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1279,37 +1571,37 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">兩年來首度恢復股票回購</td>
-                            <td>公司宣布自2024年以來首次恢復股票回購計畫，於3月4日開始回購A股與B股。根據公司政策，此舉意味著管理層認為當前股價低於其評估的內在價值，向市場釋放出強烈的價值信號，有助於支撐股價並提升股東回報。</td>
+                            <td class="font-semibold text-slate-600">分析師目標價上調至773美元上修幅度達3.83%</td>
+                            <td>FactSet最新調查顯示，共24位分析師對Caterpillar給出最新目標價：中位數由744.5美元上修至773美元，調升幅度3.83%，相對3月6日收盤價706.08美元有9.5%的上行空間。31位評級分析師中，積極樂觀15位、保持中立12位、保守悲觀僅4位，整體機構態度明顯偏多，顯示華爾街對其中長期基本面前景仍有信心，預期未來業績將持續正向推動股價。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">新任執行長展現強烈信心</td>
-                            <td>新任執行長阿貝爾(Greg Abel)不僅在與巴菲特討論後決定啟動回購，更以個人稅後年薪約1500萬美元的資金買入公司股票，並承諾未來每年都將持續以薪資投入。此舉展現了管理層與股東利益的高度一致，大幅提振投資人信心。</td>
+                            <td class="font-semibold text-slate-600">工程機械需求受益全球基礎建設擴張</td>
+                            <td>Caterpillar是全球最大工程機械製造商，產品涵蓋挖掘機、推土機、採礦設備及柴油發電機等。在全球基礎建設投資持續擴張的環境下，其核心機具需求具備跨週期韌性。美日經濟深化合作背景下，日本首相高市早苗主導的財政擴張計畫有望推動基礎建設相關需求，貝萊德特別點名機械、造船與鋼鐵等重工業為受益方向，Caterpillar在日美基礎建設合作中的市場定位具有長期訂單支撐。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">股價自高點回落提供切入點</td>
-                            <td>波克夏股價自去年5月創下歷史高點後已回落約10%，近期更因第四季營業利益下滑而承壓。在股價相對整理的階段，公司內部人（執行長）與公司本身（庫藏股）同時進場買進，為價值投資者提供了具吸引力的安全邊際。</td>
+                            <td class="font-semibold text-slate-600">能源設備部門受益於能源安全投資擴張</td>
+                            <td>Caterpillar旗下能源與運輸部門（Energy &amp; Transportation）銷售柴油發電機組、天然氣引擎及工業渦輪機，在中東衝突引發全球能源安全意識提升的背景下，各國政府與企業對備援能源設備的需求顯著增加。此外，資料中心電力需求快速增長帶動大型柴油發電機與不斷電設備訂單，AI基礎設施建設的電力保障需求為Caterpillar的能源部門提供結構性長期成長機會。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-BRK.B/financials-overview/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-CAT/financials-overview/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                基本面傳遞出極為正面的內部信心訊號。公司在股價自高點回落後，啟動兩年來的首次股票回購，顯示管理層認為股價已低於內在價值。更重要的是，新任執行長Greg Abel以1500萬美元自有資金大舉加碼，並承諾未來每年持續投入，此舉確保了管理層與股東利益的高度一致性，有效回應了市場對接班人持股的疑慮，為公司長期價值提供強力背書。
+                                FactSet調查顯示Caterpillar目標價中位數由744.5上調至773美元（+3.83%），相對當前706.08美元有9.5%上行空間。31位評級分析師中，積極樂觀15位（48%）。公司長期維持強勁自由現金流與股東回報政策，股息持續成長為長期投資者提供保護。全球基礎建設投資週期持續，AI資料中心電力設備需求為新興增長引擎，機構普遍給予中長期正向展望。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-BRK.B/technicals/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-CAT/technicals/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                根據新聞報導，在宣布恢復回購與CEO加碼持股後，股價收高2.65%至500.40美元。此一帶量上漲顯示市場對此利多消息反應積極。股價在經歷一段時間整理後，由公司內部力量發動攻勢，有望扭轉近期頹勢，形成底部支撐區。後續若能站穩500美元關卡，技術面有望由弱轉強。
+                                Caterpillar 3月6日收盤706.08美元，近五日股價下跌3.83%，短期走勢弱於標普500指數的同期跌幅，顯示股價受近期市場整體拋售影響。惟下跌幅度與大盤接近，未見恐慌性拋售。目標價773美元與目前股價706.08美元之間的9.5%差距，提供技術上的回歸空間。詳細支撐位、均線及動能指標建議參閱TradingView圖表確認。
                             </td>
                         </tr>
                     </tbody>
@@ -1320,14 +1612,14 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>內部人信心爆棚的價值回歸</strong><br>波克夏海瑟威的看多邏輯並非基於短期題材，而是源自最經典的價值投資信號：公司與內部人同時在股價回檔時大舉買進。新任執行長阿貝爾(Greg Abel)動用1500萬美元個人資金加碼，並承諾未來每年都將薪資投入，這不僅是財務操作，更是對公司未來的強力宣示，有效消除了市場對「後巴菲特時代」的疑慮。公司啟動兩年來的首次庫藏股，明確表示管理層認為當前股價被低估。在市場追逐AI熱潮之際，波克夏以穩健的姿態展現其內在價值。雖然其龐大的體量意味著爆發性增長不易，但這種由內而外的信心，為投資組合提供了在不確定環境下的穩定基石。風險在於其傳統業務可能受經濟週期影響，但其多元化的投資組合與龐大的現金流提供了強大的防禦能力。</p>
+                    <p><strong>基礎建設與能源安全雙引擎驅動長期訂單</strong><br>Caterpillar的核心投資邏輯建立在兩個相互強化的結構性需求之上：全球基礎建設投資週期與能源安全設備需求擴張。FactSet調查顯示，機構目標價中位數上調至773美元，相對當前706美元具備9.5%的估值修復空間，顯示分析師對其業務可見性具有信心。在全球基礎建設採購週期中，Caterpillar的工程機具具備不可替代的標準化產品地位，且在日美深化產業合作的背景下，重工業需求能見度提升。能源部門方面，中東衝突引發的能源安全意識升溫，加之AI資料中心電力基礎設施建設急劇擴張，使柴油發電機組與工業能源設備訂單出現新興增長點。主要風險：全球經濟放緩若壓縮政府基礎建設預算，或AI資料中心建設時程延誤，均可能影響訂單成長速度。關鍵可驗證指標：下季財報中能源與運輸部門的訂單積壓量是否持續增長至新高水準。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看空推薦第一檔 -->
         <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:礦產資源 (以Southern Copper為例)</h3>
+            <h3 class="recommendation-title bearish">[看空]:企業軟體．雲端運算 (以Oracle為例)</h3>
 
             <div class="overflow-x-auto">
                 <table class="analysis-table">
@@ -1339,76 +1631,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">核心產品銅價前景疲軟</td>
-                            <td>作為全球最大工業金屬消費國，中國宣布了自1991年以來最保守的經濟增長目標，暗示房地產和基礎建設開發需求將減少，直接衝擊銅價。同時，強勢美元也使得以美元計價的銅對國際買家更昂貴，進一步壓抑需求。</td>
+                            <td class="font-semibold text-slate-600">計畫裁減數千名員工資金壓力顯著</td>
+                            <td>Oracle正計畫裁減數千名員工，以因應大規模擴建AI資料中心所帶來的資金壓力。裁員範圍涵蓋多個部門，部分針對因AI發展而預期需求下降的職位類別，最快本月實施。此次裁員規模預計超過公司過去常見的分批裁員模式，Oracle已在內部宣布暫停或放慢雲端部門的招募計畫，截至2025年5月底約16.2萬名員工中的相當比例面臨影響。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">分析師紛紛下調評級</td>
-                            <td>近期多家知名研究機構下調其股票評級，包括從「買入」下調至「持有」，以及最新的「跑輸大盤」評級，並同步調降目標價。分析師的共識趨向「減持」，反映出投資界對其未來獲利前景普遍持悲觀態度。</td>
+                            <td class="font-semibold text-slate-600">分析師目標價中位數下調至254美元</td>
+                            <td>FactSet最新調查顯示，37位分析師對Oracle的目標價中位數由266美元下調至254美元，下調幅度4.51%。儘管45位評級分析師中仍有35位給予積極樂觀評價，但目標價的下修反映市場對其能否在AI轉型過程中有效管理成本、同時維持競爭力的疑慮。Oracle收盤154.79美元，相對下調後的目標價254美元仍有上行空間，但目標價下修訊號本身具有負面信號意義，顯示機構對業績可見度的確信度降低。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">內部人士在財報後大量拋售</td>
-                            <td>公司多位董事近期大量拋售持股，尤其值得注意的是，在公司公布優於預期的第四季財報後不久，一名董事即賣出大部分持股。這種在股價接近高點且財報利多後的內部人賣出行為，可能釋放出公司內部對未來缺乏信心的信號。</td>
-                        </tr>
-                         <tr>
-                            <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-SCCO/financials-overview/" target="_blank" class="link-button fundamental">
-                                    基本面
-                                    <span class="link-button-subtitle">按此看財務數據</span>
-                                </a>
-                            </td>
-                            <td>
-                                基本面面臨宏觀、產業與公司內部三重壓力。首先，最大客戶中國設定保守的經濟增長目標，直接衝擊核心產品銅的需求預期。其次，多家分析師近期接連下調評級，顯示市場對其未來盈利能力轉趨悲觀。最關鍵的是，公司董事在財報利多發布後、股價接近高點時大量拋售持股，此舉嚴重打擊投資人信心，暗示內部人士可能認為公司價值已被高估。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-SCCO/technicals/" target="_blank" class="link-button technical">
-                                    技術面
-                                    <span class="link-button-subtitle">按此看技術圖表</span>
-                                </a>
-                            </td>
-                            <td>
-                                根據新聞報導，股價單日重挫7.16%，出現帶量長黑K棒，顯示賣壓沉重。此一跌幅遠超所屬行業的4.41%跌幅，呈現弱勢領跌格局。股價已跌破短期支撐，技術指標轉弱。儘管部分指標如Williams %R顯示超賣，但在基本面利空環伺下，短期內恐難以扭轉頹勢，後續需提防進一步下探的風險。
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
-
-            <div class="analysis-block">
-                 <h4>深度分析:</h4>
-                <div class="structured-analysis">
-                    <p><strong>宏觀逆風與內部人拋售的雙重打擊</strong><br>南方銅業的看空邏輯，來自於宏觀經濟逆風、分析師悲觀預期與內部人信心不足的三重共振。首先，作為週期性極強的礦產公司，其命運與全球最大銅消費國中國的經濟前景緊密相連。當中國設定三十年來最保守的增長目標，等於直接宣告銅的下游需求引擎將減速。其次，華爾街分析師的集體降評，反映出對其盈利能力的擔憂已成共識。最致命的一擊來自內部，多位董事在股價高檔、財報利多後大量拋售持股，這種「利多出盡」式的操作，強烈暗示內部人認為公司股價已觸及天花板。儘管公司Q4財報優於預期，但市場交易的是未來，在多重利空疊加下，過去的業績已無法支撐其高估值。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 看空推薦第二檔 -->
-        <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:軟體與雲端服務 (以Oracle為例)</h3>
-
-            <div class="overflow-x-auto">
-                <table class="analysis-table">
-                    <thead>
-                        <tr>
-                            <th>分析維度</th>
-                            <th>觀點與數據</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="font-semibold text-slate-600">大規模裁員引發營運疑慮</td>
-                            <td>據報導，甲骨文正計劃裁減數千名員工，規模預計比過去常見的分批裁員更廣泛。此舉雖是為應對AI資料中心擴張帶來的資金壓力，但也暴露了公司在快速轉型過程中可能面臨的成本控制問題與營運挑戰。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600">AI轉型伴隨巨大資金壓力</td>
-                            <td>公司正大規模建設資料中心以支援AI運算需求，試圖追趕亞馬遜與微軟。然而，裁員消息顯示，如此龐大的資本支出已對公司財務造成壓力，迫使其在其他部門削減成本，引發市場對其AI戰略投資回報率與可持續性的擔憂。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600">雲端部門招募放緩或暫停</td>
-                            <td>報導指出，甲骨文已在內部宣布將重新審視雲端部門的許多職缺，實際上等同於放慢或暫停招募。在雲端運算與AI被視為核心增長引擎的當下，放緩關鍵部門的人才引進，可能影響其長期競爭力與產品開發進度。</td>
+                            <td class="font-semibold text-slate-600">AI資料中心資本支出擠壓核心業務盈利空間</td>
+                            <td>Oracle在董事長Larry Ellison主導下大規模投資AI資料中心建設，以支援OpenAI等雲端客戶的運算需求，在與亞馬遜AWS和微軟Azure競爭的過程中投入大量資本支出。然而，這種大規模建設的資本密集特性對傳統以授權費用為主的軟體業務盈利模式形成擠壓，資料庫授權業務成長放緩而雲端業務尚未形成足夠規模效益，使整體盈利效率面臨轉型期的結構性壓力。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
@@ -1418,7 +1650,7 @@
                                 </a>
                             </td>
                             <td>
-                                基本面出現隱憂。儘管公司積極投入AI資料中心建設以追趕市場領導者，但計畫裁員數千人的消息，揭示了其宏大轉型背後所承受的巨大財務壓力。此舉可能影響多個部門的運作，甚至連被視為未來核心的雲端部門也傳出招募放緩，引發市場對其AI戰略能否順利執行及投資回報率的質疑。在競爭激烈的雲端市場，任何執行上的顛簸都可能被對手放大。
+                                FactSet調查顯示Oracle目標價中位數由266下調至254美元（-4.51%）。計畫裁員數千人反映AI資料中心擴建帶來的資金壓力加劇。傳統軟體授權業務承壓，雲端轉型尚未達到規模效益。公司約16.2萬名員工的人力成本顯著，裁員為結構性轉型痛點的外顯信號。與AWS、Azure在雲端市場的競爭激烈，定價力相對受限。
                             </td>
                         </tr>
                         <tr>
@@ -1429,7 +1661,67 @@
                                 </a>
                             </td>
                             <td>
-                                根據新聞報導，儘管傳出裁員利空，股價當日仍收漲1.59%。這種股價與消息面的背離值得警惕，可能反映市場尚未完全消化此負面消息的長期影響，或是被大盤反彈情緒所帶動。然而，基本面的隱憂並未消除，若後續市場回歸理性，股價可能面臨補跌壓力，投資人需留意其能否守住關鍵支撐。
+                                Oracle近五日股價上漲4.51%，收盤154.79美元，短期內走勢優於大盤標普500指數的-1.13%，顯示市場尚未充分反映裁員等負面因素。然而，目標價中位數254美元雖高於現價，但機構下修目標價是重要的反向信號，股價短期反彈可能是逢高布局空頭的時機。詳細技術指標與壓力位建議參閱TradingView圖表。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                 <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>AI轉型資本支出擠壓盈利裁員顯示成本失控</strong><br>Oracle的看空邏輯建立在AI轉型過程中資本支出與盈利能力的失衡之上。計畫裁減數千名員工是最直接的信號，顯示公司在大規模擴建AI資料中心的資金壓力下，已無法維持原有的人力規模，被迫在員工與資本支出之間做出取捨。37位分析師將目標價中位數由266下調至254美元（-4.51%），亦反映機構對其業績可見度的信心下降。Oracle傳統核心競爭力在資料庫授權軟體，但在雲端時代，AWS、Azure、Google Cloud的成長壓縮了Oracle的市場空間，而其OCI（Oracle Cloud Infrastructure）雖獲OpenAI等大型客戶，但規模仍遠落後於三大雲端巨頭，形成投資回報週期漫長的困境。若後續財報顯示雲端業務毛利率持續低於傳統軟體業務，將進一步確認轉型代價過重的判斷。關鍵可驗證指標：下季裁員人數正式公布及雲端部門收入成長率是否低於20%。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看空推薦第二檔 -->
+        <div class="stock-recommendation bearish">
+            <h3 class="recommendation-title bearish">[看空]:航空運輸 (以American Airlines Group為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">燃油成本占營運費用約25%為業績最大變數</td>
+                            <td>American Airlines是全球最大航空公司之一，燃油成本長期占其總營運費用的22至26%，是單一最大可變成本項目。WTI原油本週大漲35.63%至每桶90.90美元，直接提升每座位每英里燃油成本，在票價傳導存在時滯的前提下，短期毛利率承壓明顯。歷史上，油價每上漲10%，航空公司年度燃油支出約增加3至5億美元，折算為EPS約影響0.20至0.40美元。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">高負債資本結構使利率與燃油雙重成本敏感性高</td>
+                            <td>American Airlines是全球負債比率最高的航空公司之一，截至近期財報總負債超過400億美元，其中大量為固定利率長期債務與飛機融資租賃。在油價飆升帶動停滯性通膨疑慮的環境下，Fed維持高利率的時間可能延長，進一步壓縮其再融資空間與財務彈性。停滯性通膨場景下，消費者旅遊支出可能受到壓縮，削弱票價轉嫁油價成本的能力，使盈利壓力從成本端延伸至收入端。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">旅遊需求受通膨侵蝕消費者信心影響轉嫁能力</td>
+                            <td>2月美國非農就業意外減少9.2萬人、零售銷售月降0.2%，顯示消費端已出現降溫信號。Spartan Capital Securities經濟學家Cardillo指出，就業弱化趨勢持續將對消費構成重要警訊。對航空業而言，消費者可支配收入壓縮將優先削減旅遊支出，尤其是休閒旅行需求彈性較高。若消費端持續走弱而油價維持高位，American Airlines在票價上漲與客座率維持之間的平衡將更加困難，業績下修壓力顯著。</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-AAL/financials-overview/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                American Airlines燃油成本占總營運費用22至26%，油價每漲10%對年度EPS影響約-0.20至-0.40美元。總負債超過400億美元，高財務槓桿使再融資成本敏感於利率環境。非農就業疲弱顯示消費降溫風險，商務艙與休閒艙需求可能雙雙承壓。在停滯性通膨情境下，票價轉嫁能力受限，導致成本壓力難以全數轉嫁給乘客。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-AAL/technicals/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                American Airlines受油價急漲衝擊，股價週線承壓。航空股作為油價的空頭避險工具在近期市場受到關注，費用端壓力先行反映於市場定價。技術面上，油價若維持高位將持續壓制股價反彈動能。詳細技術支撐位與均線位置建議參閱TradingView圖表，觀察近五日成交量是否同步放大以確認賣壓強度。
                             </td>
                         </tr>
                     </tbody>
@@ -1440,7 +1732,7 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>AI擴張下的財務壓力鍋</strong><br>甲骨文的看空邏輯，並非否定其AI轉型的決心，而是質疑其執行能力與財務健康度。在雲端市場，甲骨文是追趕者，其大規模建設AI資料中心的策略是不得不為之的豪賭。然而，「裁員數千人」的消息如同一盆冷水，揭示了這場豪賭的代價極高，已對公司整體營運造成壓力，甚至需要犧牲其他部門來為AI輸血。更令人擔憂的是，連雲端部門的招聘都已放緩。在AI人才爭奪戰白熱化的當下，此舉無異於自斷臂膀。儘管股價因市場情緒而上漲，但基本面的裂痕已經出現。相較於財務穩健、能從容擴張的競爭對手，甲骨文的AI之路顯得步履蹣跚，未來若無法有效將巨額投資轉化為獲利，恐將面臨更大的挑戰。</p>
+                    <p><strong>油價飆升燃油成本急增消費走弱票價難漲</strong><br>American Airlines的看空邏輯建立在成本結構的高度油價敏感性之上。燃油成本占其總營運費用的22至26%，是利潤的最大單一變數；WTI本週漲幅35.63%將直接轉化為顯著的季度燃油支出增加，以歷史參數估算影響年度EPS約0.70至1.40美元。更值得警惕的是，與消費類航空公司不同，American Airlines擁有超過400億美元總負債，高財務槓桿在利率維持高位的情況下進一步壓縮財務彈性。從需求端看，2月非農就業減少9.2萬人、零售銷售月降，顯示消費端降溫已有所顯現，在停滯性通膨情境下，消費者可能優先削減旅遊支出，使票價轉嫁成本的能力受到限制。成本升、需求弱、債務重的三重壓力共振，是看空American Airlines的核心依據。關鍵可驗證指標：下季財報中客座率是否低於前年同期85%，以及燃油每加侖成本是否突破3.5美元。</p>
                 </div>
             </div>
         </div>
@@ -1456,7 +1748,7 @@
 </div>
 
 <!-- 回頂按鈕 -->
-<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部" style="display: none;">↑</button>
 
 <script>
 // 進度條功能
@@ -1541,6 +1833,7 @@ window.addEventListener('load', function() {
 }); // end window.load
 </script>
 
-</body>
-</html>
 
+
+
+</body></html>
