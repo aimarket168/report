@@ -75,8 +75,7 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 5px;            cursor: pointer;
             font-size: 16px;
             margin-right: 10px;
             margin-bottom: 10px;
@@ -227,6 +226,8 @@
             switch(type) {
                 case 'today':
                     date = new Date();
+                    // 修改：讓今日按鈕與預設日期也都產生「前一日」
+                    date.setDate(date.getDate() - 1);
                     break;
                 case 'yesterday':
                     date = new Date();
@@ -320,7 +321,7 @@
             }, 3000);
         }
 
-        // 頁面載入時自動產生今日連結
+        // 頁面載入時自動產生今日連結 (因為上面邏輯已改，這裡預設會產生昨天的日期)
         window.onload = function() {
             generateDailyUrl('today');
         };
