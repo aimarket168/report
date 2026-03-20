@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026-03-20（週五） 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026-03-20（週五） 金融市場日報|洞察•解構•透視全球資產">
+
+    <style>
+        /* 系統字體堆疊 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 標題階層 - 字體大小已調換 */
+        .main-title {
+            font-size: 2.5rem; /* 原為 3.125rem */
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4f46e5, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* --- v3.1.1 修正: 移除 max-width --- */
+        .sub-title {
+            font-size: 3.125rem; /* 原為 2.5rem */
+            font-weight: 600;
+            color: #2563eb;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            /* 移除 max-width */
+        }
+
+        @media (max-width: 768px) {
+             /* 響應式字體大小已調換 */
+            .main-title { font-size: 1.5rem; } /* 原為 1.875rem */
+            .sub-title { font-size: 1.875rem; } /* 原為 1.5rem */
+        }
+
+        /* 章節與容器 */
+        section { scroll-margin-top: 120px; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        h3.table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: left;
+            color: #374151;
+        }
+
+        .container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        @media (min-width: 768px) {
+            .container { padding: 2rem; }
+        }
+
+        /* 表格樣式 */
+        .table-styled {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+        .table-styled caption {
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            caption-side: top;
+        }
+        .table-styled thead th {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            text-align: center;
+        }
+        .table-styled thead th:first-child {
+            text-align: left;
+        }
+        .table-styled tbody td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 400; /* 強制所有表格內容為正常字重 */
+            text-align: center;
+        }
+        .table-styled tbody td:first-child {
+            text-align: left;
+            font-weight: 500; /* 第一欄稍加強調 */
+        }
+        /* 強制表格內容非粗體 */
+        .table-styled tbody td strong {
+             font-weight: normal !important;
+        }
+        /* 允許特定行加粗 */
+         .table-styled tbody tr.summary-row td {
+            font-weight: 600 !important; /* 針對總計行加粗 */
+            border-top: 2px solid #e5e7eb;
+         }
+
+
+        /* 漲跌顏色 */
+        .text-up { color: #dc2626; font-weight: 600; }
+        .text-down { color: #059669; font-weight: 600; }
+        .text-flat { color: #6b7280; font-weight: 500; }
+
+        /* 熱度條 */
+        .heat-container {
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .heat-item {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 2.5rem;
+        }
+        .heat-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 文字靠左 */
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            height: 100%;
+            border-radius: 8px 0 0 8px; /* 只有左邊圓角 */
+            transition: all 0.3s ease;
+            white-space: nowrap; /* 防止文字換行 */
+            overflow: hidden; /* 隱藏超出部分 */
+            text-overflow: ellipsis; /* 超出部分顯示省略號 */
+        }
+        .heat-bar-1 { background: #dc2626; width: 100%; border-radius: 8px; } /* 100% 兩邊都圓角 */
+        .heat-bar-2 { background: #dc2626; width: 92%; }
+        .heat-bar-3 { background: #ea580c; width: 84%; }
+        .heat-bar-4 { background: #ea580c; width: 76%; }
+        .heat-bar-5 { background: #d97706; width: 68%; }
+        .heat-bar-6 { background: #d97706; width: 60%; }
+        .heat-bar-7 { background: #eab308; width: 52%; color: #1f2937; }
+        .heat-bar-8 { background: #eab308; width: 44%; color: #1f2937; }
+        .heat-bar-9 { background: #84cc16; width: 36%; color: #1f2937; }
+        .heat-bar-10 { background: #84cc16; width: 28%; color: #1f2937; }
+
+        /* 卡片 */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .section-card:first-child { margin-top: 0.5rem; }
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-left-color: #4f46e5;
+        }
+
+        /* 導覽列 */
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+        }
+        .nav-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+        }
+        .nav-content::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
+        .nav-links-group {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            align-items: center;
+            min-width: fit-content;
+        }
+        .nav-links-group a {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: #dc2626;
+            color: white;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .nav-links-group a:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+        .nav-links-group .download-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .nav-links-group .download-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+
+        /* 時間軸標籤 */
+        .timeline-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.75rem;
+            vertical-align: top;
+        }
+        .timeline-tag-taiwan { background: #f1f5f9; color: #1e293b; }
+        .timeline-tag-us { background: #f1f5f9; color: #dc2626; }
+        .timeline-container p {
+            margin: 0;
+            padding: 0.125rem 0;
+            line-height: 1.4;
+             /* 字數控制由JS確保, CSS不強制 */
+        }
+
+        /* --- v3.1.9 保持 v3.1.8 的深度分析格式 --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的深度分析格式 --- */
+        .analysis-block {
+            background: #fffbeb; /* 淺黃色背景 */
+            border-left: 4px solid #f59e0b; /* 琥珀色左邊框 */
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .analysis-block h4 { /* v2.8 "深度分析:" 標題樣式 */
+            font-weight: 600;
+            color: #92400e; /* 深琥珀色 */
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+        .structured-analysis p { /* v2.8 分析段落樣式 */
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .structured-analysis p:last-child {
+            margin-bottom: 0;
+        }
+        .structured-analysis strong { /* v2.8 段落內粗體標題樣式 */
+             display: inline; /* 與內容同行 */
+             margin-right: 0.5em; /* 和內容稍微隔開 */
+             color: #92400e; /* 深琥珀色 */
+             font-size: 1rem;
+             font-weight: 700;
+        }
+         /* v2.8 不使用 br 換行 */
+         .structured-analysis br {
+            display: none;
+         }
+
+        /* 市場數據卡片 */
+        .market-overview-custom { margin: 1.5rem 0; }
+        .market-overview-row-1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        /* --- v3.1.3 修正: 並排斷點改為 lg --- */
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } /* For Top10/Timeline */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); } /* Default for small screens */
+        @media (min-width: 1024px) { /* lg breakpoint */
+          .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        .market-overview-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 3fr; /* 保持1:3比例 */
+            gap: 1.5rem;
+        }
+        .market-card-new {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            display: flex; /* 使用 Flexbox 布局 */
+            flex-direction: column; /* 垂直排列 */
+            justify-content: space-between; /* 內容均勻分布 */
+            min-height: 120px; /* 設定最小高度 */
+        }
+        .market-card-new:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .market-card-new.us-stock { border-left: 4px solid #dc2626; }
+        .market-card-new.tw-stock { border-left: 4px solid #059669; }
+        .market-card-new.bond { border-left: 4px solid #2563eb; }
+        .market-card-new.commodity { border-left: 4px solid #f59e0b; }
+        .market-card-new.fx { border-left: 4px solid #0891b2; }
+        .market-card-title-new {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        .market-card-value-new {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.2rem;
+        }
+         .market-card-value-new strong { font-weight: 700 !important; } /* 確保卡片數值加粗 */
+        .market-card-change-new {
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: auto; /* 將描述文字推到底部 */
+        }
+         .market-card-change-new strong { font-weight: bold !important; } /* 確保卡片漲跌幅加粗 */
+        /* 卡片漲跌顏色：相容 text-up/text-down 與省略「text-」的 up/down 兩種寫法 */
+        .market-card-change-new.up,
+        .market-card-change-new.text-up   { color: #dc2626; font-weight: 600; }
+        .market-card-change-new.down,
+        .market-card-change-new.text-down { color: #059669; font-weight: 600; }
+        .market-card-change-new.flat,
+        .market-card-change-new.text-flat { color: #6b7280; font-weight: 500; }
+
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章表格樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章表格樣式 --- */
+        .analysis-table { /* v2.8 style */
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-spacing: 0;
+            table-layout: fixed;
+        }
+        .analysis-table th:first-child, .analysis-table td:first-child {
+            width: 30%; /* v2.8 寬度 */
+            padding-left: 0.75rem;
+            vertical-align: top;
+        }
+        .analysis-table th:last-child, .analysis-table td:last-child {
+            width: 70%; /* v2.8 寬度 */
+            padding-right: 0.75rem;
+            vertical-align: top;
+        }
+        .analysis-table td { /* v2.8 style */
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            word-wrap: break-word;
+            text-align: left; /* v2.8 靠左對齊 */
+            font-weight: 400 !important; /* 強制非粗體 */
+        }
+        .analysis-table th { /* v2.8 style */
+            background: #f8fafc;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+            color: #374151;
+        }
+        .analysis-table td strong { font-weight: normal !important; } /* 強制非粗體 */
+        .analysis-table .font-semibold { font-weight: 600 !important; } /* 允許維度名稱加粗 */
+
+
+        /* 個股推薦卡片 */
+        .stock-recommendation {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的 class name (修改買進/賣出為看多/看空) --- */
+        .stock-recommendation.bullish { border-left: 4px solid #059669; } /* 改為 bullish */
+        .stock-recommendation.bearish { border-left: 4px solid #dc2626; } /* 改為 bearish */
+        .recommendation-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) の class name (修改買進/賣出為看多/看空) --- */
+        .recommendation-title.bullish { color: #059669; } /* 改為 bullish */
+        .recommendation-title.bearish { color: #dc2626; } /* 改為 bearish */
+
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章按鈕樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章按鈕樣式 --- */
+        .link-button-container { /* v2.8 container */
+             display: flex;
+             flex-direction: column;
+             gap: 0.5rem;
+             width: 100%; /* 確保容器寬度 */
+             align-items: flex-start; /* 按鈕靠左 */
+        }
+        .link-button { /* v2.8 style */
+            display: block; /* 改回 block */
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+            width: 95%; /* 調整寬度 */
+            max-width: 150px; /* 最大寬度 */
+            margin: 0; /* 移除 auto margin */
+            font-size: 0.875rem;
+            box-sizing: border-box; /* 包含 padding */
+        }
+        .link-button.fundamental { background: #2563eb; color: white; }
+        .link-button.fundamental:hover { background: #1d4ed8; }
+        .link-button.technical { background: #374151; color: white; }
+        .link-button.technical:hover { background: #111827; }
+        .link-button-subtitle {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+
+        /* 回頂按鈕 */
+        .back-to-top {
+            position: fixed;
+            left: 1.5rem;
+            bottom: 1.5rem;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.125rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 40;
+            transition: all 0.2s ease;
+        }
+        .back-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 進度條 */
+        .progress-bar {
+            height: 3px;
+            background: #4f46e5;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        /* 網格佈局 (通用) */
+        .grid { display: grid; }
+        .gap-8 { gap: 2rem; }
+
+        /* TL;DR區塊 */
+        .tldr-block {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .tldr-block ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+        }
+        /* --- v3.1.1 修正: 移除 max-width --- */
+        .tldr-block li {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            position: relative;
+            /* 移除 max-width */
+        }
+        .tldr-block li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+         /* --- v3.1.10 修正: TL;DR 區塊內的 strong 標籤改為粗體 --- */
+         .tldr-block li strong {
+            font-weight: 700 !important;
+         }
+
+        /* 響應式 */
+        @media (max-width: 1024px) {
+            .market-overview-row-1 { grid-template-columns: repeat(2, 1fr); }
+            /* lg斷點以下 (平板) Top10/時間軸垂直排列已由上方 grid-cols-1 處理 */
+        }
+        @media (max-width: 768px) {
+            .grid-cols-2, .lg\:grid-cols-2 { grid-template-columns: 1fr; } /* 手機全部垂直排列 */
+            .market-overview-row-1,
+            .market-overview-row-2 { grid-template-columns: 1fr; }
+            .back-to-top { left: 1rem; bottom: 5rem; }
+            /* --- v3.1.9 維持 v3.1.8 的手機表格寬度 --- */
+            /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章手機表格寬度 --- */
+            .analysis-table th:first-child, .analysis-table td:first-child {
+                width: 40%; /* v2.8 手機版寬度 */
+            }
+            .analysis-table th:last-child, .analysis-table td:last-child {
+                width: 60%; /* v2.8 手機版寬度 */
+            }
+
+            .nav-content {
+                justify-content: flex-start;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .nav-links-group { gap: 0.75rem; }
+        }
+
+        /* 工具類 */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-semibold { font-weight: 600; }
+        .text-xs { font-size: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .overflow-x-auto { overflow-x: auto; }
+
+        @media print {
+            .nav-sticky, .back-to-top, .download-btn, .progress-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 進度條 -->
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
+
+<!-- 導覽工具列 -->
+<div class="nav-sticky">
+    <div class="nav-content">
+        <div class="nav-links-group">
+            <a href="#sec-1">市場總覽</a>
+            <a href="#sec-2">歐美股市</a>
+            <a href="#sec-3">債券市場</a>
+            <a href="#sec-4">大宗商品</a>
+            <a href="#sec-5">台股解析</a>
+            <a href="#sec-6">匯率市場</a>
+            <a href="#sec-7">產業展望</a>
+            <button class="download-btn" id="smartDownloadBtn">🔥 下載日報</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- 標題 -->
+    <header style="text-align: center; margin: 0;">
+        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026-03-20（週五） 金融市場日報</h1>
+        <p class="sub-title" style="margin: 0;">外資續賣拖累台股走低　戰事推高油價壓抑美股續跌</p>
+    </header>
+
+    <!-- 第1章:市場總覽與重點 -->
+    <section id="sec-1" class="section-card">
+        <h2 style="color: #015fb4;"><span style="margin-right: 0.75rem;">📋</span>第1章｜市場總覽與重點</h2>
+
+        <div class="tldr-block" style="background: #f0f9ff;">
+            <h3 class="table-title">市場三大要點</h3>
+            <ul>
+                <li style="color: #015fb4;"><strong>油價重新主導市場：</strong>中東戰事讓原油與通膨預期再度成為市場主線，股票、公債與商品都開始圍繞能源風險重新定價。</li>
+                <li style="color: #015fb4;"><strong>台股先反映資金撤退：</strong>台股跌幅雖不算失控，但外資單日賣超近四百億元，顯示短線反彈仍缺乏外部資金回補。</li>
+                <li style="color: #015fb4;"><strong>黃金轉弱形成背離：</strong>今天最特別的是黃金沒有隨避險情緒走強，反而和工業金屬一起回落，顯示市場更在意流動性與利率壓力。</li>
+            </ul>
+        </div>
+
+        <div class="market-overview-custom">
+            <h3 class="table-title">市場核心數據速覽</h3>
+            <div class="market-overview-row-1">
+                <div class="market-card-new us-stock">
+                    <div class="market-card-title-new">美股市場</div>
+                    <div class="market-card-value-new">標普500 <strong>6,506.48</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-1.51%</strong> • 油價衝高與殖利率上行壓縮整體股市評價</div>
+                </div>
+                <div class="market-card-new tw-stock">
+                    <div class="market-card-title-new">台股市場</div>
+                    <div class="market-card-value-new">加權 <strong>33,543.88</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-0.43%</strong> • 外資續賣拖住電子權值股整體反彈節奏。</div>
+                </div>
+                <div class="market-card-new bond">
+                    <div class="market-card-title-new">債券市場</div>
+                    <div class="market-card-value-new">10年期殖利率 <strong>4.39%</strong></div>
+                    <div class="market-card-change-new text-up">▲ <strong>+0.11</strong> • 通膨疑慮升溫使各天期殖利率全面明顯上揚</div>
+                </div>
+                <div class="market-card-new commodity">
+                    <div class="market-card-title-new">大宗商品</div>
+                    <div class="market-card-value-new">黃金期貨 <strong>4,492.00</strong></div>
+                    <div class="market-card-change-new text-down">▼ <strong>-2.36%</strong> • 金價跌破避險光環，另，布蘭特回吐漲幅</div>
+                </div>
+            </div>
+            <div class="market-overview-row-2">
+                <div class="market-card-new fx">
+                    <div class="market-card-title-new">匯率市場</div>
+                    <div class="market-card-value-new">美元指數 <strong>99.50</strong></div>
+                    <div class="market-card-change-new text-up">▲ <strong>+0.27%</strong> • 美元指數小升但亞幣未見同步全面轉弱。</div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+
+         <!-- --- v3.1.3 修正: 並排斷點改為 lg --- -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+                <h3 class="table-title">Top 10 市場熱點事件榜</h3>
+                <div class="heat-container">
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">伊朗戰事升級</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">油價風險溢價</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">外資續賣台股</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">聯準會路徑分歧</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">美債殖利率飆高</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">黃金失守避險</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">美超微治理風暴</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">歐洲能源焦慮</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">白宮統一AI監管</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">台美股開始不同步</div></div>
+                </div>
+                <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
+            </div>
+            <div>
+                <h3 class="table-title">市場關鍵時間軸</h3>
+                <div class="structured-analysis space-y-4 timeline-container">
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 08:20</span>伊以互轟能源命脈與歐洲天然氣急漲，開盤前市場先把通膨回升與供應鏈壓力重新納入定價考量之中。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 09:10</span>美方考慮釋出海上伊朗原油抑制漲勢，代表政策面開始介入油市，台股盤前情緒在緊張與期待間拉扯。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 09:35</span>早盤矽光子與塑化股雖一度帶動人氣，但外資賣壓與權值電子轉弱更快浮現，盤中主線轉回避險交易。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:10</span>新債王警告殖利率走勢已開始映照升息風險，使盤中資金不只防地緣政治，也同步下修高評價部位容忍度。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 18:12</span>外資單周累計賣超逾千六百億元，盤後最大訊號不是指數跌幅，而是外部資金持續撤出讓反彈基礎不足。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 19:50</span>能源價格拉高全球升息預期，英國長債率先創高，盤前先提醒美股今晚要同時面對油價與利率雙重壓力。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 20:30</span>AI晶片案延燒使美超微盤前重挫，代表科技股風險已從評價修正，進一步擴散到治理與法規層面上。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 21:38</span>伊朗戰事升溫拖累主要指數開低，盤中真正壓力不只是避險，而是油價衝擊讓通膨再升溫的想像升高。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:32</span>美債重挫與升息機率抬頭，使盤中交易主線從短暫避險轉成政策延後寬鬆，成長股壓力因此再被放大。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤後 05:38</span>伊拉克外資油田啟動不可抗力，盤後油市供應風險再被放大，意味下周全球資產仍難擺脫能源主導陰影。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第2章:歐美股市 -->
+    <section id="sec-2" class="section-card">
+        <h2 style="color: #dc2626;"><span style="margin-right: 0.75rem;">📈</span>第2章｜歐美股市</h2>
+
+        <div class="tldr-block" style="background: #fef2f2;">
+            <ul>
+                <li style="color: #dc2626;"><strong>油價與殖利率雙壓：</strong>美股壓力核心不只是戰事，而是油價衝高讓市場重新上修通膨與利率風險，評價自然被往下壓。</li>
+                <li style="color: #dc2626;"><strong>費半弱勢仍有相對韌性：</strong>費半今天跟著回落，但季漲幅與年初至今仍明顯優於大盤，代表AI主線尚未完全失效。</li>
+                <li style="color: #dc2626;"><strong>歐股更怕能源衝擊：</strong>歐洲市場對中東供應風險更敏感，Euro Stoxx 50跌幅大於美股，說明能源成本仍是歐股最大壓力。</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">歐美主要股市行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>歐美主要股市指數漲跌概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新收盤價</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>道瓊工業指數</td>
+                        <td><strong>45,577.47</strong></td>
+                        <td class="text-down"><strong>-0.96%</strong></td>
+                        <td class="text-down"><strong>-2.11%</strong></td>
+                        <td class="text-down"><strong>-8.16%</strong></td>
+                        <td class="text-down"><strong>-5.31%</strong></td>
+                        <td class="text-down"><strong>-5.17%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>標普500</td>
+                        <td><strong>6,506.48</strong></td>
+                        <td class="text-down"><strong>-1.51%</strong></td>
+                        <td class="text-down"><strong>-1.90%</strong></td>
+                        <td class="text-down"><strong>-5.83%</strong></td>
+                        <td class="text-down"><strong>-4.80%</strong></td>
+                        <td class="text-down"><strong>-4.95%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>那斯達克</td>
+                        <td><strong>21,647.61</strong></td>
+                        <td class="text-down"><strong>-2.01%</strong></td>
+                        <td class="text-down"><strong>-2.07%</strong></td>
+                        <td class="text-down"><strong>-5.41%</strong></td>
+                        <td class="text-down"><strong>-7.12%</strong></td>
+                        <td class="text-down"><strong>-6.86%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>費城半導體指數</td>
+                        <td><strong>7,670.61</strong></td>
+                        <td class="text-down"><strong>-2.45%</strong></td>
+                        <td class="text-up"><strong>+0.31%</strong></td>
+                        <td class="text-down"><strong>-7.14%</strong></td>
+                        <td class="text-up"><strong>+8.53%</strong></td>
+                        <td class="text-up"><strong>+8.29%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>羅素2000</td>
+                        <td><strong>2,438.45</strong></td>
+                        <td class="text-down"><strong>-2.26%</strong></td>
+                        <td class="text-down"><strong>-1.68%</strong></td>
+                        <td class="text-down"><strong>-8.46%</strong></td>
+                        <td class="text-down"><strong>-3.60%</strong></td>
+                        <td class="text-down"><strong>-1.75%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>道瓊歐洲50</td>
+                        <td><strong>5,501.28</strong></td>
+                        <td class="text-down"><strong>-2.00%</strong></td>
+                        <td class="text-down"><strong>-3.77%</strong></td>
+                        <td class="text-down"><strong>-10.28%</strong></td>
+                        <td class="text-down"><strong>-4.50%</strong></td>
+                        <td class="text-down"><strong>-5.09%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                 <p><strong>油價利率雙壓修正評價</strong>今天歐美股市真正承壓的關鍵，不只是戰事，而是油價衝高後，市場立刻把通膨與降息延後風險重新算進估值。當十年期公債殖利率同步上行，高本益比成長股最先被調節，連帶讓標普與那指跌幅擴大。後續要盯的是油價能否降溫，以及債市是否停止把聯準會路徑往更鷹方向修正。</p>
+                 <p><strong>費半轉弱仍留相對強勢</strong>雖然費半今天下跌超過兩成點數幅度不小，但若把時間拉長看，季線與年初至今表現仍遠優於道瓊、標普與那指，代表AI硬體主線沒有被徹底破壞。現在的問題不是題材消失，而是高油價與高利率讓資金先縮短持股週期。若下周半導體族群能先止穩，大盤才有機會從防禦交易轉回結構性反彈。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第3章:債券市場 -->
+    <section id="sec-3" class="section-card">
+        <h2 style="color: #2563eb;"><span style="margin-right: 0.75rem;">🏛️</span>第3章｜債券市場</h2>
+
+        <div class="tldr-block" style="background: #eff6ff;">
+            <ul>
+                <li style="color: #2563eb;"><strong>整條殖利率曲線上移：</strong>三月期到三十年期殖利率全數走高，代表市場把通膨壓力與降息延後同時反映進債券價格。</li>
+                <li style="color: #2563eb;"><strong>信用債也開始轉弱：</strong>HYG與EMB同步收跌，說明風險縮減已從公債擴散到信用債，市場防守心態明顯升高。</li>
+                <li style="color: #2563eb;"><strong>聯準會預期再被上修：</strong>戰事若持續推高能源價格，債市會更難相信聯準會能快速轉鴿，利率敏感資產壓力仍在。</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">主要債券與殖利率行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>主要債券與殖利率變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新殖利率/價格</th>
+                        <th>日變動</th>
+                        <th>五日變動</th>
+                        <th>月變動</th>
+                        <th>季變動</th>
+                        <th>年初至今變動</th>
+                    </tr>
+                </thead>
+                <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>美國3月期殖利率</td>
+                        <td><strong>3.62%</strong></td>
+                        <td class="text-up"><strong>+0.01</strong></td>
+                        <td class="text-up"><strong>+0.02</strong></td>
+                        <td class="text-up"><strong>+0.02</strong></td>
+                        <td class="text-up"><strong>+0.10</strong></td>
+                        <td class="text-up"><strong>+0.07</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國5年期殖利率</td>
+                        <td><strong>4.01%</strong></td>
+                        <td class="text-up"><strong>+0.09</strong></td>
+                        <td class="text-up"><strong>+0.14</strong></td>
+                        <td class="text-up"><strong>+0.36</strong></td>
+                        <td class="text-up"><strong>+0.32</strong></td>
+                        <td class="text-up"><strong>+0.29</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國10年期殖利率</td>
+                        <td><strong>4.39%</strong></td>
+                        <td class="text-up"><strong>+0.11</strong></td>
+                        <td class="text-up"><strong>+0.11</strong></td>
+                        <td class="text-up"><strong>+0.30</strong></td>
+                        <td class="text-up"><strong>+0.24</strong></td>
+                        <td class="text-up"><strong>+0.23</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美國30年期殖利率</td>
+                        <td><strong>4.96%</strong></td>
+                        <td class="text-up"><strong>+0.11</strong></td>
+                        <td class="text-up"><strong>+0.05</strong></td>
+                        <td class="text-up"><strong>+0.24</strong></td>
+                        <td class="text-up"><strong>+0.13</strong></td>
+                        <td class="text-up"><strong>+0.12</strong></td>
+                    </tr>
+                    <tr>
+                        <td>高收益債券ETF(HYG)</td>
+                        <td><strong>78.92</strong></td>
+                        <td class="text-down"><strong>-0.93%</strong></td>
+                        <td class="text-down"><strong>-0.35%</strong></td>
+                        <td class="text-down"><strong>-2.57%</strong></td>
+                        <td class="text-down"><strong>-1.79%</strong></td>
+                        <td class="text-down"><strong>-2.12%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>新興市場美元債ETF(EMB)</td>
+                        <td><strong>93.15</strong></td>
+                        <td class="text-down"><strong>-1.56%</strong></td>
+                        <td class="text-down"><strong>-1.30%</strong></td>
+                        <td class="text-down"><strong>-4.61%</strong></td>
+                        <td class="text-down"><strong>-3.24%</strong></td>
+                        <td class="text-down"><strong>-3.25%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>通膨重估推升整條曲線</strong>債市今天最清楚的訊號，就是從三月期到三十年期殖利率全線上升，顯示市場不再把油價上漲只當成短暫事件，而是開始重估它對通膨與政策路徑的影響。五年與十年期升幅尤其明顯，代表中期利率預期被往上修。只要能源風險沒有降溫，債券市場就很難重新交易快速降息的劇本。</p>
+                <p><strong>信用債走弱風險開始外溢</strong>和前幾天相比，今天更值得注意的是高收益債與新興市場美元債同步轉弱，代表市場防禦不只停留在公債殖利率上行，而是開始擔心融資條件與風險溢酬一起擴大。這種走法通常意味資金正在降低整體風險曝險。接下來若HYG與EMB無法先止跌，股市壓力往往也不容易單靠題材股自行化解。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第4章:大宗商品 -->
+    <section id="sec-4" class="section-card">
+        <h2 style="color: #cc4e01;"><span style="margin-right: 0.75rem;">🔥</span>第4章｜大宗商品</h2>
+
+        <div class="tldr-block" style="background: #fffbeb;">
+            <ul>
+                <li style="color: #cc4e01;"><strong>供應風險仍撐油價：</strong>WTI續漲顯示供應中斷風險仍在，即使布蘭特回吐部分漲幅，油市主線仍是中東局勢。</li>
+                <li style="color: #cc4e01;"><strong>黃金失去避險光環：</strong>在風險事件升溫下金價反而下跌，代表市場先處理流動性與利率壓力，而非單純追逐避險資產。</li>
+                <li style="color: #cc4e01;"><strong>工業金屬先反映降溫：</strong>DBB續跌說明市場已開始擔心高油價若拖太久，製造業與景氣動能都會先受到壓抑。</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">能源與商品市場行情</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>能源與商品市場價格變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新價格</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>WTI原油</td>
+                        <td><strong>98.09</strong></td>
+                        <td class="text-up"><strong>+2.03%</strong></td>
+                        <td class="text-down"><strong>-0.63%</strong></td>
+                        <td class="text-up"><strong>+47.75%</strong></td>
+                        <td class="text-up"><strong>+73.12%</strong></td>
+                        <td class="text-up"><strong>+70.83%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>布蘭特原油</td>
+                        <td><strong>106.77</strong></td>
+                        <td class="text-down"><strong>-1.73%</strong></td>
+                        <td class="text-up"><strong>+3.52%</strong></td>
+                        <td class="text-up"><strong>+48.79%</strong></td>
+                        <td class="text-up"><strong>+76.57%</strong></td>
+                        <td class="text-up"><strong>+75.46%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>黃金期貨</td>
+                        <td><strong>4,492.00</strong></td>
+                        <td class="text-down"><strong>-2.36%</strong></td>
+                        <td class="text-down"><strong>-11.09%</strong></td>
+                        <td class="text-down"><strong>-11.21%</strong></td>
+                        <td class="text-up"><strong>+2.99%</strong></td>
+                        <td class="text-up"><strong>+3.85%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>基礎金屬ETF (DBB)</td>
+                        <td><strong>22.34</strong></td>
+                        <td class="text-down"><strong>-2.66%</strong></td>
+                        <td class="text-down"><strong>-6.06%</strong></td>
+                        <td class="text-down"><strong>-6.21%</strong></td>
+                        <td class="text-down"><strong>-1.33%</strong></td>
+                        <td class="text-down"><strong>-2.62%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>原油仍是全市場主導變數</strong>今天商品市場的核心不是單看收盤漲跌，而是原油仍主導了其他資產的情緒。WTI續漲顯示供應風險沒有解除，布蘭特雖回吐日內漲幅，也只是反映部分獲利了結而非主線反轉。只要荷姆茲海峽與中東油氣設施風險還在，油價就會持續影響股票估值、債市利率與匯市避險需求，短線不易改變。</p>
+                <p><strong>黃金轉弱凸顯避險背離</strong>最值得注意的背離，是在戰事升溫情境下，黃金沒有跟著強勢走高，反而和基礎金屬一起回落。這通常代表市場此刻更在意真實利率、美元流動性與部位調整，而不是單純堆高避險資產。若金價後續仍無法快速站回強勢，代表避險資金並未全面回流，市場修正就可能延續得比預期更久。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第5章:台股解析 -->
+    <section id="sec-5" class="section-card">
+        <h2 style="color: #059669;"><span style="margin-right: 0.75rem;">🗻</span>第5章｜台股解析</h2>
+
+        <div class="tldr-block" style="background: #f0fdf4;">
+            <ul>
+                <li style="color: #059669;"><strong>外資續賣壓住反彈：</strong>台股只小跌不代表壓力小，真正的問題是外資單日與單周都維持大幅賣超，籌碼面仍偏弱。</li>
+                <li style="color: #059669;"><strong>韓印逆勢形成對比：</strong>今天亞洲股市不是全面下跌，韓國與印度逆勢收紅，更凸顯台股與港股仍受外資與權值股拖累。</li>
+                <li style="color: #059669;"><strong>內資承接仍嫌不足：</strong>投信雖持續買超，但力道仍不足以抵消外資與自營商同步站在賣方帶來的壓力。</li>
+            </ul>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>亞洲主要股市指數漲跌概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新收盤價</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>台灣加權指數</td>
+                        <td><strong>33,543.88</strong></td>
+                        <td class="text-down"><strong>-0.43%</strong></td>
+                        <td class="text-up"><strong>+0.43%</strong></td>
+                        <td class="text-down"><strong>-0.18%</strong></td>
+                        <td class="text-up"><strong>+21.11%</strong></td>
+                        <td class="text-up"><strong>+15.81%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>日經225</td>
+                        <td><strong>休市</strong></td>
+                        <td class="text-down"><strong>-3.38%</strong></td>
+                        <td class="text-down"><strong>-1.98%</strong></td>
+                        <td class="text-down"><strong>-7.13%</strong></td>
+                        <td class="text-up"><strong>+7.81%</strong></td>
+                        <td class="text-up"><strong>+6.03%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>香港恆生指數</td>
+                        <td><strong>25,277.32</strong></td>
+                        <td class="text-down"><strong>-0.88%</strong></td>
+                        <td class="text-down"><strong>-0.74%</strong></td>
+                        <td class="text-down"><strong>-4.30%</strong></td>
+                        <td class="text-down"><strong>-1.61%</strong></td>
+                        <td class="text-down"><strong>-1.38%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>韓國KOSPI</td>
+                        <td><strong>5,781.20</strong></td>
+                        <td class="text-up"><strong>+0.31%</strong></td>
+                        <td class="text-up"><strong>+5.36%</strong></td>
+                        <td class="text-down"><strong>-0.47%</strong></td>
+                        <td class="text-up"><strong>+43.79%</strong></td>
+                        <td class="text-up"><strong>+37.18%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>印度SENSEX</td>
+                        <td><strong>74,532.96</strong></td>
+                        <td class="text-up"><strong>+0.44%</strong></td>
+                        <td class="text-down"><strong>-0.04%</strong></td>
+                        <td class="text-down"><strong>-10.00%</strong></td>
+                        <td class="text-down"><strong>-12.24%</strong></td>
+                        <td class="text-down"><strong>-12.51%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+
+        <h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-03-20)</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>台股三大法人買賣超統計</caption>
+                <thead>
+                    <tr>
+                        <th>法人別</th>
+                        <th>當日淨額(億)</th>
+                        <th>5日累計(億)</th>
+                        <th>20日累計(億)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>外資</td>
+                        <td class="text-down"><strong>-399.86</strong></td>
+                        <td class="text-down"><strong>-1651.03</strong></td>
+                        <td class="text-down"><strong>-5657.51</strong></td>
+                    </tr>
+                    <tr>
+                        <td>投信</td>
+                        <td class="text-up"><strong>+12.77</strong></td>
+                        <td class="text-up"><strong>+5.26</strong></td>
+                        <td class="text-up"><strong>+816.74</strong></td>
+                    </tr>
+                    <tr>
+                        <td>自營商</td>
+                        <td class="text-down"><strong>-101.05</strong></td>
+                        <td class="text-down"><strong>-59.17</strong></td>
+                        <td class="text-down"><strong>-1628.94</strong></td>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>總計</td>
+                        <td class="text-down"><strong>-488.14</strong></td>
+                        <td class="text-down"><strong>-1704.94</strong></td>
+                        <td class="text-down"><strong>-6469.71</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 交易所資料整理</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>外資賣壓壓住權值反彈</strong>台股今天跌幅不算極端，但盤面真正偏弱的地方在於外資賣壓沒有停。當外資單日賣超接近四百億元、單周賣超累積逾千六百億元時，權值股就很難形成有力反彈，指數也容易反覆測試支撐。這種情況下，內資只能撐住局部族群，無法快速扭轉整體結構，後續仍要先看外資賣壓是否收斂。</p>
+                <p><strong>亞股分化提醒台股內傷</strong>今天亞洲股市呈現分化，韓國與印度收紅，台股與港股則偏弱，這代表外部風險雖然一致，但各市場的籌碼結構與產業權重差異開始放大。台股問題不只是跟跌美股，更是高權重電子與外資部位調整同步出現。若接下來台幣無法轉強、權值股又缺乏領漲族群，台股反彈多半仍先視為區間修復。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第6章:匯率市場 -->
+    <section id="sec-6" class="section-card">
+        <h2 style="color: #0891b2;"><span style="margin-right: 0.75rem;">💱</span>第6章｜匯率市場</h2>
+
+        <div class="tldr-block" style="background: #ecfeff;">
+            <ul>
+                <li style="color: #0891b2;"><strong>美元指數小幅走升：</strong>美元指數續升反映市場仍把能源風險與高利率視為支撐美元的重要條件。</li>
+                <li style="color: #0891b2;"><strong>亞幣沒有全面轉弱：</strong>美元兌台幣與美元兌日圓都沒有同步大幅上行，顯示亞洲匯市仍有各自的政策與部位因素。</li>
+                <li style="color: #0891b2;"><strong>主要貨幣反應分裂：</strong>匯市現在不是單一方向交易，美元、歐元、日圓與台幣的反應明顯分化，代表波動還會放大。</li>
+            </ul>
+        </div>
+
+        <h3 class="table-title">主要貨幣兌美元匯率</h3>
+        <div class="overflow-x-auto">
+            <table class="table-styled">
+                <caption>主要貨幣兌美元匯率變動概覽</caption>
+                <thead>
+                    <tr>
+                        <th>指標名稱</th>
+                        <th>最新匯率</th>
+                        <th>日漲跌</th>
+                        <th>五日漲跌</th>
+                        <th>月漲跌</th>
+                        <th>季漲跌</th>
+                        <th>年初至今</th>
+                    </tr>
+                </thead>
+                 <!-- --- v3.1.2 修正: 補齊表格行佔位符 --- -->
+                <tbody>
+                    <tr>
+                        <td>美元指數</td>
+                        <td><strong>99.50</strong></td>
+                        <td class="text-up"><strong>+0.27%</strong></td>
+                        <td class="text-down"><strong>-0.85%</strong></td>
+                        <td class="text-up"><strong>+1.74%</strong></td>
+                        <td class="text-up"><strong>+0.92%</strong></td>
+                        <td class="text-up"><strong>+1.24%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美元兌台幣</td>
+                        <td><strong>32.0140</strong></td>
+                        <td class="text-down"><strong>-0.05%</strong></td>
+                        <td class="text-up"><strong>+0.37%</strong></td>
+                        <td class="text-up"><strong>+1.38%</strong></td>
+                        <td class="text-up"><strong>+1.59%</strong></td>
+                        <td class="text-up"><strong>+2.47%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>歐元兌美元</td>
+                        <td><strong>1.1575</strong></td>
+                        <td class="text-up"><strong>+0.97%</strong></td>
+                        <td class="text-up"><strong>+0.47%</strong></td>
+                        <td class="text-down"><strong>-1.65%</strong></td>
+                        <td class="text-down"><strong>-1.28%</strong></td>
+                        <td class="text-down"><strong>-1.46%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>美元兌日圓</td>
+                        <td><strong>159.2200</strong></td>
+                        <td class="text-down"><strong>-0.36%</strong></td>
+                        <td class="text-up"><strong>+0.01%</strong></td>
+                        <td class="text-up"><strong>+2.62%</strong></td>
+                        <td class="text-up"><strong>+2.34%</strong></td>
+                        <td class="text-up"><strong>+1.79%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+
+        <!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+        <div class="analysis-block">
+            <h4>深度分析:</h4>
+            <div class="structured-analysis">
+                <p><strong>美元小升但匯市反應分裂</strong>美元指數今天續升，代表市場仍把能源風險與較高利率視為美元的基本支撐，但從主要貨幣表現來看，匯市反應並不一致。美元兌台幣與美元兌日圓都沒有同步大幅走強，說明各地資金流與政策預期正互相抵銷。這種分裂走法通常意味匯市還在尋找新平衡，短線波動可能比單邊趨勢更值得注意。</p>
+                <p><strong>日圓與台幣先守住防線</strong>在美元仍偏強的大環境下，日圓與台幣沒有明顯失守，反而先守住一部分防線，這點對亞洲資產其實很重要。因為只要匯率沒有出現恐慌式貶值，外資撤出的速度通常就不會進一步失控。不過這並不代表壓力解除，若油價續漲、殖利率再上行，美元仍有機會重新主導方向，亞幣屆時會再受測試。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- v3.1.9 替換: 整個第7章區塊使用 v2.8 格式 --- -->
+    <!-- --- v3.1.10 修正: 將 [買進] 改為 [看多], [賣出] 改為 [看空], class buy -> bullish, sell -> bearish --- -->
+    <section id="sec-7" class="section-card">
+        <h2 style="color: #7c3aed;">
+            <span style="margin-right: 0.75rem;">🏭</span>第7章｜產業多空展望
+        </h2>
+
+        <!-- TL;DR -->
+        <div class="tldr-block" style="background: #faf5ff;">
+            <ul>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> 整合能源股可把供應風險直接轉成現金流，震盪盤裡相對容易獲得資金青睞。</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> AI基礎設施雖受高利率干擾，但資本支出與政策支持仍讓主線沒有完全失效。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 伺服器硬體若疊加治理與法規風險，修正速度往往會比大盤更快。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 數位廣告平台面對景氣保守與競爭升高，短線難靠題材單獨扭轉評價下修。</li>
+            </ul>
+        </div>
+
+        <!-- 看多推薦第一檔 -->
+        <div class="stock-recommendation bullish">
+            <h3 class="recommendation-title bullish">[看多]:整合能源 (以Shell為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">主線邏輯</td>
+                            <td>中東供應風險墊高油氣價格波動，整合能源龍頭能直接把風險溢價轉成現金流與股東回饋能力。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">催化因素</td>
+                            <td>當天新聞已有法人上修殼牌每股盈餘預估與目標價，代表市場對獲利延續性仍維持正向解讀。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">風險觀察</td>
+                            <td>若戰事快速降溫、油價大幅回吐，整合能源股的短線相對優勢會先收斂，但防禦屬性仍在。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-SHEL/financials-overview/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                重點在於油價風險溢價有機會轉成上游獲利與自由現金流，評價不必靠高本夢比支撐。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-SHEL/technicals/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                若市場持續偏防禦，能源股通常較容易守住均線結構；但若油價急跌，短線也會同步回檔。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>高油價最先受惠的是現金流確定性</strong><br>Shell 的優勢不在短線題材，而在於當市場同時面對戰事、通膨與利率不確定時，整合能源公司能把油氣價格波動轉成更直接的獲利能見度。現在資金尋找的不是最高成長，而是能在波動環境中穩定交出現金流的產業。只要供應風險還在，這類標的在配置上就容易維持相對高權重。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看多推薦第二檔 -->
+        <div class="stock-recommendation bullish">
+            <h3 class="recommendation-title bullish">[看多]:AI晶片 (以NVIDIA為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">主線邏輯</td>
+                            <td>即使大盤受油價與利率拖累，AI算力投資與政策支持仍讓高階晶片需求沒有被明顯推翻。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">催化因素</td>
+                            <td>當天新聞仍圍繞AI稅收、機器人與政策監管，代表資本市場對AI基礎設施的關注度沒有降溫。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">風險觀察</td>
+                            <td>真正壓力在於高利率與反壟斷監管，若估值無法靠業績持續消化，股價波動會明顯放大。</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                需求主線仍是大型雲端與企業AI支出，只要資本支出沒有縮手，基本面中長線仍有支撐。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/technicals/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                短線會受那指與利率波動影響，但若能先守住關鍵均線，通常代表主線資金尚未全面撤出。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>AI主線變慢但沒有被終止</strong><br>NVIDIA 今天面對的不是需求消失，而是市場在高油價與高利率環境下，暫時降低對高估值成長股的容忍度。這和主線結束是兩件事。只要企業端AI投資與資料中心建置沒有明顯縮手，股價修正更像是估值壓縮而非基本面翻空。後續關鍵是能不能再用訂單與資本支出證明成長仍在延續。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看空推薦第一檔 -->
+        <div class="stock-recommendation bearish">
+            <h3 class="recommendation-title bearish">[看空]:伺服器硬體 (以Super Micro Computer為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">主線壓力</td>
+                            <td>當市場已對AI硬體給出高估值時，任何治理、法規或會計疑慮都可能放大成股價快速修正。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">負面催化</td>
+                            <td>當天新聞點名共同創辦人遭起訴並辭任董事，加上盤前重挫，代表風險已由基本面擴散到治理層面。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">風險觀察</td>
+                            <td>若公司無法快速釐清事件影響，市場會先提高折價率，短線很難只靠AI題材自動修復。</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-SMCI/financials-overview/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                估值建立在高速成長與執行力上，一旦治理雜訊升高，市場通常先下修倍數而非耐心等待。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-SMCI/technicals/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                事件性跳空下跌最怕後續無法回補缺口，代表賣壓已從情緒擴大到結構性撤退。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                 <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>治理風險會先摧毀高估值信心</strong><br>Super Micro Computer 最大問題不是單一新聞，而是高估值成長股最怕治理風險突然浮上檯面。當市場本來就因利率與油價轉向保守時，任何法規或管理層事件都會讓資金更快撤出。這類股票要止穩，通常不是只看題材還在不在，而是要先看到公司把風險說清楚、把市場信心重新建立起來。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 看空推薦第二檔 -->
+        <div class="stock-recommendation bearish">
+            <h3 class="recommendation-title bearish">[看空]:數位廣告平台 (以Snap為例)</h3>
+
+            <div class="overflow-x-auto">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>分析維度</th>
+                            <th>觀點與數據</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold text-slate-600">主線壓力</td>
+                            <td>景氣保守、廣告主縮手與平台競爭升高時，數位廣告公司往往最先反映預算下修壓力。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">負面催化</td>
+                            <td>當天新聞顯示分析師同步調降目標價，代表市場對成長與獲利改善速度的信心持續下修。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">風險觀察</td>
+                            <td>即使技術指標出現超賣，也只代表跌深反彈可能增加，不等於基本面壓力已經解除。</td>
+                        </tr>
+                         <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-SNAP/financials-overview/" target="_blank" class="link-button fundamental">
+                                    基本面
+                                    <span class="link-button-subtitle">按此看財務數據</span>
+                                </a>
+                            </td>
+                            <td>
+                                若廣告景氣未明顯回升，收入成長與獲利槓桿都會受限，評價回升空間自然有限。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-SNAP/technicals/" target="_blank" class="link-button technical">
+                                    技術面
+                                    <span class="link-button-subtitle">按此看技術圖表</span>
+                                </a>
+                            </td>
+                            <td>
+                                股價腰斬後確實可能出現技術性反彈，但若無法收復主要均線，仍偏向弱勢整理格局。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+
+            <div class="analysis-block">
+                <h4>深度分析:</h4>
+                <div class="structured-analysis">
+                    <p><strong>跌深不代表壓力已經出清</strong><br>Snap 這類股票最容易讓市場誤以為跌深就是機會，但真正關鍵仍在廣告預算與競爭環境能否改善。當分析師連目標價都同步下修，代表疑慮不是短線情緒，而是對未來幾季成長力的再評價。若總體環境繼續偏保守，超賣訊號頂多提供短線喘息，還不足以支撐中期趨勢反轉。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 頁尾 -->
+    <footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+        <p class="text-xs" style="color: #64748b;">© 2025 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+        <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享,不構成任何投資建議,投資人應秉持獨立判斷,審慎評估並自負投資風險。</p>
+    </footer>
+
+</div>
+
+<!-- 回頂按鈕 -->
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
+
+<script>
+// 進度條功能
+function updateProgressBar() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById("progressBar");
+    if (progressBar) { // Check if progressBar exists
+        progressBar.style.width = scrolled + "%";
+        // Show progress bar only when scrolling starts
+        progressBar.style.opacity = scrolled > 0 ? "1" : "0";
+    }
+}
+window.onscroll = function() { updateProgressBar(); };
+
+
+// --- 穩健性: 確保 DOM 載入後才綁定事件 ---
+window.addEventListener('load', function() {
+
+    // 智能下載功能
+    const smartDownloadBtn = document.getElementById('smartDownloadBtn');
+    if (smartDownloadBtn) {
+        smartDownloadBtn.addEventListener('click', function() {
+            const element = document.createElement('a');
+            // --- v3.1.8 Use placeholder for date string ---
+            const dateStr = '20260320'; // Use placeholder
+            // CRITICAL: Download filename MUST be in 'yyyymmdd.html' format.
+            const filename = dateStr + '.html'; // 強制要求 yyyymmdd.html 格式
+
+            // Temporarily hide elements that shouldn't be in the downloaded file
+            const progressBar = document.getElementById('progressBar');
+            const backToTopButton = document.querySelector('.back-to-top');
+            const originalProgressBarStyle = progressBar ? progressBar.style.display : '';
+            const originalBackToTopStyle = backToTopButton ? backToTopButton.style.display : '';
+
+            if (progressBar) progressBar.style.display = 'none';
+            if (backToTopButton) backToTopButton.style.display = 'none';
+
+            // Get the HTML content AFTER hiding elements
+            const content = document.documentElement.outerHTML;
+
+            // Restore elements
+            if (progressBar) progressBar.style.display = originalProgressBarStyle;
+            if (backToTopButton) backToTopButton.style.display = originalBackToTopStyle;
+
+
+            const file = new Blob([content], {type: 'text/html;charset=utf-8'});
+            element.href = URL.createObjectURL(file);
+            element.download = filename; // Use dynamic filename
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            URL.revokeObjectURL(element.href);
+        });
+    } // end if(smartDownloadBtn)
+
+    // 平滑滾動導航
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = 120; // Adjusted offset for sticky nav
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = target.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 載入完成後隱藏進度條 (fade out effect)
+    const progressBar = document.getElementById("progressBar");
+     if (progressBar) { // Check if progressBar exists
+        progressBar.style.transition = 'opacity 0.5s ease-out'; // Add fade out transition
+        setTimeout(function() {
+            progressBar.style.opacity = "0";
+        }, 500); // Start fade out after 500ms
+     }
+}); // end window.load
+</script>
+
+
+<script>
+/* ── 外部連結修復腳本 ──────────────────────────────────────────
+   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入一段 JS，
+   攔截所有連結點擊並改用 postMessage 通知父框架開啟外部連結。
+   在 Claude.ai 以外的環境（Netlify、本機瀏覽器等），
+   父框架不存在，外部連結會因此完全失效。
+   本腳本在 DOMContentLoaded 後重新接管連結行為，
+   對外部連結直接呼叫 window.open，繞過注入代碼的攔截。
+──────────────────────────────────────────────────────────────── */
+(function() {
+  function fixExternalLinks() {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#')) return;  // 跳過頁內錨點
+      // 移除舊的 click listeners 無法做到，改用 capture 模式搶先處理
+    });
+  }
+
+  // 用 capture 模式（第三個參數 true）在注入代碼之前攔截
+  document.addEventListener('click', function(event) {
+    var el = event.target;
+    if (!(el instanceof HTMLElement)) return;
+    var linkEl = el.closest('a');
+    if (!linkEl) return;
+
+    var href = linkEl.getAttribute('href');
+    if (!href || href.startsWith('#')) return;  // 頁內跳轉放行
+
+    // 判斷是否為外部連結
+    try {
+      var url = new URL(href, window.location.href);
+      if (url.hostname !== window.location.hostname) {
+        // 外部連結：阻止注入代碼的 postMessage 邏輯，直接開新分頁
+        event.stopImmediatePropagation();
+        window.open(href, '_blank', 'noopener,noreferrer');
+      }
+    } catch(e) {}
+  }, true);  // ← true = capture 模式，比 bubble 模式更早執行
+})();
+</script>
+
+</body>
+</html>
+
