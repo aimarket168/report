@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合庫投信 內部控制制度修訂比較分析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600&display=swap');
+
+  :root {
+    --gold: #B8860B;
+    --gold-light: #DAA520;
+    --gold-pale: #FFF8E1;
+    --navy: #0D2444;
+    --navy-mid: #1B3A6B;
+    --navy-light: #E8EEF7;
+    --green: #1A6B3C;
+    --green-light: #E8F5EE;
+    --red: #8B1A1A;
+    --red-light: #FDF0F0;
+    --slate: #4A5568;
+    --border: #D4C9A0;
+    --bg: #FAFAF7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--bg);
+    color: #2D2D2D;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #2A5298 100%);
+    color: white;
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 2px solid rgba(218,165,32,0.3);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(218,165,32,0.2);
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    position: relative; z-index: 1;
+  }
+  .header-sub {
+    font-size: 14px;
+    opacity: 0.8;
+    position: relative; z-index: 1;
+  }
+  .header-meta {
+    margin-top: 24px;
+    display: flex;
+    gap: 32px;
+    position: relative; z-index: 1;
+  }
+  .header-meta-item {
+    font-size: 13px;
+    opacity: 0.9;
+  }
+  .header-meta-item span {
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  /* ── CONTENT ── */
+  .content { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 14px;
+    margin: 48px 0 20px;
+  }
+  .section-title.first { margin-top: 40px; }
+
+  /* ── OVERVIEW CARDS ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .overview-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+  .overview-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .overview-card .label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--slate);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .overview-card .value {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .overview-card .desc {
+    font-size: 12px;
+    color: var(--slate);
+    margin-top: 6px;
+  }
+  .overview-card.highlight {
+    border-color: var(--gold);
+    background: var(--gold-pale);
+  }
+  .overview-card.highlight .value { color: var(--gold); }
+
+  /* ── BIG CHANGE BOX ── */
+  .big-change {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .big-change-header {
+    background: var(--navy);
+    color: white;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .change-badge {
+    background: var(--gold);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .change-badge.new { background: var(--green); }
+  .change-badge.modified { background: #6B4E14; }
+  .change-badge.structural { background: #4A1A8B; }
+
+  /* ── CYCLE COMPARISON ── */
+  .cycle-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .cycle-col {
+    padding: 24px;
+  }
+  .cycle-col:first-child {
+    border-right: 1px solid var(--border);
+    background: #F5F5F5;
+  }
+  .cycle-col-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cycle-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #E0E0E0;
+    font-size: 13px;
+  }
+  .cycle-item:last-child { border-bottom: none; }
+  .cycle-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--navy-light);
+    color: var(--navy);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .cycle-num.gone {
+    background: #F5E0E0;
+    color: var(--red);
+    text-decoration: line-through;
+  }
+  .cycle-num.new-cycle {
+    background: var(--green-light);
+    color: var(--green);
+  }
+  .cycle-name { line-height: 1.4; }
+  .cycle-code {
+    font-size: 10px;
+    color: var(--slate);
+    font-family: monospace;
+  }
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+    font-size: 22px;
+    color: var(--gold);
+    background: white;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+  }
+  .moved-tag {
+    font-size: 10px;
+    background: #E8D5F5;
+    color: #5A1A8B;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .cmp-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmp-table th:first-child { background: #F5F0E8; color: var(--navy); width: 18%; }
+  .cmp-table th:nth-child(2) { background: #EBEDF5; color: #6B4A8B; width: 32%; }
+  .cmp-table th:nth-child(3) { background: #E8EEF7; color: var(--navy); width: 32%; }
+  .cmp-table th:last-child { background: #F0F5F0; color: var(--green); width: 18%; }
+
+  .cmp-table td {
+    padding: 12px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid #F0EDE6;
+    line-height: 1.6;
+  }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr:nth-child(even) td { background: #FCFBF9; }
+
+  .cmp-table .section-label {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 12px;
+  }
+  .cmp-old { color: #6B4A8B; }
+  .cmp-new { color: var(--navy); }
+  .cmp-impact { font-size: 12px; }
+
+  .diff-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .diff-tag.add { background: var(--green-light); color: var(--green); }
+  .diff-tag.del { background: var(--red-light); color: var(--red); }
+  .diff-tag.chg { background: var(--gold-pale); color: var(--gold); }
+  .diff-tag.same { background: var(--navy-light); color: var(--navy); }
+
+  .impact-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+  }
+  .impact-tag.high { background: #FEE2E2; color: #991B1B; }
+  .impact-tag.mid { background: #FEF3C7; color: #92400E; }
+  .impact-tag.low { background: #ECFDF5; color: #065F46; }
+
+  /* ── DETAIL BOXES ── */
+  .detail-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .detail-box-title {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .code-badge {
+    background: var(--navy-light);
+    color: var(--navy);
+    font-size: 11px;
+    font-family: monospace;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .diff-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .diff-side {
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .diff-side.old-side {
+    background: #FAF5FF;
+    border: 1px solid #D8C4F0;
+    border-left: 4px solid #9B59B6;
+  }
+  .diff-side.new-side {
+    background: var(--navy-light);
+    border: 1px solid #C1D0E8;
+    border-left: 4px solid var(--navy);
+  }
+  .diff-side-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .diff-side.old-side .diff-side-label { color: #6B4A8B; }
+  .diff-side.new-side .diff-side-label { color: var(--navy); }
+
+  mark.del { background: #FFDCE0; padding: 1px 3px; border-radius: 2px; text-decoration: line-through; color: #8B1A1A; }
+  mark.ins { background: #DCFFD8; padding: 1px 3px; border-radius: 2px; color: #1A6B1A; }
+
+  /* ── SUMMARY BAR ── */
+  .summary-bar {
+    display: flex;
+    background: var(--navy);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .summary-bar-item {
+    flex: 1;
+    padding: 16px 20px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    color: white;
+  }
+  .summary-bar-item:last-child { border-right: none; }
+  .summary-bar-item .num {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Noto Serif TC', serif;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .summary-bar-item .lbl {
+    font-size: 11px;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 6px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; top: 18px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid white;
+    outline: 2px solid var(--gold);
+  }
+  .timeline-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .timeline-desc {
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    background: var(--navy-light);
+    border: 1px solid #C1D0E8;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--slate);
+    line-height: 1.8;
+    margin-top: 40px;
+  }
+  .footnote strong { color: var(--navy); }
+
+  /* ── SPECIAL BOXES ── */
+  .info-box {
+    display: flex;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .info-box.info { background: var(--navy-light); border-left: 4px solid var(--navy); }
+  .info-box.warn { background: var(--gold-pale); border-left: 4px solid var(--gold); }
+  .info-box.success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .info-box-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── TOTALS ROW ── */
+  .totals-row { display: flex; gap: 12px; margin-bottom: 24px; }
+  .total-chip {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+  }
+  .total-chip.c1 { background: #EDE9F5; color: #5A1A8B; border: 1px solid #D4C4E8; }
+  .total-chip.c2 { background: var(--green-light); color: var(--green); border: 1px solid #B0D8C0; }
+  .total-chip.c3 { background: var(--gold-pale); color: #8B6914; border: 1px solid #D4C090; }
+  .total-chip.c4 { background: var(--navy-light); color: var(--navy); border: 1px solid #B8C8E0; }
+
+  @media print {
+    body { font-size: 12px; }
+    .header { padding: 30px 40px; }
+    .content { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">機密文件 · 內部使用</div>
+  <h1>合作金庫證券投資信託股份有限公司<br>內部控制制度修訂比較分析報告</h1>
+  <div class="header-sub">本公司版本 ╳ 投信投顧公會版本 ╳ 舊版本 三方差異對照</div>
+  <div class="header-meta">
+    <div class="header-meta-item">公會函日期：<span>114年7月8日</span></div>
+    <div class="header-meta-item">本公司發函：<span>115年3月24日</span></div>
+    <div class="header-meta-item">函號：<span>合字第1150000085號</span></div>
+    <div class="header-meta-item">依據：<span>金控子公司管理辦法第4條第2項第1款第4目</span></div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- OVERVIEW CARDS -->
+<div class="section-title first">📋 修訂概況一覽</div>
+
+<div class="summary-bar">
+  <div class="summary-bar-item">
+    <div class="num">10→8</div>
+    <div class="lbl">循環數調整（壹~拾→壹~捌）</div>
+  </div>
+  <div class="summary-bar-item">
+    <div class="num">1</div>
+    <div class="lbl">全新新增章節（總則）</div>
+  </div>
+  <div class="summary-bar-item">
+    <div class="num">6+</div>
+    <div class="lbl">本公司特別調整條目</div>
+  </div>
+  <div class="summary-bar-item">
+    <div class="num">全文</div>
+    <div class="lbl">「公司」改為「本公司」</div>
+  </div>
+</div>
+
+<div class="info-box info">
+  <div class="info-box-icon">ℹ️</div>
+  <div>
+    本次修訂以投信投顧公會114年7月8日中信顧字第1140053254號函公告之「<strong>證券投資信託事業內部控制制度標準規範</strong>」為藍本，全面翻新本公司內部控制制度架構。整體而言，本公司版本在實質內容上高度比照公會版本，主要差異在於：<strong>（一）正式化公司稱謂</strong>、<strong>（二）部分條文配合本公司實際組織與法規時程調整</strong>、<strong>（三）新增總則章節</strong>。
+  </div>
+</div>
+
+<!-- STRUCTURAL CHANGE -->
+<div class="section-title">🏗️ 壹、結構性改變：循環數由十大調整為八大</div>
+
+<div class="big-change">
+  <div class="big-change-header">
+    <span>📐 控制循環架構調整</span>
+    <span class="change-badge structural">結構調整</span>
+  </div>
+  <div class="cycle-compare">
+    <div class="cycle-col">
+      <div class="cycle-col-title">🗂 舊版（十大循環）</div>
+      <div class="cycle-item"><div class="cycle-num">壹</div><div class="cycle-name">業務及收入循環<div class="cycle-code">CA-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">貳</div><div class="cycle-name">採購及付款循環<div class="cycle-code">CP-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">參</div><div class="cycle-name">薪工循環<div class="cycle-code">CW-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">肆</div><div class="cycle-name">融資循環<div class="cycle-code">CR-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">伍</div><div class="cycle-name">不動產及設備循環<div class="cycle-code">CF-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">陸</div><div class="cycle-name">投資循環<div class="cycle-code">CI-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">柒</div><div class="cycle-name">電腦作業與資訊提供<div class="cycle-code">CC-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">捌</div><div class="cycle-name">管理控制制度<div class="cycle-code">CM-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num gone">玖</div><div class="cycle-name"><mark class="del">全權委託投資業務</mark><span class="moved-tag">→ 移入壹四</span></div></div>
+      <div class="cycle-item"><div class="cycle-num gone">拾</div><div class="cycle-name"><mark class="del">兼營證券投資顧問業務</mark><span class="moved-tag">→ 移入壹八</span></div></div>
+    </div>
+    <div class="cycle-col">
+      <div class="cycle-col-title">✅ 新版（八大循環，公會版及本公司版相同）</div>
+      <div class="cycle-item"><div class="cycle-num">壹</div><div class="cycle-name">業務及收入循環（共十項作業）<div class="cycle-code">CA-20000（含全委CA-24000、投顧CA-28000）</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">貳</div><div class="cycle-name">採購及付款循環<div class="cycle-code">CP-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">參</div><div class="cycle-name">薪工循環<div class="cycle-code">CW-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">肆</div><div class="cycle-name">融資循環<div class="cycle-code">CR-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">伍</div><div class="cycle-name">不動產及設備循環<div class="cycle-code">CF-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">陸</div><div class="cycle-name">投資循環<div class="cycle-code">CI-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num">柒</div><div class="cycle-name">電腦作業與資訊提供<div class="cycle-code">CC-20000</div></div></div>
+      <div class="cycle-item"><div class="cycle-num new-cycle">捌</div><div class="cycle-name">管理控制制度（新增至20項作業）<div class="cycle-code">CM-20000（新增CM-2A至CM-2K等多項）</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="info-box warn">
+  <div class="info-box-icon">⚠️</div>
+  <div>
+    <strong>壹、業務及收入循環</strong>範圍大幅擴增：原獨立為第九循環的<strong>全權委託投資業務（CA-24000）</strong>及原第十循環的<strong>兼營投顧業務（CA-28000）</strong>，均合併納入壹大循環，並延伸至第十項作業「永續報告書之編製及申報（CA-2A000）」。
+  </div>
+</div>
+
+<!-- NEW SECTION: 總則 -->
+<div class="section-title">📖 貳、全新章節：總則（無舊版對應）</div>
+
+<div class="big-change">
+  <div class="big-change-header">
+    <span>📜 新增「總則」章節</span>
+    <span class="change-badge new">全新新增</span>
+  </div>
+  <div style="padding:24px;">
+    <div class="info-box success">
+      <div class="info-box-icon">✅</div>
+      <div>舊版內部控制制度無獨立「總則」章節。依公會標準規範要求，各投信事業訂立內部控制制度時，應於總則至少敘明以下<strong>14項事項</strong>。本公司新版制度已依此要求制定總則，內容高度比照公會版本，並加入本公司特有組織條文。</div>
+    </div>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>項次</th>
+          <th style="background:#EDE9F5;color:#5A1A8B">公會版規定內容</th>
+          <th style="background:#E8EEF7;color:#0D2444">本公司版對應內容</th>
+          <th style="background:#E8F0E8;color:#1A6B3C">差異說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="section-label">㈠ 訂定依據</td>
+          <td class="cmp-old">依據「證券投資信託及顧問法」第93條及「處理準則」等相關法規；<br><em>本標準規範依據主管機關訂定之相關法規編製而成</em></td>
+          <td class="cmp-new">同上，但明確指出「<mark class="ins">參考</mark>中華民國證券投資信託暨顧問商業同業公會所訂標準規範之內容<mark class="ins">編製而成</mark>」<br>並增列各簡稱：<mark class="ins">金融監督管理委員會：主管機關<strong>或金管會</strong></mark></td>
+          <td><span class="diff-tag chg">微幅修改</span><br>本公司版明確說明以公會規範為參考，並補充「金管會」簡稱</td>
+        </tr>
+        <tr>
+          <td class="section-label">㈡ 本標準規範之使用</td>
+          <td class="cmp-old">公會版有獨立「本標準規範之使用」說明章節，提示各投信事業可自行調整</td>
+          <td class="cmp-new"><mark class="del">本公司版無此章節</mark>（因係公司自訂制度，非供他人參考之標準規範，故省略）</td>
+          <td><span class="diff-tag del">刪除</span><br>符合公司自用制度性質</td>
+        </tr>
+        <tr>
+          <td class="section-label">㈢ 內部控制制度之訂定</td>
+          <td class="cmp-old">敘明需經董事會通過；設有審計委員會者，應經審計委員會半數以上同意</td>
+          <td class="cmp-new">本公司版敘明董事會通過要件，但因<strong>本公司非上市公司，未設審計委員會</strong>，故省略審計委員會同意條款</td>
+          <td><span class="diff-tag chg">適度調整</span><br>配合本公司組織現況</td>
+        </tr>
+        <tr>
+          <td class="section-label">㈣ 公司組織架構與部門職掌</td>
+          <td class="cmp-old">應訂定明確之內部組織架構及呈報體系，需考量公司及子公司整體營運</td>
+          <td class="cmp-new">新增：「<mark class="ins">本公司依公司章程第41條規定訂定組織規程</mark>」，並載明呈報體系、職稱、授權範圍等</td>
+          <td><span class="diff-tag add">公司特有新增</span><br>明確引用公司章程具體條款</td>
+        </tr>
+        <tr>
+          <td class="section-label">㈤～㈭<br>其餘10項</td>
+          <td class="cmp-old">包含：業務經營原則與方針、制度內容、制度設計、稽核目的、稽核範圍、稽核職能、稽核人員職責、稽核人員注意事項、自行評估、投信事業公司治理</td>
+          <td class="cmp-new">實質內容與公會版相同，文字略有調整（主詞改為「本公司」等）</td>
+          <td><span class="diff-tag same">基本一致</span><br>無實質差異</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION-BY-SECTION COMPARISON -->
+<div class="section-title">📑 參、逐章比較：本公司版 vs. 公會版</div>
+
+<div class="totals-row">
+  <div class="total-chip c1">🔵 高度一致（幾無差異）</div>
+  <div class="total-chip c3">🟡 微幅修改（稱謂或條文調整）</div>
+  <div class="total-chip c2">🟢 本公司新增（公司特有條文）</div>
+  <div class="total-chip c4">⚡ 實質差異（需特別注意）</div>
+</div>
+
+<table class="cmp-table" style="margin-bottom:24px">
+  <thead>
+    <tr>
+      <th>章節／編號</th>
+      <th>公會版（標準規範）</th>
+      <th>本公司版</th>
+      <th>差異程度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="section-label">CA-21000<br>投信基金募集作業</td>
+      <td class="cmp-old">主詞為「公司」；內容涵蓋新基金募集、信託契約修正、公開說明書更新、私募基金等四項作業</td>
+      <td class="cmp-new">主詞改為「本公司」；作業內容與公會版完全一致</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>僅稱謂差異</td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-22000<br>基金交易作業</td>
+      <td class="cmp-old">包含基金交易開戶、投資分析、投資決策、投資執行、投資檢討、特殊情形、投資委員會職責、電腦控管、ESG投資、股東會出席、基金報告申報、NAV計算等12項子作業</td>
+      <td class="cmp-new">內容完全比照公會版，主詞改為「本公司」；<br>CA-22190（ESG投資）另標注「<mark class="ins">此節業經114年9月9日董事會審議通過</mark>」</td>
+      <td><span class="diff-tag chg">🟡 微幅修改</span><br>增加董事會審議日期標注</td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-23000<br>投信基金事務處理作業</td>
+      <td class="cmp-old">包含受益人帳戶管理、基金收益分配、申購、買回、受益憑證、受益人會議、短線交易防制、銷售機構報酬管理等8項子作業</td>
+      <td class="cmp-new">內容高度比照公會版，主詞改為「本公司」</td>
+      <td><span class="diff-tag same">🔵 高度一致</span></td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-24000<br>全權委託投資業務<br><em>（原第九循環）</em></td>
+      <td class="cmp-old">公會版涵蓋業務招攬、受理申請簽約、投資決策、對帳交割、人員管理利益衝突、營業紛爭、契約變更終止等7大項</td>
+      <td class="cmp-new">本公司版內容完全比照公會版，主詞均改為「本公司」；循環編號位置已從「玖」調整至「壹四」</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>位置結構調整</td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-25000<br>境外基金總代理業務</td>
+      <td class="cmp-old">新境外基金募集銷售、廣告促銷、KYP商品評估、銷售通路管理、公告申報、投資人權利、終止代理等10項作業</td>
+      <td class="cmp-new">完全比照公會版，主詞改為「本公司」</td>
+      <td><span class="diff-tag same">🔵 高度一致</span></td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-26000<br>防制洗錢及打擊資恐</td>
+      <td class="cmp-old">主詞為「公司」：「<em>應依公司本身資產規模、地域分布、業務特點...</em>」</td>
+      <td class="cmp-new">主詞改為「本公司」：「<em>應依<mark class="ins">本公司</mark>本身資產規模、地域分布、業務特點...</em>」<br>實質內容完全一致</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>僅稱謂差異</td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-27000<br>廣告及營業活動</td>
+      <td class="cmp-old">「應以<mark class="del">公司</mark>名義為之」</td>
+      <td class="cmp-new">「應以<mark class="ins">本公司</mark>名義為之」<br>其餘內容包括與網紅合作事前/事中/事後檢核均完全一致</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>僅稱謂差異</td>
+    </tr>
+    <tr>
+      <td class="section-label">CA-28000<br>兼營投顧業務<br><em>（原第十循環）</em></td>
+      <td class="cmp-old">「<mark class="del">公司</mark>應經主管機關之許可，始得兼營投顧業務…」（全文以「公司」稱之）</td>
+      <td class="cmp-new">「<mark class="ins">本公司</mark>應經主管機關之許可，始得兼營投顧業務…」（全文以「本公司」稱之）<br>實質內容、法規引用完全一致</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>僅稱謂差異</td>
+    </tr>
+    <tr style="background:#FFFEF5">
+      <td class="section-label">CA-29000<br>個人交易管理</td>
+      <td class="cmp-old">法人董監事申報豁免規定，未明確引用113年新函令</td>
+      <td class="cmp-new">新增引用：<mark class="ins">金管會113年11月27日金管證投字第1130385818號令</mark>，明確法人董監事若未參與投資決策，得出具聲明書以替代申報</td>
+      <td><span class="diff-tag add">⚡ 實質新增</span><br>納入最新法規</td>
+    </tr>
+    <tr style="background:#FFFEF5">
+      <td class="section-label">CA-2A000<br>永續報告書之編製及申報</td>
+      <td class="cmp-old">
+        第8條：「應導入國際資安管理標準及取得資安人員國際證照」<br>
+        第9條：「應辦理溫室氣體之盤查」<br>
+        第10條：「應辦理溫室氣體盤查之確信」<br>
+        第12條：「應於每年<mark class="del">六月三十日</mark>前申報；取得第三方確信者延至<mark class="del">九月三十日</mark>」
+      </td>
+      <td class="cmp-new">
+        第8條：「依…<mark class="ins">作業辦法中規模時程之規定</mark>，導入國際資安管理標準…」<br>
+        第9條：「應依…作業辦法規定揭露…，並<mark class="ins">揭露中程及長程減碳目標與策略</mark>」<br>
+        第10條：「應依…作業辦法規定揭露溫室氣體排放之確信資訊」<br>
+        第12條：「應於每年<mark class="ins">八月三十一日</mark>前申報」（無第三方確信延期規定）
+      </td>
+      <td><span class="impact-tag high">⚡ 實質差異</span><br>申報截止日差異：<br>公會版 6/30<br>本公司版 <strong>8/31</strong></td>
+    </tr>
+    <tr>
+      <td class="section-label">貳～捌<br>（CP/CW/CR/CF/CI/CC/CM）</td>
+      <td class="cmp-old">採購付款、薪工、融資、不動產設備、投資、電腦資訊、管理控制等循環，主詞為「公司」</td>
+      <td class="cmp-new">實質內容比照公會版，主詞改為「本公司」；捌大循環（CM-20000）新增至20項作業（含CM-2A至CM-2K）</td>
+      <td><span class="diff-tag same">🔵 高度一致</span><br>CM循環作業項目增加</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- DETAIL SECTION: CA-2A000 -->
+<div class="section-title">🔍 肆、重點差異深度解析</div>
+
+<div class="detail-box">
+  <div class="detail-box-title">
+    <span class="code-badge">CA-2A000</span>
+    永續報告書之編製及申報 ── 最具實質差異之章節
+    <span class="impact-tag high">高影響</span>
+  </div>
+  <div class="diff-block">
+    <div class="diff-side old-side">
+      <div class="diff-side-label">公會版（標準規範）</div>
+      <strong>第8條</strong>：「應導入國際資安管理標準及取得資安人員國際證照或專業證照。」<br><br>
+      <strong>第9條</strong>：「應辦理溫室氣體之盤查。」<br><br>
+      <strong>第10條</strong>：「應辦理溫室氣體盤查之確信。」<br><br>
+      <strong>第12條</strong>：「應於每年 <mark class="del">六月三十日</mark> 前將永續報告書公布…；依第九條取得第三方確信者，得延至 <mark class="del">九月三十日</mark> 前完成。」
+    </div>
+    <div class="diff-side new-side">
+      <div class="diff-side-label">本公司版（草稿）</div>
+      <strong>第8條</strong>：「依中華民國證券投資信託暨顧問商業同業公會…作業辦法中 <mark class="ins">規模時程之規定</mark>，導入國際資安管理標準及取得資安人員國際證照或專業證照。」<br><br>
+      <strong>第9條</strong>：「應依…作業辦法規定揭露溫室氣體排放之盤查資訊，並 <mark class="ins">揭露中程及長程減碳目標與策略</mark>。」<br><br>
+      <strong>第10條</strong>：「應依…作業辦法規定揭露溫室氣體排放之確信資訊。」<br><br>
+      <strong>第12條</strong>：「應於每年 <mark class="ins">八月三十一日</mark> 前將永續報告書公布於本公司網站專區及向投信投顧公會申報。」（無延期規定）
+    </div>
+  </div>
+  <div class="info-box warn" style="margin-top:16px">
+    <div class="info-box-icon">📅</div>
+    <div>
+      <strong>申報截止日關鍵差異：</strong>公會版為每年 <mark class="del">6月30日</mark>（取得第三方確信可延至9月30日），本公司版調整為 <mark class="ins">8月31日</mark>，且無延期機制。此差異係配合「證券投資信託事業編製與申報永續報告書作業辦法」中針對本公司規模所訂定之時程規定，並非單純寬延，而是依據規模分級的不同適用期限。
+    </div>
+  </div>
+</div>
+
+<div class="detail-box">
+  <div class="detail-box-title">
+    <span class="code-badge">CA-29000</span>
+    個人交易管理 ── 納入最新法規
+    <span class="impact-tag mid">中影響</span>
+  </div>
+  <div class="diff-block">
+    <div class="diff-side old-side">
+      <div class="diff-side-label">公會版（標準規範）</div>
+      法人董監事申報豁免：文字較為簡略，未明確引用具體函令編號，適用範圍敘述較概括
+    </div>
+    <div class="diff-side new-side">
+      <div class="diff-side-label">本公司版（草稿）</div>
+      明確引用：「<mark class="ins">金管會113年11月27日金管證投字第1130385818號令</mark>」，針對「法人董監事未參與制定投資或交易決策，且未事先知悉非公開資訊者，得出具書面聲明書（附件A格式）及檢具關係人資料，以替代申報」提供具體實施依據
+    </div>
+  </div>
+</div>
+
+<div class="detail-box">
+  <div class="detail-box-title">
+    <span class="code-badge">全文</span>
+    稱謂統一調整：「公司」→「本公司」
+    <span class="impact-tag low">低影響（形式調整）</span>
+  </div>
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>章節</th>
+        <th>公會版稱謂</th>
+        <th>本公司版稱謂</th>
+        <th>說明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CA-27000 廣告及營業活動</td>
+        <td>「應以公司名義為之」</td>
+        <td>「應以<strong>本公司</strong>名義為之」</td>
+        <td>全章均改</td>
+      </tr>
+      <tr>
+        <td>CA-28000 兼營投顧業務</td>
+        <td>「公司應經主管機關許可」<br>「公司兼營投顧業務」</td>
+        <td>「<strong>本公司</strong>應經主管機關許可」<br>「<strong>本公司</strong>兼營投顧業務」</td>
+        <td>全章均改，共7處</td>
+      </tr>
+      <tr>
+        <td>CA-26000 防制洗錢</td>
+        <td>「公司依據…建立防制洗錢…」<br>「應依公司本身資產規模…」</td>
+        <td>「<strong>本公司</strong>依據…建立防制洗錢…」<br>「應依<strong>本公司</strong>本身資產規模…」</td>
+        <td>全章均改</td>
+      </tr>
+      <tr>
+        <td>貳～捌大循環（非壹）</td>
+        <td>「公司」</td>
+        <td>「本公司」</td>
+        <td>全文統一改稱</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- NEW ADDITIONS IN CM -->
+<div class="detail-box">
+  <div class="detail-box-title">
+    <span class="code-badge">CM-20000</span>
+    捌、管理控制制度 ── 作業項目由11項擴增至20項
+    <span class="impact-tag mid">中影響</span>
+  </div>
+  <div class="diff-block">
+    <div class="diff-side old-side">
+      <div class="diff-side-label">舊版（11項）</div>
+      CM-21000 印鑑使用管理<br>
+      CM-22000 票據領用管理<br>
+      CM-23000 負債承諾及或有事項管理<br>
+      CM-24000 財產管理<br>
+      CM-25000 內部財務及營業資訊管理<br>
+      CM-26000 職務授權制度<br>
+      CM-27000 會計及出納作業管理<br>
+      CM-28000 薪資報酬委員會<br>
+      CM-29000 審計委員會議事<br>
+      CM-2A000 辦理金融機構間資料共享<br>
+      CM-2B000 作業委託他人處理管理
+    </div>
+    <div class="diff-side new-side">
+      <div class="diff-side-label">新版（20項，新增9項標示★）</div>
+      CM-21000 印鑑使用管理<br>
+      CM-22000 票據領用管理<br>
+      CM-23000 負債承諾及或有事項管理<br>
+      CM-24000 財產管理<br>
+      CM-25000 內部財務及營業資訊管理<br>
+      CM-26000 職務授權制度<br>
+      CM-27000 會計及出納作業管理<br>
+      CM-28000 薪資報酬委員會<br>
+      CM-29000 審計委員會議事<br>
+      CM-2A000 辦理金融機構間資料共享<br>
+      CM-2B000 作業委託他人處理管理<br>
+      <mark class="ins">★ CM-2C000 重大偶發事件處理及通報</mark><br>
+      <mark class="ins">★ CM-2D000 資通安全事件通報應變機制</mark><br>
+      <mark class="ins">★ CM-2E000 對子公司之監理</mark><br>
+      <mark class="ins">★ CM-2F000 關係人交易之管理</mark><br>
+      <mark class="ins">★ CM-2G000 法令遵循制度</mark><br>
+      <mark class="ins">★ CM-2H000 檢舉制度</mark><br>
+      <mark class="ins">★ CM-2I000 董事會議事運作管理</mark><br>
+      <mark class="ins">★ CM-2J000 金融檢查報告管理</mark><br>
+      <mark class="ins">★ CM-2K000 防範內線交易管理</mark>
+    </div>
+  </div>
+  <div class="info-box info" style="margin-top:14px">
+    <div class="info-box-icon">ℹ️</div>
+    <div>CM-2E000（對子公司之監理）、CM-28000（薪資報酬委員會）及CM-29000（審計委員會）等項目，因<strong>本公司未設立子公司，且非股票公開發行公司</strong>，故於本公司版本中載明「此章不適用，僅保留編號與作業項目名稱」。</div>
+  </div>
+</div>
+
+<!-- SUBMISSION TIMELINE -->
+<div class="section-title">📅 伍、修訂推進時程</div>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">114年7月8日</div>
+    <div class="timeline-title">投信投顧公會發布標準規範</div>
+    <div class="timeline-desc">投信投顧公會以中信顧字第1140053254號函公告「證券投資信託事業內部控制制度標準規範」，要求各投信事業依此修訂。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">115年3月24日</div>
+    <div class="timeline-title">本公司報請金控審核</div>
+    <div class="timeline-desc">以合字第1150000085號函（急件）向合作金庫金融控股股份有限公司檢陳內控修正說明及修正後內容草稿，請求鑒核。奉核准後，再續提報本公司董事會審議。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">115年度（預計）</div>
+    <div class="timeline-title">分次提報董事會審議（4次）</div>
+    <div class="timeline-desc">本年度預計召開4次董事會（6月18日、7月23日、9月17日、11月26日），每次提報2項控制作業修正案，8項循環預計年底前全數完成。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">115年底</div>
+    <div class="timeline-title">完成全面修訂</div>
+    <div class="timeline-desc">所有捌大循環之控制作業修正案預計全數完成董事會審議，完成本公司內部控制制度之全面翻新。</div>
+  </div>
+</div>
+
+<!-- SUMMARY TABLE -->
+<div class="section-title">📊 陸、差異彙整速覽表</div>
+
+<table class="cmp-table">
+  <thead>
+    <tr>
+      <th>差異類型</th>
+      <th>公會版內容</th>
+      <th>本公司版內容</th>
+      <th>影響程度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>整體架構</strong></td>
+      <td>十大循環（含全委及投顧獨立成循環）</td>
+      <td>八大循環（全委、投顧納入壹循環）</td>
+      <td><span class="impact-tag high">結構性</span></td>
+    </tr>
+    <tr>
+      <td><strong>總則</strong></td>
+      <td>有標準規範說明，並提示投信事業自訂</td>
+      <td>全新制定14項內容，加入公司章程第41條引用</td>
+      <td><span class="impact-tag high">全新章節</span></td>
+    </tr>
+    <tr>
+      <td><strong>稱謂</strong></td>
+      <td>全文稱「公司」</td>
+      <td>全文改稱「本公司」</td>
+      <td><span class="impact-tag low">形式調整</span></td>
+    </tr>
+    <tr>
+      <td><strong>金管會簡稱</strong></td>
+      <td>「金融監督管理委員會：主管機關」</td>
+      <td>「金融監督管理委員會：主管機關<strong>或金管會</strong>」</td>
+      <td><span class="impact-tag low">微幅新增</span></td>
+    </tr>
+    <tr>
+      <td><strong>CA-2A000<br>永續報告書申報截止</strong></td>
+      <td>每年6月30日（確信者延至9月30日）</td>
+      <td>每年<strong>8月31日</strong>（無延期機制）</td>
+      <td><span class="impact-tag high">實質差異</span></td>
+    </tr>
+    <tr>
+      <td><strong>CA-2A000<br>永續報告第8-10條</strong></td>
+      <td>原則性規定（無時程/細項引用）</td>
+      <td>引用「作業辦法中規模時程規定」，增加「中長程減碳目標」</td>
+      <td><span class="impact-tag mid">實質新增</span></td>
+    </tr>
+    <tr>
+      <td><strong>CA-29000<br>個人交易管理</strong></td>
+      <td>法人董監事豁免規定較概括</td>
+      <td>引用113年11月金管會函令，豁免條件具體化</td>
+      <td><span class="impact-tag mid">法規更新</span></td>
+    </tr>
+    <tr>
+      <td><strong>CM-20000<br>管理控制制度</strong></td>
+      <td>11項作業（CM-21000至CM-2B000）</td>
+      <td>20項作業（增加CM-2C至CM-2K等9項）</td>
+      <td><span class="impact-tag high">大幅擴增</span></td>
+    </tr>
+    <tr>
+      <td><strong>CA-22000<br>基金交易ESG節</strong></td>
+      <td>CA-22190 ESG投資風險管理</td>
+      <td>同公會版，並加注「<strong>業經114年9月9日董事會審議通過</strong>」</td>
+      <td><span class="impact-tag low">加注說明</span></td>
+    </tr>
+    <tr>
+      <td><strong>審計委員會相關條款</strong></td>
+      <td>公會版保留審計委員會相關規定</td>
+      <td>因本公司非股票公開發行公司，相關章節標注「不適用」</td>
+      <td><span class="impact-tag low">配合組織現況</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footnote">
+  <strong>資料來源：</strong>本分析依據下列文件整理而成：<br>
+  ① 中華民國證券投資信託暨顧問商業同業公會「證券投資信託事業內部控制制度標準規範」（114年7月8日公告，EB533105730000000系列文件）<br>
+  ② 合作金庫證券投資信託股份有限公司內控修正說明（稿）及各循環修正後內容（稿）（115年3月，含壹一CA-21000至捌CM-20000各章節）<br>
+  ③ 合作金庫證券投資信託股份有限公司函（合字第1150000085號，115年3月24日）<br>
+  <br>
+  <strong>備注：</strong>本報告係就現有草稿版本進行比較分析，各章節內容須以董事會正式審議通過版本為準。
+</div>
+
+</div><!-- /content -->
+</body>
+</html>
