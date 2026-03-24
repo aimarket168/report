@@ -1,10 +1,12 @@
-<html lang="zh-TW"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026-03-23（週一） 金融市場日報|洞察•解構•透視全球資產</title>
-    <meta name="description" content="2026-03-23（週一） 金融市場日報|洞察•解構•透視全球資產">
+<!DOCTYPE html>
 
-    <style>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2026-03-23（週一） 金融市場日報|洞察•解構•透視全球資產</title>
+<meta content="2026-03-23（週一） 金融市場日報|洞察•解構•透視全球資產" name="description"/>
+<style>
         /* 系統字體堆疊 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -269,37 +271,44 @@
             margin: 0;
             padding: 0.125rem 0;
             line-height: 1.4;
+             /* 字數控制由JS確保, CSS不強制 */
         }
 
+        /* --- v3.1.9 保持 v3.1.8 的深度分析格式 --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的深度分析格式 --- */
         .analysis-block {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
+            background: #fffbeb; /* 淺黃色背景 */
+            border-left: 4px solid #f59e0b; /* 琥珀色左邊框 */
             padding: 1.5rem;
             margin: 1.5rem 0;
             border-radius: 8px;
         }
-        .analysis-block h4 {
+        .analysis-block h4 { /* v2.8 "深度分析:" 標題樣式 */
             font-weight: 600;
-            color: #92400e;
+            color: #92400e; /* 深琥珀色 */
             margin-bottom: 1rem;
             font-size: 1.125rem;
         }
-        .structured-analysis p {
+        .structured-analysis p { /* v2.8 分析段落樣式 */
             line-height: 1.75;
             margin-bottom: 1rem;
         }
         .structured-analysis p:last-child {
             margin-bottom: 0;
         }
-        .structured-analysis strong {
-             display: inline;
-             margin-right: 0.5em;
-             color: #92400e;
+        .structured-analysis strong { /* v2.8 段落內粗體標題樣式 */
+             display: inline; /* 與內容同行 */
+             margin-right: 0.5em; /* 和內容稍微隔開 */
+             color: #92400e; /* 深琥珀色 */
              font-size: 1rem;
              font-weight: 700;
         }
-        .structured-analysis br { display: none; }
+         /* v2.8 不使用 br 換行 */
+         .structured-analysis br {
+            display: none;
+         }
 
+        /* 市場數據卡片 */
         .market-overview-custom { margin: 1.5rem 0; }
         .market-overview-row-1 {
             display: grid;
@@ -307,15 +316,16 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
-        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        @media (min-width: 1024px) {
+        /* --- v3.1.3 修正: 並排斷點改為 lg --- */
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } /* For Top10/Timeline */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); } /* Default for small screens */
+        @media (min-width: 1024px) { /* lg breakpoint */
           .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
         .market-overview-row-2 {
             display: grid;
-            grid-template-columns: 1fr 3fr;
+            grid-template-columns: 1fr 3fr; /* 保持1:3比例 */
             gap: 1.5rem;
         }
         .market-card-new {
@@ -324,10 +334,10 @@
             padding: 1.25rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 120px;
+            display: flex; /* 使用 Flexbox 布局 */
+            flex-direction: column; /* 垂直排列 */
+            justify-content: space-between; /* 內容均勻分布 */
+            min-height: 120px; /* 設定最小高度 */
         }
         .market-card-new:hover {
             transform: translateY(-1px);
@@ -350,13 +360,14 @@
             color: #1e293b;
             margin-bottom: 0.2rem;
         }
-         .market-card-value-new strong { font-weight: 700 !important; }
+         .market-card-value-new strong { font-weight: 700 !important; } /* 確保卡片數值加粗 */
         .market-card-change-new {
             font-size: 0.75rem;
             font-weight: 500;
-            margin-top: auto;
+            margin-top: auto; /* 將描述文字推到底部 */
         }
-         .market-card-change-new strong { font-weight: bold !important; }
+         .market-card-change-new strong { font-weight: bold !important; } /* 確保卡片漲跌幅加粗 */
+        /* 卡片漲跌顏色：相容 text-up/text-down 與省略「text-」的 up/down 兩種寫法 */
         .market-card-change-new.up,
         .market-card-change-new.text-up   { color: #dc2626; font-weight: 600; }
         .market-card-change-new.down,
@@ -364,7 +375,10 @@
         .market-card-change-new.flat,
         .market-card-change-new.text-flat { color: #6b7280; font-weight: 500; }
 
-        .analysis-table {
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章表格樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章表格樣式 --- */
+        .analysis-table { /* v2.8 style */
             width: 100%;
             border-collapse: collapse;
             background: white;
@@ -376,24 +390,24 @@
             table-layout: fixed;
         }
         .analysis-table th:first-child, .analysis-table td:first-child {
-            width: 30%;
+            width: 30%; /* v2.8 寬度 */
             padding-left: 0.75rem;
             vertical-align: top;
         }
         .analysis-table th:last-child, .analysis-table td:last-child {
-            width: 70%;
+            width: 70%; /* v2.8 寬度 */
             padding-right: 0.75rem;
             vertical-align: top;
         }
-        .analysis-table td {
+        .analysis-table td { /* v2.8 style */
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid #f1f5f9;
             word-wrap: break-word;
-            text-align: left;
-            font-weight: 400 !important;
+            text-align: left; /* v2.8 靠左對齊 */
+            font-weight: 400 !important; /* 強制非粗體 */
         }
-        .analysis-table th {
+        .analysis-table th { /* v2.8 style */
             background: #f8fafc;
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
@@ -401,9 +415,11 @@
             text-align: left;
             color: #374151;
         }
-        .analysis-table td strong { font-weight: normal !important; }
-        .analysis-table .font-semibold { font-weight: 600 !important; }
+        .analysis-table td strong { font-weight: normal !important; } /* 強制非粗體 */
+        .analysis-table .font-semibold { font-weight: 600 !important; } /* 允許維度名稱加粗 */
 
+
+        /* 個股推薦卡片 */
         .stock-recommendation {
             background: white;
             border-radius: 12px;
@@ -411,36 +427,43 @@
             margin: 2rem 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .stock-recommendation.bullish { border-left: 4px solid #059669; }
-        .stock-recommendation.bearish { border-left: 4px solid #dc2626; }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的 class name (修改買進/賣出為看多/看空) --- */
+        .stock-recommendation.bullish { border-left: 4px solid #059669; } /* 改為 bullish */
+        .stock-recommendation.bearish { border-left: 4px solid #dc2626; } /* 改為 bearish */
         .recommendation-title {
             font-size: 1.125rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
         }
-        .recommendation-title.bullish { color: #059669; }
-        .recommendation-title.bearish { color: #dc2626; }
+        /* --- v3.1.9 維持 v3.1.8 的 class name (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) の class name (修改買進/賣出為看多/看空) --- */
+        .recommendation-title.bullish { color: #059669; } /* 改為 bullish */
+        .recommendation-title.bearish { color: #dc2626; } /* 改為 bearish */
 
-        .link-button-container {
+
+        /* --- v3.1.9 維持 v3.1.8 的第7章按鈕樣式 (源自v2.8) --- */
+        /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章按鈕樣式 --- */
+        .link-button-container { /* v2.8 container */
              display: flex;
              flex-direction: column;
              gap: 0.5rem;
-             width: 100%;
-             align-items: flex-start;
+             width: 100%; /* 確保容器寬度 */
+             align-items: flex-start; /* 按鈕靠左 */
         }
-        .link-button {
-            display: block;
+        .link-button { /* v2.8 style */
+            display: block; /* 改回 block */
             padding: 0.6rem 0.8rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.2s ease;
             text-align: center;
-            width: 95%;
-            max-width: 150px;
-            margin: 0;
+            width: 95%; /* 調整寬度 */
+            max-width: 150px; /* 最大寬度 */
+            margin: 0; /* 移除 auto margin */
             font-size: 0.875rem;
-            box-sizing: border-box;
+            box-sizing: border-box; /* 包含 padding */
         }
         .link-button.fundamental { background: #2563eb; color: white; }
         .link-button.fundamental:hover { background: #1d4ed8; }
@@ -454,6 +477,8 @@
             margin-top: 0.25rem;
         }
 
+
+        /* 回頂按鈕 */
         .back-to-top {
             position: fixed;
             left: 1.5rem;
@@ -475,6 +500,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
+        /* 進度條 */
         .progress-bar {
             height: 3px;
             background: #4f46e5;
@@ -485,9 +511,11 @@
             transition: width 0.3s ease;
         }
 
+        /* 網格佈局 (通用) */
         .grid { display: grid; }
         .gap-8 { gap: 2rem; }
 
+        /* TL;DR區塊 */
         .tldr-block {
             padding: 1rem;
             border-radius: 8px;
@@ -499,10 +527,12 @@
             margin: 0;
             font-size: 1rem;
         }
+        /* --- v3.1.1 修正: 移除 max-width --- */
         .tldr-block li {
             margin: 0.75rem 0;
             padding-left: 1rem;
             position: relative;
+            /* 移除 max-width */
         }
         .tldr-block li::before {
             content: "•";
@@ -510,23 +540,28 @@
             left: 0;
             font-weight: 700;
         }
+         /* --- v3.1.10 修正: TL;DR 區塊內的 strong 標籤改為粗體 --- */
          .tldr-block li strong {
             font-weight: 700 !important;
          }
 
+        /* 響應式 */
         @media (max-width: 1024px) {
             .market-overview-row-1 { grid-template-columns: repeat(2, 1fr); }
+            /* lg斷點以下 (平板) Top10/時間軸垂直排列已由上方 grid-cols-1 處理 */
         }
         @media (max-width: 768px) {
-            .grid-cols-2, .lg\:grid-cols-2 { grid-template-columns: 1fr; }
+            .grid-cols-2, .lg\:grid-cols-2 { grid-template-columns: 1fr; } /* 手機全部垂直排列 */
             .market-overview-row-1,
             .market-overview-row-2 { grid-template-columns: 1fr; }
             .back-to-top { left: 1rem; bottom: 5rem; }
+            /* --- v3.1.9 維持 v3.1.8 的手機表格寬度 --- */
+            /* --- v3.1.10 維持 v3.1.9 (即 v2.8) 的第7章手機表格寬度 --- */
             .analysis-table th:first-child, .analysis-table td:first-child {
-                width: 40%;
+                width: 40%; /* v2.8 手機版寬度 */
             }
             .analysis-table th:last-child, .analysis-table td:last-child {
-                width: 60%;
+                width: 60%; /* v2.8 手機版寬度 */
             }
 
             .nav-content {
@@ -537,6 +572,7 @@
             .nav-links-group { gap: 0.75rem; }
         }
 
+        /* 工具類 */
         .text-center { text-align: center; }
         .text-right { text-align: right; }
         .font-semibold { font-weight: 600; }
@@ -550,405 +586,485 @@
     </style>
 </head>
 <body>
-
-<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; display: none;"></div>
-
+<!-- 進度條 -->
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
+<!-- 導覽工具列 -->
 <div class="nav-sticky">
-    <div class="nav-content">
-        <div class="nav-links-group">
-            <a href="#sec-1">市場總覽</a>
-            <a href="#sec-2">歐美股市</a>
-            <a href="#sec-3">債券市場</a>
-            <a href="#sec-4">大宗商品</a>
-            <a href="#sec-5">台股解析</a>
-            <a href="#sec-6">匯率市場</a>
-            <a href="#sec-7">產業展望</a>
-            <button class="download-btn" id="smartDownloadBtn">🔥 下載日報</button>
-        </div>
-    </div>
+<div class="nav-content">
+<div class="nav-links-group">
+<a href="#sec-1">市場總覽</a>
+<a href="#sec-2">歐美股市</a>
+<a href="#sec-3">債券市場</a>
+<a href="#sec-4">大宗商品</a>
+<a href="#sec-5">台股解析</a>
+<a href="#sec-6">匯率市場</a>
+<a href="#sec-7">產業展望</a>
+<button class="download-btn" id="smartDownloadBtn">🔥 下載日報</button>
 </div>
-
+</div>
+</div>
 <div class="container">
-
-    <header style="text-align: center; margin: 0;">
-        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026-03-23（週一） 金融市場日報</h1>
-        <p class="sub-title" style="margin: 0;">外資倒貨拖低台股　川普暫緩攻擊帶動美股與科技股反彈</p>
-    </header>
-
-    <section id="sec-1" class="section-card">
-        <h2 style="color: #015fb4;"><span style="margin-right: 0.75rem;">📋</span>第1章｜市場總覽與重點</h2>
-
-        <div class="tldr-block" style="background: #f0f9ff;">
-            <h3 class="table-title">市場三大要點</h3>
-            <ul>
-                <li style="color: #015fb4;"><strong>外資賣壓先殺台股：</strong>外資連三賣又續增台指空單，記憶體成殺盤核心，台股失守三萬三，壓力沒退。</li>
-                <li style="color: #015fb4;"><strong>美股反彈先修恐慌：</strong>川普暫緩攻擊伊朗電廠五天，三大指數止跌彈升，但風險只是往後挪而已。</li>
-                <li style="color: #015fb4;"><strong>油價回檔不等於沒事：</strong>布蘭特單日重挫10.35%，但荷姆茲航運仍受阻，通膨壓力只是先退一步。</li>
-            </ul>
-        </div>
-
-        <div class="market-overview-custom">
-            <h3 class="table-title">市場核心數據速覽</h3>
-            <div class="market-overview-row-1">
-                <div class="market-card-new us-stock">
-                    <div class="market-card-title-new">美股市場</div>
-                    <div class="market-card-value-new">標普500 <strong>6,581.00</strong></div>
-                    <div class="market-card-change-new text-up">▲ <strong>+1.15%</strong> • 川普暫緩攻擊伊朗設施，科技股先帶動反彈，但市場仍防談判再度破局</div>
-                </div>
-                <div class="market-card-new tw-stock">
-                    <div class="market-card-title-new">台股市場</div>
-                    <div class="market-card-value-new">加權 <strong>32,722.50</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-2.45%</strong> • 外資連三賣又續增台指空單，記憶體成殺盤核心，台股失守三萬三並回測季線</div>
-                </div>
-                <div class="market-card-new bond">
-                    <div class="market-card-title-new">債券市場</div>
-                    <div class="market-card-value-new">10年期殖利率 <strong>4.33%</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-6bp</strong> • 停攻消息讓避險買盤回流，10年期殖利率自近月高檔回落，但曲線仍偏陡</div>
-                </div>
-                <div class="market-card-new commodity">
-                    <div class="market-card-title-new">大宗商品</div>
-                    <div class="market-card-value-new">黃金期貨 <strong>4,406.70</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-3.58%</strong> • 金價跌到近25日新低，油價雖急跌，但荷姆茲供應風險仍未散去</div>
-                </div>
-            </div>
-            <div class="market-overview-row-2">
-                <div class="market-card-new fx">
-                    <div class="market-card-title-new">匯率市場</div>
-                    <div class="market-card-value-new">美元指數 <strong>99.12</strong></div>
-                    <div class="market-card-change-new text-down">▼ <strong>-0.53%</strong> • 美元跟著油價與避險情緒降溫回落，但聯準會分歧讓跌勢沒有一路擴大</div>
-                </div>
-                <div>
-                    <h3 class="table-title">Top 10 市場熱點事件榜</h3>
-                    <div class="heat-container">
-                        <div class="heat-item"><div class="heat-bar heat-bar-1">川普暫緩攻擊</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-2">荷姆茲封鎖</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-3">油價急跌</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-4">美股強彈</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-5">外資大賣台股</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-6">台股跌破三萬三</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-7">聯準會分歧</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-8">美元回落</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-9">氦氣供應風險</div></div>
-                        <div class="heat-item"><div class="heat-bar heat-bar-10">AI電力整合</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-                <h3 class="table-title">市場關鍵時間軸</h3>
-                <div class="timeline-container">
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 08:34</span>伊朗威脅封鎖荷姆茲、英美急著協調，使台股開盤前先面對油價、通膨與電子賣壓同步升溫，壓力先到開盤。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:04</span>台幣跌破32元且股匯同步走弱，代表外資撤出壓力未鬆，電子股盤中承接力道到尾盤仍偏弱，買盤沒回來。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:02</span>高盛兩周內二度上修布蘭特目標，市場把高油價與升息風險一起算進亞洲股市報價，先壓抑追價意願。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 14:12</span>記憶體成賣壓中心且塑化逆勢撐盤，顯示資金已轉向原物料受惠股與防禦題材避風頭，電子主流先讓位。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 18:53</span>外資單日賣超839億元並續增台指空單，代表短線不只避險，還在主動壓低台股整體持股部位與風險水位。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 19:29</span>川普宣布暫停攻擊伊朗能源設施五天，讓華爾街盤前先把壞情境從股價與油價報價裡拿掉，先抽離恐慌部位。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 21:00</span>輝達攜手電力業者推AI工廠，顯示算力競爭正往電網與儲能整合延伸，AI主軸沒有中斷，資本支出還在擴張。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:30</span>聯準會官員對升息與降息看法分歧，代表油價衝擊尚未定型，利率路徑仍會反覆修正，長債難脫震盪。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 03:30</span>OpenAI拉高企業合作誘因搶客，說明AI競爭已從模型能力延伸到企業客戶滲透與導入速度，企業戰升溫。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤後 06:07</span>川普暫緩攻擊雖讓三大指數反彈，但伊朗否認談判，代表風險只是延後，並沒有真正解除警報，反彈待驗證。</p>
-                </div>
-            </div>
-            <div></div>
-        </div>
-    </section>
-
-    <section id="sec-2" class="section-card">
-        <h2 style="color:#dc2626;"><span style="margin-right:0.75rem;">📈</span>第2章｜歐美股市</h2>
-        <div class="tldr-block" style="background:#fff1f2;">
-            <ul>
-                <li style="color:#b91c1c;"><strong>美股彈升先修恐慌：</strong>川普暫緩攻擊伊朗設施，讓三大指數止跌，但市場只拿掉最壞情境的一角。</li>
-                <li style="color:#b91c1c;"><strong>羅素反彈強過大型股：</strong>羅素2000單日漲2.29%，高於標普與那指，短線先見中小型股回補買盤增溫。</li>
-                <li style="color:#b91c1c;"><strong>歐股仍在近月低檔：</strong>Euro Stoxx 50雖反彈1.33%，但離3月20日低點不遠，歐股回穩速度仍偏慢。</li>
-            </ul>
-        </div>
-        <table class="table-styled">
-            <thead><tr><th>指數</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
-            <tbody>
-                <tr><td>道瓊工業指數</td><td>46,208.47</td><td class="text-up"><strong>+1.38%</strong></td><td class="text-down"><strong>-1.57%</strong></td><td class="text-down"><strong>-5.32%</strong></td><td class="text-down"><strong>-4.61%</strong></td><td class="text-down"><strong>-3.86%</strong></td></tr>
-                <tr><td>標普500</td><td>6,581.00</td><td class="text-up"><strong>+1.15%</strong></td><td class="text-down"><strong>-1.77%</strong></td><td class="text-down"><strong>-3.75%</strong></td><td class="text-down"><strong>-4.76%</strong></td><td class="text-down"><strong>-3.86%</strong></td></tr>
-                <tr><td>那斯達克</td><td>21,946.76</td><td class="text-up"><strong>+1.38%</strong></td><td class="text-down"><strong>-1.91%</strong></td><td class="text-down"><strong>-3.01%</strong></td><td class="text-down"><strong>-6.85%</strong></td><td class="text-down"><strong>-5.57%</strong></td></tr>
-                <tr><td>費城半導體指數</td><td>7,773.13</td><td class="text-up"><strong>+1.34%</strong></td><td class="text-down"><strong>-0.30%</strong></td><td class="text-down"><strong>-5.36%</strong></td><td class="text-up"><strong>+8.19%</strong></td><td class="text-up"><strong>+9.74%</strong></td></tr>
-                <tr><td>羅素2000</td><td>2,494.23</td><td class="text-up"><strong>+2.29%</strong></td><td class="text-down"><strong>-0.36%</strong></td><td class="text-down"><strong>-4.84%</strong></td><td class="text-down"><strong>-1.85%</strong></td><td class="text-up"><strong>+0.50%</strong></td></tr>
-                <tr><td>道瓊EURO STOXX50</td><td>5,574.32</td><td class="text-up"><strong>+1.33%</strong></td><td class="text-down"><strong>-2.87%</strong></td><td class="text-down"><strong>-8.83%</strong></td><td class="text-down"><strong>-3.04%</strong></td><td class="text-down"><strong>-3.83%</strong></td></tr>
-            </tbody>
-        </table>
-        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
-            <p><strong>美股反彈仍像修正波段</strong>川普暫緩攻擊伊朗能源設施五天，讓道瓊、標普與那指23日同步反彈，分別上漲1.38%、1.15%與1.38%。但標普仍只比3月20日近25日低點高1.15%，距2月25日高點還低5.26%，代表這波先是修正恐慌，不是直接回到多頭主升段，後面還得看談判能否真的延續。</p>
-            <p><strong>半導體反彈仍在弱勢區</strong>費城半導體指數23日雖漲1.34%，但只比3月6日近25日低點高3.44%，距2月25日高點仍低8.20%，明顯還在低檔回穩區。這代表科技股雖跟著風險降溫反彈，但高油價、長債震盪與供應鏈風險仍讓資金不敢全面回補高本益比族群，費半還沒拿回明顯領漲地位。</p>
-        </div></div>
-    </section>
-
-    <section id="sec-3" class="section-card">
-        <h2 style="color:#2563eb;"><span style="margin-right:0.75rem;">💵</span>第3章｜債券市場</h2>
-        <div class="tldr-block" style="background:#eff6ff;">
-            <ul>
-                <li style="color:#1d4ed8;"><strong>殖利率回落先喘口氣：</strong>10年期殖利率下滑6bp，但仍貼近近25日高檔區，長債壓力只是先喘口氣。</li>
-                <li style="color:#1d4ed8;"><strong>曲線偏陡未見扭轉：</strong>10年與3月期利差仍有72bp，市場現在還沒把油價帶來的通膨風險真正放下。</li>
-                <li style="color:#1d4ed8;"><strong>信用債只跟彈不領漲：</strong>HYG與EMB雖同步收紅，但近月仍偏弱，資金回流還停在試單與觀望階段。</li>
-            </ul>
-        </div>
-        <table class="table-styled">
-            <thead><tr><th>項目</th><th>收盤</th><th>日變動</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
-            <tbody>
-                <tr><td>美國3月期殖利率</td><td>3.61%</td><td class="text-down"><strong>-1bp</strong></td><td class="text-up"><strong>+1bp</strong></td><td class="text-up"><strong>+2bp</strong></td><td class="text-up"><strong>+7bp</strong></td><td class="text-up"><strong>+7bp</strong></td></tr>
-                <tr><td>美國5年期殖利率</td><td>3.95%</td><td class="text-down"><strong>-6bp</strong></td><td class="text-up"><strong>+15bp</strong></td><td class="text-up"><strong>+37bp</strong></td><td class="text-up"><strong>+22bp</strong></td><td class="text-up"><strong>+23bp</strong></td></tr>
-                <tr><td>美國10年期殖利率</td><td>4.33%</td><td class="text-down"><strong>-6bp</strong></td><td class="text-up"><strong>+11bp</strong></td><td class="text-up"><strong>+31bp</strong></td><td class="text-up"><strong>+16bp</strong></td><td class="text-up"><strong>+17bp</strong></td></tr>
-                <tr><td>美國30年期殖利率</td><td>4.91%</td><td class="text-down"><strong>-5bp</strong></td><td class="text-up"><strong>+5bp</strong></td><td class="text-up"><strong>+22bp</strong></td><td class="text-up"><strong>+8bp</strong></td><td class="text-up"><strong>+7bp</strong></td></tr>
-                <tr><td>高收益債券ETF(HYG)</td><td>79.44</td><td class="text-up"><strong>+0.66%</strong></td><td class="text-down"><strong>-0.01%</strong></td><td class="text-down"><strong>-1.77%</strong></td><td class="text-down"><strong>-1.30%</strong></td><td class="text-down"><strong>-1.48%</strong></td></tr>
-                <tr><td>新興市場美元債ETF(EMB)</td><td>94.06</td><td class="text-up"><strong>+0.98%</strong></td><td class="text-down"><strong>-0.73%</strong></td><td class="text-down"><strong>-3.74%</strong></td><td class="text-down"><strong>-2.29%</strong></td><td class="text-down"><strong>-2.31%</strong></td></tr>
-            </tbody>
-        </table>
-        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
-            <p><strong>殖利率回落只是喘息期</strong>10年期美債殖利率23日回落6bp至4.33%，但離3月20日近25日高點4.39%只差6bp，仍在高檔區。川普延後攻擊帶動避險買盤回流，才讓殖利率先從高位退一步；只是油價與聯準會分歧都還在，長債壓力沒有真正解除，市場只是先把最緊張的定價往回收一點。</p>
-            <p><strong>信用債仍沒跟上股彈勢</strong>HYG與EMB23日分別上漲0.66%與0.98%，但兩者都只比3月20日近25日低點高不到1%，且距2月高檔仍有1%到4%差距。這代表資金願意先回補股票，卻還不敢明顯加碼信用債，市場對景氣與融資條件的擔心其實還沒放下，信用債回穩速度仍慢過股市，資金風格還是偏保守。</p>
-        </div></div>
-    </section>
-
-    <section id="sec-4" class="section-card">
-        <h2 style="color:#f59e0b;"><span style="margin-right:0.75rem;">🛢️</span>第4章｜大宗商品</h2>
-        <div class="tldr-block" style="background:#fffbeb;">
-            <ul>
-                <li style="color:#b45309;"><strong>油價先吐戰爭溢價：</strong>川普暫緩攻擊伊朗後，WTI與布蘭特同步重挫，但航道風險仍沒有完全消失。</li>
-                <li style="color:#b45309;"><strong>黃金跌到近月低點：</strong>金價單日跌3.58%且落到近25日低點，顯示短線先被流動性賣壓往下壓住。</li>
-                <li style="color:#b45309;"><strong>基本金屬跟著回穩：</strong>DBB反彈2.28%，銅價也自低檔回升，市場暫時把衰退交易往後再收一點。</li>
-            </ul>
-        </div>
-        <table class="table-styled">
-            <thead><tr><th>項目</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
-            <tbody>
-                <tr><td>WTI原油</td><td>89.20</td><td class="text-down"><strong>-9.28%</strong></td><td class="text-down"><strong>-4.60%</strong></td><td class="text-up"><strong>+34.52%</strong></td><td class="text-up"><strong>+52.79%</strong></td><td class="text-up"><strong>+55.35%</strong></td></tr>
-                <tr><td>布蘭特原油</td><td>100.58</td><td class="text-down"><strong>-10.35%</strong></td><td class="text-up"><strong>+0.37%</strong></td><td class="text-up"><strong>+40.69%</strong></td><td class="text-up"><strong>+61.24%</strong></td><td class="text-up"><strong>+65.29%</strong></td></tr>
-                <tr><td>黃金期貨</td><td>4,406.70</td><td class="text-down"><strong>-3.58%</strong></td><td class="text-down"><strong>-11.76%</strong></td><td class="text-down"><strong>-15.33%</strong></td><td class="text-down"><strong>-1.70%</strong></td><td class="text-up"><strong>+1.87%</strong></td></tr>
-                <tr><td>基礎金屬ETF (DBB)</td><td>22.85</td><td class="text-up"><strong>+2.28%</strong></td><td class="text-down"><strong>-5.23%</strong></td><td class="text-down"><strong>-3.55%</strong></td><td class="text-up"><strong>+2.24%</strong></td><td class="text-down"><strong>-0.39%</strong></td></tr>
-            </tbody>
-        </table>
-        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
-            <p><strong>油價先砍回戰爭溢價區</strong>WTI與布蘭特23日分別跌9.28%與10.35%，反映川普暫緩攻擊後，市場先把一段戰爭溢價吐回去。不過WTI仍比2月17日近25日低點高43%，布蘭特近月漲幅仍達40.69%，代表價格雖大跌，但供應面壓力與荷姆茲風險根本沒有真正消失，油市只是先把最極端情境往回修。</p>
-            <p><strong>黃金失靈更像籌錢賣壓</strong>黃金期貨23日跌3.58%至4406.70美元，直接落到近25日新低，距3月2日高點已回落16.77%。照理說地緣風險升高應有利黃金，但這次市場先賣黃金、買現金，顯示投資人更在意短線流動性與利率方向，黃金暫時沒有拿回避險主導權，短線反而更像被拿來籌錢。</p>
-        </div></div>
-    </section>
-
-    <section id="sec-5" class="section-card">
-        <h2 style="color:#059669;"><span style="margin-right:0.75rem;">🇹🇼</span>第5章｜台股解析</h2>
-        <div class="tldr-block" style="background:#ecfdf5;">
-            <ul>
-                <li style="color:#047857;"><strong>外資賣壓還在加大：</strong>外資單日賣超839億元，5日累計已破2000億元，台股籌碼面持續往弱勢傾斜。</li>
-                <li style="color:#047857;"><strong>記憶體成殺盤核心：</strong>先前強勢的記憶體族群全面轉弱，顯示資金先從高波動電子股撤出避風頭。</li>
-                <li style="color:#047857;"><strong>塑化逆勢透露避險：</strong>油價高檔曾推動塑化股撐盤，盤面主軸已轉向原物料與防禦配置的一側。</li>
-            </ul>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-                <table class="table-styled">
-                    <thead><tr><th>亞洲主要指數</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
-                    <tbody>
-                        <tr><td>台灣加權指數</td><td>32,722.50</td><td class="text-down"><strong>-2.45%</strong></td><td class="text-down"><strong>-1.86%</strong></td><td class="text-down"><strong>-3.11%</strong></td><td class="text-up"><strong>+15.58%</strong></td><td class="text-up"><strong>+12.98%</strong></td></tr>
-                        <tr><td>日經225</td><td>51,515.49</td><td class="text-down"><strong>-3.48%</strong></td><td class="text-down"><strong>-4.28%</strong></td><td class="text-down"><strong>-9.34%</strong></td><td class="text-up"><strong>+2.19%</strong></td><td class="text-up"><strong>+2.34%</strong></td></tr>
-                        <tr><td>香港恆生指數</td><td>24,382.47</td><td class="text-down"><strong>-3.54%</strong></td><td class="text-down"><strong>-5.62%</strong></td><td class="text-down"><strong>-9.97%</strong></td><td class="text-down"><strong>-5.40%</strong></td><td class="text-down"><strong>-4.87%</strong></td></tr>
-                        <tr><td>韓國KOSPI</td><td>5,405.75</td><td class="text-down"><strong>-6.49%</strong></td><td class="text-down"><strong>-2.60%</strong></td><td class="text-down"><strong>-7.53%</strong></td><td class="text-up"><strong>+31.29%</strong></td><td class="text-up"><strong>+28.28%</strong></td></tr>
-                        <tr><td>印度SENSEX</td><td>72,696.39</td><td class="text-down"><strong>-2.46%</strong></td><td class="text-down"><strong>-3.72%</strong></td><td class="text-down"><strong>-12.72%</strong></td><td class="text-down"><strong>-15.00%</strong></td><td class="text-down"><strong>-14.66%</strong></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <table class="table-styled">
-                    <thead><tr><th>三大法人</th><th>當日淨額(億)</th><th>5日累計(億)</th><th>20日累計(億)</th></tr></thead>
-                    <tbody>
-                        <tr><td>外資</td><td class="text-down"><strong>-839.23</strong></td><td class="text-down"><strong>-2050.73</strong></td><td class="text-down"><strong>-7020.34</strong></td></tr>
-                        <tr><td>投信</td><td class="text-up"><strong>+104.07</strong></td><td class="text-up"><strong>+113.40</strong></td><td class="text-up"><strong>+883.19</strong></td></tr>
-                        <tr><td>自營商</td><td class="text-down"><strong>-311.12</strong></td><td class="text-down"><strong>-335.99</strong></td><td class="text-down"><strong>-1953.79</strong></td></tr>
-                        <tr class="summary-row"><td>總計</td><td class="text-down"><strong>-1046.28</strong></td><td class="text-down"><strong>-2273.32</strong></td><td class="text-down"><strong>-8090.94</strong></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
-            <p><strong>台股先被外資往下壓低</strong>台股23日下跌2.45%至32722.50點，單日跌821點，收盤已離2月26日近25日高點回落7.60%，只比2月6日低點高2.96%。同日外資賣超839.23億元、三大法人合計賣超1046.28億元，顯示這次不是單純獲利了結，而是外資主動降低整體風險部位，台股短線還在被籌碼往下壓。</p>
-            <p><strong>記憶體轉弱拖慢電子股</strong>這次台股不是全面一起跌，而是記憶體股成了賣壓中心，搭配台積電、鴻海與聯發科等權值股同步轉弱，才把指數往下拖。另一頭塑化與部分原物料股逆勢撐盤，代表資金正在把高油價受害股與受惠股分開看，電子主流暫時失去主導權，盤面已經從成長題材切回避險與通膨交易。</p>
-        </div></div>
-    </section>
-
-    <section id="sec-6" class="section-card">
-        <h2 style="color:#0891b2;"><span style="margin-right:0.75rem;">💱</span>第6章｜匯率市場</h2>
-        <div class="tldr-block" style="background:#ecfeff;">
-            <ul>
-                <li style="color:#0e7490;"><strong>美元回落先跟風險走：</strong>美元指數下跌0.53%，主要跟著談判消息與油價回落，修正先前避險漲勢。</li>
-                <li style="color:#0e7490;"><strong>台幣仍弱外資未回頭：</strong>美元兌台幣日漲0.19%，代表台股雖有內資承接，但外資資金仍偏保守些。</li>
-                <li style="color:#0e7490;"><strong>日圓避險力道有限：</strong>美元兌日圓仍在158上方，代表市場對日圓的避險需求沒有明顯升高起來。</li>
-            </ul>
-        </div>
-        <table class="table-styled">
-            <thead><tr><th>項目</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
-            <tbody>
-                <tr><td>美元指數</td><td>99.12</td><td class="text-down"><strong>-0.53%</strong></td><td class="text-down"><strong>-0.59%</strong></td><td class="text-up"><strong>+1.46%</strong></td><td class="text-up"><strong>+1.21%</strong></td><td class="text-up"><strong>+0.86%</strong></td></tr>
-                <tr><td>美元兌台幣</td><td>31.8610</td><td class="text-up"><strong>+0.19%</strong></td><td class="text-down"><strong>-0.94%</strong></td><td class="text-up"><strong>+1.11%</strong></td><td class="text-up"><strong>+1.04%</strong></td><td class="text-up"><strong>+1.98%</strong></td></tr>
-                <tr><td>歐元兌美元</td><td>1.1617</td><td class="text-up"><strong>+0.34%</strong></td><td class="text-up"><strong>+1.59%</strong></td><td class="text-down"><strong>-1.84%</strong></td><td class="text-down"><strong>-1.27%</strong></td><td class="text-down"><strong>-1.11%</strong></td></tr>
-                <tr><td>美元兌日圓</td><td>158.3400</td><td class="text-up"><strong>+0.26%</strong></td><td class="text-down"><strong>-0.77%</strong></td><td class="text-up"><strong>+2.59%</strong></td><td class="text-up"><strong>+0.93%</strong></td><td class="text-up"><strong>+1.23%</strong></td></tr>
-            </tbody>
-        </table>
-        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
-            <p><strong>美元回落仍非空頭轉折</strong>美元指數23日下跌0.53%至99.12，主因川普暫緩攻擊後，市場先把部分避險需求吐回去；但美元仍比2月17日近25日低點高2.02%，距3月13日高點只低1.24%。這代表美元只是從短線高檔回落，不是已經進入明確轉弱的新波段，後續仍會跟著油價與利率預期反覆擺動。</p>
-            <p><strong>台幣與日圓都還不算強</strong>美元兌台幣23日上升0.19%至31.861，距3月16日近25日高點32.16只低0.93%；美元兌日圓也仍在158.34，距3月19日高點159.79只低0.91%。這代表亞洲貨幣雖沒有進一步失速，但外資仍未明顯回流台股，日圓也還沒拿回強勢避險地位，匯市的保守氣氛還在。</p>
-        </div></div>
-    </section>
-
-    <section id="sec-7" class="section-card">
-        <h2 style="color: #7c3aed;">
-            <span style="margin-right: 0.75rem;">🏭</span>第7章｜產業多空展望
-        </h2>
-
-        <div class="tldr-block" style="background: #faf5ff;">
-            <ul>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> EDA設計工具受惠AI晶片複雜度提升，新思又多了激進投資人催化。</li>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> AI電力整合被市場重新定價，輝達把算力擴張延伸到電網與儲能。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 蘋果短線題材偏弱，地圖廣告能補收入，卻難替代硬體新週期。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 阿里轉型AI方向不錯，但補貼與資本支出先吃掉獲利彈性。</li>
-            </ul>
-        </div>
-
-        <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:EDA設計工具 (以新思科技 SNPS為例)</h3>
-            <div class="overflow-x-auto">
-                <table class="analysis-table">
-                    <thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
-                    <tbody>
-                        <tr><td class="font-semibold text-slate-600">驅動主因</td><td>Elliott建立數十億美元持股後，市場把新思重新放回AI晶片升級受惠名單，因為晶片越複雜，設計工具的必要性就越高。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">基本面位置</td><td>公司核心是EDA與矽智財服務，既能吃到AI晶片設計複雜度提高，也受惠客戶資本支出往先進製程與高效能運算集中。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">股價含意</td><td>這類工具商通常不是景氣第一棒，卻常是資本支出延續期最穩的受惠者，若AI投資不退，股價支撐較強。</td></tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-SNPS/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
-                            <td>若AI資料中心與高階晶片需求續增，EDA授權與服務收入會比一般硬體供應商更穩，獲利韌性相對高。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-SNPS/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術線圖</span></a></td>
-                            <td>激進投資人題材讓股價短線轉強，後續若放量站穩近期高點，代表市場開始把新一輪AI資本支出重新算進去。</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
-            <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>AI晶片愈複雜，先受惠的不一定是晶片股</strong>市場常把AI行情只看成晶片製造與伺服器出貨，但真正先被鎖定的，往往是設計流程裡不可替代的工具商。新思這次被資金看上，不只是因為Elliott進場，而是AI晶片複雜度上升後，EDA工具的議價力更容易往上走。</p></div></div>
-        </div>
-
-        <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:AI電力整合 (以輝達 NVDA為例)</h3>
-            <div class="overflow-x-auto">
-                <table class="analysis-table">
-                    <thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
-                    <tbody>
-                        <tr><td class="font-semibold text-slate-600">驅動主因</td><td>輝達攜手多家電力業者推AI工廠，代表市場已從只看GPU，進一步看到電網、儲能與調度能力也是下一段瓶頸。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">基本面位置</td><td>AI資料中心擴張不再只是買更多晶片，而是要同時解決接電、散熱與負載調度，輝達正把角色延伸成整體架構主導者。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">股價含意</td><td>只要AI資本支出主線沒斷，輝達仍有機會維持產業定價權；而電力整合題材，會讓市場願意給更長的成長視角。</td></tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
-                            <td>公司不只賣GPU，還在往系統架構、網路與能源調度延伸，等於把護城河從晶片單點擴大成整套AI基建。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術線圖</span></a></td>
-                            <td>若中東風險降溫後科技股續彈，輝達通常仍是資金觀察主指標；量價若重回強勢，代表AI主線沒有被打斷。</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
-            <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>AI投資下一個關卡已經不是算力而是接電</strong>過去市場把AI擴張理解成多買GPU，但真正開始限制速度的，是電力能不能同步到位。輝達把合作對象拉進電力與儲能公司，等於先卡位下一個瓶頸。這讓它的故事不只是晶片，而是整座AI工廠的操作系統。</p></div></div>
-        </div>
-
-        <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:消費電子平台 (以蘋果 AAPL為例)</h3>
-            <div class="overflow-x-auto">
-                <table class="analysis-table">
-                    <thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
-                    <tbody>
-                        <tr><td class="font-semibold text-slate-600">壓力來源</td><td>蘋果準備在地圖導入廣告，代表公司仍在找服務收入新成長點，但這也反映硬體新週期短線還不夠強。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">基本面位置</td><td>服務收入規模大且穩，但市場真正想看到的，仍是AI功能是否能帶動裝置換機與生態圈再加速，這點目前還不夠明確。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">股價含意</td><td>廣告業務能補營收，卻很難在短時間改變市場對硬體動能偏弱的看法，短線題材強度有限。</td></tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
-                            <td>服務業務能提供穩定現金流，但若AI功能無法快速轉成裝置銷量與生態變現，市場給的成長溢價就不容易擴大。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術線圖</span></a></td>
-                            <td>股價若只靠防禦型資金撐住，通常彈性有限；後續仍要看新產品與WWDC後的AI功能說法能否把成交量帶回來。</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
-            <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>服務收入加法，暫時還蓋不過硬體週期放慢</strong>地圖廣告的確能替蘋果多開一條變現路徑，但投資人此刻更在意的是，蘋果能不能用AI功能重新拉動裝置需求。若服務收入只是補洞，而不是帶來新一輪硬體換機，股價就比較像穩定型標的，不像高成長主線。</p></div></div>
-        </div>
-
-        <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:中國平台電商 (以阿里巴巴 BABA為例)</h3>
-            <div class="overflow-x-auto">
-                <table class="analysis-table">
-                    <thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
-                    <tbody>
-                        <tr><td class="font-semibold text-slate-600">壓力來源</td><td>阿里員工大減並非單純裁員，而是資產剝離與戰略轉型，但市場更在意的是利潤被補貼與AI投資吃掉。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">基本面位置</td><td>雲端與AI收入仍在增長，只是即時零售補貼、資本支出與轉型成本同時拉高，讓短線獲利彈性先被壓住。</td></tr>
-                        <tr><td class="font-semibold text-slate-600">股價含意</td><td>若營收成長無法明顯快於費用增速，市場就會把它視為轉型中的平台股，而不是重新進入加速期的成長股。</td></tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-BABA/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
-                            <td>AI與雲端方向沒有錯，但利潤被補貼與重投資吃掉時，市場通常會先觀望，等看到獲利改善才願意把股價水位再往上調。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-BABA/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術線圖</span></a></td>
-                            <td>若股價反彈時量能不足，通常表示資金還不願意把它當成中國科技核心主攻標的，技術面容易弱於同業。</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
-            <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>轉型方向沒錯，問題在獲利何時跟上</strong>阿里現在不是沒有故事，而是故事太多：電商、即時零售、雲端、AI全都要投。這種階段最容易出現營收有成長、獲利卻先掉下來的尷尬期。若AI與雲端的放量速度還追不上補貼與投資支出，市場就很難把它重新當成高成長股。</p></div></div>
-        </div>
-    </section>
+<!-- 標題 -->
+<header style="text-align: center; margin: 0;">
+<h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026-03-23（週一） 金融市場日報</h1>
+<p class="sub-title" style="margin: 0;">外資倒貨拖低台股　川普暫緩攻擊帶動美股與科技股反彈</p>
+</header>
+<!-- 第1章:市場總覽與重點 -->
+<section class="section-card" id="sec-1">
+<h2 style="color: #015fb4;"><span style="margin-right: 0.75rem;">📋</span>第1章｜市場總覽與重點</h2>
+<div class="tldr-block" style="background: #f0f9ff;">
+<h3 class="table-title">市場三大要點</h3>
+<ul>
+<li style="color: #015fb4;"><strong>外資賣壓先殺台股：</strong>外資連三賣又續增台指空單，記憶體成殺盤核心，台股失守三萬三，壓力沒退。</li>
+<li style="color: #015fb4;"><strong>美股反彈先修恐慌：</strong>川普暫緩攻擊伊朗電廠五天，三大指數止跌彈升，但風險只是往後挪而已。</li>
+<li style="color: #015fb4;"><strong>油價回檔不等於沒事：</strong>布蘭特單日重挫10.35%，但荷姆茲航運仍受阻，通膨壓力只是先退一步。</li>
+</ul>
 </div>
-
-<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="display: none;">↑</button>
-
+<div class="market-overview-custom">
+<h3 class="table-title">市場核心數據速覽</h3>
+<div class="market-overview-row-1">
+<div class="market-card-new us-stock">
+<div class="market-card-title-new">美股市場</div>
+<div class="market-card-value-new">標普500 <strong>6,581.00</strong></div>
+<div class="market-card-change-new text-up">▲ <strong>+1.15%</strong> • 川普暫緩攻擊伊朗設施，科技股先帶動反彈，但市場仍防談判再度破局</div>
+</div>
+<div class="market-card-new tw-stock">
+<div class="market-card-title-new">台股市場</div>
+<div class="market-card-value-new">加權 <strong>32,722.50</strong></div>
+<div class="market-card-change-new text-down">▼ <strong>-2.45%</strong> • 外資連三賣又續增台指空單，記憶體成殺盤核心，台股失守三萬三並回測季線</div>
+</div>
+<div class="market-card-new bond">
+<div class="market-card-title-new">債券市場</div>
+<div class="market-card-value-new">10年期殖利率 <strong>4.33%</strong></div>
+<div class="market-card-change-new text-down">▼ <strong>-6bp</strong> • 停攻消息讓避險買盤回流，10年期殖利率自近月高檔回落，但曲線仍偏陡</div>
+</div>
+<div class="market-card-new commodity">
+<div class="market-card-title-new">大宗商品</div>
+<div class="market-card-value-new">黃金期貨 <strong>4,406.70</strong></div>
+<div class="market-card-change-new text-down">▼ <strong>-3.58%</strong> • 金價跌到近25日新低，油價雖急跌，但荷姆茲供應風險仍未散去</div>
+</div>
+</div>
+<div class="market-overview-row-2"><div class="market-card-new fx">
+<div class="market-card-title-new">匯率市場</div>
+<div class="market-card-value-new">美元指數 <strong>99.12</strong></div>
+<div class="market-card-change-new text-down">▼ <strong>-0.53%</strong> • 美元跟著油價與避險情緒降溫回落，但聯準會分歧讓跌勢沒有一路擴大</div>
+</div><div></div></div>
+</div>
+<!-- --- v3.1.3 修正: 並排斷點改為 lg --- -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div>
+<h3 class="table-title">Top 10 市場熱點事件榜</h3>
+<div class="heat-container">
+<div class="heat-item"><div class="heat-bar heat-bar-1">川普暫緩攻擊</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-2">荷姆茲封鎖</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-3">油價急跌</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-4">美股強彈</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-5">外資大賣台股</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-6">台股跌破三萬三</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-7">聯準會分歧</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-8">美元回落</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-9">氦氣供應風險</div></div>
+<div class="heat-item"><div class="heat-bar heat-bar-10">AI電力整合</div></div>
+</div>
+<p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
+</div>
+<div>
+<h3 class="table-title">市場關鍵時間軸</h3>
+<div class="structured-analysis space-y-4 timeline-container"><p><span class="timeline-tag timeline-tag-taiwan">台股盤前 08:34</span>伊朗威脅封鎖荷姆茲、英美急著協調，使台股開盤前先面對油價、通膨與電子賣壓同步升溫，壓力先到開盤。</p><p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:04</span>台幣跌破32元且股匯同步走弱，代表外資撤出壓力未鬆，電子股盤中承接力道到尾盤仍偏弱，買盤沒回來。</p><p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:02</span>高盛兩周內二度上修布蘭特目標，市場把高油價與升息風險一起算進亞洲股市報價，先壓抑追價意願。</p><p><span class="timeline-tag timeline-tag-taiwan">台股盤後 14:12</span>記憶體成賣壓中心且塑化逆勢撐盤，顯示資金已轉向原物料受惠股與防禦題材避風頭，電子主流先讓位。</p><p><span class="timeline-tag timeline-tag-taiwan">台股盤後 18:53</span>外資單日賣超839億元並續增台指空單，代表短線不只避險，還在主動壓低台股整體持股部位與風險水位。</p><p><span class="timeline-tag timeline-tag-us">美股盤前 19:29</span>川普宣布暫停攻擊伊朗能源設施五天，讓華爾街盤前先把壞情境從股價與油價報價裡拿掉，先抽離恐慌部位。</p><p><span class="timeline-tag timeline-tag-us">美股盤前 21:00</span>輝達攜手電力業者推AI工廠，顯示算力競爭正往電網與儲能整合延伸，AI主軸沒有中斷，資本支出還在擴張。</p><p><span class="timeline-tag timeline-tag-us">美股盤中 23:30</span>聯準會官員對升息與降息看法分歧，代表油價衝擊尚未定型，利率路徑仍會反覆修正，長債難脫震盪。</p><p><span class="timeline-tag timeline-tag-us">美股盤中 03:30</span>OpenAI拉高企業合作誘因搶客，說明AI競爭已從模型能力延伸到企業客戶滲透與導入速度，企業戰升溫。</p><p><span class="timeline-tag timeline-tag-us">美股盤後 06:07</span>川普暫緩攻擊雖讓三大指數反彈，但伊朗否認談判，代表風險只是延後，並沒有真正解除警報，反彈待驗證。</p></div>
+</div>
+</div>
+</section>
+<!-- 第2章:歐美股市 -->
+<section class="section-card" id="sec-2">
+<h2 style="color: #dc2626;"><span style="margin-right: 0.75rem;">📈</span>第2章｜歐美股市</h2>
+<div class="tldr-block" style="background:#fff1f2;">
+<ul>
+<li style="color:#b91c1c;"><strong>美股彈升先修恐慌：</strong>川普暫緩攻擊伊朗設施，讓三大指數止跌，但市場只拿掉最壞情境的一角。</li>
+<li style="color:#b91c1c;"><strong>羅素反彈強過大型股：</strong>羅素2000單日漲2.29%，高於標普與那指，短線先見中小型股回補買盤增溫。</li>
+<li style="color:#b91c1c;"><strong>歐股仍在近月低檔：</strong>Euro Stoxx 50雖反彈1.33%，但離3月20日低點不遠，歐股回穩速度仍偏慢。</li>
+</ul>
+</div>
+<h3 class="table-title">歐美主要股市行情</h3>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>歐美主要股市指數漲跌概覽</caption>
+<thead><tr><th>指數</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
+<tbody>
+<tr><td>道瓊工業指數</td><td>46,208.47</td><td class="text-up"><strong>+1.38%</strong></td><td class="text-down"><strong>-1.57%</strong></td><td class="text-down"><strong>-5.32%</strong></td><td class="text-down"><strong>-4.61%</strong></td><td class="text-down"><strong>-3.86%</strong></td></tr>
+<tr><td>標普500</td><td>6,581.00</td><td class="text-up"><strong>+1.15%</strong></td><td class="text-down"><strong>-1.77%</strong></td><td class="text-down"><strong>-3.75%</strong></td><td class="text-down"><strong>-4.76%</strong></td><td class="text-down"><strong>-3.86%</strong></td></tr>
+<tr><td>那斯達克</td><td>21,946.76</td><td class="text-up"><strong>+1.38%</strong></td><td class="text-down"><strong>-1.91%</strong></td><td class="text-down"><strong>-3.01%</strong></td><td class="text-down"><strong>-6.85%</strong></td><td class="text-down"><strong>-5.57%</strong></td></tr>
+<tr><td>費城半導體指數</td><td>7,773.13</td><td class="text-up"><strong>+1.34%</strong></td><td class="text-down"><strong>-0.30%</strong></td><td class="text-down"><strong>-5.36%</strong></td><td class="text-up"><strong>+8.19%</strong></td><td class="text-up"><strong>+9.74%</strong></td></tr>
+<tr><td>羅素2000</td><td>2,494.23</td><td class="text-up"><strong>+2.29%</strong></td><td class="text-down"><strong>-0.36%</strong></td><td class="text-down"><strong>-4.84%</strong></td><td class="text-down"><strong>-1.85%</strong></td><td class="text-up"><strong>+0.50%</strong></td></tr>
+<tr><td>道瓊EURO STOXX50</td><td>5,574.32</td><td class="text-up"><strong>+1.33%</strong></td><td class="text-down"><strong>-2.87%</strong></td><td class="text-down"><strong>-8.83%</strong></td><td class="text-down"><strong>-3.04%</strong></td><td class="text-down"><strong>-3.83%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+<!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
+<p><strong>美股反彈仍像修正波段</strong>川普暫緩攻擊伊朗能源設施五天，讓道瓊、標普與那指23日同步反彈，分別上漲1.38%、1.15%與1.38%。但標普仍只比3月20日近25日低點高1.15%，距2月25日高點還低5.26%，代表這波先是修正恐慌，不是直接回到多頭主升段，後面還得看談判能否真的延續。</p>
+<p><strong>半導體反彈仍在弱勢區</strong>費城半導體指數23日雖漲1.34%，但只比3月6日近25日低點高3.44%，距2月25日高點仍低8.20%，明顯還在低檔回穩區。這代表科技股雖跟著風險降溫反彈，但高油價、長債震盪與供應鏈風險仍讓資金不敢全面回補高本益比族群，費半還沒拿回明顯領漲地位。</p>
+</div></div>
+</section>
+<!-- 第3章:債券市場 -->
+<section class="section-card" id="sec-3">
+<h2 style="color: #2563eb;"><span style="margin-right: 0.75rem;">🏛️</span>第3章｜債券市場</h2>
+<div class="tldr-block" style="background:#eff6ff;">
+<ul>
+<li style="color:#1d4ed8;"><strong>殖利率回落先喘口氣：</strong>10年期殖利率下滑6bp，但仍貼近近25日高檔區，長債壓力只是先喘口氣。</li>
+<li style="color:#1d4ed8;"><strong>曲線偏陡未見扭轉：</strong>10年與3月期利差仍有72bp，市場現在還沒把油價帶來的通膨風險真正放下。</li>
+<li style="color:#1d4ed8;"><strong>信用債只跟彈不領漲：</strong>HYG與EMB雖同步收紅，但近月仍偏弱，資金回流還停在試單與觀望階段。</li>
+</ul>
+</div>
+<h3 class="table-title">主要債券與殖利率行情</h3>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>主要債券與殖利率變動概覽</caption>
+<thead><tr><th>項目</th><th>收盤</th><th>日變動</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
+<tbody>
+<tr><td>美國3月期殖利率</td><td>3.61%</td><td class="text-down"><strong>-1bp</strong></td><td class="text-up"><strong>+1bp</strong></td><td class="text-up"><strong>+2bp</strong></td><td class="text-up"><strong>+7bp</strong></td><td class="text-up"><strong>+7bp</strong></td></tr>
+<tr><td>美國5年期殖利率</td><td>3.95%</td><td class="text-down"><strong>-6bp</strong></td><td class="text-up"><strong>+15bp</strong></td><td class="text-up"><strong>+37bp</strong></td><td class="text-up"><strong>+22bp</strong></td><td class="text-up"><strong>+23bp</strong></td></tr>
+<tr><td>美國10年期殖利率</td><td>4.33%</td><td class="text-down"><strong>-6bp</strong></td><td class="text-up"><strong>+11bp</strong></td><td class="text-up"><strong>+31bp</strong></td><td class="text-up"><strong>+16bp</strong></td><td class="text-up"><strong>+17bp</strong></td></tr>
+<tr><td>美國30年期殖利率</td><td>4.91%</td><td class="text-down"><strong>-5bp</strong></td><td class="text-up"><strong>+5bp</strong></td><td class="text-up"><strong>+22bp</strong></td><td class="text-up"><strong>+8bp</strong></td><td class="text-up"><strong>+7bp</strong></td></tr>
+<tr><td>高收益債券ETF(HYG)</td><td>79.44</td><td class="text-up"><strong>+0.66%</strong></td><td class="text-down"><strong>-0.01%</strong></td><td class="text-down"><strong>-1.77%</strong></td><td class="text-down"><strong>-1.30%</strong></td><td class="text-down"><strong>-1.48%</strong></td></tr>
+<tr><td>新興市場美元債ETF(EMB)</td><td>94.06</td><td class="text-up"><strong>+0.98%</strong></td><td class="text-down"><strong>-0.73%</strong></td><td class="text-down"><strong>-3.74%</strong></td><td class="text-down"><strong>-2.29%</strong></td><td class="text-down"><strong>-2.31%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+<!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
+<p><strong>殖利率回落只是喘息期</strong>10年期美債殖利率23日回落6bp至4.33%，但離3月20日近25日高點4.39%只差6bp，仍在高檔區。川普延後攻擊帶動避險買盤回流，才讓殖利率先從高位退一步；只是油價與聯準會分歧都還在，長債壓力沒有真正解除，市場只是先把最緊張的定價往回收一點。</p>
+<p><strong>信用債仍沒跟上股彈勢</strong>HYG與EMB23日分別上漲0.66%與0.98%，但兩者都只比3月20日近25日低點高不到1%，且距2月高檔仍有1%到4%差距。這代表資金願意先回補股票，卻還不敢明顯加碼信用債，市場對景氣與融資條件的擔心其實還沒放下，信用債回穩速度仍慢過股市，資金風格還是偏保守。</p>
+</div></div>
+</section>
+<!-- 第4章:大宗商品 -->
+<section class="section-card" id="sec-4">
+<h2 style="color: #cc4e01;"><span style="margin-right: 0.75rem;">🔥</span>第4章｜大宗商品</h2>
+<div class="tldr-block" style="background:#fffbeb;">
+<ul>
+<li style="color:#b45309;"><strong>油價先吐戰爭溢價：</strong>川普暫緩攻擊伊朗後，WTI與布蘭特同步重挫，但航道風險仍沒有完全消失。</li>
+<li style="color:#b45309;"><strong>黃金跌到近月低點：</strong>金價單日跌3.58%且落到近25日低點，顯示短線先被流動性賣壓往下壓住。</li>
+<li style="color:#b45309;"><strong>基本金屬跟著回穩：</strong>DBB反彈2.28%，銅價也自低檔回升，市場暫時把衰退交易往後再收一點。</li>
+</ul>
+</div>
+<h3 class="table-title">能源與商品市場行情</h3>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>能源與商品市場價格變動概覽</caption>
+<thead><tr><th>項目</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
+<tbody>
+<tr><td>WTI原油</td><td>89.20</td><td class="text-down"><strong>-9.28%</strong></td><td class="text-down"><strong>-4.60%</strong></td><td class="text-up"><strong>+34.52%</strong></td><td class="text-up"><strong>+52.79%</strong></td><td class="text-up"><strong>+55.35%</strong></td></tr>
+<tr><td>布蘭特原油</td><td>100.58</td><td class="text-down"><strong>-10.35%</strong></td><td class="text-up"><strong>+0.37%</strong></td><td class="text-up"><strong>+40.69%</strong></td><td class="text-up"><strong>+61.24%</strong></td><td class="text-up"><strong>+65.29%</strong></td></tr>
+<tr><td>黃金期貨</td><td>4,406.70</td><td class="text-down"><strong>-3.58%</strong></td><td class="text-down"><strong>-11.76%</strong></td><td class="text-down"><strong>-15.33%</strong></td><td class="text-down"><strong>-1.70%</strong></td><td class="text-up"><strong>+1.87%</strong></td></tr>
+<tr><td>基礎金屬ETF (DBB)</td><td>22.85</td><td class="text-up"><strong>+2.28%</strong></td><td class="text-down"><strong>-5.23%</strong></td><td class="text-down"><strong>-3.55%</strong></td><td class="text-up"><strong>+2.24%</strong></td><td class="text-down"><strong>-0.39%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+<!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
+<p><strong>油價先砍回戰爭溢價區</strong>WTI與布蘭特23日分別跌9.28%與10.35%，反映川普暫緩攻擊後，市場先把一段戰爭溢價吐回去。不過WTI仍比2月17日近25日低點高43%，布蘭特近月漲幅仍達40.69%，代表價格雖大跌，但供應面壓力與荷姆茲風險根本沒有真正消失，油市只是先把最極端情境往回修。</p>
+<p><strong>黃金失靈更像籌錢賣壓</strong>黃金期貨23日跌3.58%至4406.70美元，直接落到近25日新低，距3月2日高點已回落16.77%。照理說地緣風險升高應有利黃金，但這次市場先賣黃金、買現金，顯示投資人更在意短線流動性與利率方向，黃金暫時沒有拿回避險主導權，短線反而更像被拿來籌錢。</p>
+</div></div>
+</section>
+<!-- 第5章:台股解析 -->
+<section class="section-card" id="sec-5">
+<h2 style="color: #059669;"><span style="margin-right: 0.75rem;">🗻</span>第5章｜台股解析</h2>
+<div class="tldr-block" style="background:#ecfdf5;">
+<ul>
+<li style="color:#047857;"><strong>外資賣壓還在加大：</strong>外資單日賣超839億元，5日累計已破2000億元，台股籌碼面持續往弱勢傾斜。</li>
+<li style="color:#047857;"><strong>記憶體成殺盤核心：</strong>先前強勢的記憶體族群全面轉弱，顯示資金先從高波動電子股撤出避風頭。</li>
+<li style="color:#047857;"><strong>塑化逆勢透露避險：</strong>油價高檔曾推動塑化股撐盤，盤面主軸已轉向原物料與防禦配置的一側。</li>
+</ul>
+</div>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>亞洲主要股市指數漲跌概覽</caption>
+<thead><tr><th>亞洲主要指數</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
+<tbody>
+<tr><td>台灣加權指數</td><td>32,722.50</td><td class="text-down"><strong>-2.45%</strong></td><td class="text-down"><strong>-1.86%</strong></td><td class="text-down"><strong>-3.11%</strong></td><td class="text-up"><strong>+15.58%</strong></td><td class="text-up"><strong>+12.98%</strong></td></tr>
+<tr><td>日經225</td><td>51,515.49</td><td class="text-down"><strong>-3.48%</strong></td><td class="text-down"><strong>-4.28%</strong></td><td class="text-down"><strong>-9.34%</strong></td><td class="text-up"><strong>+2.19%</strong></td><td class="text-up"><strong>+2.34%</strong></td></tr>
+<tr><td>香港恆生指數</td><td>24,382.47</td><td class="text-down"><strong>-3.54%</strong></td><td class="text-down"><strong>-5.62%</strong></td><td class="text-down"><strong>-9.97%</strong></td><td class="text-down"><strong>-5.40%</strong></td><td class="text-down"><strong>-4.87%</strong></td></tr>
+<tr><td>韓國KOSPI</td><td>5,405.75</td><td class="text-down"><strong>-6.49%</strong></td><td class="text-down"><strong>-2.60%</strong></td><td class="text-down"><strong>-7.53%</strong></td><td class="text-up"><strong>+31.29%</strong></td><td class="text-up"><strong>+28.28%</strong></td></tr>
+<tr><td>印度SENSEX</td><td>72,696.39</td><td class="text-down"><strong>-2.46%</strong></td><td class="text-down"><strong>-3.72%</strong></td><td class="text-down"><strong>-12.72%</strong></td><td class="text-down"><strong>-15.00%</strong></td><td class="text-down"><strong>-14.66%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+<h3 class="table-title" style="margin-top: 2rem;">台股三大法人買賣超 (2026-03-23)</h3>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>台股三大法人買賣超統計</caption>
+<thead><tr><th>三大法人</th><th>當日淨額(億)</th><th>5日累計(億)</th><th>20日累計(億)</th></tr></thead>
+<tbody>
+<tr><td>外資</td><td class="text-down"><strong>-839.23</strong></td><td class="text-down"><strong>-2050.73</strong></td><td class="text-down"><strong>-7020.34</strong></td></tr>
+<tr><td>投信</td><td class="text-up"><strong>+104.07</strong></td><td class="text-up"><strong>+113.40</strong></td><td class="text-up"><strong>+883.19</strong></td></tr>
+<tr><td>自營商</td><td class="text-down"><strong>-311.12</strong></td><td class="text-down"><strong>-335.99</strong></td><td class="text-down"><strong>-1953.79</strong></td></tr>
+<tr class="summary-row"><td>總計</td><td class="text-down"><strong>-1046.28</strong></td><td class="text-down"><strong>-2273.32</strong></td><td class="text-down"><strong>-8090.94</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: 交易所資料整理</p>
+<!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
+<p><strong>台股先被外資往下壓低</strong>台股23日下跌2.45%至32722.50點，單日跌821點，收盤已離2月26日近25日高點回落7.60%，只比2月6日低點高2.96%。同日外資賣超839.23億元、三大法人合計賣超1046.28億元，顯示這次不是單純獲利了結，而是外資主動降低整體風險部位，台股短線還在被籌碼往下壓。</p>
+<p><strong>記憶體轉弱拖慢電子股</strong>這次台股不是全面一起跌，而是記憶體股成了賣壓中心，搭配台積電、鴻海與聯發科等權值股同步轉弱，才把指數往下拖。另一頭塑化與部分原物料股逆勢撐盤，代表資金正在把高油價受害股與受惠股分開看，電子主流暫時失去主導權，盤面已經從成長題材切回避險與通膨交易。</p>
+</div></div>
+</section>
+<!-- 第6章:匯率市場 -->
+<section class="section-card" id="sec-6">
+<h2 style="color: #0891b2;"><span style="margin-right: 0.75rem;">💱</span>第6章｜匯率市場</h2>
+<div class="tldr-block" style="background:#ecfeff;">
+<ul>
+<li style="color:#0e7490;"><strong>美元回落先跟風險走：</strong>美元指數下跌0.53%，主要跟著談判消息與油價回落，修正先前避險漲勢。</li>
+<li style="color:#0e7490;"><strong>台幣仍弱外資未回頭：</strong>美元兌台幣日漲0.19%，代表台股雖有內資承接，但外資資金仍偏保守些。</li>
+<li style="color:#0e7490;"><strong>日圓避險力道有限：</strong>美元兌日圓仍在158上方，代表市場對日圓的避險需求沒有明顯升高起來。</li>
+</ul>
+</div>
+<h3 class="table-title">主要貨幣兌美元匯率</h3>
+<div class="overflow-x-auto">
+<table class="table-styled"><caption>主要貨幣兌美元匯率變動概覽</caption>
+<thead><tr><th>項目</th><th>收盤</th><th>日漲跌</th><th>五日</th><th>近月</th><th>近季</th><th>年初至今</th></tr></thead>
+<tbody>
+<tr><td>美元指數</td><td>99.12</td><td class="text-down"><strong>-0.53%</strong></td><td class="text-down"><strong>-0.59%</strong></td><td class="text-up"><strong>+1.46%</strong></td><td class="text-up"><strong>+1.21%</strong></td><td class="text-up"><strong>+0.86%</strong></td></tr>
+<tr><td>美元兌台幣</td><td>31.8610</td><td class="text-up"><strong>+0.19%</strong></td><td class="text-down"><strong>-0.94%</strong></td><td class="text-up"><strong>+1.11%</strong></td><td class="text-up"><strong>+1.04%</strong></td><td class="text-up"><strong>+1.98%</strong></td></tr>
+<tr><td>歐元兌美元</td><td>1.1617</td><td class="text-up"><strong>+0.34%</strong></td><td class="text-up"><strong>+1.59%</strong></td><td class="text-down"><strong>-1.84%</strong></td><td class="text-down"><strong>-1.27%</strong></td><td class="text-down"><strong>-1.11%</strong></td></tr>
+<tr><td>美元兌日圓</td><td>158.3400</td><td class="text-up"><strong>+0.26%</strong></td><td class="text-down"><strong>-0.77%</strong></td><td class="text-up"><strong>+2.59%</strong></td><td class="text-up"><strong>+0.93%</strong></td><td class="text-up"><strong>+1.23%</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: Yahoo Finance</p>
+<!-- --- v3.1.9 替換: 深度分析區塊使用 v2.8 格式 --- -->
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis">
+<p><strong>美元回落仍非空頭轉折</strong>美元指數23日下跌0.53%至99.12，主因川普暫緩攻擊後，市場先把部分避險需求吐回去；但美元仍比2月17日近25日低點高2.02%，距3月13日高點只低1.24%。這代表美元只是從短線高檔回落，不是已經進入明確轉弱的新波段，後續仍會跟著油價與利率預期反覆擺動。</p>
+<p><strong>台幣與日圓都還不算強</strong>美元兌台幣23日上升0.19%至31.861，距3月16日近25日高點32.16只低0.93%；美元兌日圓也仍在158.34，距3月19日高點159.79只低0.91%。這代表亞洲貨幣雖沒有進一步失速，但外資仍未明顯回流台股，日圓也還沒拿回強勢避險地位，匯市的保守氣氛還在。</p>
+</div></div>
+</section>
+<!-- --- v3.1.9 替換: 整個第7章區塊使用 v2.8 格式 --- -->
+<!-- --- v3.1.10 修正: 將 [買進] 改為 [看多], [賣出] 改為 [看空], class buy -> bullish, sell -> bearish --- -->
+<section class="section-card" id="sec-7"><h2 style="color: #7c3aed;">
+<span style="margin-right: 0.75rem;">🏭</span>第7章｜產業多空展望
+        </h2><div class="tldr-block" style="background: #faf5ff;">
+<ul>
+<li style="color: #7c3aed;"><strong>[看多]</strong> EDA設計工具受惠AI晶片複雜度提升，新思又多了激進投資人催化。</li>
+<li style="color: #7c3aed;"><strong>[看多]</strong> AI電力整合被市場重新定價，輝達把算力擴張延伸到電網與儲能。</li>
+<li style="color: #7c3aed;"><strong>[看空]</strong> 蘋果短線題材偏弱，地圖廣告能補收入，卻難替代硬體新週期。</li>
+<li style="color: #7c3aed;"><strong>[看空]</strong> 阿里轉型AI方向不錯，但補貼與資本支出先吃掉獲利彈性。</li>
+</ul>
+</div><div class="stock-recommendation bullish">
+<h3 class="recommendation-title bullish">[看多]:EDA設計工具 (以新思科技 SNPS為例)</h3>
+<div class="overflow-x-auto">
+<table class="analysis-table">
+<thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
+<tbody>
+<tr><td class="font-semibold text-slate-600">驅動主因</td><td>Elliott建立數十億美元持股後，市場把新思重新放回AI晶片升級受惠名單，因為晶片越複雜，設計工具的必要性就越高。</td></tr>
+<tr><td class="font-semibold text-slate-600">基本面位置</td><td>公司核心是EDA與矽智財服務，既能吃到AI晶片設計複雜度提高，也受惠客戶資本支出往先進製程與高效能運算集中。</td></tr>
+<tr><td class="font-semibold text-slate-600">股價含意</td><td>這類工具商通常不是景氣第一棒，卻常是資本支出延續期最穩的受惠者，若AI投資不退，股價支撐較強。</td></tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button fundamental" href="https://tw.tradingview.com/symbols/NASDAQ-SNPS/financials-overview/" target="_blank">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
+<td>若AI資料中心與高階晶片需求續增，EDA授權與服務收入會比一般硬體供應商更穩，獲利韌性相對高。</td>
+</tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button technical" href="https://tw.tradingview.com/symbols/NASDAQ-SNPS/technicals/" target="_blank">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td>
+<td>激進投資人題材讓股價短線轉強，後續若放量站穩近期高點，代表市場開始把新一輪AI資本支出重新算進去。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>AI晶片愈複雜，先受惠的不一定是晶片股</strong>市場常把AI行情只看成晶片製造與伺服器出貨，但真正先被鎖定的，往往是設計流程裡不可替代的工具商。新思這次被資金看上，不只是因為Elliott進場，而是AI晶片複雜度上升後，EDA工具的議價力更容易往上走。</p></div></div>
+</div><div class="stock-recommendation bullish">
+<h3 class="recommendation-title bullish">[看多]:AI電力整合 (以輝達 NVDA為例)</h3>
+<div class="overflow-x-auto">
+<table class="analysis-table">
+<thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
+<tbody>
+<tr><td class="font-semibold text-slate-600">驅動主因</td><td>輝達攜手多家電力業者推AI工廠，代表市場已從只看GPU，進一步看到電網、儲能與調度能力也是下一段瓶頸。</td></tr>
+<tr><td class="font-semibold text-slate-600">基本面位置</td><td>AI資料中心擴張不再只是買更多晶片，而是要同時解決接電、散熱與負載調度，輝達正把角色延伸成整體架構主導者。</td></tr>
+<tr><td class="font-semibold text-slate-600">股價含意</td><td>只要AI資本支出主線沒斷，輝達仍有機會維持產業定價權；而電力整合題材，會讓市場願意給更長的成長視角。</td></tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button fundamental" href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/" target="_blank">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
+<td>公司不只賣GPU，還在往系統架構、網路與能源調度延伸，等於把護城河從晶片單點擴大成整套AI基建。</td>
+</tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button technical" href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/technicals/" target="_blank">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td>
+<td>若中東風險降溫後科技股續彈，輝達通常仍是資金觀察主指標；量價若重回強勢，代表AI主線沒有被打斷。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>AI投資下一個關卡已經不是算力而是接電</strong>過去市場把AI擴張理解成多買GPU，但真正開始限制速度的，是電力能不能同步到位。輝達把合作對象拉進電力與儲能公司，等於先卡位下一個瓶頸。這讓它的故事不只是晶片，而是整座AI工廠的操作系統。</p></div></div>
+</div><div class="stock-recommendation bearish">
+<h3 class="recommendation-title bearish">[看空]:消費電子平台 (以蘋果 AAPL為例)</h3>
+<div class="overflow-x-auto">
+<table class="analysis-table">
+<thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
+<tbody>
+<tr><td class="font-semibold text-slate-600">壓力來源</td><td>蘋果準備在地圖導入廣告，代表公司仍在找服務收入新成長點，但這也反映硬體新週期短線還不夠強。</td></tr>
+<tr><td class="font-semibold text-slate-600">基本面位置</td><td>服務收入規模大且穩，但市場真正想看到的，仍是AI功能是否能帶動裝置換機與生態圈再加速，這點目前還不夠明確。</td></tr>
+<tr><td class="font-semibold text-slate-600">股價含意</td><td>廣告業務能補營收，卻很難在短時間改變市場對硬體動能偏弱的看法，短線題材強度有限。</td></tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button fundamental" href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/financials-overview/" target="_blank">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
+<td>服務業務能提供穩定現金流，但若AI功能無法快速轉成裝置銷量與生態變現，市場給的成長溢價就不容易擴大。</td>
+</tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button technical" href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/technicals/" target="_blank">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td>
+<td>股價若只靠防禦型資金撐住，通常彈性有限；後續仍要看新產品與WWDC後的AI功能說法能否把成交量帶回來。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>服務收入加法，暫時還蓋不過硬體週期放慢</strong>地圖廣告的確能替蘋果多開一條變現路徑，但投資人此刻更在意的是，蘋果能不能用AI功能重新拉動裝置需求。若服務收入只是補洞，而不是帶來新一輪硬體換機，股價就比較像穩定型標的，不像高成長主線。</p></div></div>
+</div><div class="stock-recommendation bearish">
+<h3 class="recommendation-title bearish">[看空]:中國平台電商 (以阿里巴巴 BABA為例)</h3>
+<div class="overflow-x-auto">
+<table class="analysis-table">
+<thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead>
+<tbody>
+<tr><td class="font-semibold text-slate-600">壓力來源</td><td>阿里員工大減並非單純裁員，而是資產剝離與戰略轉型，但市場更在意的是利潤被補貼與AI投資吃掉。</td></tr>
+<tr><td class="font-semibold text-slate-600">基本面位置</td><td>雲端與AI收入仍在增長，只是即時零售補貼、資本支出與轉型成本同時拉高，讓短線獲利彈性先被壓住。</td></tr>
+<tr><td class="font-semibold text-slate-600">股價含意</td><td>若營收成長無法明顯快於費用增速，市場就會把它視為轉型中的平台股，而不是重新進入加速期的成長股。</td></tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button fundamental" href="https://tw.tradingview.com/symbols/NYSE-BABA/financials-overview/" target="_blank">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td>
+<td>AI與雲端方向沒有錯，但利潤被補貼與重投資吃掉時，市場通常會先觀望，等看到獲利改善才願意把股價水位再往上調。</td>
+</tr>
+<tr>
+<td class="font-semibold text-slate-600"><a class="link-button technical" href="https://tw.tradingview.com/symbols/NYSE-BABA/technicals/" target="_blank">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td>
+<td>若股價反彈時量能不足，通常表示資金還不願意把它當成中國科技核心主攻標的，技術面容易弱於同業。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-right" style="color: #64748b; margin-top: 0.5rem;">資料來源: TradingView</p>
+<div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>轉型方向沒錯，問題在獲利何時跟上</strong>阿里現在不是沒有故事，而是故事太多：電商、即時零售、雲端、AI全都要投。這種階段最容易出現營收有成長、獲利卻先掉下來的尷尬期。若AI與雲端的放量速度還追不上補貼與投資支出，市場就很難把它重新當成高成長股。</p></div></div>
+</div></section>
+<!-- 頁尾 -->
+<footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+<p class="text-xs" style="color: #64748b;">© 2025 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+<p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享,不構成任何投資建議,投資人應秉持獨立判斷,審慎評估並自負投資風險。</p>
+</footer>
+</div>
+<!-- 回頂按鈕 -->
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
 <script>
+// 進度條功能
 function updateProgressBar() {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    const bar = document.getElementById('progressBar');
-    if (bar) {
-        bar.style.width = progress + '%';
-        bar.style.opacity = scrollTop > 0 ? '1' : '0';
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById("progressBar");
+    if (progressBar) { // Check if progressBar exists
+        progressBar.style.width = scrolled + "%";
+        // Show progress bar only when scrolling starts
+        progressBar.style.opacity = scrolled > 0 ? "1" : "0";
     }
 }
 window.onscroll = function() { updateProgressBar(); };
 
+
+// --- 穩健性: 確保 DOM 載入後才綁定事件 ---
 window.addEventListener('load', function() {
+
+    // 智能下載功能
     const smartDownloadBtn = document.getElementById('smartDownloadBtn');
     if (smartDownloadBtn) {
         smartDownloadBtn.addEventListener('click', function() {
             const element = document.createElement('a');
-            const dateStr = '20260323';
-            const filename = dateStr + '.html';
+            // --- v3.1.8 Use placeholder for date string ---
+            const dateStr = '20260323'; // Use placeholder
+            // CRITICAL: Download filename MUST be in 'yyyymmdd.html' format.
+            const filename = dateStr + '.html'; // 強制要求 yyyymmdd.html 格式
+
+            // Temporarily hide elements that shouldn't be in the downloaded file
             const progressBar = document.getElementById('progressBar');
             const backToTopButton = document.querySelector('.back-to-top');
             const originalProgressBarStyle = progressBar ? progressBar.style.display : '';
             const originalBackToTopStyle = backToTopButton ? backToTopButton.style.display : '';
+
             if (progressBar) progressBar.style.display = 'none';
             if (backToTopButton) backToTopButton.style.display = 'none';
+
+            // Get the HTML content AFTER hiding elements
             const content = document.documentElement.outerHTML;
+
+            // Restore elements
             if (progressBar) progressBar.style.display = originalProgressBarStyle;
             if (backToTopButton) backToTopButton.style.display = originalBackToTopStyle;
-            const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
-            element.href = URL.createObjectURL(blob);
-            element.download = filename;
+
+
+            const file = new Blob([content], {type: 'text/html;charset=utf-8'});
+            element.href = URL.createObjectURL(file);
+            element.download = filename; // Use dynamic filename
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
             URL.revokeObjectURL(element.href);
         });
-    }
-});
+    } // end if(smartDownloadBtn)
+
+    // 平滑滾動導航
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = 120; // Adjusted offset for sticky nav
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = target.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 載入完成後隱藏進度條 (fade out effect)
+    const progressBar = document.getElementById("progressBar");
+     if (progressBar) { // Check if progressBar exists
+        progressBar.style.transition = 'opacity 0.5s ease-out'; // Add fade out transition
+        setTimeout(function() {
+            progressBar.style.opacity = "0";
+        }, 500); // Start fade out after 500ms
+     }
+}); // end window.load
 </script>
+<script>
+/* ── 外部連結修復腳本 ──────────────────────────────────────────
+   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入一段 JS，
+   攔截所有連結點擊並改用 postMessage 通知父框架開啟外部連結。
+   在 Claude.ai 以外的環境（Netlify、本機瀏覽器等），
+   父框架不存在，外部連結會因此完全失效。
+   本腳本在 DOMContentLoaded 後重新接管連結行為，
+   對外部連結直接呼叫 window.open，繞過注入代碼的攔截。
+──────────────────────────────────────────────────────────────── */
+(function() {
+  function fixExternalLinks() {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#')) return;  // 跳過頁內錨點
+      // 移除舊的 click listeners 無法做到，改用 capture 模式搶先處理
+    });
+  }
 
+  // 用 capture 模式（第三個參數 true）在注入代碼之前攔截
+  document.addEventListener('click', function(event) {
+    var el = event.target;
+    if (!(el instanceof HTMLElement)) return;
+    var linkEl = el.closest('a');
+    if (!linkEl) return;
 
-</body></html>
+    var href = linkEl.getAttribute('href');
+    if (!href || href.startsWith('#')) return;  // 頁內跳轉放行
+
+    // 判斷是否為外部連結
+    try {
+      var url = new URL(href, window.location.href);
+      if (url.hostname !== window.location.hostname) {
+        // 外部連結：阻止注入代碼的 postMessage 邏輯，直接開新分頁
+        event.stopImmediatePropagation();
+        window.open(href, '_blank', 'noopener,noreferrer');
+      }
+    } catch(e) {}
+  }, true);  // ← true = capture 模式，比 bubble 模式更早執行
+})();
+</script>
+</body>
+</html>
