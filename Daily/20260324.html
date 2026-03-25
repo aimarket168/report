@@ -44,6 +44,11 @@
              /* 響應式字體大小已調換 */
             .main-title { font-size: 1.5rem; } /* 原為 1.875rem */
             .sub-title { font-size: 1.875rem; } /* 原為 1.5rem */
+            .heat-bar { font-size: 0.875rem; padding: 0.4rem 0.75rem; }
+        }
+
+        @media (max-width: 480px) {
+            .heat-bar { font-size: 0.75rem; }
         }
 
         /* 章節與容器 */
@@ -161,15 +166,15 @@
             text-overflow: ellipsis; /* 超出部分顯示省略號 */
         }
         .heat-bar-1 { background: #dc2626; width: 100%; border-radius: 8px; } /* 100% 兩邊都圓角 */
-        .heat-bar-2 { background: #dc2626; width: 93%; }
-        .heat-bar-3 { background: #ea580c; width: 87%; }
-        .heat-bar-4 { background: #ea580c; width: 80%; }
-        .heat-bar-5 { background: #d97706; width: 73%; }
-        .heat-bar-6 { background: #d97706; width: 67%; }
-        .heat-bar-7 { background: #eab308; width: 60%; color: #1f2937; }
-        .heat-bar-8 { background: #eab308; width: 53%; color: #1f2937; }
-        .heat-bar-9 { background: #84cc16; width: 47%; color: #1f2937; }
-        .heat-bar-10 { background: #84cc16; width: 40%; color: #1f2937; }
+        .heat-bar-2 { background: #dc2626; width: 93.9%; }
+        .heat-bar-3 { background: #ea580c; width: 87.8%; }
+        .heat-bar-4 { background: #ea580c; width: 81.7%; }
+        .heat-bar-5 { background: #d97706; width: 75.6%; }
+        .heat-bar-6 { background: #d97706; width: 69.4%; }
+        .heat-bar-7 { background: #eab308; width: 63.3%; color: #1f2937; }
+        .heat-bar-8 { background: #eab308; width: 57.2%; color: #1f2937; }
+        .heat-bar-9 { background: #84cc16; width: 51.1%; color: #1f2937; }
+        .heat-bar-10 { background: #84cc16; width: 45%; color: #1f2937; }
 
         /* 卡片 */
         .section-card {
@@ -586,7 +591,7 @@
 <body>
 
 <!-- 進度條 -->
-<div class="progress-bar" id="progressBar" style="width: 8.91822%; opacity: 1; transition: opacity 0.5s ease-out; display: none;"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; transition: opacity 0.5s ease-out; display: none;"></div>
 
 <!-- 導覽工具列 -->
 <div class="nav-sticky">
@@ -1380,9 +1385,9 @@ window.addEventListener('load', function() {
         smartDownloadBtn.addEventListener('click', function() {
             const element = document.createElement('a');
             // 下載檔名使用交易日
-            const dateStr = '20260324'; // Use placeholder
+            const dateStr = '2026-03-24';
             // 下載檔名固定為 yyyymmdd.html
-            const filename = dateStr + '.html'; // 強制要求 yyyymmdd.html 格式
+            const filename = dateStr.replace(/-/g, '') + '.html'; // 強制要求 yyyymmdd.html 格式
 
             // Temporarily hide elements that shouldn't be in the downloaded file
             const progressBar = document.getElementById('progressBar');
