@@ -1,556 +1,6 @@
-<html lang="zh-TW"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
-        window.__firebase_config = firebaseConfig;
-        window.__initial_auth_token = initialAuthToken;
-        window.__app_id = appId;
-            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjM0Y2RjMzdkODYzZjgzOWY1NDQyMjUyNzQ2YjMyNjcyMzlkNGI5NWQiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzdhY2EzYTA5ZTc5MTRhN2RfMjAyNjA0MDIuaHRtbC0yMTgifSwiZXhwIjoxNzc1MTc3NzA3LCJpYXQiOjE3NzUxNzQxMDcsImFsZyI6IlJTMjU2In0.kTibH4k1xSVii81KeahV0wGsTjvQjzAmnH-5-GWxtU74sSjd9F1pzcRb3MeOKH0xq8xDSOgxvHayxYnRezIvCZPk2rygqVxZ1Z69-52gRbU-VVQukaEui6wkEwEyAxF0Ruka0RZeJXbFOL1OGQbcXvGZJPJg_NOL8h85hniRvtLoJKagy3re99Ssrnueo4r6UZ_cTe8x_bCjbLuUdpQDs172I4_nG_rVGug4GU39z7RV-jHGDUkuvGTzFVOn2T-6AjS9ZzKl_PTUkWZBTaDi0f_D75BM9PsGXT8GhoN9jRZfxjmEj3M6RLr-ROpVeXBlf3bYApAhX_lglqMuuYR6Kg","c_7aca3a09e7914a7d_20260402.html-218")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
-function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
-p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
-
- MIT License
-
- Copyright (c) 2017-2023 W.Y.
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
-*/
-function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
-function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
-function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
-function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
-var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
-function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
-function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
-function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
-function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
-return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
-function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
-function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
-c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
-function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
-function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
-function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
-function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
-function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
-function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
-d.lastIndex;b.push(e[0])}return b}
-function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
-{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
-function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
-function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
-function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
-16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
-function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
-function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
-window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
-})();</script><script>(function() {
-  // Ensure this script is executed only once
-  if (window.firebaseAuthBridgeScriptLoaded) {
-    return;
-  }
-  window.firebaseAuthBridgeScriptLoaded = true;
-
-  let nextTokenPromiseId = 0;
-
-  // Stores { resolve, reject } for ongoing token requests
-  const pendingTokenPromises = {};
-
-  // Listen for messages from the Host Application
-  window.addEventListener('message', function(event) {
-
-    const messageData = event.data;
-
-  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
-      const { success, token, error, promiseId } = messageData ?? {};
-      if (pendingTokenPromises[promiseId]) {
-        if (success) {
-          pendingTokenPromises[promiseId].resolve(token);
-        } else {
-          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
-        }
-        delete pendingTokenPromises[promiseId];
-      }
-    }
-  });
-
-  // Expose a function for the Generated App to request a new Firebase token
-  window.requestNewFirebaseToken = function() {
-    const currentPromiseId = nextTokenPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingTokenPromises[currentPromiseId] = { resolve, reject };
-    });
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({
-        type: 'REQUEST_NEW_FIREBASE_TOKEN',
-        promiseId: currentPromiseId
-      }, '*');
-    } else {
-      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
-      delete pendingTokenPromises[currentPromiseId];
-    }
-    return promise;
-  };
-})();</script><script>
-let realOriginalGetUserMedia = null;
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-}
-
-(function() {
-  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
-    try {
-      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
-        get: function() {
-          return undefined; // Or throw an error
-        },
-        configurable: false
-      });
-    } catch (error) {
-      console.error("Error defining prototype getter:", error);
-    }
-  }
-})();
-
-(function() {
-  const pendingMediaResolvers = {};
-  let nextMediaPromiseId = 0;
-
-  function requestMediaPermissions(constraints) {
-    const mediaPromiseId = nextMediaPromiseId++;
-    const promise = new Promise((resolve, reject) => {
-      pendingMediaResolvers[mediaPromiseId] = (granted) => {
-        delete pendingMediaResolvers[mediaPromiseId];
-        resolve(granted);
-      };
-    });
-
-    window.parent.postMessage({
-      type: 'requestMediaPermission',
-      constraints: constraints,
-      promiseId: mediaPromiseId,
-    }, '*');
-
-    return promise;
-  }
-
-  let originalGetUserMedia = realOriginalGetUserMedia;
-
-  function interceptGetUserMedia() {
-    if (navigator.mediaDevices) {
-      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
-        value: function(constraints) {
-          return requestMediaPermissions(constraints).then((granted) => {
-            if (granted) {
-              if (originalGetUserMedia) {
-                return originalGetUserMedia(constraints);
-              } else {
-                throw new Error("Original getUserMedia not available.");
-              }
-            } else {
-              throw new DOMException('Permission denied', 'NotAllowedError');
-            }
-          });
-        },
-        writable: false,
-        configurable: false
-      });
-    }
-  }
-
-  interceptGetUserMedia();
-
-  const observer = new MutationObserver(function(mutationsList, observer) {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
-        interceptGetUserMedia();
-      } else if (mutation.type === 'childList' && mutation.addedNodes) {
-        mutation.addedNodes.forEach(node => {
-          if (node === navigator.mediaDevices) {
-            interceptGetUserMedia();
-          }
-        });
-      }
-    }
-  });
-
-  function interceptSpeechRecognition() {
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-      return;
-    }
-
-    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const SpeechRecognitionWrapper = function(...args) {
-      const recognizer = new OriginalSpeechRecognition(...args);
-      const originalStart = recognizer.start.bind(recognizer);
-
-      recognizer.start = function() {
-        requestMediaPermissions({ audio: true }).then(granted => {
-          if (granted) {
-            originalStart();
-          } else {
-            const errorEvent = new SpeechRecognitionErrorEvent('error');
-            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
-            recognizer.dispatchEvent(errorEvent);
-          }
-        });
-      };
-
-      return recognizer;
-    };
-
-    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
-    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
-
-    if (window.SpeechRecognition) {
-      window.SpeechRecognition = SpeechRecognitionWrapper;
-    }
-    if (window.webkitSpeechRecognition) {
-      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
-    }
-  }
-
-  interceptSpeechRecognition();
-
-  window.addEventListener('message', function(event) {
-    if (event.data) {
-      if (event.data.type === 'resolveMediaPermission') {
-        const { promiseId, granted } = event.data;
-        if (pendingMediaResolvers[promiseId]) {
-          pendingMediaResolvers[promiseId](granted);
-        }
-      }
-    }
-  });
-
-})();</script><script>((function(modelInformation) {
-  const originalFetch = window.fetch;
-  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
-  let googleLlmBaseApiUrls = [
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
-    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
-  ];
-  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
-    );
-  });
-  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
-    googleLlmBaseApiUrls.push(
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
-      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
-    );
-  });
-
-  const pendingFetchResolvers = {};
-  let nextPromiseId = 0;
-
-  function handleStringInput(input, optionsArgument) {
-    const actualUrl = input;
-    const fetchCallArgs = [actualUrl, optionsArgument];
-    const effectiveOptions = optionsArgument || {};
-    const bodyForApiKeyCheck = effectiveOptions.body;
-    const bodyForPostMessage = effectiveOptions.body;
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  function handleRequestInput(input, optionsArgument) {
-    const actualUrl = input.url;
-    const fetchCallArgs = [input, optionsArgument];
-    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (optionsArgument) {
-      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
-      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
-      if ('body' in optionsArgument) {
-        bodyForApiKeyCheck = optionsArgument.body;
-        bodyForPostMessage = optionsArgument.body;
-      } else {
-        bodyForApiKeyCheck = undefined;
-        bodyForPostMessage = input.body;
-      }
-    } else {
-      bodyForApiKeyCheck = undefined;
-      bodyForPostMessage = input.body;
-    }
-    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
-  }
-
-  window.fetch = function(input, optionsArgument) {
-    let actualUrl;
-    let fetchCallArgs;
-    let effectiveOptions = {};
-    let bodyForApiKeyCheck;
-    let bodyForPostMessage;
-
-    if (typeof input === 'string') {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
-    } else if (input instanceof Request) {
-      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
-    } else {
-      return originalFetch.apply(window, [input, optionsArgument]);
-    }
-
-    effectiveOptions.method = effectiveOptions.method || 'GET';
-    if (!effectiveOptions.headers) {
-      effectiveOptions.headers = new Headers();
-    }
-
-
-    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
-      let apiKeyIsNull = true;
-
-      const regex = new RegExp("models/([^:]+)");
-      const modelNameMatch = actualUrl.match(regex);
-      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
-
-
-      try {
-        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
-        const apiKeyParam = urlObject.searchParams.get('key');
-        if (apiKeyParam) {
-          apiKeyIsNull = false;
-        }
-      } catch (e) {
-        // Continue checks even if URL parsing fails
-      }
-
-      if (apiKeyIsNull && effectiveOptions.headers) {
-        const h = new Headers(effectiveOptions.headers);
-        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
-        if (apiKeyHeaderValue) {
-          apiKeyIsNull = false;
-          return originalFetch.apply(window, fetchCallArgs);
-        }
-      }
-
-      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
-        try {
-          const bodyData = JSON.parse(bodyForApiKeyCheck);
-          if (bodyData && bodyData.apiKey) {
-            apiKeyIsNull = false;
-            return originalFetch.apply(window, fetchCallArgs);
-          }
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      if(apiKeyIsNull) {
-        const promiseId = nextPromiseId++;
-        const promise = new Promise((resolve) => {
-          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
-            delete pendingFetchResolvers[promiseId];
-            resolve(resolvedResponse);
-          };
-        });
-
-        let serializedBodyForPostMessage;
-        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
-            serializedBodyForPostMessage = bodyForPostMessage;
-        } else if (bodyForPostMessage instanceof ReadableStream) {
-            serializedBodyForPostMessage = null;
-        } else {
-            try {
-                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
-            } catch (e) {
-                serializedBodyForPostMessage = null;
-            }
-        }
-
-        const messageOptions = {
-            method: effectiveOptions.method,
-            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
-            body: serializedBodyForPostMessage
-        };
-
-        window.parent.postMessage({
-          type: 'requestFetch',
-          url: actualUrl,
-          modelName: modelName,
-          options: messageOptions,
-          promiseId: promiseId,
-        }, '*');
-
-        return promise;
-      }
-      return originalFetch.apply(window, fetchCallArgs);
-    }
-    return originalFetch.apply(window, fetchCallArgs);
-  };
-
-  window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'resolveFetch') {
-      const { promiseId, response } = event.data;
-      if (pendingFetchResolvers[promiseId]) {
-        try {
-          const reconstructedResponse = new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: new Headers(response.headers),
-          });
-          pendingFetchResolvers[promiseId](reconstructedResponse);
-        } catch (error) {
-          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
-        }
-      }
-    }
-  });
-
-}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
-</script><script>(function() {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-
-    /**
-   * Normalizes an error event or a promise rejection reason into a structured error object.
-   * @param {*} errorEventOrReason The error object or reason.
-   * @return {object} Structured error data { message, name, stack }.
-   */
-  function getErrorObject(errorEventOrReason) {
-    if (errorEventOrReason instanceof Error) {
-      return {
-        message: errorEventOrReason.message,
-        name: errorEventOrReason.name,
-        stack: errorEventOrReason.stack,
-      };
-    }
-    // Fallback for non-Error objects.
-    try {
-      return {
-        message: JSON.stringify(errorEventOrReason),
-        name: 'UnknownErrorType',
-        stack: null,
-      };
-    } catch (e) {
-      return {
-        message: String(errorEventOrReason),
-        name: 'UnknownErrorTypeNonStringifiable',
-        stack: null,
-      };
-    }
-  }
-
-  /**
-   * Converts an array of arguments (from log/error) into a single string.
-   * Handles Error objects specially to include their message and stack.
-   * @param {Array<*>} args - Arguments passed to console methods.
-   * @return {string} A string representation of the arguments.
-   */
-  function stringifyArgs(args) {
-    return args
-      .map((arg) => {
-        if (arg instanceof Error) {
-          const {message, stack} = arg;
-          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
-        }
-        if (typeof arg === 'object' && arg !== null) {
-          try {
-            return JSON.stringify(arg);
-          } catch (error) {
-            return '[Circular Object]';
-          }
-        } else {
-          return String(arg);
-        }
-      })
-      .join(' ');
-  }
-
-  console.log = function(...args) {
-    const logString = stringifyArgs(args);
-    window.parent.postMessage({ type: 'log', message: logString }, '*');
-    originalConsoleLog.apply(console, args);
-  };
-
-  console.error = function(...args) {
-    let errorData;
-    if (args.length > 0 && args[0] instanceof Error) {
-      const err = args[0];
-      // If the first arg is an Error, capture its details.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        ...getErrorObject(err),
-        rawArgsString: stringifyArgs(args.slice(1)),
-        timestamp: new Date().toISOString(),
-      };
-    } else {
-      // If not an Error object, treat all args as a general error message.
-      errorData = {
-        type: 'error',
-        source: 'CONSOLE_ERROR',
-        message: stringifyArgs(args),
-        name: 'ConsoleLoggedError',
-        stack: null,
-        timestamp: new Date().toISOString(),
-      };
-    }
-    window.parent.postMessage(errorData, '*');
-    originalConsoleError.apply(console, args);
-  };
-
-  // Listen for global unhandled synchronous errors.
-  window.addEventListener('error', function(event) {
-    const errorDetails = event.error ? getErrorObject(event.error) : {
-      message: event.message,
-      name: 'GlobalError',
-      stack: null,
-      filename: event.filename,
-      lineno: event.lineno,
-      colno: event.colno,
-    };
-
-    window.parent.postMessage({
-      type: 'error',
-      source: 'global',
-      ...errorDetails,
-      message: errorDetails.message || event.message,
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
-
-  // Listen for unhandled promise rejections (asynchronous errors).
-  window.addEventListener('unhandledrejection', function(event) {
-    const errorDetails = getErrorObject(event.reason);
-
-    window.parent.postMessage({
-      type: 'error',
-      source: 'unhandledrejection',
-      ...errorDetails,
-      message: errorDetails.message || 'Unhandled Promise Rejection',
-      timestamp: new Date().toISOString(),
-    }, '*');
-  });
-
-})();</script>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026-04-02（週四） 金融市場日報|洞察•解構•透視全球資產</title>
@@ -724,7 +174,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             text-overflow: ellipsis; /* 超出部分顯示省略號 */
         }
 
-        .heat-bar-1 { background: #dc2626; width: 100.0%; border-radius: 8px; } /* 100% 兩邊都圓角 */
+        .heat-bar-1 { background: #dc2626; width: 100%; border-radius: 8px; } /* 100% 兩邊都圓角 */
         .heat-bar-2 { background: #dc2626; width: 93.9%; }
         .heat-bar-3 { background: #ea580c; width: 87.8%; }
         .heat-bar-4 { background: #ea580c; width: 81.7%; }
@@ -1161,10 +611,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 padding-right: 0.5rem;
             }
             .nav-links-group { gap: 0.75rem; }
-
+            
             .heat-bar { font-size: 0.875rem; padding: 0.4rem 0.75rem; }
         }
-
+        
         @media (max-width: 480px) {
             .heat-bar { font-size: 0.75rem; }
         }
@@ -1185,7 +635,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 <body>
 
 <!-- 進度條 -->
-<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; transition: opacity 0.5s ease-out; display: none;"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
 
 <!-- 導覽工具列 -->
 <div class="nav-sticky">
@@ -1207,7 +657,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     <!-- 標題 -->
     <header style="text-align: center; margin: 0;">
         <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026-04-02（週四） 金融市場日報</h1>
-        <p class="sub-title" style="margin: 0;">川普打到底，油價暴漲引發通膨憂慮　美股震盪科技巨頭力挽狂瀾</p>
+        <p class="sub-title" style="margin: 0;">外資避險提款拖累台股大跌　川普強硬言論推升油價與通膨疑慮壓抑美股漲勢</p>
     </header>
 
     <!-- 第1章:市場總覽與重點 -->
@@ -1219,9 +669,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="tldr-block" style="background: #f0f9ff;">
             <h3 class="table-title">市場三大要點</h3>
             <ul>
-                <li style="color: #015fb4;"><strong>川普揚言猛攻推升油價：</strong>川普揚言對伊升級打擊引發斷供擔憂，西德州原油暴漲11.93%，拖累風險偏好明顯降溫。</li>
-                <li style="color: #015fb4;"><strong>外資大逃殺拖累亞股：</strong>戰事促使外資撤出亞洲，台股單日下跌1.82%，韓國重挫4.47%與日本大跌2.38%，資金快速轉向防禦操作。</li>
-                <li style="color: #015fb4;"><strong>避險情緒推升美元走揚：</strong>避險買盤湧入推升美元單日上漲0.34%，黃金則因美元走強與高檔獲利了結賣壓而反向回落。</li>
+                <li style="color: #015fb4;"><strong>地緣與關稅雙重施壓：</strong>川普揚言猛攻伊朗並祭出鋼鋁新關稅，推升通膨擔憂，資金快速撤出亞洲風險資產。</li>
+                <li style="color: #015fb4;"><strong>油價狂飆與金價背離：</strong>中東戰火與俄油設施受損使布蘭特原油大漲逾7%，但黃金未獲避險買盤反而走跌。</li>
+                <li style="color: #015fb4;"><strong>美科技股展現抗震韌性：</strong>儘管道瓊因關稅與通膨預期收黑，費半與那斯達克仍微幅收紅，顯示核心籌碼未散。</li>
             </ul>
         </div>
 
@@ -1231,30 +681,30 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 <div class="market-card-new us-stock">
                     <div class="market-card-title-new">美股市場</div>
                     <div class="market-card-value-new">費城半導體指數 <strong>7,833.39</strong></div>
-                    <div class="market-card-change-new text-up">↑ <strong>+0.40%</strong> • 戰事升溫推升油價引發通膨重燃疑慮，惟科技股逆勢發揮撐盤作用。</div>
+                    <div class="market-card-change-new text-up">↑ <strong>+0.40%</strong> • 關稅與油價飆漲推升通膨疑慮，道瓊收黑但科技龍頭逆勢抗跌，使大盤跌幅受控。</div>
                 </div>
                 <div class="market-card-new tw-stock">
                     <div class="market-card-title-new">台股市場</div>
                     <div class="market-card-value-new">加權 <strong>32,572.43</strong></div>
-                    <div class="market-card-change-new text-down">↓ <strong>-1.82%</strong> • 戰火引發外資大舉提款386.96億元，權值股全面下殺拖累大盤下跌。</div>
+                    <div class="market-card-change-new text-down">↓ <strong>-1.82%</strong> • 外資提款逾3869億元，權值股全面重挫，資金快速撤出亞洲市場。</div>
                 </div>
                 <div class="market-card-new bond">
                     <div class="market-card-title-new">債券市場</div>
                     <div class="market-card-value-new">10年期殖利率 <strong>4.31%</strong></div>
-                    <div class="market-card-change-new text-down">↓ <strong>-1 bps</strong> • 通膨擔憂與避險情緒相互拉扯，10年期公債殖利率微幅回落。</div>
+                    <div class="market-card-change-new text-down">↓ <strong>-1 bps</strong> • 戰火升溫激發強烈避險需求，資金轉入美債停泊促使長天期公債殖利率微幅回落。</div>
                 </div>
                 <div class="market-card-new commodity">
-                    <div class="market-card-title-new">原油</div>
-                    <div class="market-card-value-new">WTI原油 <strong>112.06</strong></div>
-                    <div class="market-card-change-new text-up">↑ <strong>+11.93%</strong> • 川普揚言猛攻伊朗引爆能源斷供恐慌，推升國際油價單日狂飆。</div>
+                    <div class="market-card-title-new">大宗商品</div>
+                    <div class="market-card-value-new">黃金期貨 <strong>4,651.50</strong></div>
+                    <div class="market-card-change-new text-down">↓ <strong>-2.75%</strong> • 強勢美元重返100大關壓制黃金買盤，另，布蘭特原油因斷供恐慌單日大漲逾7%。</div>
                 </div>
             </div>
             
             <div class="market-overview-row-2">
                 <div class="market-card-new fx">
                     <div class="market-card-title-new">匯率市場</div>
-                    <div class="market-card-value-new">美元指數 <strong>99.99</strong></div>
-                    <div class="market-card-change-new text-up">↑ <strong>+0.34%</strong> • 中東地緣政治風險急遽升溫，帶動避險資金大舉湧入推升美元走勢。</div>
+                    <div class="market-card-value-new">美元指數 <strong>100.03</strong></div>
+                    <div class="market-card-change-new text-up">↑ <strong>+0.38%</strong> • 關稅威脅與戰火升溫，推升市場避險需求，帶動美元指數重返100大關。</div>
                 </div>
                 <div></div>
             </div>
@@ -1264,16 +714,16 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div>
                 <h3 class="table-title">Top 10 市場熱點事件榜</h3>
                 <div class="heat-container">
-                    <div class="heat-item"><div class="heat-bar heat-bar-1">川普揚言猛攻伊朗</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-2">特斯拉調降車款價</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-3">太空探索巨頭募資</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-4">川普加徵鋼鋁關稅</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-5">烏無人機襲俄油港</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-6">英特爾重掌愛爾蘭</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-7">國際組織發布聲明</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-8">德國限制油價漲幅</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-9">官方推虛擬資產法</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-10">央行宣布維持利率</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">川普擬徵鋼鋁稅</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">川普誓言攻伊朗</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">川普擬徵藥品稅</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">烏軍摧毀俄油港</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">天然氣船首通航</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">初領失業金驟降</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">特斯拉交車漏氣</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">歐洲祭出限價令</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">SpaceX調高估值</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">台灣祭物價7箭</div></div>
                 </div>
                 <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
             </div>
@@ -1281,16 +731,16 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div>
                 <h3 class="table-title">市場關鍵時間軸</h3>
                 <div class="structured-analysis space-y-4 timeline-container">
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 06:15</span>首檔記憶體指數型基金成分股正式出爐，南韓雙雄權重占半，預期將為亞洲科技供應鏈增添被動資金活水。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:10</span>川普發表全國演說宣稱接近完成對伊朗軍事任務，引發市場對中東地緣政治局勢進一步升級的嚴重擔憂。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 12:22</span>國內多檔債券指數型基金正式啟動除息大秀，公告之年化配息率突破8%水準，吸引長線收息型機構高度關注。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 16:06</span>官方宣布國內公共運輸票價全面凍漲，並跨部會祭出民生物價平穩機制，力求將全年通膨率控制在警戒線內。</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 20:44</span>央行於理監事會議後宣布維持政策利率不變，主要考量通膨預期尚未降溫且需觀察美準會後續貨幣政策動向。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 21:26</span>電動車大廠特斯拉宣布調降多款主力電動車售價，試圖在競爭激烈的市場中刺激買氣，引發車市價格戰疑慮。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤前 22:14</span>美國勞工部公布上週初領失業金人數意外降至近2年低點，顯示就業市場仍陷入低招募與低裁員的僵固狀態。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 01:15</span>川普針對中東局勢發表強硬言論引爆國際油市劇烈波動，市場憂心美國本土汽油價格恐將衝破5美元大關。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 04:18</span>航太科技巨頭準備進行史上最大規模公開募股計畫，內部將公司估值大幅上調至逾2兆美元以吸引外部資金。</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤後 04:59</span>川普政府正式公告對進口鋼鐵與鋁衍生品加徵高達25%的懲罰性關稅，引發全球對於供應鏈成本墊高疑慮。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 06:10</span>美國正式宣布對鋼鐵與鋁衍生品加徵25%高額關稅，引發亞洲市場對全球貿易摩擦升溫與通膨再起的初步擔憂。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 07:04</span>川普發表強硬演說誓言把伊朗打回石器時代，西德州原油受斷供恐慌刺激單日大漲逾11%強勢突破百元大關。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 09:57</span>外資券商點名多檔記憶體指標股在演算法衝擊後浮現黃金買點，短線為半導體板塊提供部分抗震與下檔支撐力道。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 13:45</span>地緣戰火蔓延至基礎塑料供應鏈導致原料大缺貨，下游包材商大幅調漲報價加重了市場對物價通膨再起的疑慮。</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 16:06</span>台灣跨部會宣布大眾運輸全面凍漲並祭出民生物價7箭政策，試圖在能源飆升環境下全力守住全年通膨防線。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 20:20</span>專家警告市場過度低估中東能源供應中斷對美國經濟的連動打擊，帶動美股開盤前避險情緒持續向各大板塊快速擴散。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 21:26</span>特斯拉公布第一季交車數據連續兩季未能達到華爾街預期，加重非必需消費板塊壓力並使電動車相關供應鏈承壓。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 22:00</span>美國最新單周初領失業金人數意外下降至近兩年低點，就業市場展現韌性的同時也削弱聯準會快速啟動降息的理由。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 23:00</span>歐洲多國為防堵能源通膨失控緊急祭出油價漲幅限制與補貼措施，顯示高油價環境已對歐洲實體經濟產生實質衝擊。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤後 04:59</span>川普政府預告對進口藥品與部分金屬加徵大幅關稅，此舉預期將進1步推升美國本土製造成本並增加企業營運不確定性。</p>
                 </div>
             </div>
         </div>
@@ -1304,9 +754,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #fef2f2;">
             <ul>
-                <li style="color: #dc2626;"><strong>戰事升溫拖累歐股：</strong>地緣局勢緊張推升能源價格，歐洲50指數單日下跌0.62%，顯示通膨重燃疑慮壓抑歐股買盤。</li>
-                <li style="color: #dc2626;"><strong>科技股發揮撐盤力：</strong>戰事陰霾下那指與費半仍微幅收紅，顯示資金在不確定環境下轉向大型科技股避險。</li>
-                <li style="color: #dc2626;"><strong>小型股表現相抗跌：</strong>羅素2000單日逆勢上漲0.70%，反映內需股在外部風險升高時，相對受到避險資金青睞。</li>
+                <li style="color: #dc2626;"><strong>川普關稅重燃通膨擔憂：</strong>鋼鋁與進口藥品面臨高額關稅威脅，市場擔憂製造成本上升將阻礙聯準會降息路徑。</li>
+                <li style="color: #dc2626;"><strong>科技股展現抗跌韌性：</strong>儘管道瓊因油價與關稅重挫，費半與那指仍逆勢微幅收紅，顯示核心科技板塊籌碼穩固。</li>
+                <li style="color: #dc2626;"><strong>高油價衝擊歐洲經濟：</strong>布蘭特原油突破百元大關，促使德國等歐洲國家祭出限價措施，加重市場對衰退的疑慮。</li>
             </ul>
         </div>
 
@@ -1319,7 +769,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <th>指標名稱</th>
                         <th>最新收盤價</th>
                         <th>日漲跌</th>
-                        <th>五日漲跌</th>
+                        <th>5日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1373,12 +823,12 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </tr>
                     <tr>
                         <td>道瓊歐洲50</td>
-                        <td><strong>5,696.96</strong></td>
-                        <td class="text-down"><strong>-0.62%</strong></td>
-                        <td class="text-up"><strong>+2.35%</strong></td>
-                        <td class="text-down"><strong>-4.84%</strong></td>
-                        <td class="text-down"><strong>-1.71%</strong></td>
-                        <td class="text-down"><strong>-1.71%</strong></td>
+                        <td><strong>5,692.86</strong></td>
+                        <td class="text-down"><strong>-0.70%</strong></td>
+                        <td class="text-up"><strong>+2.28%</strong></td>
+                        <td class="text-down"><strong>-4.91%</strong></td>
+                        <td class="text-down"><strong>-1.78%</strong></td>
+                        <td class="text-down"><strong>-1.78%</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -1388,8 +838,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                 <p><strong>川普喊打衝擊信心 歐股重挫</strong><br>川普誓言對伊朗發動猛烈攻擊，引爆市場對中東能源斷供的恐慌，帶動西德州原油暴漲11.93%，通膨重燃疑慮促使歐洲50指數下跌0.62%。美股則呈現分歧，道瓊微跌而那斯達克小漲0.18%，顯示能源價格飆升與利率預期上修的雙重壓力，正全面侵蝕實質經濟板塊的復甦動能。僅少數科技巨頭發揮撐盤作用。</p>
-                 <p><strong>資金湧入科技避險 後市盯油價</strong><br>大型科技股表現與主流氛圍不符，在戰事恐慌中那斯達克與費半（SOX）逆勢走高0.18%與0.40%，代表資金並非全面撤出股市，而是將流動性佳的科技股視為防禦資產。若油價突破120美元導致通膨全面失控，科技股優勢將面臨修正；若油價漲勢暫緩，科技股則有望成為引領大盤反彈的先鋒部隊。</p>
+                 <p><strong>油價與關稅夾擊道瓊走跌</strong>川普誓言對伊朗採取強硬軍事行動並對多項金屬祭出25%關稅，推升布蘭特原油單日大漲7.78%突破百元大關，通膨重燃的恐慌預期使道瓊工業指數下跌0.13%成為四大指數中表現最弱的板塊。在能源飆漲與雙重製造成本壓力夾擊下，資金快速撤出傳統工業與非必需消費（XLY）板塊以規避潛在的獲利下修風險。</p>
+                 <p><strong>費半逆勢抗跌顯露新支撐</strong>儘管通膨擔憂壓抑大盤表現，費城半導體指數（SOX）本週仍逆勢收漲0.40%，與重挫的道瓊指數形成強烈背離——顯示在極端總體經濟壓力下，具備AI剛性需求的科技龍頭仍是機構資金首選避風港。若下週油價持續衝高，需觀察科技股能否死守季線支撐；若油價漲勢暫緩，科技板塊有望率領大盤啟動強勁的反彈波段。</p>
             </div>
         </div>
     </section>
@@ -1402,9 +852,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #eff6ff;">
             <ul>
-                <li style="color: #2563eb;"><strong>通膨與避險拉扯 殖利率微降：</strong>戰事引發避險買盤湧入，促使10年期公債殖利率微降1 bps，長天期公債價格暫時止穩。</li>
-                <li style="color: #2563eb;"><strong>信用債相對具韌性：</strong>高收益債券單日上漲0.24%，顯示市場尚未擔憂地緣風險引發違約，信用利差保持相對穩定。</li>
-                <li style="color: #2563eb;"><strong>美國就業支撐短債：</strong>就業數據凸顯勞動韌性，3月期殖利率持平於3.61%，顯示市場對降息預期持續收斂。</li>
+                <li style="color: #2563eb;"><strong>長天期公債殖利率微降：</strong>在高油價與地緣政治風險夾擊下，資金轉入美債避險，促使10年期與30年期殖利率同步回落。</li>
+                <li style="color: #2563eb;"><strong>就業韌性限制利率下行：</strong>美國初領失業金人數意外降至近兩年低點，就業持穩削弱了長天期公債大幅走強的基本面動能。</li>
+                <li style="color: #2563eb;"><strong>高收益債展現抗震能力：</strong>股市面臨油價飆漲壓力，但高收益債券ETF單日微漲0.24%，顯示信用市場尚未出現恐慌拋售。</li>
             </ul>
         </div>
 
@@ -1417,7 +867,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <th>指標名稱</th>
                         <th>最新殖利率/價格</th>
                         <th>日變動</th>
-                        <th>五日變動</th>
+                        <th>5日變動</th>
                         <th>月變動</th>
                         <th>季變動</th>
                         <th>年初至今變動</th>
@@ -1428,7 +878,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <td>美國3月期殖利率</td>
                         <td><strong>3.61%</strong></td>
                         <td class="text-flat"><strong>0 bps</strong></td>
-                        <td class="text-down"><strong>-1 bps</strong></td>
+                        <td class="text-flat"><strong>0 bps</strong></td>
                         <td class="text-up"><strong>+2 bps</strong></td>
                         <td class="text-up"><strong>+7 bps</strong></td>
                         <td class="text-up"><strong>+6 bps</strong></td>
@@ -1436,8 +886,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tr>
                         <td>美國5年期殖利率</td>
                         <td><strong>3.95%</strong></td>
-                        <td class="text-down"><strong>-1 bps</strong></td>
-                        <td class="text-down"><strong>-15 bps</strong></td>
+                        <td class="text-flat"><strong>0 bps</strong></td>
+                        <td class="text-down"><strong>-14 bps</strong></td>
                         <td class="text-up"><strong>+33 bps</strong></td>
                         <td class="text-up"><strong>+21 bps</strong></td>
                         <td class="text-up"><strong>+23 bps</strong></td>
@@ -1446,7 +896,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <td>美國10年期殖利率</td>
                         <td><strong>4.31%</strong></td>
                         <td class="text-down"><strong>-1 bps</strong></td>
-                        <td class="text-down"><strong>-10 bps</strong></td>
+                        <td class="text-down"><strong>-11 bps</strong></td>
                         <td class="text-up"><strong>+27 bps</strong></td>
                         <td class="text-up"><strong>+13 bps</strong></td>
                         <td class="text-up"><strong>+15 bps</strong></td>
@@ -1486,8 +936,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>就業與避險拉扯 長端止穩</strong><br>美國勞工部公布上週初領失業金人數意外降至近2年低點，強勁就業數據原本應推升利率預期，但中東戰火升溫引爆強大避險買盤，兩股力量相互拉扯下，10年期公債殖利率單日微降1 bps至4.31%，5年期亦同步下跌1 bps。這顯示地緣政治風險暫時壓過通膨隱憂，成為主導債券市場資金流向的最核心變數。</p>
-                <p><strong>信用債未見恐慌 後市盯油價</strong><br>高收益債券（HYG）單日上漲0.24%，走勢與大盤避險氛圍不符，代表資金僅在股市進行獲利了結，尚未將能源危機轉譯為企業流動性枯竭恐慌。若油價突破120美元長期維持高檔，高昂成本勢必侵蝕企業現金流導致違約利差大幅擴大；若油價回落，信用債則有望延續收息優勢，HYG利差是否擴大為前哨訊號。</p>
+                <p><strong>避險需求壓抑長債殖利率</strong>地緣政治衝突升級與油價單日飆漲逾10%引發市場對停滯性通膨的擔憂，避險買盤湧入促使美國10年期公債殖利率微幅下跌1 bps至4.31%。雖然短期物價上行壓力顯著增加，但由於避險情緒凌駕了對聯準會可能延後降息的定價，長天期公債（TLT）在本次衝擊中意外獲得買盤支撐，成為資金短期停泊的主要選擇。</p>
+                <p><strong>信用利差未隨股市大幅擴大</strong>高收益債券ETF（HYG）單日逆勢微漲0.24%，與台股大跌近2%的情境形成明顯背離——這代表儘管地緣與關稅風險加劇了股市拋售，但企業違約風險並未被市場實質重估。若後續油價突破120美元導致通膨全面失控，信用利差大幅擴張將是資金撤出的最前哨訊號；若利差維持低檔，則顯示當前波動僅停留在情緒宣洩層面。</p>
             </div>
         </div>
     </section>
@@ -1500,9 +950,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #fffbeb;">
             <ul>
-                <li style="color: #cc4e01;"><strong>川普喊話引爆油價：</strong>川普揚言猛攻伊朗引爆斷供恐慌，西德州原油暴漲11.93%，成為通膨重燃的最主要推手。</li>
-                <li style="color: #cc4e01;"><strong>強勢美元壓抑金價：</strong>受強勢美元與獲利了結賣壓夾擊，黃金下挫2.29%，顯示避險資金優先湧向高流動性美元。</li>
-                <li style="color: #cc4e01;"><strong>基礎金屬同步回落：</strong>受美元升值拖累，基礎金屬下跌0.80%，反映市場擔憂高油價恐將壓抑全球經濟復甦動能。</li>
+                <li style="color: #cc4e01;"><strong>中東斷供恐慌推升油價：</strong>伊朗戰事升溫與俄羅斯油港遇襲導致產能銳減，西德州原油受斷供預期刺激單日大漲逾11%。</li>
+                <li style="color: #cc4e01;"><strong>強勢美元壓制黃金避險：</strong>地緣衝突升溫，但美元重返100大關的強勢表現削弱黃金避險吸引力，致其單日重挫2.75%。</li>
+                <li style="color: #cc4e01;"><strong>基本金屬面臨景氣考驗：</strong>能源飆漲，基礎金屬ETF微跌0.80%，反映市場擔憂高通膨環境恐侵蝕實體工業的真實需求。</li>
             </ul>
         </div>
 
@@ -1515,7 +965,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <th>指標名稱</th>
                         <th>最新價格</th>
                         <th>日漲跌</th>
-                        <th>五日漲跌</th>
+                        <th>5日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1524,30 +974,30 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 <tbody>
                     <tr>
                         <td>WTI原油</td>
-                        <td><strong>112.06</strong></td>
-                        <td class="text-up"><strong>+11.93%</strong></td>
-                        <td class="text-up"><strong>+18.61%</strong></td>
-                        <td class="text-up"><strong>+58.46%</strong></td>
-                        <td class="text-up"><strong>+96.84%</strong></td>
-                        <td class="text-up"><strong>+96.60%</strong></td>
+                        <td><strong>111.54</strong></td>
+                        <td class="text-up"><strong>+11.41%</strong></td>
+                        <td class="text-up"><strong>+18.06%</strong></td>
+                        <td class="text-up"><strong>+57.72%</strong></td>
+                        <td class="text-up"><strong>+95.92%</strong></td>
+                        <td class="text-up"><strong>+95.68%</strong></td>
                     </tr>
                     <tr>
                         <td>布蘭特原油</td>
-                        <td><strong>109.05</strong></td>
-                        <td class="text-up"><strong>+7.80%</strong></td>
-                        <td class="text-up"><strong>+7.03%</strong></td>
-                        <td class="text-up"><strong>+43.19%</strong></td>
-                        <td class="text-up"><strong>+81.03%</strong></td>
-                        <td class="text-up"><strong>+81.00%</strong></td>
+                        <td><strong>109.03</strong></td>
+                        <td class="text-up"><strong>+7.78%</strong></td>
+                        <td class="text-up"><strong>+7.01%</strong></td>
+                        <td class="text-up"><strong>+43.16%</strong></td>
+                        <td class="text-up"><strong>+80.99%</strong></td>
+                        <td class="text-up"><strong>+80.96%</strong></td>
                     </tr>
                     <tr>
                         <td>黃金期貨</td>
-                        <td><strong>4,702.70</strong></td>
-                        <td class="text-down"><strong>-2.29%</strong></td>
-                        <td class="text-up"><strong>+6.66%</strong></td>
-                        <td class="text-down"><strong>-12.13%</strong></td>
-                        <td class="text-up"><strong>+7.01%</strong></td>
-                        <td class="text-up"><strong>+6.71%</strong></td>
+                        <td><strong>4,651.50</strong></td>
+                        <td class="text-down"><strong>-2.75%</strong></td>
+                        <td class="text-up"><strong>+6.29%</strong></td>
+                        <td class="text-down"><strong>-12.43%</strong></td>
+                        <td class="text-up"><strong>+6.64%</strong></td>
+                        <td class="text-up"><strong>+6.35%</strong></td>
                     </tr>
                     <tr>
                         <td>基礎金屬ETF (DBB)</td>
@@ -1566,8 +1016,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>川普引爆油價飆升 通膨拉警報</strong><br>川普揚言將伊朗打回石器時代的言論，徹底引爆對中東原油斷供的恐慌。西德州原油暴漲11.93%站上112美元，布蘭特原油亦急漲7.80%。高油價不僅直接衝擊企業生產成本，更引發美國汽油飆破5美元大關的擔憂，這股通膨重燃的強大預期，正全面壓抑投資人對全球風險資產的樂觀偏好與風險承受度。</p>
-                <p><strong>金價背離避險邏輯 後市盯美元</strong><br>黃金期貨單日大跌2.29%，表現與傳統地緣風險爆發時的避險邏輯完全不符，這代表市場資金在極度恐慌下，優先選擇拋售所有資產換取流動性最佳的美元，同時反映金價創高後的獲利了結賣壓極為沉重。若美元指數（DXY）持續強勢，黃金短線仍將面臨評價修正；若油價回落帶動美元走貶，金價才有望重啟漲勢。</p>
+                <p><strong>斷供恐慌引爆原油強勢噴出</strong>烏克蘭無人機摧毀俄羅斯4成油港儲油設施，疊加川普誓言猛攻伊朗，雙重地緣衝擊推升西德州原油（WTI）單日暴漲11.41%至111.54美元。這股突如其來的能源飆漲潮徹底打亂了市場原先對通膨降溫的定價路徑，使資金被迫快速拋售對能源成本極度敏感的航空與傳統運輸類股，進而引發跨市場的風險重估效應。</p>
+                <p><strong>黃金重挫突顯美元強勢壓制</strong>黃金期貨單日重挫2.75%至4,651.50美元，與油價單日狂飆逾11%形成罕見的避險背離——這代表現階段主導金價的不是純粹的戰爭恐慌，而是強勢美元與流動性偏好帶來的壓制效果。若油價持續飆升迫使聯準會重啟升息討論，無孳息的黃金將面臨更大評價修正壓力；若地緣降溫且美元回落，金價才有望重獲資金青睞。</p>
             </div>
         </div>
     </section>
@@ -1580,9 +1030,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #f0fdf4;">
             <ul>
-                <li style="color: #059669;"><strong>外資大賣拖累台股：</strong>外資大賣386.96億元，台股下挫1.82%，顯示避險資金正快速撤離亞洲。</li>
-                <li style="color: #059669;"><strong>日韓股市同步崩跌：</strong>韓國重挫4.47%與日本大跌2.38%，反映高油價對亞洲製造業成本的壓力，科技股淪為外資提款機。</li>
-                <li style="color: #059669;"><strong>投信撐盤內外互抵：</strong>投信單日買超83.26億元力抗外資賣壓，但自營商同步轉賣，籌碼面呈現嚴重的土洋對立僵局。</li>
+                <li style="color: #059669;"><strong>外資瘋狂倒貨重擊台股：</strong>川普言論引爆地緣恐慌，外資單日提款逾3869億元，直接拖累台灣加權指數大跌1.82%。</li>
+                <li style="color: #059669;"><strong>投信逢低承接力抗賣壓：</strong>儘管外資大賣，投信仍逆勢加碼83.26億元，顯示本土資金正試圖在急跌過程中尋找錯殺買點。</li>
+                <li style="color: #059669;"><strong>亞股全面重挫無1倖免：</strong>能源斷供與關稅威脅引發資金逃離亞洲市場，韓國與日本股市分別大跌4.47%與2.38%。</li>
             </ul>
         </div>
 
@@ -1594,7 +1044,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <th>指標名稱</th>
                         <th>最新收盤價</th>
                         <th>日漲跌</th>
-                        <th>五日漲跌</th>
+                        <th>5日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1696,8 +1146,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>中東戰火升溫引爆油價狂飆，高度依賴能源進口的亞洲股市首當其衝。外資受恐慌驅使，單日大舉提款台股386.96億元，拖累加權指數下跌1.82%。同屬製造業重鎮的南韓KOSPI重挫4.47%與日經225大跌2.38%，顯示資金正無差別地自新興亞洲撤退，半導體與權值股淪為主要外資提款機。</strong></p>
-                <p><strong>投信撐盤杯水車薪 後市盯外資</strong><br>投信單日買超83.26億元的護盤動作，與外資高達386.96億元的強大賣壓形成對比，代表內資雖有意逢低承接，但面對地緣系統性風險（0050等權值股首當其衝）仍顯獨木難支。若中東衝突擴大導致外資延續逾100億元大逃殺，台股技術面將面臨深度修正；若油價漲勢見頂且外資賣壓收斂，內資標的有望回穩。</p>
+                <p><strong>外資避險大逃殺引爆台股急殺</strong>川普對中東戰事的強硬態度以及新1波關稅威脅，觸發外資高達386.96億元的單日提款潮，拖累台灣加權指數大跌1.82%失守33000點大關。這波極端賣壓主要集中在對出口與能源成本高度敏感的權值板塊，本土投信雖買超83.26億元試圖護盤，但仍無法抵擋國際資金為規避全球通膨再起風險而進行的劇烈降倉操作。</p>
+                <p><strong>台股抗跌優於韓股的背後意涵</strong>韓國KOSPI指數單日暴跌4.47%，對比之下台股僅下跌1.82%，此背離現象顯示台股核心半導體供應鏈在此波地緣衝擊中具備較強的資金黏著度。若後續油價失控且外資連續賣超超過千億規模，台股將面臨向下尋求季線支撐的補跌壓力；若美股科技股持續逆勢走揚，則有望為台股AI相關族群提供率先止跌反彈的契機。</p>
             </div>
         </div>
     </section>
@@ -1710,9 +1160,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="tldr-block" style="background: #ecfeff;">
             <ul>
-                <li style="color: #0891b2;"><strong>避險資金湧入美元：</strong>戰火推升避險需求，帶動美元指數單日上漲0.34%，強勢逼近百元大關，全面壓制非美貨幣。</li>
-                <li style="color: #0891b2;"><strong>台幣跟隨亞股承壓：</strong>外資大舉提款匯出，導致台幣面臨貶值壓力，美元兌台幣單日上漲0.20%，貶破32元大關。</li>
-                <li style="color: #0891b2;"><strong>日圓避險屬性發揮：</strong>美元走強下，美元兌日圓單日僅微漲0.07%，顯示日圓避險屬性發揮，抵銷部分貶值壓力。</li>
+                <li style="color: #0891b2;"><strong>避險買盤推升美元走強：</strong>關稅威脅與中東戰事不確定性推升避險情緒，促使資金湧入美元，帶動美元指數重返100大關。</li>
+                <li style="color: #0891b2;"><strong>歐元展現抗跌微幅收升：</strong>美元雖走強，歐元單日仍微升0.14%，反映歐洲在能源通膨壓力下維持緊縮政策的潛在支撐。</li>
+                <li style="color: #0891b2;"><strong>台幣隨外資撤出而重貶：</strong>外資提款引發股匯雙殺，美元兌台幣單日走升0.20%，使台幣匯價正式貶破32元整數大關。</li>
             </ul>
         </div>
 
@@ -1725,7 +1175,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <th>指標名稱</th>
                         <th>最新匯率</th>
                         <th>日漲跌</th>
-                        <th>五日漲跌</th>
+                        <th>5日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1734,12 +1184,12 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 <tbody>
                     <tr>
                         <td>美元指數</td>
-                        <td><strong>99.99</strong></td>
-                        <td class="text-up"><strong>+0.34%</strong></td>
-                        <td class="text-up"><strong>+0.09%</strong></td>
+                        <td><strong>100.03</strong></td>
+                        <td class="text-up"><strong>+0.38%</strong></td>
+                        <td class="text-up"><strong>+0.13%</strong></td>
+                        <td class="text-up"><strong>+1.68%</strong></td>
                         <td class="text-up"><strong>+1.64%</strong></td>
-                        <td class="text-up"><strong>+1.60%</strong></td>
-                        <td class="text-up"><strong>+1.74%</strong></td>
+                        <td class="text-up"><strong>+1.78%</strong></td>
                     </tr>
                     <tr>
                         <td>美元兌台幣</td>
@@ -1776,8 +1226,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>戰火驅動避險潮 美元強攻</strong><br>川普對中東戰事的強硬發言，瞬間擊潰市場對軟著陸的樂觀定價，恐慌情緒驅使資金轉入終極避險天堂。美元指數單日上漲0.34%收在99.99，不僅逆轉先前的疲弱態勢，更對歐元、台幣等非美貨幣形成壓制。這顯示在不可測的地緣風險面前，高流動性的美元資產（UUP）依舊是機構法人的首選防禦工具。</p>
-                <p><strong>非美貨幣重挫 後市盯歐元</strong><br>外資為規避地緣風險而從亞洲股匯市撤退，導致美元兌台幣單日上漲0.20%貶破32元，這代表資金外流趨勢正影響新興市場流動性。若中東衝突未歇且美元指數突破100大關，亞幣貶值壓力恐進一步加劇；若戰事意外降溫，則需密切觀察歐元兌美元（FXE）能否率先反彈，作為全球風險偏好回溫的先期訊號。</p>
+                <p><strong>地緣恐慌助燃美元強勢回歸</strong>川普對進口金屬與藥品祭出高額關稅，配合中東地緣政治全面升溫，雙重利空推動市場避險情緒急速飆升，帶動美元指數單日上漲0.38%重返100.03高位。強勢美元不僅對新興市場貨幣造成全面性抽血壓力，更直接削弱了以美元計價的大宗商品吸引力，使得資金在流動性考量下優先選擇回流美國本土尋求安全庇護。</p>
+                <p><strong>歐元抗跌透漏的政策差異訊號</strong>在美元強勢反彈且日圓持續貶值的環境下，歐元兌美元（EURUSD）卻逆勢微幅上漲14 bps，此1背離現象顯示市場預期歐洲受高油價衝擊更深，恐迫使歐洲央行維持更長時間的高利率政策。若油價持續飆升，歐元將因停滯性通膨擔憂而轉弱；若原油供給擔憂順利緩解，歐美利差的縮小預期有望為歐元提供進1步上行空間。</p>
             </div>
         </div>
     </section>
@@ -1790,16 +1240,16 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         <!-- TL;DR -->
         <div class="tldr-block" style="background: #faf5ff;">
             <ul>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> 記憶體市場在經歷Google演算法衝擊後，迎來外資升評的「黃金買點」。</li>
-                <li style="color: #7c3aed;"><strong>[看多]</strong> 企業積極建置AI資料中心，帶動高效能運算晶片需求持續爆發。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 川普政府擬對鋼鐵與鋁金屬衍生品徵收25%關稅，重創汽車製造成本。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 高油價與通膨預期重燃，嚴重侵蝕民眾實質可支配所得，拖累非必需品銷售。</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> 記憶體與儲存受惠報價回升與剛性需求，成為資金抗震避風港。</li>
+                <li style="color: #7c3aed;"><strong>[看多]</strong> 壟斷型半導體設備商憑藉極高定價權，成功吸引長線買盤進駐。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 傳統汽車製造同時面臨鋼鋁關稅與高油價打擊，獲利修復預期崩解。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 運動服飾與0售受庫存積壓與高通膨排擠消費影響，面臨戴維斯雙殺。</li>
             </ul>
         </div>
 
         <!-- 看多推薦第一檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:記憶體 (以威騰電子為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:記憶體與儲存 (以威騰電子為例)</h3>
             <div class="overflow-x-auto">
                 <table class="analysis-table">
                     <thead>
@@ -1811,15 +1261,15 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tbody>
                         <tr>
                             <td class="font-semibold text-slate-600">產業趨勢</td>
-                            <td>記憶體市場在經歷Google演算法衝擊後，迎來外資升評的「黃金買點」。</td>
+                            <td>外資點名記憶體產業在演算法衝擊後浮現黃金買點，短線具備極強抗震韌性。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">價格循環</td>
-                            <td>戰事並未摧毀科技剛需，記憶體庫存去化與報價回溫趨勢依然穩健。</td>
+                            <td class="font-semibold text-slate-600">訂單能見度</td>
+                            <td>雲端資料中心建設對大容量儲存需求持續不墜，基本面獲利重估空間廣闊。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">資金動向</td>
-                            <td>避險資金在科技股中尋找高防禦性與具轉機題材的次族群停泊。</td>
+                            <td>在科技板塊面臨通膨逆風時，記憶體族群成功吸引部分避險資金進駐撐盤。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
@@ -1829,7 +1279,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 </a>
                             </td>
                             <td>
-                                AI伺服器需求持續發酵，帶動高容量存儲設備訂單回流，獲利結構有望顯著改善。
+                                NAND Flash報價回升與AI伺服器儲存需求爆發，雙位數毛利率成長預期提供估值下檔保護。
                             </td>
                         </tr>
                         <tr>
@@ -1840,7 +1290,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 </a>
                             </td>
                             <td>
-                                股價若能守住關鍵支撐並帶量突破均線糾結區，多頭格局將更加確立。
+                                股價在市場劇烈回檔中強勢守穩月線支撐，若帶量突破前高，有望開啟新1波波段多頭走勢。
                             </td>
                         </tr>
                     </tbody>
@@ -1851,14 +1301,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>AI剛需支撐 記憶體迎轉機</strong><br>儘管地緣政治引發大盤劇震，但外資點名威騰電子等存儲巨頭已浮現買點，這代表AI帶動的基礎設施剛需並未被戰火摧毀。在半導體族群中，記憶體板塊的報價回升與庫存去化邏輯最為明確。若油價不再失控，威騰有望憑藉強勁AI存儲訂單，帶動2026年EPS上看5.2美元，成為引領科技股反攻的急先鋒標的。</p>
+                    <p><strong>演算法衝擊後的錯殺機遇</strong><br>美光與威騰等儲存指標股在整體科技板塊承壓時展現出極強的抗跌力道，這代表市場資金並未因為地緣風險而全面撤出AI硬體賽道，而是精準轉向具備報價回升與剛性需求支撐的記憶體次板塊。只要雲端大廠的資本支出計畫維持擴張趨勢不變，此族群將在本次估值修正後成為下半年科技多頭最核心的領頭羊板塊。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看多推薦第二檔 -->
         <div class="stock-recommendation bullish">
-            <h3 class="recommendation-title bullish">[看多]:高效能運算 (以超威半導體為例)</h3>
+            <h3 class="recommendation-title bullish">[看多]:半導體設備 (以艾司摩爾為例)</h3>
             <div class="overflow-x-auto">
                 <table class="analysis-table">
                     <thead>
@@ -1870,36 +1320,36 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tbody>
                         <tr>
                             <td class="font-semibold text-slate-600">產業趨勢</td>
-                            <td>企業積極建置AI資料中心，帶動高效能運算晶片需求持續爆發。</td>
-                        </tr>
-                        <tr>
-                            <td class="font-semibold text-slate-600">訂單能見度</td>
-                            <td>儘管大盤震盪，高效能處理器市占率擴張邏輯依然獲得買盤認同。</td>
+                            <td>儘管通膨疑慮升溫，晶圓代工廠擴充先進製程的長期資本支出依然具備高度確定性。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">資金動向</td>
-                            <td>避險氛圍中，具備高流動性與強大護城河的大型科技股成為資金避風港。</td>
+                            <td>費城半導體指數單日逆勢收紅0.40%，顯示核心半導體設備商仍受法人長線資金青睞。</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold text-slate-600">競爭優勢</td>
+                            <td>隨著AI晶片需求爆發，EUV曝光機的出貨量與未交單能見度為營運提供極高穩定度。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NASDAQ-AMD/financials-overview/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-ASML/financials-overview/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                AI加速器出貨放量，伺服器業務營收占比穩步提升，毛利率擴張趨勢明確。
+                                擁有全球先進製程曝光機絕對壟斷地位，技術護城河確保其在景氣逆風中維持極高定價權與獲利。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NASDAQ-AMD/technicals/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NASDAQ-ASML/technicals/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                單日逆勢上漲3.38%，展現極強抗跌韌性，後續有望挑戰前波歷史高點。
+                                股價回測重要均線後迅速獲得買盤承接留下長下影線，顯示大型機構資金逢低佈局意願依然強烈。
                             </td>
                         </tr>
                     </tbody>
@@ -1910,14 +1360,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>算力需求不減 AI晶片抗震</strong><br>戰火雖引發拋售潮，但超威（AMD）單日逆勢大漲3.38%，走勢與大盤避險氛圍形成強烈對比，代表資金高度認可AI算力建設的剛需。在總體經濟面臨高油價威脅時，企業並未縮減對AI晶片的資本支出。若那斯達克順利止穩，超威憑藉市占率提升，預期下半年營收年增率可達25%，將是帶動費半重返榮耀的引擎。</p>
+                    <p><strong>壟斷型設備商的避風港效應</strong><br>費城半導體指數在油價飆漲的恐慌環境中逆勢上漲0.40%，此1背離現象完美詮釋了艾司摩爾這類絕對壟斷型設備商的避風港價值。資金明確認知到，無論短期通膨數據如何波動，全球科技巨頭為爭奪AI算力霸權的軍備競賽絕不會停止。只要AI晶片迭代進度不變，設備龍頭仍將享有最高確定性的獲利增長預期。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看空推薦第一檔 -->
         <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:傳統汽車製造 (以通用汽車為例)</h3>
+            <h3 class="recommendation-title bearish">[看空]:傳統汽車製造 (以福特汽車為例)</h3>
             <div class="overflow-x-auto">
                 <table class="analysis-table">
                     <thead>
@@ -1929,36 +1379,36 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <tbody>
                         <tr>
                             <td class="font-semibold text-slate-600">政策風險</td>
-                            <td>川普政府擬對鋼鐵與鋁金屬衍生品徵收25%關稅，重創汽車製造成本。</td>
+                            <td>川普政府正式預告對鋼鐵與鋁衍生品加徵25%關稅，將大幅推升汽車製造成本。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">成本轉嫁</td>
-                            <td>競爭激烈的車市環境下，車廠難以將高昂的原料成本完全轉嫁給消費者。</td>
+                            <td class="font-semibold text-slate-600">需求逆風</td>
+                            <td>油價飆破百元大關嚴重打擊消費者對傳統燃油車的購買意願，需求端面臨顯著逆風。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">利率環境</td>
-                            <td>通膨重燃疑慮導致降息預期收斂，高車貸利率持續壓抑終端購車意願。</td>
+                            <td class="font-semibold text-slate-600">總經壓力</td>
+                            <td>在高通膨與高利率雙重擠壓下，車貸違約率攀升風險恐進1步侵蝕汽車金融部門獲利。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-GM/financials-overview/" target="_blank" class="link-button fundamental">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-F/financials-overview/" target="_blank" class="link-button fundamental">
                                     基本面
                                     <span class="link-button-subtitle">按此看財務數據</span>
                                 </a>
                             </td>
                             <td>
-                                原物料成本墊高與庫存去化緩慢，恐雙重擠壓營收成長與營業利益率。
+                                原物料成本暴增與終端庫存去化緩慢形成雙面夾擊，毛利率面臨嚴峻下修壓力且難以轉嫁消費者。
                             </td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">
-                                <a href="https://tw.tradingview.com/symbols/NYSE-GM/technicals/" target="_blank" class="link-button technical">
+                                <a href="https://tw.tradingview.com/symbols/NYSE-F/technicals/" target="_blank" class="link-button technical">
                                     技術面
                                     <span class="link-button-subtitle">按此看技術圖表</span>
                                 </a>
                             </td>
                             <td>
-                                股價單日重挫3.21%，跌破近期關鍵支撐，技術面呈現明顯弱勢空頭排列。
+                                股價跌破關鍵支撐頸線並伴隨成交量放大，呈現明顯的空頭排列格局，短線缺乏強而有力的反彈動能。
                             </td>
                         </tr>
                     </tbody>
@@ -1969,14 +1419,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                  <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>關稅與油價夾擊 車廠陷泥淖</strong><br>通用汽車（GM）單日大跌3.21%，徹底反映傳統製造業在當前宏觀環境下的脆弱性。川普針對鋼鋁祭出25%高額關稅，加上油價狂飆與車貸利率居高不下，形成完美的負面風暴。這代表汽車產業不僅面臨供給端成本暴增，還要承受需求端消費力萎縮。若關稅政策落地，預期將侵蝕整車廠年度獲利空間達15%以上。</p>
+                    <p><strong>關稅與油價的雙重毀滅打擊</strong><br>福特等傳統車廠正面臨近年來最嚴峻的完美風暴，這不僅是單1成本增加的問題，而是鋼鋁關稅暴增25%與油價突破百元大關同時發生的結構性災難。這種雙重擠壓將徹底摧毀車廠今年的獲利修復預期，迫使市場重新評估其資本支出的可持續性。在成本轉嫁能力獲得證實前，傳統汽車板塊將持續成為資金大舉提款的首要重災區。</p>
                 </div>
             </div>
         </div>
 
         <!-- 看空推薦第二檔 -->
         <div class="stock-recommendation bearish">
-            <h3 class="recommendation-title bearish">[看空]:消費性成衣 (以耐吉為例)</h3>
+            <h3 class="recommendation-title bearish">[看空]:運動服飾與0售 (以耐吉為例)</h3>
             <div class="overflow-x-auto">
                 <table class="analysis-table">
                     <thead>
@@ -1987,16 +1437,16 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="font-semibold text-slate-600">終端消費</td>
-                            <td>高油價與通膨預期重燃，嚴重侵蝕民眾實質可支配所得，拖累非必需品銷售。</td>
+                            <td class="font-semibold text-slate-600">市場疲軟</td>
+                            <td>中國市場銷售動能嚴重疲軟，加上全球能源通膨重燃，非必需消費品首當其衝面臨拋售。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">庫存壓力</td>
-                            <td>中國市場銷售疲軟，導致全球庫存去化進度大幅落後市場原先預期。</td>
+                            <td class="font-semibold text-slate-600">成本壓力</td>
+                            <td>供應鏈物流成本因地緣政治衝突而面臨再次飆升的風險，嚴重威脅其下半年的毛利率指引。</td>
                         </tr>
                         <tr>
-                            <td class="font-semibold text-slate-600">競爭加劇</td>
-                            <td>面臨新興品牌強力挑戰，市占率流失壓力導致產品定價能力明顯下滑。</td>
+                            <td class="font-semibold text-slate-600">資金潰散</td>
+                            <td>最新1季財報表現不佳導致股價創下8年半新低，市場對其重返高成長軌道的信心潰散。</td>
                         </tr>
                          <tr>
                             <td class="font-semibold text-slate-600">
@@ -2006,7 +1456,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 </a>
                             </td>
                             <td>
-                                營收成長停滯且促銷活動增加，導致毛利率持續承壓，財務體質面臨嚴峻考驗。
+                                庫存去化進度不如預期疊加高通膨排擠消費者可支配所得，營收與淨利雙雙面臨華爾街大規模下修。
                             </td>
                         </tr>
                         <tr>
@@ -2017,7 +1467,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 </a>
                             </td>
                             <td>
-                                股價狂瀉15%創下8年半新低，所有均線急彎向下，空方賣壓深不見底。
+                                股價呈現單日重挫15%的斷崖式下跌並跌破所有均線支撐，籌碼面徹底鬆動且缺乏任何抄底買盤。
                             </td>
                         </tr>
                     </tbody>
@@ -2028,7 +1478,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>通膨侵蝕買氣 零售巨頭重摔</strong><br>耐吉（NKE）單日崩跌15%創下8年半新低，這是消費市場最具破壞性的警訊。代表在高油價與通膨重燃的威脅下，民眾正快速削減對非必需品的支出。中國市場買氣疲弱更讓高庫存問題雪上加霜，顯示大型零售商的定價權正在瓦解。若原油價格持續居高不下，其庫存周轉天數恐攀升至110天，面臨更嚴酷估值收縮。</p>
+                    <p><strong>消費降級與高庫存的致命連鎖</strong><br>耐吉股價單日狂瀉15%並創下8年半新低，其背後代表的深層警訊是全球非必需消費需求的全面崩盤。在原油飆漲與通膨高燒不退的宏觀環境下，消費者可支配所得被嚴重排擠，這讓本就面臨庫存去化挑戰的0售巨頭雪上加霜。若無法在短期內證明其中國市場策略轉型見效，其估值恐將面臨長達數個季度的殘酷戴維斯雙殺。</p>
                 </div>
             </div>
         </div>
@@ -2036,13 +1486,13 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
     <!-- 頁尾 -->
     <footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
-        <p class="text-xs" style="color: #64748b;">© 2026 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+        <p class="text-xs" style="color: #64748b;">© 2025 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
         <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享,不構成任何投資建議,投資人應秉持獨立判斷,審慎評估並自負投資風險。</p>
     </footer>
 </div>
 
 <!-- 回頂按鈕 -->
-<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部" style="display: none;">↑</button>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
 
 <script>
 /* 進度條功能 */
@@ -2126,7 +1576,7 @@ window.addEventListener('load', function() {
 
 <script>
 /* ── 外部連結修復腳本 ──────────────────────────────────────────
-   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入一段 JS，
+   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入1段 JS，
    攔截所有連結點擊並改用 postMessage 通知父框架開啟外部連結。
    在 Claude.ai 以外的環境（Netlify、本機瀏覽器等），
    父框架不存在，外部連結會因此完全失效。
@@ -2164,5 +1614,5 @@ window.addEventListener('load', function() {
   }, true);  /* ← true = capture 模式，比 bubble 模式更早執行 */
 })();
 </script>
-
-</body></html>
+</body>
+</html>
