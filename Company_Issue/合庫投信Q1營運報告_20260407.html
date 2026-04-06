@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="zh-TW"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      (function() {
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
+          }
+        };
+
+        let requestId = 0;
+        let callbacksMap = new Map();
+        let streamControllers = new Map();
+        
+        window.claude = {
+          complete: (prompt) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
+            });
+          }
+        };
+
+        window.storage = {
+          get: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageGet', id, key, shared }, '*');
+            });
+          },
+          set: (key, value, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
+            });
+          },
+          delete: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
+            });
+          },
+          list: (prefix, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
+            });
+          }
+        };
+
+        let pendingBlobs = new Map();
+        URL.createObjectURL = (blob) => {
+          // Store the blob and create an ID and URL for it
+          const blobId = `blob-${Date.now()}-${Math.random()}`;
+          pendingBlobs.set(blobId, blob);
+          return `blob-request://${blobId}`;
+        };
+
+        URL.revokeObjectURL = (url) => {
+          // Remove the blob from our store
+          const blobId = url.replace("blob-request://", "");
+          pendingBlobs.delete(blobId);
+        };
+
+        const getBlobFromURL = (url) => {
+          const blobId = url.replace("blob-request://", "");
+          return pendingBlobs.get(blobId);
+        };
+
+        // Override global fetch with streaming support
+        window.fetch = (url, init = {}) => {
+          return new Promise((resolve, reject) => {
+            const id = requestId++;
+            const channelId = `fetch-${id}-${Date.now()}`;
+            
+            callbacksMap.set(id, { 
+              resolve: (response) => {
+                // Create a ReadableStream for the response body
+                const stream = new ReadableStream({
+                  start(controller) {
+                    streamControllers.set(channelId, controller);
+                  },
+                  cancel() {
+                    streamControllers.delete(channelId);
+                  }
+                });
+                
+                // Create and return the Response with the stream
+                resolve(new Response(stream, {
+                  status: response.status,
+                  statusText: response.statusText,
+                  headers: response.headers
+                }));
+              },
+              reject,
+              channelId
+            });
+            
+            window.parent.postMessage({
+              type: 'proxyFetch',
+              id,
+              url,
+              init,
+              channelId
+            }, '*');
+          });
+        };
+
+        window.addEventListener('message', async (event) => {
+          if (event.data.type === 'takeScreenshot') {
+            const rootElement = document.getElementById('artifacts-component-root-html');
+            if (!rootElement) {
+              window.parent.postMessage({
+                type: 'screenshotError',
+                error: new Error('Root element not found'),
+              }, '*');
+            }
+            const screenshot = await htmlToImage.toPng(rootElement, {
+              imagePlaceholder:
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
+            });
+            window.parent.postMessage({
+              type: 'screenshotData',
+              data: screenshot,
+            }, '*');
+          } else if (event.data.type === 'claudeComplete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.completion);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'proxyFetchResponse') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+              callbacksMap.delete(event.data.id);
+            } else {
+              // Initial response with headers, status, etc.
+              callback.resolve({
+                status: event.data.status,
+                statusText: event.data.statusText,
+                headers: event.data.headers
+              });
+              // Don't delete the callback yet if streaming
+              if (!event.data.body) {
+                callbacksMap.delete(event.data.id);
+              }
+            }
+          } else if (event.data.type === 'proxyFetchStream') {
+            // Handle streaming data chunks
+            const controller = streamControllers.get(event.data.channelId);
+            if (controller) {
+              if (event.data.error) {
+                controller.error(new Error(event.data.error));
+                streamControllers.delete(event.data.channelId);
+              } else if (event.data.done) {
+                controller.close();
+                streamControllers.delete(event.data.channelId);
+                // Clean up the callback
+                const callback = Array.from(callbacksMap.entries()).find(
+                  ([_, value]) => value.channelId === event.data.channelId
+                );
+                if (callback) {
+                  callbacksMap.delete(callback[0]);
+                }
+              } else if (event.data.chunk) {
+                controller.enqueue(new Uint8Array(event.data.chunk));
+              }
+            }
+          } else if (event.data.type === 'storageGet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageSet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageDelete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageList') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          }
+        });
+
+        window.addEventListener('click', (event) => {
+          const isEl = event.target instanceof HTMLElement;
+          if (!isEl) return;
+    
+          // find ancestor links
+          const linkEl = event.target.closest("a");
+          if (!linkEl || !linkEl.href) return;
+    
+          event.preventDefault();
+          event.stopImmediatePropagation();
+    
+          if (linkEl.href.startsWith("blob-request:")) {
+            const blob = getBlobFromURL(linkEl.href);
+            if (!blob) return;
+            void blob.arrayBuffer().then((data) => {
+              window.parent.postMessage({
+                type: "downloadFile",
+                filename: linkEl.download,
+                data,
+                mimeType: blob.type || "application/octet-stream",
+              });
+            });
+          } else if (linkEl.href.startsWith("data:")) {
+            const [header, base64Data] = linkEl.href.split(",");
+            const mimeMatch = header.match(/data:([^;]+)/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+            const binaryString = atob(base64Data);
+            const data = Uint8Array.from(binaryString, (c) =>
+              c.charCodeAt(0),
+            ).buffer;
+            window.parent.postMessage({
+              type: "downloadFile",
+              filename: linkEl.download,
+              data,
+              mimeType,
+            });
+          } else {
+            let linkUrl;
+            try {
+              linkUrl = new URL(linkEl.href);
+            } catch (error) {
+              return;
+            }
+    
+            if (linkUrl.hostname === window.location.hostname) return;
+      
+            window.parent.postMessage({
+              type: 'openExternal',
+              href: linkEl.href,
+            }, '*');
+          }
+      });
+
+        const originalOpen = window.open;
+        window.open = function (url) {
+          window.parent.postMessage({
+            type: "openExternal",
+            href: url,
+          }, "*");
+        };
+
+        window.addEventListener('error', (event) => {
+          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  <script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjM0Y2RjMzdkODYzZjgzOWY1NDQyMjUyNzQ2YjMyNjcyMzlkNGI5NWQiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxMzc4MDAzODMyMDc4NzQ2ODAyMiIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzNhZDgxZGVjNDk3YTIzOGFf5ZCI5bqr5oqV5L-hUTHnh5_pgYvoiIfnlLPotJbotqjli6LlhIDooajmnb8uaHRtbC00OTYifSwiZXhwIjoxNzc1MTE2NTcwLCJpYXQiOjE3NzUxMTI5NzAsImFsZyI6IlJTMjU2In0.DuJvwD65cggkA23ZPxL2IsAPuM-nfsj5D9_ug6Tr50E6hA6UN7lvBkWBi3D0NpDRtSoAJ8-OG3EwEPe_Bgf7Vbr3NU7Zt5Thr7ZIL6J7qAh-kJDd2txnd-6pbtAXYrwC1SakmEibk9s5mi_dqjW2TiVPe6vb74AkyajpqjOe165ESeIx3xoOh_KG3cWnssYktwFN8FzWNLhx4VE4YDIECNgXTlmMDcqzo_mTcupp0IXNAakDQI_mhFdWolT_dWt_G7MsmTjlaq74U4jB9pC-xpwHmMJVpUhMHSd9zNp2EYGtDdQTvoFpXNqWKbt5uYdr_CqDOPnN-zulnbHnbcW5Uw","c_3ad81dec497a238a_合庫投信Q1營運與申贖趨勢儀表板.html-496")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合庫投信 - 115年Q1營運與申贖趨勢報告</title>
+    <!-- Tailwind CSS (inline, no CDN) -->
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" crossorigin="anonymous"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0" crossorigin="anonymous"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web" crossorigin="anonymous"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/thin/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/duotone/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/thin/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/duotone/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.2s;
+            break-inside: avoid;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .nav-item {
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .nav-item.active {
+            border-bottom-color: #00695c;
+            color: #00695c;
+            background-color: #f0fdfa;
+        }
+        .nav-item:hover:not(.active) {
+            color: #111827;
+            background-color: #f9fafb;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        /* Print Styles */
+        @media print {
+            @page { size: A4; margin: 1cm; }
+            body { background-color: white; font-size: 10pt; color: #000; }
+            header nav, .no-print, button, .shadow-sm, .shadow-lg { display: none !important; }
+            header { border-bottom: 2px solid #00695c; margin-bottom: 15px; padding-bottom: 10px; }
+            .tab-content { display: block !important; margin-bottom: 25px; page-break-inside: avoid; }
+            .tab-content::before {
+                content: attr(data-print-title); display: block; font-size: 14pt; font-weight: bold; color: #004d40;
+                margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #ddd;
+            }
+            .card { box-shadow: none !important; border: 1px solid #ddd; margin-bottom: 15px; }
+            .chart-container { height: 250px !important; }
+            canvas { max-width: 100% !important; }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sticky{position:sticky}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-8{height:2rem}.w-10{width:2.5rem}.w-8{width:2rem}.min-w-full{min-width:100%}.max-w-7xl{max-width:80rem}.cursor-pointer{cursor:pointer}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(243 244 246 / var(--tw-divide-opacity, 1))}.overflow-x-auto{overflow-x:auto}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border-b{border-bottom-width:1px}.border-l-4{border-left-width:4px}.border-l-8{border-left-width:8px}.border-t{border-top-width:1px}.border-t-4{border-top-width:4px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-green-500{--tw-border-opacity:1;border-color:rgb(34 197 94 / var(--tw-border-opacity, 1))}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229 / var(--tw-border-opacity, 1))}.border-orange-500{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202 / var(--tw-border-opacity, 1))}.border-red-500{--tw-border-opacity:1;border-color:rgb(239 68 68 / var(--tw-border-opacity, 1))}.border-teal-500{--tw-border-opacity:1;border-color:rgb(20 184 166 / var(--tw-border-opacity, 1))}.border-teal-600\/50{border-color:rgb(13 148 136 / 0.5)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-red-500\/20{background-color:rgb(239 68 68 / 0.2)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241 / var(--tw-bg-opacity, 1))}.bg-teal-700{--tw-bg-opacity:1;background-color:rgb(15 118 110 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-orange-50{--tw-gradient-from:#fff7ed var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 247 237 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-50{--tw-gradient-from:#f0fdfa var(--tw-gradient-from-position);--tw-gradient-to:rgb(240 253 250 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-700{--tw-gradient-from:#0f766e var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 118 110 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-teal-900{--tw-gradient-to:#134e4a var(--tw-gradient-to-position)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.p-4{padding:1rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pl-11{padding-left:2.75rem}.pl-5{padding-left:1.25rem}.pt-2{padding-top:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-red-100{--tw-text-opacity:1;color:rgb(254 226 226 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.text-teal-100{--tw-text-opacity:1;color:rgb(204 251 241 / var(--tw-text-opacity, 1))}.text-teal-200{--tw-text-opacity:1;color:rgb(153 246 228 / var(--tw-text-opacity, 1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212 / var(--tw-text-opacity, 1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136 / var(--tw-text-opacity, 1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-600{--tw-text-opacity:1;color:rgb(202 138 4 / var(--tw-text-opacity, 1))}.opacity-80{opacity:0.8}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:flex{display:flex}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media print{.print\:border{border-width:1px}.print\:border-2{border-width:2px}.print\:border-black{--tw-border-opacity:1;border-color:rgb(0 0 0 / var(--tw-border-opacity, 1))}.print\:border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.print\:border-teal-700{--tw-border-opacity:1;border-color:rgb(15 118 110 / var(--tw-border-opacity, 1))}.print\:bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.print\:bg-transparent{background-color:transparent}.print\:bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.print\:text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.print\:text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.print\:text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.print\:text-red-700{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.print\:text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sticky{position:sticky}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-8{height:2rem}.w-10{width:2.5rem}.w-8{width:2rem}.min-w-full{min-width:100%}.max-w-7xl{max-width:80rem}.cursor-pointer{cursor:pointer}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(243 244 246 / var(--tw-divide-opacity, 1))}.overflow-x-auto{overflow-x:auto}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border-b{border-bottom-width:1px}.border-l-4{border-left-width:4px}.border-l-8{border-left-width:8px}.border-t{border-top-width:1px}.border-t-4{border-top-width:4px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-green-500{--tw-border-opacity:1;border-color:rgb(34 197 94 / var(--tw-border-opacity, 1))}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229 / var(--tw-border-opacity, 1))}.border-orange-500{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202 / var(--tw-border-opacity, 1))}.border-red-500{--tw-border-opacity:1;border-color:rgb(239 68 68 / var(--tw-border-opacity, 1))}.border-teal-500{--tw-border-opacity:1;border-color:rgb(20 184 166 / var(--tw-border-opacity, 1))}.border-teal-600\/50{border-color:rgb(13 148 136 / 0.5)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-red-500\/20{background-color:rgb(239 68 68 / 0.2)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241 / var(--tw-bg-opacity, 1))}.bg-teal-700{--tw-bg-opacity:1;background-color:rgb(15 118 110 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-orange-50{--tw-gradient-from:#fff7ed var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 247 237 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-50{--tw-gradient-from:#f0fdfa var(--tw-gradient-from-position);--tw-gradient-to:rgb(240 253 250 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-700{--tw-gradient-from:#0f766e var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 118 110 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-teal-900{--tw-gradient-to:#134e4a var(--tw-gradient-to-position)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.p-4{padding:1rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pl-11{padding-left:2.75rem}.pl-5{padding-left:1.25rem}.pt-2{padding-top:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-red-100{--tw-text-opacity:1;color:rgb(254 226 226 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.text-teal-100{--tw-text-opacity:1;color:rgb(204 251 241 / var(--tw-text-opacity, 1))}.text-teal-200{--tw-text-opacity:1;color:rgb(153 246 228 / var(--tw-text-opacity, 1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212 / var(--tw-text-opacity, 1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136 / var(--tw-text-opacity, 1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-600{--tw-text-opacity:1;color:rgb(202 138 4 / var(--tw-text-opacity, 1))}.opacity-80{opacity:0.8}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:flex{display:flex}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media print{.print\:border{border-width:1px}.print\:border-2{border-width:2px}.print\:border-black{--tw-border-opacity:1;border-color:rgb(0 0 0 / var(--tw-border-opacity, 1))}.print\:border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.print\:border-teal-700{--tw-border-opacity:1;border-color:rgb(15 118 110 / var(--tw-border-opacity, 1))}.print\:bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.print\:bg-transparent{background-color:transparent}.print\:bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.print\:text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.print\:text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.print\:text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.print\:text-red-700{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.print\:text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}}</style><style>
+/* Additional utility classes for Q2 bank incentive sections */
+.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}
+.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235 / var(--tw-border-opacity, 1))}
+.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253 / var(--tw-border-opacity, 1))}
+.border-orange-300{--tw-border-opacity:1;border-color:rgb(253 186 116 / var(--tw-border-opacity, 1))}
+.border-indigo-500{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}
+.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}
+.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}
+.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}
+.bg-yellow-50{--tw-bg-opacity:1;background-color:rgb(254 252 232 / var(--tw-bg-opacity, 1))}
+.from-blue-50{--tw-gradient-from:#eff6ff var(--tw-gradient-from-position);--tw-gradient-to:rgb(239 246 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}
+.from-indigo-50{--tw-gradient-from:#eef2ff var(--tw-gradient-from-position);--tw-gradient-to:rgb(238 242 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}
+.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}
+.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}
+.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}
+.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}
+.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}
+.text-yellow-800{--tw-text-opacity:1;color:rgb(133 77 14 / var(--tw-text-opacity, 1))}
+.text-orange-700{--tw-text-opacity:1;color:rgb(194 65 12 / var(--tw-text-opacity, 1))}
+.text-orange-800{--tw-text-opacity:1;color:rgb(154 52 18 / var(--tw-text-opacity, 1))}
+.border-l-2{border-left-width:2px}
+.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}
+.pl-3{padding-left:0.75rem}
+.p-3{padding:0.75rem}
+.mt-3{margin-top:0.75rem}
+.gap-4{gap:1rem}
+.rounded-lg{border-radius:0.5rem}
+</style></head>
+<body class="text-gray-800" id="artifacts-component-root-html">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-teal-700 rounded-lg flex items-center justify-center text-white text-xl font-bold print:border print:border-black print:text-black print:bg-transparent">TCB</div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">合庫投信</h1>
+                        <p class="text-xs text-gray-500">115年 Q1 (1-3月) 營運與申贖趨勢總結報告</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-sm text-gray-500 flex items-center gap-2 hidden sm:flex">
+                        <i class="ph ph-calendar-blank text-lg"></i> 資料區間：115/01 - 115/03
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="downloadHTMLReport()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors shadow-sm no-print cursor-pointer">
+                            <i class="ph ph-download-simple text-lg"></i>
+                            <span class="hidden sm:inline">下載 HTML</span>
+                        </button>
+                        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors shadow-sm no-print cursor-pointer">
+                            <i class="ph ph-printer text-lg"></i>
+                            <span class="hidden sm:inline">列印 / 存PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-100 no-print">
+            <nav class="flex space-x-4 overflow-x-auto" aria-label="Tabs">
+                <button class="nav-item" onclick="switchTab('overview')">3月營運總覽</button>
+                <button class="nav-item" onclick="switchTab('trends')">Q1 申贖動能趨勢</button>
+                <button class="nav-item" onclick="switchTab('revenue-diff')">經理費差異 (3月vs2月)</button>
+                <button class="nav-item" onclick="switchTab('mmf')">貨幣型止血分析</button>
+                <button class="nav-item" onclick="switchTab('products')">經理費排行</button>
+                <button class="nav-item active" onclick="switchTab('strategy')">Q2 提升戰略</button>
+                <button class="nav-item" onclick="switchTab('bank-incentive')">Q2 母行獎勵方案</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Tab 1: Overview -->
+        <div id="overview" class="tab-content block space-y-6 hidden" data-print-title="一、3月營運總覽">
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- AUM Card -->
+                <div class="card bg-gradient-to-br from-teal-700 to-teal-900 text-white print:bg-white print:text-black print:border-teal-700 print:border-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-teal-100 print:text-gray-600 text-sm font-medium">總資產規模 (含全委)</p>
+                            <h3 class="text-3xl font-bold mt-2">392.8 <span class="text-lg font-normal">億</span></h3>
+                            <div class="mt-2 flex items-center text-xs text-teal-200 print:text-teal-700">
+                                <span class="bg-red-500/20 print:bg-red-100 text-red-100 print:text-red-700 px-2 py-0.5 rounded-full flex items-center mr-2">
+                                    <i class="ph ph-trend-down mr-1"></i> -3.3%
+                                </span>
+                                <span>MoM (較2月 406.3億)</span>
+                            </div>
+                        </div>
+                        <i class="ph ph-chart-pie-slice text-3xl text-teal-300 print:text-teal-700"></i>
+                    </div>
+                    <p class="text-sm mt-4 text-teal-100 print:text-gray-500 opacity-80 border-t border-teal-600/50 print:border-gray-200 pt-2">MMF基期較低，規模微降</p>
+                </div>
+
+                <!-- Revenue Card -->
+                <div class="card">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">3月經理費收入</p>
+                            <h3 class="text-3xl font-bold mt-2 text-gray-800">1,760 <span class="text-lg font-normal">萬</span></h3>
+                            <div class="mt-2 flex items-center text-xs text-green-600">
+                                <span class="bg-green-100 px-2 py-0.5 rounded-full flex items-center mr-2">
+                                    <i class="ph ph-trend-up mr-1"></i> +4.2%
+                                </span>
+                                <span class="text-gray-400">vs 2月 (1690萬)</span>
+                            </div>
+                        </div>
+                        <i class="ph ph-coins text-3xl text-yellow-600"></i>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm border-t border-gray-100 pt-2">
+                        <span class="text-blue-600 font-medium flex items-center">
+                            <i class="ph ph-calendar-plus mr-1"></i> 天數恢復 + 台股助攻
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Equity Star Card -->
+                <div class="card border-l-4 border-orange-500">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">3月申購 MVP</p>
+                            <h3 class="text-xl font-bold mt-2 text-gray-800">台股雙雄</h3>
+                            <div class="mt-2 text-xs text-orange-600 font-bold">
+                                合計淨流入 1.28 億
+                            </div>
+                        </div>
+                        <i class="ph ph-trend-up text-3xl text-orange-500"></i>
+                    </div>
+                    <p class="text-sm mt-4 text-gray-500 border-t border-gray-100 pt-2">申購達 6.11億，成功消化龐大贖回賣壓</p>
+                </div>
+
+                <!-- Bond Warning Card -->
+                <div class="card bg-red-50 border-l-4 border-red-500">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">營收警訊</p>
+                            <h3 class="text-xl font-bold mt-2 text-gray-800">全球複合收益債</h3>
+                            <div class="mt-2 text-xs text-red-600 font-bold">
+                                收入跌破 300 萬
+                            </div>
+                        </div>
+                        <i class="ph ph-warning-circle text-3xl text-red-500"></i>
+                    </div>
+                    <p class="text-sm mt-4 text-gray-600 border-t border-red-200 pt-2">連兩月淨流出，單月營收減 36.5萬</p>
+                </div>
+            </div>
+
+            <!-- Main Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Size Distribution -->
+                <div class="card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
+                        <span class="flex items-center"><i class="ph ph-pie-chart mr-2 text-teal-600"></i> 3月 資產規模分佈 (392.8億)</span>
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="chartAumDist" width="0" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;"></canvas>
+                    </div>
+                </div>
+
+                <!-- Revenue vs Scale Scatter -->
+                <div class="card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
+                         <span class="flex items-center"><i class="ph ph-chart-scatter mr-2 text-blue-600"></i> 3月 規模 vs 收入 效益圖</span>
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="chartScatter" width="0" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-4">* AI電動車(橘點)收入直逼貨幣型</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Q1 Trend Analysis -->
+        <div id="trends" class="tab-content space-y-6 hidden" data-print-title="二、Q1 (1-3月) 申贖動能趨勢">
+            <div class="card bg-gradient-to-r from-orange-50 to-white border-l-4 border-orange-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Q1 動能板塊挪移：台股接棒，債券退潮</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            台股雙雄3月迎來強勁買盤，成為新增長引擎；複合債則進入盤整期。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Trend Comparison Chart -->
+                <div class="card lg:col-span-2">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="ph ph-trend-up text-blue-600 mr-2"></i> 主力基金 Q1 淨申贖趨勢 (Jan - Mar)
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="chartQ1Trends" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-2">單位：億元 (正值為淨流入)</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">3月份資金板塊挪移</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <i class="ph ph-rocket-launch text-orange-500 mt-1 mr-2 text-lg"></i>
+                            <div>
+                                <strong class="text-gray-900">台股雙雄買氣回籠，成功抵抗賣壓</strong>
+                                <p>台灣基金與高科技基金3月合計申購高達 6.11 億，雖面臨高檔獲利了結，仍成功維持合計淨流入 1.28 億（台灣基金淨流入 0.78 億、高科技 0.50 億），徹底扭轉前期頹勢。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph ph-trend-down text-red-500 mt-1 mr-2 text-lg"></i>
+                            <div>
+                                <strong class="text-gray-900">複合債持續流出</strong>
+                                <p>專案熱潮消退，3月申購動能降至 1.92 億，不敵 3.25 億的贖回賣壓，全月淨流出 1.34 億，需擬定 Q2 應對策略。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph ph-lightning text-green-500 mt-1 mr-2 text-lg"></i>
+                            <div>
+                                <strong class="text-gray-900">AI電動車穩步加溫</strong>
+                                <p>3月申購達 0.79 億，贖回約 0.36 億，淨流入 0.43 億。科技題材持續吸引資金進駐。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Revenue Diff Analysis -->
+        <div id="revenue-diff" class="tab-content space-y-6 hidden" data-print-title="三、經理費收入差異分析 (3月 vs 2月)">
+            <div class="card bg-white border-l-4 border-green-500">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">3月營收回溫：受惠計息天數與台股規模增長</h3>
+                    <p class="text-gray-600">
+                        3月經理費較上月增加 <span class="font-bold text-green-600">71 萬元 (+4.2%)</span>。計息天數增加與台股規模成長，成功彌補複合債的收入缺口。
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Top 5 Diff Chart -->
+                <div class="card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">經理費增減金額矩陣</h3>
+                    <div class="chart-container">
+                        <canvas id="chartRevDiff" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed Table -->
+                <div class="card">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">差異明細表</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-xs md:text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-500">
+                                <tr>
+                                    <th class="px-4 py-2">基金名稱</th>
+                                    <th class="px-4 py-2 text-right">2月收入 (元)</th>
+                                    <th class="px-4 py-2 text-right">3月收入 (元)</th>
+                                    <th class="px-4 py-2 text-right">差異金額 (元)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr class="bg-green-50">
+                                    <td class="px-4 py-3 font-medium text-green-800">台灣基金</td>
+                                    <td class="px-4 py-3 text-right">880,675</td>
+                                    <td class="px-4 py-3 text-right">1,119,408</td>
+                                    <td class="px-4 py-3 text-right text-green-600 font-bold">+238,733</td>
+                                </tr>
+                                <tr class="bg-green-50">
+                                    <td class="px-4 py-3 font-medium text-green-800">AI電動車及車聯網</td>
+                                    <td class="px-4 py-3 text-right">1,548,088</td>
+                                    <td class="px-4 py-3 text-right">1,714,196</td>
+                                    <td class="px-4 py-3 text-right text-green-600 font-bold">+166,108</td>
+                                </tr>
+                                <tr class="bg-green-50">
+                                    <td class="px-4 py-3 font-medium text-green-800">台灣高科技</td>
+                                    <td class="px-4 py-3 text-right">762,818</td>
+                                    <td class="px-4 py-3 text-right">900,953</td>
+                                    <td class="px-4 py-3 text-right text-green-600 font-bold">+138,135</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">貨幣市場基金</td>
+                                    <td class="px-4 py-3 text-right">1,651,033</td>
+                                    <td class="px-4 py-3 text-right">1,755,975</td>
+                                    <td class="px-4 py-3 text-right text-green-600">+104,942</td>
+                                </tr>
+                                <tr class="bg-red-50">
+                                    <td class="px-4 py-3 font-medium text-red-800">全球複合收益債</td>
+                                    <td class="px-4 py-3 text-right">3,333,866</td>
+                                    <td class="px-4 py-3 text-right text-red-600">2,967,967</td>
+                                    <td class="px-4 py-3 text-right text-red-600 font-bold">-365,899</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-gray-500 mt-4">* 複合債月平均規模滑落，導致經理費跌破三百萬，需立即制定防守策略。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: MMF Analysis -->
+        <div id="mmf" class="tab-content space-y-6 hidden" data-print-title="四、貨幣型基金止血分析">
+             <div class="card bg-gradient-to-r from-teal-50 to-white border-l-4 border-teal-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">貨幣市場基金：流出顯著收斂</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            相較前兩月逾 20 億的淨流出，3月大幅收斂至 <span class="font-bold text-teal-700">-1.94 億</span>，規模持穩於 255 億。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Flow Trend Line -->
+                <div class="card">
+                    <h4 class="text-gray-500 text-sm font-medium mb-4 flex items-center"><i class="ph ph-chart-line mr-2"></i> Q1 每月淨流出金額 (億)</h4>
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="chartMmfFlow" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-2">流出幅度呈顯著收斂趨勢</p>
+                </div>
+                
+                <!-- Action Plan -->
+                <div class="card">
+                    <h4 class="text-gray-500 text-sm font-medium mb-4 flex items-center"><i class="ph ph-shield-check mr-2"></i> 狀態評估與下一步</h4>
+                    <div class="space-y-4">
+                        <div class="border-b pb-3">
+                            <div class="flex justify-between mb-1"><span class="font-bold">3月動能分析</span> </div>
+                            <p class="text-sm text-gray-600">3月申購 20.7 億有效抵銷贖回。前期人壽資金回流與分行推廣計畫已見初步成效。</p>
+                        </div>
+                        <div class="pb-2">
+                            <div class="flex justify-between mb-1"><span class="font-bold text-teal-700">Q2 戰術轉折：由守轉攻</span></div>
+                            <p class="text-sm text-gray-600">重心全面轉向合庫分行深耕推廣，並積極接洽爭取人壽資金回流，目標規模回升至 280 億。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Products (Revenue Ranking) -->
+        <div id="products" class="tab-content space-y-6 hidden" data-print-title="五、經理費排行榜 (3月)">
+            <div class="card">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">3月份 經理費收入 Top 5</h3>
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="chartTopFunds" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+                </div>
+                <p class="text-xs text-center text-gray-400 mt-2">數值單位：新台幣萬元 (直接顯示於圖表內)</p>
+            </div>
+        </div>
+
+        <!-- Tab 6: Strategy -->
+        <div id="strategy" class="tab-content space-y-6" data-print-title="六、策略總結：Q2 提升戰略與行動方針">
+            
+            <div class="card bg-white border-l-8 border-indigo-600 shadow-md mb-6">
+                <div class="p-4">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Q2 戰略主軸：搶佔理專心佔率，讓合庫投信成為分行首選</h3>
+                    <p class="text-gray-600 text-lg">
+                        母行 Q2 同步啟動「小資向錢衝」定額專案與「合力致富」母子基金方案，14 家投信同場競技。合庫投信的決勝關鍵不在於方案本身，而在於<strong>如何讓 270+ 分行理專第一時間想到我們、優先推薦我們</strong>。以下四大策略環環相扣，從 IPO 爆點引流、母子基金卡位、定額長線佈局到教育訓練攻心，構成完整的 Q2 攻防體系。
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+                <!-- Strategy 1: IPO 重中之重 -->
+                <div class="card border-t-4 border-red-500">
+                    <h4 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-3">1</span>
+                        【重中之重】5月 IPO「AI電力創新基金」— Q2 唯一的爆發窗口
+                    </h4>
+                    <div class="pl-11 space-y-2 text-gray-700">
+                        <p class="mb-2"><strong>為什麼理專該重視：</strong>IPO 是唯一能在短期內大幅衝高手續費收入的機會。合庫銀行目標 15 億、元大銀行目標 15 億，合計 30 億的募集量將直接轉化為分行可觀的手續費業績。</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                            <li><strong>核心募集期 5/11 - 5/15：</strong>理專在此期間每一筆成交都直接計入「合力致富」專案計績，同時貢獻財管業務評核的「信託理財手續費收入」及「基金平均庫存量(AUM)」兩大項目。</li>
+                            <li><strong>IPO 搭配「合力致富」雙重計績：</strong>新基金申購屬於單筆新申購，完全符合「合力致富」專案計績範圍。單筆銷售量達 800 萬元以上之營業單位，依銷售量排序取前 30 名可獲合庫投信教育訓練講座。</li>
+                            <li><strong>差異化賣點 — AI + 電力雙題材：</strong>不同於市場上已飽和的純 AI 基金，「AI電力創新」結合 AI 算力需求帶動的電力基建投資，題材新穎、客戶接受度高，理專有明確的故事可講。</li>
+                            <li><strong>行動要求：</strong>4 月完成分行教育訓練巡迴 → 5 月初集中火力預約客戶 → 5/11-5/15 全力衝刺。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Strategy 2: 合力致富 母子基金 -->
+                <div class="card border-t-4 border-blue-500">
+                    <h4 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">2</span>
+                        【母子基金卡位】「合力致富」— 用複合債/入息當母基金，鎖住 AUM 再轉攻台股
+                    </h4>
+                    <div class="pl-11 space-y-2 text-gray-700">
+                        <p class="mb-2"><strong>商業邏輯：</strong>「合力致富」不是單純的單筆行銷，而是<strong>母子基金轉換機制</strong>。客戶先申購母基金（穩健配置），再依市場時機轉換至子基金（積極成長），全程 AUM 留在合庫投信體系內。</p>
+                        <div class="bg-blue-50 rounded-lg p-3 my-3">
+                            <p class="font-bold text-blue-800 mb-2">合庫投信母子基金池配置</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div class="border-l-2 border-blue-300 pl-3">
+                                    <p class="font-bold text-blue-700">🛡️ 母基金池（穩健端）</p>
+                                    <p>• 全球複合收益債券基金</p>
+                                    <p>• 入息優化多重資產基金</p>
+                                    <p class="text-xs text-gray-500 mt-1">→ 客戶資金先停泊於此，降低進場時機壓力</p>
+                                </div>
+                                <div class="border-l-2 border-orange-300 pl-3">
+                                    <p class="font-bold text-orange-700">🚀 子基金池（成長端）</p>
+                                    <p>• 台灣基金</p>
+                                    <p>• 台灣高科技基金</p>
+                                    <p>• AI電動車及車聯網創新基金</p>
+                                    <p class="text-xs text-gray-500 mt-1">→ 時機成熟時轉換，手續費再計一次</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-2"><strong>對理專的利益：</strong></p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                            <li><strong>一魚多吃：</strong>客戶申購母基金時產生手續費 → 轉換子基金時再產生手續費 → AUM 持續留存貢獻庫存量評核。比起賣一檔境外基金客戶贖回就走，母子基金的客戶黏著度遠高於競品。</li>
+                            <li><strong>複合債止血的關鍵手段：</strong>Q1 複合債淨流出 1.34 億、經理費跌破 300 萬。透過「合力致富」引導新資金進入複合債作為母基金，既穩住 AUM 又為未來轉換至台股子基金埋下伏筆。</li>
+                            <li><strong>與富蘭克林華美的競爭：</strong>「合力致富」中富蘭克林華美同為合作投信，其教育訓練講座名額取前 60 名（合庫投信取前 30 名）。但合庫投信的優勢在於<strong>「自家人」身份 + 母子基金池更完整的台股產品線</strong>，理專推薦自家產品在內部評核上有加分效果。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Strategy 3: 小資向錢衝 RSP -->
+                <div class="card border-t-4 border-orange-500">
+                    <h4 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-3">3</span>
+                        【長線佈局】「小資向錢衝 Q2」定額專案 — 在 14 家投信中脫穎而出
+                    </h4>
+                    <div class="pl-11 space-y-2 text-gray-700">
+                        <p class="mb-2"><strong>競爭現實：</strong>14 家投信的基金都列入「小資夥伴系列」，理專賣誰家的基金都能拿積點。合庫投信排序第 14 位，<strong>如果不主動出擊，理專沒有理由優先選我們</strong>。</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                            <li><strong>搶佔理專心佔率的關鍵：</strong>合庫投信的台股基金（台灣基金、台灣高科技）Q1 已展現強勁動能（3月合計淨流入 1.28 億），理專手上有鮮活的績效數據可以跟客戶講故事，這是其他競品短期難以複製的。</li>
+                            <li><strong>獎勵積點最大化攻略：</strong>每次扣款 ≤ 35 萬元才計入小資夥伴獎。引導理專將大額客戶拆分為多筆定額扣款（例如 100 萬拆成 3 筆），既符合定額投資分散風險的精神，也能讓理專累積更多積點。</li>
+                            <li><strong>搭配客戶端優惠降低銷售阻力：</strong>網銀下單享申購手續費 2 折（「小資大趨勢」精選基金標的）、Winner 理財套餐 2.5 折、信託管理費 5 折、電子對帳單客戶定額最低扣款降至 1,000 元起。</li>
+                            <li><strong>教育訓練講座門檻：</strong>各系列基金累積定額銷售額達 200 萬元以上之營業單位，依手續費收入排序各取前 20 名獲講座。合庫投信需主動追蹤各分行累積進度，適時提醒接近門檻的分行加把勁。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Strategy 4: 固本防禦 -->
+                <div class="card border-t-4 border-teal-500">
+                    <h4 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 mr-3">4</span>
+                        【固本防禦】貨幣型吸金 + 教育訓練攻心，建立理專長期信任
+                    </h4>
+                    <div class="pl-11 space-y-2 text-gray-700">
+                        <p class="mb-2"><strong>底氣建立：</strong>3 月 MMF 流出顯著收斂至 -1.94 億，底部 255 億已確立。Q2 目標回升至 280 億。</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                            <li><strong>貨幣型 (MMF) 主動吸金：</strong>全面著重「合庫分行推廣」及積極爭取「人壽資金回流」。貨幣型是理專最容易成交的產品，先用 MMF 建立合作關係，再逐步引導轉換至收益更高的股票型/債券型基金。</li>
+                            <li><strong>教育訓練是最強武器：</strong>「合力致富」與「小資向錢衝」都設有教育訓練講座獎勵。合庫投信應將每一場分行講座視為<strong>建立理專品牌忠誠度的機會</strong>，而非單純的產品說明會。講座內容須涵蓋市場觀點、銷售話術、客戶異議處理，讓理專覺得「賣合庫投信的基金，我有後援」。</li>
+                            <li><strong>每月主動追蹤回饋：</strong>達成情形每月十日前公佈於企業入口網站（財富管理部/信託理財業務資訊/成績統計）。合庫投信應在每月數據公佈後<strong>第一時間主動聯繫重點分行</strong>，表揚達標單位、提醒接近門檻者加速衝刺。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 策略整合時間軸 -->
+            <div class="card bg-gradient-to-r from-indigo-50 to-white border-l-4 border-indigo-500">
+                <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="ph ph-calendar-check mr-2 text-indigo-600"></i> Q2 行銷策略整合時間軸
+                </h4>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-xs md:text-sm text-left">
+                        <thead class="bg-indigo-50 text-gray-600">
+                            <tr>
+                                <th class="px-4 py-2">月份</th>
+                                <th class="px-4 py-2">核心行動</th>
+                                <th class="px-4 py-2">搭配母行方案</th>
+                                <th class="px-4 py-2">理專端訴求重點</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="px-4 py-3 font-bold text-indigo-700">4月</td>
+                                <td class="px-4 py-3">分行教育訓練巡迴啟動、「合力致富」母子基金推廣、定額扣款戶數衝刺</td>
+                                <td class="px-4 py-3">「小資向錢衝Q2」+ 「合力致富」同步啟動（4/1 起）</td>
+                                <td class="px-4 py-3 text-green-600">讓理專認識獎勵機制 → 建立「賣合庫基金有額外好處」的認知</td>
+                            </tr>
+                            <tr class="bg-red-50">
+                                <td class="px-4 py-3 font-bold text-red-700">5月</td>
+                                <td class="px-4 py-3">🔥 AI電力創新基金 IPO（5/11-5/15 核心募集期），全力集中火力</td>
+                                <td class="px-4 py-3">IPO 銷售量直接計入「合力致富」專案 + 財管業務評核</td>
+                                <td class="px-4 py-3 text-red-600 font-bold">「這檔新基金幫你衝業績最快」— 手續費收入 + AUM + 講座資格一次到位</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-bold text-indigo-700">6月</td>
+                                <td class="px-4 py-3">IPO 收尾轉存續申購、母子基金轉換引導、季末達成率衝刺</td>
+                                <td class="px-4 py-3">兩大專案持續至 6/30，主動通知接近門檻之分行加速衝刺</td>
+                                <td class="px-4 py-3 text-green-600">「最後一個月，再努力一下就達標」— 用數據驅動理專行動</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 7: Bank Incentive Programs Detail -->
+        <div id="bank-incentive" class="tab-content space-y-6 hidden" data-print-title="七、Q2 母行獎勵方案明細 — 理專必讀">
+            
+            <div class="card bg-gradient-to-r from-blue-50 to-white border-l-4 border-blue-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">理專必讀：Q2 兩大獎勵方案完整攻略</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            以下整理自合庫銀行正式發函內容。重點標註<strong>合庫投信系列基金的競爭優勢與可操作策略</strong>，幫助理專在 14 家投信競爭中最大化個人獎勵。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 競爭態勢總覽 -->
+            <div class="card bg-red-50 border-l-4 border-red-500">
+                <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                    <i class="ph ph-warning-circle mr-2 text-red-500"></i> 競爭態勢：合庫投信在方案中的定位
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="font-bold text-red-800 mb-2">「小資向錢衝 Q2」定額專案</p>
+                        <p class="text-gray-700">合作投信共 <strong>14 家</strong>，合庫投信排序第 14 位。理專賣任何一家都能拿積點，合庫投信<strong>沒有天然優勢</strong>。</p>
+                        <p class="text-gray-700 mt-2">但合庫投信台股雙雄 Q1 績效亮眼、「自家人」身份在內部評核有加分效果。<strong>必須靠主動出擊爭取理專心佔率。</strong></p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-red-800 mb-2">「合力致富」母子基金方案</p>
+                        <p class="text-gray-700">合作投信僅 <strong>2 家</strong>：合庫投信 + 富蘭克林華美投信。競爭對手明確且僅一家。</p>
+                        <p class="text-gray-700 mt-2">富蘭克林華美講座名額取前 60 名，合庫投信僅取前 30 名。但合庫投信擁有<strong>更完整的台股子基金池</strong>（3 檔 vs 對手以境外為主），且母子轉換靈活度更高。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 方案一：小資向錢衝 Q2 -->
+                <div class="card border-t-4 border-orange-500">
+                    <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="ph ph-coins mr-2 text-orange-500"></i> 方案一：「小資向錢衝 Q2」定期定額
+                    </h4>
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <div class="bg-orange-50 rounded-lg p-3">
+                            <p class="font-bold text-orange-800">📋 基本資訊</p>
+                            <p>發文字號：合金總富字第1159601118號（115/3/31）</p>
+                            <p>專案期間：115年4月1日 至 6月30日</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">合作投信（14家）</p>
+                            <p class="text-gray-500">摩根、安聯、富達、富蘭克林及美盛、聯博、瀚亞、野村及高盛、法巴、統一、富邦(含原日盛)、永豐、中信、富蘭克林華美、<span class="text-orange-600 font-bold">合庫(96、CF)</span></p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">計績範圍</p>
+                            <p>臨櫃、網路下單之定期定額（不定額）基金新增申購、續扣及復扣均納入</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">三大獎勵機制</p>
+                            <div class="space-y-2 mt-2">
+                                <div class="border-l-2 border-orange-300 pl-3">
+                                    <p class="font-bold text-orange-700">① 分月達成獎（營業單位）</p>
+                                    <p>達成率100%以上，各組前3名：第1名 NT$3,000、第2名 NT$2,500、第3名 NT$2,000；區域中心另取前2名</p>
+                                </div>
+                                <div class="border-l-2 border-orange-300 pl-3">
+                                    <p class="font-bold text-orange-700">② 小資夥伴獎（理專個人）</p>
+                                    <p>每次扣款 ≤ 35萬元，手續費收入每達1萬元依達成率給 1～6 點：</p>
+                                    <p class="text-xs text-gray-500 mt-1">30%-50%→1點 / 50%-75%→2點 / 75%-85%→3點 / 85%-100%→4點 / 100%-120%→5點 / 120%↑→6點</p>
+                                </div>
+                                <div class="border-l-2 border-orange-300 pl-3">
+                                    <p class="font-bold text-orange-700">③ 教育訓練講座</p>
+                                    <p>各系列基金累積定額銷售額達200萬元以上，依手續費收入排序各取前20名</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-3">
+                            <p class="font-bold text-yellow-800">💡 客戶端優惠（降低銷售阻力）</p>
+                            <p>• 「小資大趨勢」精選基金：網銀下單申購手續費 2 折、Winner 理財套餐 2.5 折</p>
+                            <p>• 電子對帳單客戶網銀定額最低扣款降至 NT$1,000 元起</p>
+                            <p>• 信託管理費 5 折（信託部配合提供）</p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-3">
+                            <p class="font-bold text-green-800">🎯 合庫投信的操作建議</p>
+                            <p>• 主推台股雙雄（台灣基金/高科技）搭配 AI 電動車的定額組合</p>
+                            <p>• 大額客戶拆分多筆扣款（≤35萬），最大化理專積點</p>
+                            <p>• 主動追蹤各分行累積進度，接近 200 萬門檻時提醒衝刺</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 方案二：合力致富 母子基金 -->
+                <div class="card border-t-4 border-blue-500">
+                    <h4 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="ph ph-hand-coins mr-2 text-blue-500"></i> 方案二：「合力致富」母子基金
+                    </h4>
+                    <div class="space-y-3 text-sm text-gray-700">
+                        <div class="bg-blue-50 rounded-lg p-3">
+                            <p class="font-bold text-blue-800">📋 基本資訊</p>
+                            <p>發文字號：合金總富字第1159600984號（115/3/30）</p>
+                            <p>專案期間：115年4月1日 至 6月30日</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">合作基金公司（僅 2 家）</p>
+                            <p><span class="text-blue-600 font-bold">合庫投信</span> vs 富蘭克林華美投信</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">合庫投信合作基金標的</p>
+                            <p>境內系列：96、CF、YC、ZC</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">計績範圍</p>
+                            <p>單筆基金（含智富及後收型，不含貨幣型）之新申購，不含轉換</p>
+                            <p class="text-xs text-gray-500">私人銀行部 RM 銷售不列入計績</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1">教育訓練講座獎勵</p>
+                            <div class="space-y-2 mt-2">
+                                <div class="border-l-2 border-blue-300 pl-3">
+                                    <p><strong>合庫投信：</strong>單筆銷售量達 800 萬元(含)以上，取前 <span class="font-bold text-blue-700">30 名</span></p>
+                                </div>
+                                <div class="border-l-2 border-blue-300 pl-3">
+                                    <p><strong>富蘭克林華美：</strong>單筆銷售量達 800 萬元(含)以上，取前 <span class="font-bold text-blue-700">60 名</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-3">
+                            <p class="font-bold text-yellow-800">💡 可併用優惠</p>
+                            <p>• 「一石二鳥3.0」或「好薪動」等優惠方案可併同運用</p>
+                            <p>• 列入財管業務評核「信託理財及黃金存摺業務」項目配分</p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-3">
+                            <p class="font-bold text-green-800">🎯 合庫投信 vs 富蘭克林華美 — 怎麼贏</p>
+                            <p>• <strong>母基金優勢：</strong>複合債 + 入息優化雙母基金，穩健端選擇更多</p>
+                            <p>• <strong>子基金優勢：</strong>台灣基金/高科技/AI電動車三檔台股子基金，完整覆蓋台股題材，客戶轉換靈活度遠勝對手</p>
+                            <p>• <strong>5月 IPO 加持：</strong>AI電力創新基金 IPO 銷售量直接計入本專案，這是富蘭克林華美沒有的爆發點</p>
+                            <p>• <strong>「自家人」優勢：</strong>推合庫投信產品在內部評核有隱性加分，理專心裡有數</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行銷專案評核提醒 -->
+            <div class="card">
+                <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="ph ph-chart-bar mr-2 text-indigo-600"></i> 行銷專案評核與追蹤重點
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-indigo-50 rounded-lg p-4">
+                        <h5 class="font-bold text-indigo-700 mb-2">📊 評核計分機制</h5>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li>• 行銷專案權數為 40，最高得分 48 分（需達手續費季目標 120%）</li>
+                            <li>• 「合力致富」承作得列入「信託理財及黃金存摺業務」評核項目：信託理財手續費收入、基金平均庫存量(AUM)、基金定期定額業務</li>
+                            <li>• 以上激勵措施均得同時領取，<strong>不互斥</strong></li>
+                        </ul>
+                    </div>
+                    <div class="bg-indigo-50 rounded-lg p-4">
+                        <h5 class="font-bold text-indigo-700 mb-2">🔔 合庫投信行動清單</h5>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li>• <strong>每月 10 日後：</strong>達成情形公佈於企業入口網站，第一時間主動聯繫重點分行</li>
+                            <li>• <strong>表揚先行：</strong>達標分行立即致電感謝，未達標分行提供具體差距數據與追趕建議</li>
+                            <li>• <strong>講座品質把關：</strong>每場教育訓練講座須包含市場觀點、銷售話術、客戶異議處理三要素，讓理專感受「有後援」</li>
+                            <li>• <strong>手續費折扣提醒：</strong>營業單位運用手續費折扣時須兼顧理財業務之收益性，避免過度折讓</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- Tab Switching ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            event.target.classList.add('active');
+            window.dispatchEvent(new Event('resize'));
+        }
+        
+        // --- Download HTML Function ---
+        function downloadHTMLReport() {
+            const now = new Date();
+            const filename = `合庫投信Q1營運報告_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.html`;
+            const blob = new Blob(["<!DOCTYPE html>\n" + document.documentElement.outerHTML], {type: 'text/html'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // --- Plugins ---
+        const labelPlugin = {
+            id: 'labelPlugin',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                const type = chart.config.type;
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+                    let total = 0;
+                    if (type === 'doughnut') {
+                        total = dataset.data.reduce((a, b) => a + b, 0);
+                    }
+
+                    meta.data.forEach((element, index) => {
+                        const value = dataset.data[index];
+                        ctx.fillStyle = '#000';
+                        ctx.font = 'bold 11px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+
+                        if (type === 'doughnut') {
+                            const { x, y } = element.tooltipPosition();
+                            const percentage = ((value / total) * 100).toFixed(1) + '%';
+                            if ((value/total) > 0.03) ctx.fillText(percentage, x, y);
+                        } else if (type === 'bar' && chart.options.indexAxis === 'y') {
+                            if (chart.canvas.id === 'chartRevDiff') {
+                                // Exact formatted string with units matching the table
+                                ctx.fillStyle = '#333';
+                                ctx.textAlign = value >= 0 ? 'left' : 'right';
+                                const textX = value >= 0 ? element.x + 5 : element.x - 5;
+                                const formatted = (value > 0 ? '+' : '') + value.toLocaleString() + ' 元';
+                                ctx.fillText(formatted, textX, element.y);
+                            } else {
+                                // Use 萬 for Top 5 ranking
+                                ctx.fillStyle = '#fff';
+                                ctx.textAlign = 'right';
+                                if (value > 20 || value < -20) {
+                                    ctx.fillText(value + '萬', element.x - 5, element.y);
+                                } else {
+                                    ctx.fillStyle = '#333';
+                                    ctx.textAlign = 'left';
+                                    ctx.fillText(value + '萬', element.x + 5, element.y);
+                                }
+                            }
+                        } else if (type === 'bar' && chart.canvas.id === 'chartQ1Trends') {
+                            ctx.fillStyle = value >= 0 ? '#ea580c' : '#b91c1c';
+                            ctx.font = 'bold 10px sans-serif';
+                            const yPos = value >= 0 ? element.y - 10 : element.y + 10;
+                            ctx.fillText(value, element.x, yPos);
+                        } else if (type === 'scatter') {
+                            const dataPoint = dataset.data[index];
+                            const cx = element.x;
+                            const cy = element.y;
+                            let xOffset = 30;
+                            let yOffset = -20;
+                            
+                            if (dataPoint.fund.includes('高科技')) { yOffset = -35; xOffset = 10; }
+                            if (dataPoint.fund.includes('台灣基金')) { yOffset = 15; xOffset = 30; }
+                            if (dataPoint.fund.includes('醫療')) { yOffset = -15; xOffset = -40; }
+                            if (dataPoint.fund.includes('複合')) { yOffset = -20; xOffset = 40; }
+
+                            const labelX = cx + xOffset;
+                            const labelY = cy + yOffset;
+
+                            ctx.beginPath();
+                            ctx.moveTo(cx, cy);
+                            ctx.lineTo(labelX, labelY + (yOffset > 0 ? -10 : 10)); 
+                            ctx.strokeStyle = '#94a3b8';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+
+                            ctx.fillStyle = '#1f2937';
+                            ctx.font = 'bold 10px sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(dataPoint.fund, labelX, labelY - 6);
+                            ctx.fillStyle = '#059669';
+                            ctx.font = 'bold 10px sans-serif';
+                            ctx.fillText('$' + dataPoint.y + '萬', labelX, labelY + 6);
+                        } else if (type === 'line' && chart.canvas.id === 'chartMmfFlow') {
+                            ctx.fillStyle = '#b91c1c';
+                            ctx.font = 'bold 12px sans-serif';
+                            ctx.fillText(value, element.x, element.y - 15);
+                        }
+                    });
+                });
+            }
+        };
+
+        // --- Chart Config ---
+        document.addEventListener('DOMContentLoaded', function() {
+            Chart.register(labelPlugin);
+
+            // 1. AUM Distribution (March Data)
+            const ctxAum = document.getElementById('chartAumDist').getContext('2d');
+            new Chart(ctxAum, {
+                type: 'doughnut',
+                data: {
+                    labels: ['貨幣型', '債券型', '公募(股票/多重等)', '全權委託'],
+                    datasets: [{
+                        data: [255.0, 39.3, 74.4, 24.1], 
+                        backgroundColor: ['#0d9488', '#2563eb', '#f59e0b', '#7c3aed'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right' }, tooltip: {enabled: true} }
+                }
+            });
+
+            // 2. Q1 Trend Comparison Chart
+            const ctxTrends = document.getElementById('chartQ1Trends').getContext('2d');
+            new Chart(ctxTrends, {
+                type: 'bar',
+                data: {
+                    labels: ['台灣基金', '台灣高科技', '全球複合收益債', 'AI電動車'],
+                    datasets: [
+                        {
+                            label: '1月淨申贖',
+                            data: [-2.71, -1.48, 9.45, -0.09],
+                            backgroundColor: '#e2e8f0',
+                            borderRadius: 4
+                        },
+                        {
+                            label: '2月淨申贖',
+                            data: [0.04, -0.05, -1.15, 0.13],
+                            backgroundColor: '#94a3b8',
+                            borderRadius: 4
+                        },
+                        {
+                            label: '3月淨申贖',
+                            data: [0.78, 0.50, -1.34, 0.36],
+                            backgroundColor: '#f97316', 
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: { display: true, text: '淨流出/入 (億元)' }
+                        } 
+                    }
+                }
+            });
+
+            // 3. Scatter Plot (March Data)
+            const ctxScatter = document.getElementById('chartScatter').getContext('2d');
+            new Chart(ctxScatter, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: '基金分佈',
+                        data: [
+                            {x: 255.0, y: 175.5, r: 25, fund: '貨幣市場'},
+                            {x: 24.1, y: 296.7, r: 20, fund: '複合收益債'},
+                            {x: 9.9, y: 171.4, r: 15, fund: 'AI電動車'},
+                            {x: 8.4, y: 111.9, r: 12, fund: '台灣基金'},
+                            {x: 6.4, y: 90.0, r: 10, fund: '台灣高科技'},
+                            {x: 9.7, y: 159.2, r: 16, fund: '全球醫療'} 
+                        ],
+                        backgroundColor: (ctx) => {
+                            const fund = ctx.raw?.fund;
+                            if (fund.includes('台灣') || fund.includes('高科技') || fund.includes('電動車')) return '#f97316';
+                            if (fund === '貨幣市場') return '#0d9488';
+                            if (fund.includes('複合')) return '#ef4444'; 
+                            return '#2563eb';
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    layout: { padding: 30 },
+                    scales: {
+                        x: { title: {display: true, text: '基金規模 (億)'}, type: 'logarithmic' }, 
+                        y: { title: {display: true, text: '經理費收入 (萬)'} }
+                    }
+                }
+            });
+
+            // 4. Revenue Diff Chart (March vs Feb)
+            const ctxRevDiff = document.getElementById('chartRevDiff').getContext('2d');
+            new Chart(ctxRevDiff, {
+                type: 'bar',
+                data: {
+                    labels: ['台灣基金', 'AI電動車', '台灣高科技', '貨幣市場', '複合收益債'],
+                    datasets: [{
+                        label: '經理費增減金額',
+                        data: [238733, 166108, 138135, 104942, -365899],
+                        backgroundColor: (ctx) => {
+                            return ctx.raw >= 0 ? '#22c55e' : '#ef4444';
+                        },
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    layout: { padding: { left: 40, right: 60 } },
+                    scales: { 
+                        x: { 
+                            beginAtZero: true,
+                            suggestedMax: 300000,
+                            suggestedMin: -450000
+                        } 
+                    }
+                }
+            });
+
+            // 5. MMF Flow Line Chart
+            const ctxMmf = document.getElementById('chartMmfFlow').getContext('2d');
+            new Chart(ctxMmf, {
+                type: 'line',
+                data: {
+                    labels: ['1月份', '2月份', '3月份'],
+                    datasets: [{
+                        label: '淨流出金額 (億)',
+                        data: [-20.12, -20.55, -1.94],
+                        borderColor: '#0d9488',
+                        backgroundColor: '#0d9488',
+                        tension: 0.1,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { max: 0, min: -25 } }
+                }
+            });
+
+            // 6. Revenue Ranking (March Data)
+            const ctxTop = document.getElementById('chartTopFunds').getContext('2d');
+            new Chart(ctxTop, {
+                type: 'bar',
+                data: {
+                    labels: ['全球複合收益債', '合庫貨幣市場', '合庫AI電動車', '全球醫療照護', '合庫台灣基金'],
+                    datasets: [{
+                        label: '3月經理費收入',
+                        data: [296.8, 175.6, 171.4, 159.2, 111.9],
+                        backgroundColor: ['#ef4444', '#0d9488', '#f97316', '#2563eb', '#f97316'],
+                        borderRadius: 4,
+                        barThickness: 35
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    scales: { x: { beginAtZero: true, grid: { display: false } } }
+                }
+            });
+        });
+    </script>
+
+</body></html>
