@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026-04-08 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026-04-08 金融市場日報|洞察•解構•透視全球資產">
+
+    <style>
+        /* 系統字體堆疊 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 佈局容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 標題階層 */
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4f46e5, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sub-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #475569;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* 頂部4宮格 Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-change {
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .text-up { color: #ef4444; }   /* 台股習慣：紅漲 */
+        .text-down { color: #22c55e; } /* 台股習慣：綠跌 */
+
+        .card-meta {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* 雙欄佈局 (Top 10 & 深度分析) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 關鍵字時間軸 (Top 10) */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.8rem;
+            top: 0.35rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: #4f46e5;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px #e2e8f0;
+        }
+
+        .timeline-time {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4f46e5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        /* 深度分析區塊 */
+        .analysis-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .analysis-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-card p {
+            margin-bottom: 1.25rem;
+            color: #334155;
+            text-align: justify;
+        }
+
+        .analysis-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .analysis-card strong {
+            color: #1e293b;
+        }
+
+        /* 個股追蹤區塊 */
+        .stocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stock-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #4f46e5;
+        }
+
+        .stock-card.bear {
+            border-top-color: #22c55e;
+        }
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stock-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .stock-ticker {
+            font-size: 0.875rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: 0.25rem;
+            display: inline-block;
+        }
+
+        .stock-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .stock-links a {
+            font-size: 0.875rem;
+            color: #4f46e5;
+            text-decoration: none;
+            background: #e0e7ff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: background 0.2s;
+        }
+
+        .stock-links a:hover {
+            background: #c7d2fe;
+        }
+
+        .stock-content p {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .stock-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 載入進度條 */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #f1f5f9;
+            z-index: 9999;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #4f46e5, #ec4899);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <div class="container">
+        <!-- 頁首標題 -->
+        <header>
+            <h1 class="main-title">2026-04-08 金融市場日報</h1>
+            <h2 class="sub-title">半導體權值領軍台股大漲　油價回落帶動美股震盪收高</h2>
+        </header>
+
+        <!-- 第1章：核心資產儀表板 -->
+        <section class="dashboard-grid">
+            <!-- 美股板塊 -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🇺🇸 美股代表：費城半導體</span>
+                </div>
+                <div class="card-value">8,003.87</div>
+                <div class="card-change text-up">
+                    ▲ +1.11%
+                </div>
+                <div class="card-meta">
+                    <ul>
+                        <li>費城半導體指數作為全球科技股風險偏好的核心指標，反映長線資金對AI供應鏈的投資信心。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 台股板塊 -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🇹🇼 台灣加權指數</span>
+                </div>
+                <div class="card-value">33,229.82</div>
+                <div class="card-change text-up">
+                    ▲ +2.02%
+                </div>
+                <div class="card-meta">
+                    <ul>
+                        <li>外資今日買超150億元，投信加碼20億元，自營商調節5億元，三大法人聯手推升台股加權指數再創新高。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 債券板塊 -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🏛️ 美國 10 年期公債</span>
+                </div>
+                <div class="card-value">4.35%</div>
+                <div class="card-change text-up">
+                    ▲ +2 bps
+                </div>
+                <div class="card-meta">
+                    <ul>
+                        <li>美國10年期公債殖利率作為全球無風險利率基準，其近期走勢深刻牽動著跨國資本的板塊輪動節奏。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 原油板塊 -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🛢️ 布蘭特原油</span>
+                </div>
+                <div class="card-value">87.35</div>
+                <div class="card-change text-down">
+                    ▼ -0.45%
+                </div>
+                <div class="card-meta">
+                    <ul>
+                        <li>布蘭特原油價格不僅反映全球通膨預期心理，更是衡量中東地緣政治風險與能源供應穩定性的關鍵指標。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="main-grid">
+            <!-- 左欄：Top 10 行動事件驅動雷達 -->
+            <aside>
+                <h2 class="section-title">⏱️ Top 10 行動與資金流向雷達</h2>
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <!-- Event 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">08:29</div>
+                            <span class="timeline-tag">伊朗提停戰條件</span>
+                            <p class="timeline-content">伊朗政府首度向美國提出10項條件永久停戰方案，此舉大幅緩解中東原油斷供擔憂並促使能源板塊資金流出。</p>
+                        </div>
+                        <!-- Event 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">08:30</div>
+                            <span class="timeline-tag">美拒絕伊朗提案</span>
+                            <p class="timeline-content">美國國務院表態認為伊朗提出停戰條件過高而予以拒絕，導致市場避險情緒再度升溫並推升黃金期貨價格。</p>
+                        </div>
+                        <!-- Event 3 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">07:25</div>
+                            <span class="timeline-tag">美起訴Supermicro</span>
+                            <p class="timeline-content">美國司法部正式起訴Supermicro創辦人涉嫌走私受管制人工智慧設備，此消息引發對伺服器供應鏈疑慮。</p>
+                        </div>
+                        <!-- Event 4 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">07:10</div>
+                            <span class="timeline-tag">馬斯克告奧特曼</span>
+                            <p class="timeline-content">馬斯克正式向法院提出訴訟要求撤換人工智慧公司管理高層，導致相關概念股與科技巨頭面臨資金抽離。</p>
+                        </div>
+                        <!-- Event 5 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">06:15</div>
+                            <span class="timeline-tag">輝達擴大生態系</span>
+                            <p class="timeline-content">晶片大廠輝達宣布投入資金擴展人工智慧平台軟硬體生態系合作，吸引長線資金持續湧入半導體及相關類股。</p>
+                        </div>
+                        <!-- Event 6 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">15:30</div>
+                            <span class="timeline-tag">拉加德發表鷹派</span>
+                            <p class="timeline-content">歐洲央行總裁拉加德公開反對近期連續降息的偏鷹派言論，促使歐元區債券殖利率攀升並壓抑股市表現。</p>
+                        </div>
+                        <!-- Event 7 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">15:00</div>
+                            <span class="timeline-tag">大摩買台股現貨</span>
+                            <p class="timeline-content">摩根士丹利單日於台灣集中市場大舉買超百億元現貨，推升大型權值股股價並帶動加權指數突破近期新高。</p>
+                        </div>
+                        <!-- Event 8 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">21:00</div>
+                            <span class="timeline-tag">高盛升蘋果評等</span>
+                            <p class="timeline-content">高盛證券發布報告調升蘋果公司投資評等與目標價位，激勵買盤進駐並支撐那斯達克指數維持正向表現。</p>
+                        </div>
+                        <!-- Event 9 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">23:30</div>
+                            <span class="timeline-tag">鮑爾談通膨目標</span>
+                            <p class="timeline-content">聯準會主席鮑爾重申對通膨回落至目標區間具備高度信心，穩定市場對下半年貨幣政策寬鬆的樂觀預期。</p>
+                        </div>
+                        <!-- Event 10 -->
+                        <div class="timeline-item">
+                            <div class="timeline-time">08:30</div>
+                            <span class="timeline-tag">元大新基金熱銷</span>
+                            <p class="timeline-content">台灣元大投信發行之主動型股票基金引發市場流動性關注，促使投信機構調整中小型股投資組合配置。</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右欄：深度分析 (Ch 2-6) -->
+            <main>
+                <h2 class="section-title">🧠 跨資產深度洞察</h2>
+
+                <!-- Ch 2 -->
+                <article class="analysis-card">
+                    <div class="analysis-block">
+                        <h3>🌍 第 2 章｜全球股市結構解析</h3>
+                        <p><strong>板塊資金輪動效應浮現：</strong>標普500指數微幅上漲0.08%，市場資金在科技類股與防禦型板塊之間進行快速的輪動，顯示投資人對於後市走向的看法出現明顯分歧。觀察代表整體市場風險偏好的SPY ETF，單日成交量顯著放大至逾5000萬股，反映出大型機構法人在企業財報季即將到來之際，正在積極調整投資組合的權重配置，以應對潛在的市場波動風險。</p>
+                        <p><strong>聯準會降息預期與風險辨證：</strong>若聯準會於5月份的利率決策會議中釋放更為強烈的寬鬆訊號，則將有利於推升成長型股票的整體評價水準；反之，若核心通膨數據意外反彈導致降息預期降溫，則防禦型板塊將成為資金的避風港。後續應密切關注即將公布的美國消費者物價指數，該關鍵數據將直接牽動未來7天全球股市的資金流向與板塊輪動節奏。</p>
+                    </div>
+                </article>
+
+                <!-- Ch 3 -->
+                <article class="analysis-card">
+                    <div class="analysis-block">
+                        <h3>💻 第 3 章｜美股科技與半導體</h3>
+                        <p><strong>輝達擴張生態推升半導體板塊：</strong>費城半導體指數大漲1.11%至8003.87點，主要受到人工智慧晶片大廠輝達宣布擴大生態系投資的利多消息所強力驅動。追蹤半導體板塊的SOXX單日淨流入資金高達1.2億美元，顯示長線資金仍持續看好AI基礎建設的長期發展潛力。此外，Supermicro遭起訴的消息亦促使資金轉向其他具有替代效應的伺服器相關供應商。</p>
+                        <p><strong>雲端資本支出與地緣政策風險：</strong>若微軟與谷歌等雲端服務供應商在即將公布的資本支出計畫中維持高檔，則半導體設備及先進封裝相關標的將具備強勁的上漲動能；反之，若地緣政治風險升溫導致晶片出口管制措施進1步趨嚴，則可能衝擊整體半導體板塊的評價。投資人應持續關注台積電即將舉行的法說會，以釐清下半年全球半導體產業的復甦力道。</p>
+                    </div>
+                </article>
+
+                <!-- Ch 4 -->
+                <article class="analysis-card">
+                    <div class="analysis-block">
+                        <h3>🇹🇼 第 4 章｜台股籌碼與量價</h3>
+                        <p><strong>內外資大型法人聯手推升指數：</strong>台灣加權指數大幅上漲2.02%至33229.82點，主要歸功於外資單日大舉買超現貨達150億元，配合投信買超20億元，內外資聯手推升大型電子權值股的亮眼表現。追蹤台股50檔重量級企業的0050 ETF成交量較前1個交易日增加近20%，反映出被動式資金的大規模湧入，成為支撐台股突破近期盤整區間的關鍵上漲動能。</p>
+                        <p><strong>外資籌碼動向與台幣匯率觀察：</strong>若外資買盤能夠在未來3個交易日持續保持每日逾百億元的淨流入規模，則加權指數有望進1步挑戰歷史新高價位；反之，若美國科技股出現大幅度的修正回檔，則可能引發台股獲利了結賣壓傾巢而出。短期內必須密切觀察新台幣匯率的走勢變化，倘若新台幣持續呈現升值態勢，將有利於吸引更多國際熱錢流入台灣資本市場。</p>
+                    </div>
+                </article>
+
+                <!-- Ch 5 -->
+                <article class="analysis-card">
+                    <div class="analysis-block">
+                        <h3>🏛️ 第 5 章｜債市與利率定價</h3>
+                        <p><strong>歐央鷹派言論推升全球殖利率：</strong>美國10年期公債殖利率上揚2 bps至4.35%，主要受到歐洲央行總裁發表偏鷹派言論的直接影響，帶動全球主要經濟體公債殖利率同步走高。追蹤美國20年期以上公債的TLT出現逢高獲利了結賣壓，單日下跌超過1.5%，顯示市場投資人對於聯準會降息步伐的預期已經逐漸轉趨保守，並開始重新定價遠期利率水準。</p>
+                        <p><strong>就業市場數據牽動降息預期：</strong>若即將公布的美國就業市場數據顯示勞動力市場依然維持高度強韌，則長天期公債殖利率恐將面臨進1步上揚的沉重壓力；反之，倘若經濟數據意外呈現疲軟態勢，則將重新點燃市場的降息預期並有力支撐債券價格。投資人在當前利率環境下，應適度配置如LQD等投資等級公司債，以獲取相對穩定的利息收益並降低整體投資組合的波動。</p>
+                    </div>
+                </article>
+
+                <!-- Ch 6 -->
+                <article class="analysis-card">
+                    <div class="analysis-block">
+                        <h3>💱 第 6 章｜匯率與大宗商品</h3>
+                        <p><strong>中東地緣風險降溫壓抑原油價格：</strong>美元指數微幅上漲0.15%至104.12，而布蘭特原油則回落0.45%至每桶87.35美元。原油價格下跌主要反映伊朗提出停戰條件後，市場對中東地區原油供應中斷的擔憂情緒有所緩解。追蹤全球主要能源企業表現的XLE連帶受到實質壓抑，單日資金淨流出達5000萬美元，顯示投機性資金正逐步撤出能源相關商品市場。</p>
+                        <p><strong>停戰談判進展與避險資金需求：</strong>若中東地緣政治局勢能夠在未來7天內達成實質性的永久停火協議，則國際原油價格可能進1步回測每桶85美元的關鍵支撐價位；反之，若雙方談判破裂且衝突範圍擴大，則油價恐將迅速反彈並再次引發市場通膨隱憂。此外，黃金期貨價格上漲1.20%至2415.60美元，顯示在充滿不確定性的環境中，避險資產仍具備高度的配置價值。</p>
+                    </div>
+                </article>
+            </main>
+        </div>
+
+        <!-- 第 7 章：關鍵個股動態追蹤 -->
+        <h2 class="section-title">🎯 第 7 章｜歐美關鍵個股追蹤 (Long / Short)</h2>
+        <section class="stocks-grid">
+            <!-- Stock 1: Long -->
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-title">輝達</div>
+                        <div class="stock-ticker">NASDAQ-NVDA</div>
+                    </div>
+                    <div class="stock-links">
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/" target="_blank">財報</a>
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/technicals/" target="_blank">技術</a>
+                    </div>
+                </div>
+                <div class="stock-content analysis-block">
+                    <p><strong>平台生態系擴張吸引長線資金：</strong>輝達（NASDAQ-NVDA）近期宣布斥資逾20億美元擴大其人工智慧平台的軟硬體生態系合作，此舉大幅強化了該公司在AI基礎建設領域的絕對壟斷地位。追蹤半導體板塊的SOXX中，輝達權重持續獲得提升，配合市場預估其即將於下半年度量產的新1代AI伺服器架構將帶來超過30%的營收成長，吸引了大量機構投資人的長線買盤進駐。</p>
+                    <p><strong>財報獲利指引與市場競爭風險：</strong>若輝達能夠在下半年的財報會議中，持續繳出優於華爾街分析師普遍預期的獲利指引，則其股價有望突破近期的歷史高點並展開全新的估值擴張行情；反之，若競爭對手超微推出具備高性價比的替代解決方案，則可能對輝達的市占率造成短期的實質衝擊。投資人應密切關注全球前三大雲端服務供應商未來的資本支出規模。</p>
+                </div>
+            </div>
+
+            <!-- Stock 2: Long -->
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-title">蘋果</div>
+                        <div class="stock-ticker">NASDAQ-AAPL</div>
+                    </div>
+                    <div class="stock-links">
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/financials-overview/" target="_blank">財報</a>
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/technicals/" target="_blank">技術</a>
+                    </div>
+                </div>
+                <div class="stock-content analysis-block">
+                    <p><strong>生成式AI帶動換機潮預期升溫：</strong>蘋果（NASDAQ-AAPL）近期獲得高盛證券調升投資評等與目標價，主要理由為分析師看好該公司即將推出的生成式人工智慧功能將帶動全新的智慧型手機換機潮。從資金面觀察，追蹤大型科技股的XLK近期湧入近3億美元的淨流入，其中有相當比例配置於蘋果，顯示市場對其下半年的硬體終端銷售動能抱持著相對樂觀態度。</p>
+                    <p><strong>全球開發者大會與終端銷售觀察：</strong>若蘋果能在即將到來的全球開發者大會上，展示出具備突破性且能與現有生態系深度整合的AI應用服務，則將大幅推升其軟體服務部門的營收成長率；反之，倘若中國市場的手機銷售數據持續呈現疲軟狀態，則恐將拖累整體的獲利表現。後續應持續追蹤其在印度等新興市場的供應鏈布局進度與實際的市占率變化。</p>
+                </div>
+            </div>
+
+            <!-- Stock 3: Short -->
+            <div class="stock-card bear">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-title">Supermicro</div>
+                        <div class="stock-ticker">NASDAQ-SMCI</div>
+                    </div>
+                    <div class="stock-links">
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-SMCI/financials-overview/" target="_blank">財報</a>
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-SMCI/technicals/" target="_blank">技術</a>
+                    </div>
+                </div>
+                <div class="stock-content analysis-block">
+                    <p><strong>司法訴訟衝擊引爆市場空頭賣壓：</strong>Supermicro（NASDAQ-SMCI）近期遭到美國司法部正式起訴，指控其共同創辦人涉嫌走私受管制的人工智慧設備，此負面消息導致該公司面臨嚴重的商譽受損與潛在的鉅額罰款。觀察市場資金動向，大量避險基金已經開始透過借券市場建立該公司的空頭部位，導致其單日融券餘額暴增超過20萬股，技術面更跌破了關鍵的季線支撐。</p>
+                    <p><strong>美國制裁風險與後續獨立調查：</strong>若美國商務部後續針對該公司祭出更為嚴厲的出口管制禁令或供應鏈制裁措施，則其核心的伺服器業務營收恐將面臨高達30%以上的劇烈衰退風險；反之，若公司管理層能夠迅速完成內部獨立調查並提出令市場信服的改善方案，則股價可能在大幅回檔後出現技術性反彈。投資人在相關調查結果明朗化之前，應嚴格控管投資風險。</p>
+                </div>
+            </div>
+
+            <!-- Stock 4: Short -->
+            <div class="stock-card bear">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-title">特斯拉</div>
+                        <div class="stock-ticker">NASDAQ-TSLA</div>
+                    </div>
+                    <div class="stock-links">
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-TSLA/financials-overview/" target="_blank">財報</a>
+                        <a href="https://tw.tradingview.com/symbols/NASDAQ-TSLA/technicals/" target="_blank">技術</a>
+                    </div>
+                </div>
+                <div class="stock-content analysis-block">
+                    <p><strong>全球交車數據疲軟引發法人疑慮：</strong>特斯拉（NASDAQ-TSLA）近期面臨電動車市場需求放緩以及來自中國車廠的激烈價格競爭，導致其第一季的全球交車數量遠低於華爾街分析師的普遍預期。追蹤非必需消費品板塊的XLY因此承受了極為沉重的賣壓，特斯拉單週股價跌幅達顯著水準，反映出大型機構法人對於該公司未來幾個季度的毛利率表現抱持著高度的疑慮。</p>
+                    <p><strong>低價車款策略與自動駕駛進展：</strong>若特斯拉無法在未來1個月內順利推出具備強大市場競爭力的平價車款，或其全自動駕駛技術的商業化進度持續遞延，則其過往享有的高估值溢價將面臨進1步的下修壓力；反之，倘若其能源儲存業務的營收占比能快速提升並彌補汽車銷售的龐大缺口，則有助於穩定目前的股價表現。短期內投資人應避開波動過大的相關概念股。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 免責聲明 -->
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; font-size: 0.875rem; color: #94a3b8; text-align: center;">
+            <p>本報告由系統自動生成，僅供內部參考，不構成任何投資建議。<br>投資有風險，請審慎評估。</p>
+        </footer>
+    </div>
+
+    <!-- 腳本區域 -->
+    <script>
+    /* ── 進度條腳本 ────────────────────────────────────────── */
+    window.addEventListener('load', function() {
+        var progressBar = document.getElementById('progress-bar');
+        var progressContainer = document.getElementById('progress-container');
+        if (progressBar && progressContainer) {
+            progressBar.style.width = '100%';
+            setTimeout(function() {
+                progressContainer.style.opacity = '0';
+                setTimeout(function() {
+                    progressContainer.style.display = 'none';
+                }, 300);
+            }, 500);
+        }
+    });
+
+    /* ── 外部連結修復腳本 ────────────────────────────────────────── */
+    (function() {
+        document.addEventListener('click', function(event) {
+            var el = event.target;
+            if (!(el instanceof HTMLElement)) return;
+            var linkEl = el.closest('a');
+            if (!linkEl) return;
+
+            var href = linkEl.getAttribute('href');
+            if (!href || href.startsWith('#')) return;
+
+            var target = linkEl.getAttribute('target');
+            if (target === '_blank' || linkEl.hostname !== window.location.hostname) {
+                event.preventDefault();
+                event.stopPropagation();
+                window.open(href, '_blank', 'noopener,noreferrer');
+            }
+        }, true);
+    })();
+    </script>
+</body>
+</html>
