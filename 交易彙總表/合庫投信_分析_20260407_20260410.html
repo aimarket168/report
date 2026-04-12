@@ -1,0 +1,710 @@
+<html lang="zh-TW"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合庫投信｜基金交易特定期間分析 2026/04/07–04/10</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@600;700&display=swap');
+:root{
+  --ink:#0d1b2a; --ink-mid:#1e3a5f; --ink-light:#2d5986;
+  --gold:#b8892a; --gold-pale:#f5ecd6; --gold-line:#d4ac5a;
+  --buy:#0a6b3a; --buy-bg:#e6f4ec; --buy-light:#34a85a;
+  --sell:#b91c1c; --sell-bg:#fde8e8; --sell-light:#ef4444;
+  --mm:#5b4fcf; --mm-bg:#ede9fb; --mm-light:#7c72e0;
+  --anue:#c05621; --anue-bg:#fff3e8;
+  --tcb:#0a6b3a; --chb:#c2410c; --direct:#1d4ed8; --other:#4b5563;
+  --border:#e5e7eb; --surface:#f8f9fa;
+  --r:10px; --sh:0 2px 16px rgba(13,27,42,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:#eef1f5;color:var(--ink);font-size:14px;line-height:1.6}
+
+/* HEADER */
+.pg-hdr{background:var(--ink);color:#fff;padding:0 40px;display:flex;align-items:stretch;position:relative;overflow:hidden}
+.pg-hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 38px,rgba(255,255,255,.03) 38px,rgba(255,255,255,.03) 39px)}
+.hdr-l{flex:1;padding:26px 0;position:relative;z-index:1}
+.hdr-eye{font-size:10px;letter-spacing:3px;color:var(--gold-line);font-family:'DM Mono',monospace;margin-bottom:8px}
+.hdr-ttl{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:5px}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.3px}
+.hdr-r{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:8px;padding:20px 0 20px 32px;position:relative;z-index:1}
+.period-badge{background:var(--gold);color:var(--ink);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
+.gen-at{font-size:10px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace}
+
+/* ACTION BAR */
+.act-bar{background:#fff;border-bottom:2px solid var(--gold-line);padding:9px 40px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.act-bar-lbl{font-size:11px;color:var(--other);margin-right:auto;font-family:'DM Mono',monospace}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 15px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-ink{background:var(--ink);color:#fff} .btn-ink:hover{background:var(--ink-mid)}
+.btn-ol{background:#fff;color:var(--ink);border:1px solid var(--border)} .btn-ol:hover{border-color:var(--ink)}
+
+/* LAYOUT */
+.pg-body{max-width:1180px;margin:24px auto;padding:0 20px 40px;display:flex;flex-direction:column;gap:20px}
+
+/* ALERT */
+.alert-warn{background:#fffbeb;border:1px solid #fbbf24;border-radius:var(--r);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:#92400e}
+
+/* CARD */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.card-hdr{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-ttl{font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:9px}
+.card-ico{width:27px;height:27px;border-radius:7px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.card-body{padding:20px}
+.card-note{font-size:11px;color:var(--other)}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:#fff;border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);border-top:3px solid var(--border);transition:transform .2s}
+.kpi:hover{transform:translateY(-2px)}
+.kpi.k-buy{border-top-color:var(--buy)} .kpi.k-sell{border-top-color:var(--sell)}
+.kpi.k-net{border-top-color:var(--sell)} .kpi.k-mm{border-top-color:var(--mm)}
+.kpi.k-anue{border-top-color:var(--anue)}
+.kpi-lbl{font-size:10px;letter-spacing:1.5px;color:var(--other);font-weight:500;margin-bottom:8px}
+.kpi-val{font-size:21px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:3px}
+.kv-buy{color:var(--buy)} .kv-sell{color:var(--sell)} .kv-neg{color:var(--sell)}
+.kv-mm{color:var(--mm)} .kv-anue{color:var(--anue)}
+.kpi-unit{font-size:10px;color:var(--other)}
+.kpi-note{font-size:11px;color:var(--other);margin-top:5px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl thead tr{background:var(--ink)}
+.tbl th{color:rgba(255,255,255,.82);padding:8px 11px;text-align:right;font-weight:600;font-size:11px;white-space:nowrap}
+.tbl th:first-child{text-align:left}
+.th-buy{color:#6ee7b7!important} .th-sell{color:#fca5a5!important}
+.tbl td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px}
+.tbl td:first-child{text-align:left;font-family:'Noto Sans TC',sans-serif;font-size:13px}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover{background:var(--surface)}
+.tr-total{background:var(--gold-pale)!important}
+.tr-total td{border-top:2px solid var(--gold-line)!important;font-weight:700;color:var(--ink)}
+.tr-anue{background:var(--anue-bg)!important}
+.tr-anue td{color:var(--anue)}
+.tr-mm{background:var(--mm-bg)!important}
+.v-buy{color:var(--buy);font-weight:600} .v-sell{color:var(--sell);font-weight:600}
+.v-pos{color:var(--buy)} .v-neg{color:var(--sell)}
+.v-mm{color:var(--mm);font-weight:600}
+
+/* SCROLL */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two-col>div{min-width:0;overflow:hidden}
+
+/* CHANNEL PILL */
+.cp{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.cp-tcb{background:#dcfce7;color:#166534} .cp-chb{background:#ffedd5;color:#9a3412}
+.cp-dir{background:#dbeafe;color:#1e40af} .cp-oth{background:#f1f5f9;color:#475569}
+.cp-anue{background:var(--anue-bg);color:var(--anue)} .cp-life{background:#f3e8ff;color:#7e22ce}
+
+/* DAY TAG */
+.dt{font-size:10px;color:var(--other);font-family:'DM Mono',monospace;margin-left:3px}
+
+/* CHART LEGEND */
+.chart-legend{display:flex;gap:16px;margin-bottom:14px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--other)}
+.legend-dash{width:16px;height:3px;border-radius:2px;flex-shrink:0}
+
+/* CHART SVG */
+.chart-svg{width:100%;overflow:visible;display:block}
+
+/* SEC LABEL */
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--other);text-transform:uppercase;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+
+/* TOP FUND RANK */
+.top-rank{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+.r1{background:#fef3c7;color:#92400e} .r2{background:#f1f5f9;color:#475569} .r3{background:#ffedd5;color:#9a3412}
+
+/* REMARK CARDS */
+.rmk{border-radius:8px;padding:13px 15px;border:1px solid var(--border);border-left:4px solid;background:var(--surface)}
+.rmk-warn{border-left-color:var(--sell)} .rmk-note{border-left-color:var(--gold)}
+.rmk-good{border-left-color:var(--buy)} .rmk-info{border-left-color:var(--direct)}
+.rmk-watch{border-left-color:var(--anue)}
+.rmk-icon{font-size:17px;margin-bottom:6px}
+.rmk-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.rmk-body{font-size:12px;color:#374151;line-height:1.8}
+.remark-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+
+/* CHANNEL BAR */
+.ch-bar-wrap{display:flex;flex-direction:column;gap:0}
+.ch-bar-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.ch-bar-row:last-child{border-bottom:none}
+.ch-bar-lbl{width:80px;font-size:12px;font-weight:500;flex-shrink:0}
+.ch-bar-cnt{font-size:11px;color:var(--other);width:20px;flex-shrink:0;text-align:right}
+.ch-bar-track{flex:1;height:16px;background:var(--surface);border-radius:4px;overflow:hidden}
+.ch-bar-fill{height:100%;border-radius:4px;min-width:4px}
+.ch-bar-val{width:65px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0}
+
+/* FOOTER */
+.pg-footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:14px;font-size:10.5px;border-radius:var(--r);line-height:1.9}
+
+/* DATE PICKER */
+.date-picker-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dp-label{font-size:11px;font-weight:600;color:var(--other);white-space:nowrap;letter-spacing:.5px}
+.dp-input{border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Mono',monospace;color:var(--ink);background:#fff;transition:border-color .2s;height:32px}
+.dp-input:focus{outline:none;border-color:var(--ink-mid)}
+.dp-sep{font-size:12px;color:var(--other);flex-shrink:0}
+.btn-ghost{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px dashed #d4ac5a;background:#fffbf0;color:#92400e;transition:all .2s;height:32px}
+.btn-ghost:hover{background:#fef3c7}
+.btn.btn-ink,.btn.btn-ol{height:32px}
+@media(max-width:700px){.date-picker-group{gap:6px}.dp-label{display:none}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card,.kpi{animation:fadeUp .45s ease both}
+.kpi:nth-child(1){animation-delay:.05s} .kpi:nth-child(2){animation-delay:.10s}
+.kpi:nth-child(3){animation-delay:.15s} .kpi:nth-child(4){animation-delay:.20s}
+.kpi:nth-child(5){animation-delay:.25s}
+
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.two-col,.remark-grid{grid-template-columns:1fr}.pg-body{padding:0 12px 40px}.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:10px 10px 9px}.kpi-cur{font-size:17px}}
+@media print{.act-bar{display:none!important}body{background:#fff}.card{box-shadow:none;border:1px solid var(--border)}}
+
+/* ── 9-Metric KPI Panel ── */
+.kpi-panel{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.kpi-row{display:grid;grid-template-columns:68px 1fr 1fr 1fr;align-items:stretch}
+.kpi-divider{height:1px;background:linear-gradient(90deg,transparent 68px,var(--border) 68px)}
+.kpi-row-label{display:flex;align-items:center;justify-content:center;padding:18px 6px;background:#f9fafb;border-right:2px solid var(--border)}
+.kpi-row-badge{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:800;letter-spacing:3px;padding:6px 4px;border-radius:5px}
+.kpi-cell{padding:14px 18px 12px;border-left:1px solid var(--border);position:relative}
+.kpi-lbl{font-size:10px;letter-spacing:1.4px;color:var(--other);font-weight:600;text-transform:uppercase;margin-bottom:5px}
+.kpi-cur{font-size:22px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:6px}
+.kpi-unit{font-size:9.5px;color:var(--other);font-family:'DM Mono',monospace;margin-left:2px}
+.kpi-compare{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.kpi-prev{font-size:11px;color:#9ca3af;font-family:'DM Mono',monospace}
+.kpi-prev span{color:#6b7280;font-weight:600}
+.kpi-delta{font-size:11.5px;font-family:'DM Mono',monospace;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.delta-pos{background:#dcfce7;color:#166534}
+.delta-neg{background:#fde8e8;color:#991b1b}
+.delta-neu{background:#f1f5f9;color:#475569}
+.k-net{border-top:3px solid var(--border)}
+.k-net-pos{border-top-color:var(--buy)}
+.k-net-neg{border-top-color:var(--sell)}
+.badge-total{background:var(--gold-pale);color:#92400e}
+.badge-gen{background:#dbeafe;color:#1e40af}
+.badge-mm{background:#ede9fb;color:#5b21b6}
+.badge-total{background:var(--ink);color:#fff}
+.badge-gen{background:#d1fae5;color:#065f46}
+.badge-mm{background:#ede9fb;color:#3730a3}
+.kpi-cell{padding:18px 20px;border-right:1px solid #f3f4f6;transition:background .2s}
+.kpi-cell:last-child{border-right:none}
+.kpi-cell:hover{background:#fafafa}
+.k-net{background:linear-gradient(135deg,rgba(255,255,255,0),rgba(248,250,252,.7))}
+.k-net-pos .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--buy);border-radius:2px;margin-bottom:6px}
+.k-net-neg .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--sell);border-radius:2px;margin-bottom:6px}
+.kpi-lbl{font-size:10px;letter-spacing:1.2px;color:#6b7280;font-weight:600;margin-bottom:7px;text-transform:uppercase}
+.kpi-val{font-size:24px;font-weight:900;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
+.kpi-unit{font-size:10px;color:#9ca3af;margin-bottom:4px}
+.kpi-note{font-size:11px;color:#6b7280;font-style:italic}
+@media(max-width:900px){.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:14px 12px}.kpi-val{font-size:18px}}
+@media(max-width:600px){.kpi-row{grid-template-columns:36px 1fr 1fr}.kpi-row .kpi-cell:nth-child(4){grid-column:2/5;border-top:1px solid #f3f4f6}}
+
+</style>
+</head>
+<body>
+
+<header class="pg-hdr">
+  <div class="hdr-l">
+    <div class="hdr-eye">TAIWAN COOPERATIVE BANK INVESTMENT TRUST · PERIOD ANALYSIS REPORT</div>
+    <div class="hdr-ttl">基金交易特定期間分析</div>
+    <div class="hdr-sub">分析期間：<span id="hdrPeriod">4/7（二）至 4/10（五）</span>　｜　資料來源：每日交易彙總表</div>
+  </div>
+  <div class="hdr-r">
+    <div class="period-badge" id="periodBadge">2026/04/07 – 04/10</div>
+    <div class="gen-at">製表日期：2026-04-10</div>
+  </div>
+</header>
+
+<div class="act-bar">
+  <div class="date-picker-group">
+    <label class="dp-label">分析期間</label>
+    <input type="date" id="dpFrom" class="dp-input" value="2026-04-07">
+    <span class="dp-sep">至</span>
+    <input type="date" id="dpTo" class="dp-input" value="2026-04-10">
+    <button class="btn btn-ink" onclick="requestNewReport()">🔍 產生日報</button>
+    <span id="sendTip" style="display:none;font-size:11px;color:#0a6b3a;font-weight:600;white-space:nowrap">✅ 已複製，請貼至 Claude 對話框送出</span>
+    <button class="btn btn-ghost" onclick="setLastWeek()">⚡ 上週</button>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-ol" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-ink" onclick="dlHTML()">⬇️ 下載</button>
+  </div>
+</div>
+
+<div class="pg-body">
+<div class="alert-warn">
+  ⚠️ <strong>統計調整說明：</strong>4/10 22_環境社會責任 合併基準日贖回 108,906,679 元（玉山銀行）已從本期所有統計中剔除，此筆屬合併帳務轉換，非一般市場申贖行為。預計 T+4～T+7（4/16–4/21）追蹤入息優化基金是否有對應申購入帳。
+</div>
+
+
+<div style="background:#f8f9fa;border:1px solid var(--border);border-radius:var(--r) var(--r) 0 0;padding:9px 20px 8px;display:flex;align-items:center;gap:14px;border-bottom:none">
+  <span style="font-size:11px;font-weight:700;color:var(--ink)">📊 期間摘要對照</span>
+  <span style="font-size:11px;color:var(--other)">本期</span>
+  <span style="font-size:11px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--border);padding:1px 9px;border-radius:10px;font-family:'DM Mono',monospace">2026/04/07–04/10</span>
+  <span style="font-size:11px;color:var(--other)">對比前期同期</span>
+  <span style="font-size:11px;font-weight:700;color:#6b7280;background:#fff;border:1px solid #e5e7eb;padding:1px 9px;border-radius:10px;font-family:'DM Mono',monospace">2026/03/30–04/02</span>
+  <span style="font-size:10px;color:#9ca3af;margin-left:auto">金額單位：百萬新台幣（M TWD）</span>
+</div>
+<div class="kpi-panel" style="border-radius:0 0 var(--r) var(--r)">
+  <div style="display:grid;grid-template-columns:68px 1fr 1fr 1fr;background:var(--ink)">
+    <div style="padding:8px 6px;border-right:2px solid rgba(255,255,255,.15)"></div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">申　購</div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">贖　回</div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:var(--gold-line);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">淨流入／出</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-total">合　計</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">期間總申購</div>
+      <div class="kpi-cur" style="color:var(--buy)">+247.2 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+379.9</span></span>
+        <span class="kpi-delta delta-neg">▼ 132.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">期間總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+599.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+852.4</span></span>
+        <span class="kpi-delta delta-pos">▼ 253.3</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">期間淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-352.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--sell)">-472.5</span></span>
+        <span class="kpi-delta delta-pos">▲ +120.5</span>
+      </div>
+    </div>
+  </div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-gen">一般型</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">一般型總申購</div>
+      <div class="kpi-cur" style="color:var(--buy)">+117.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+137.0</span></span>
+        <span class="kpi-delta delta-neg">▼ 19.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">一般型總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+452.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+128.6</span></span>
+        <span class="kpi-delta delta-neg">▲ +323.5</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">一般型淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-334.9 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--buy)">+8.4</span></span>
+        <span class="kpi-delta delta-neg">▼ 343.3</span>
+      </div>
+    </div>
+  </div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-mm">貨幣型</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">貨幣型總申購</div>
+      <div class="kpi-cur" style="color:var(--mm)">+130.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+243.0</span></span>
+        <span class="kpi-delta delta-neg">▼ 113.0</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">貨幣型總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+147.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+723.9</span></span>
+        <span class="kpi-delta delta-pos">▼ 576.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">貨幣型淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-17.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--sell)">-480.9</span></span>
+        <span class="kpi-delta delta-pos">▲ +463.9</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="background:#f8f9fa;border:1px solid var(--border);border-radius:var(--r) var(--r) 0 0;padding:9px 20px 8px;display:flex;align-items:center;gap:14px;border-bottom:none">
+  <span style="font-size:11px;font-weight:700;color:var(--ink)">📊 期間摘要對照</span>
+  <span style="font-size:11px;color:var(--other)">本期</span>
+  <span style="font-size:11px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--border);padding:1px 9px;border-radius:10px;font-family:'DM Mono',monospace">2026/04/07–04/10</span>
+  <span style="font-size:11px;color:var(--other)">對比前期同期</span>
+  <span style="font-size:11px;font-weight:700;color:#6b7280;background:#fff;border:1px solid #e5e7eb;padding:1px 9px;border-radius:10px;font-family:'DM Mono',monospace">2026/03/30–04/02</span>
+  <span style="font-size:10px;color:#9ca3af;margin-left:auto">金額單位：百萬新台幣（M TWD）</span>
+</div>
+<div class="kpi-panel" style="border-radius:0 0 var(--r) var(--r)">
+  <div style="display:grid;grid-template-columns:68px 1fr 1fr 1fr;background:var(--ink)">
+    <div style="padding:8px 6px;border-right:2px solid rgba(255,255,255,.15)"></div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">申　購</div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">贖　回</div>
+    <div style="padding:8px 18px;font-size:10px;font-weight:700;color:var(--gold-line);letter-spacing:1.5px;border-left:1px solid rgba(255,255,255,.1)">淨流入／出</div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-total">合　計</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">期間總申購</div>
+      <div class="kpi-cur" style="color:var(--buy)">+247.2 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+379.9</span></span>
+        <span class="kpi-delta delta-neg">▼ 132.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">期間總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+599.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+852.4</span></span>
+        <span class="kpi-delta delta-pos">▼ 253.3</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">期間淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-352.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--sell)">-472.5</span></span>
+        <span class="kpi-delta delta-pos">▲ +120.5</span>
+      </div>
+    </div>
+  </div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-gen">一般型</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">一般型總申購</div>
+      <div class="kpi-cur" style="color:var(--buy)">+117.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+137.0</span></span>
+        <span class="kpi-delta delta-neg">▼ 19.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">一般型總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+452.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+128.6</span></span>
+        <span class="kpi-delta delta-neg">▲ +323.5</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">一般型淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-334.9 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--buy)">+8.4</span></span>
+        <span class="kpi-delta delta-neg">▼ 343.3</span>
+      </div>
+    </div>
+  </div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-row">
+    <div class="kpi-row-label"><div class="kpi-row-badge badge-mm">貨幣型</div></div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">貨幣型總申購</div>
+      <div class="kpi-cur" style="color:var(--mm)">+130.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+243.0</span></span>
+        <span class="kpi-delta delta-neg">▼ 113.0</span>
+      </div>
+    </div>
+        <div class="kpi-cell">
+      <div class="kpi-lbl">貨幣型總贖回</div>
+      <div class="kpi-cur" style="color:var(--sell)">+147.1 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:#6b7280">+723.9</span></span>
+        <span class="kpi-delta delta-pos">▼ 576.8</span>
+      </div>
+    </div>
+        <div class="kpi-cell k-net k-net-neg">
+      <div class="kpi-lbl">貨幣型淨流出</div>
+      <div class="kpi-cur" style="color:var(--sell)">-17.0 <span class="kpi-unit">M</span></div>
+      <div class="kpi-compare">
+        <span class="kpi-prev">前期同期 <span style="color:var(--sell)">-480.9</span></span>
+        <span class="kpi-delta delta-pos">▲ +463.9</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 情勢評論 -->
+<div class="card" style="border-left:4px solid var(--gold)">
+  <div class="card-hdr">
+    <div class="card-ttl"><div class="card-ico">📝</div>本期基金交易情勢概覽（2026/04/07–04/10）</div>
+  </div>
+  <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+    <div>
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">本週整體淨流出 −3.52億｜一般型 <span style="color:#b91c1c;font-weight:900">🔴 嚴重</span>——淨流出 3.35億，較上週倒退 3.43億</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>本週（4/7–4/10，4/6 清明補假）整體淨流出 −3.52億，申購 2.47億、贖回 5.99億</li><li>🔴 一般型為主要失血來源，淨流出 −3.35億，超過 2億警戒線，屬嚴重情況</li><li>🔴 較上週同期（+0.08億）倒退 3.43億，週比週惡化幅度亦超過 2億，雙重嚴重訊號</li><li>貨幣型相對平穩，淨流出僅 −0.17億；本週無 MMF 預報，未見銀行或壽險大額異動，屬一般通路正常進出</li></ul></div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">一般型連四日淨流出，週三週四兩天尤為嚴峻</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>四天全數淨流出，壓力逐日加重：4/7 −0.35億尚屬可控，4/8 擴大至 −0.58億，4/9 最重達 −1.35億</li><li>4/9 主力：16_台灣高科技單日贖回 0.75億（合庫商銀），為本期最大單筆</li><li>上週同期一般型淨流入 +0.08億，本週轉為淨流出 −3.35億，壓力差距明顯</li><li>30_全球複合收益債連三日出現贖回榜（4/7–4/9），合計贖回 5,417 萬，持續向下</li></ul></div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">貨幣型四天平穩，上週大額衝擊未再出現</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>四天申購 1.30億、贖回 1.47億，淨流出僅 −0.17億，無大額單日異動</li><li>本週無 MMF 預報，未見銀行或壽險大額進出，屬一般通路正常流量</li><li>上週同期（含國泰人壽 5.16億）貨幣型淨流出 −4.81億，本週回歸正常水位</li><li>4/9 27_入息多重資產首次進入申購榜（715萬，合庫商銀），後續動態值得觀察</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI 對照 -->
+
+<!-- 情勢評論 -->
+<div class="card" style="border-left:4px solid var(--gold)">
+  <div class="card-hdr">
+    <div class="card-ttl"><div class="card-ico">📝</div>本期基金交易情勢概覽（2026/04/07–04/10）</div>
+  </div>
+  <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+    <div>
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">本週整體淨流出 −3.52億｜一般型 <span style="color:#b91c1c;font-weight:900">🔴 嚴重</span>——淨流出 3.35億，較上週倒退 3.43億</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>本週（4/7–4/10，4/6 清明補假）整體淨流出 −3.52億，申購 2.47億、贖回 5.99億</li><li>🔴 一般型為主要失血來源，淨流出 −3.35億，超過 2億警戒線，屬嚴重情況</li><li>🔴 較上週同期（+0.08億）倒退 3.43億，週比週惡化幅度亦超過 2億，雙重嚴重訊號</li><li>貨幣型相對平穩，淨流出僅 −0.17億；本週無 MMF 預報，未見銀行或壽險大額異動，屬一般通路正常進出</li></ul></div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">一般型連四日淨流出，週三週四兩天尤為嚴峻</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>四天全數淨流出，壓力逐日加重：4/7 −0.35億尚屬可控，4/8 擴大至 −0.58億，4/9 最重達 −1.35億</li><li>4/9 主力：16_台灣高科技單日贖回 0.75億（合庫商銀），為本期最大單筆</li><li>上週同期一般型淨流入 +0.08億，本週轉為淨流出 −3.35億，壓力差距明顯</li><li>30_全球複合收益債連三日出現贖回榜（4/7–4/9），合計贖回 5,417 萬，持續向下</li></ul></div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.3px;margin-bottom:6px">貨幣型四天平穩，上週大額衝擊未再出現</div>
+      <div style="font-size:13px;color:#374151;line-height:1.9"><ul style="margin:0;padding-left:18px;line-height:2"><li>四天申購 1.30億、贖回 1.47億，淨流出僅 −0.17億，無大額單日異動</li><li>本週無 MMF 預報，未見銀行或壽險大額進出，屬一般通路正常流量</li><li>上週同期（含國泰人壽 5.16億）貨幣型淨流出 −4.81億，本週回歸正常水位</li><li>4/9 27_入息多重資產首次進入申購榜（715萬，合庫商銀），後續動態值得觀察</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI 對照 --><!-- SEC 1：每日彙總表 -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><div class="card-ico">📋</div>每日申贖彙總（單位：百萬新台幣）</div>
+  </div>
+  <div class="card-body">
+    <div class="tbl-scroll">
+      <table class="tbl" style="border-collapse:collapse">
+        <colgroup>
+          <col style="width:96px">
+          <col span="3" style="background:#eaf4f8">
+          <col span="3" style="background:#eeeafb">
+          <col span="3" style="background:#eaf2ea">
+        </colgroup>
+        <thead>
+          <tr>
+            <th rowspan="2" style="background:#0d1b2a;vertical-align:middle">日期</th>
+            <th colspan="3" style="background:#1e6b8a;text-align:center;font-size:11px;border-bottom:2px solid #5bb8d4">一般型基金</th>
+            <th colspan="3" style="background:#3d31a8;text-align:center;font-size:11px;border-bottom:2px solid #9d8ff0">貨幣型基金</th>
+            <th colspan="3" style="background:#1e4d22;text-align:center;font-size:11px;border-bottom:2px solid #6ab870">合計</th>
+          </tr>
+          <tr>
+            <th style="background:#1e6b8a;color:#a8e6f5">申購</th><th style="background:#1e6b8a;color:#ffb3b3">贖回</th><th style="background:#1e6b8a;color:#e0e0e0">淨流入</th>
+            <th style="background:#3d31a8;color:#c5bcff">申購</th><th style="background:#3d31a8;color:#ffb3b3">贖回</th><th style="background:#3d31a8;color:#e0e0e0">淨流入</th>
+            <th style="background:#1e4d22;color:#a8e8a8">申購</th><th style="background:#1e4d22;color:#ffb3b3">贖回</th><th style="background:#1e4d22;color:#e0e0e0">日淨流入</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4/7 <span class="dt">週二</span></td>
+            <td class="v-buy" style="background:#f0f9fc">42.9</td>
+            <td class="v-sell" style="background:#f0f9fc">77.8</td>
+            <td class="v-neg" style="background:#f0f9fc">-35.0</td>
+            <td class="v-buy" style="background:#f4f2fd">26.0</td>
+            <td class="v-sell" style="background:#f4f2fd">15.7</td>
+            <td class="v-pos" style="background:#f4f2fd">+10.3</td>
+            <td class="v-buy" style="background:#f2f7f2">68.9</td>
+            <td class="v-sell" style="background:#f2f7f2">93.5</td>
+            <td class="v-neg" style="background:#f2f7f2;font-weight:700">-24.7</td>
+          </tr>
+          <tr>
+            <td>4/8 <span class="dt">週三</span></td>
+            <td class="v-buy" style="background:#eaf4f8">26.9</td>
+            <td class="v-sell" style="background:#eaf4f8">85.1</td>
+            <td class="v-neg" style="background:#eaf4f8">-58.3</td>
+            <td class="v-buy" style="background:#ede9fb">37.0</td>
+            <td class="v-sell" style="background:#ede9fb">50.4</td>
+            <td class="v-neg" style="background:#ede9fb">-13.4</td>
+            <td class="v-buy" style="background:#eaf2ea">63.9</td>
+            <td class="v-sell" style="background:#eaf2ea">135.6</td>
+            <td class="v-neg" style="background:#eaf2ea;font-weight:700">-71.7</td>
+          </tr>
+          <tr>
+            <td>4/9 <span class="dt">週四</span></td>
+            <td class="v-buy" style="background:#f0f9fc">25.9</td>
+            <td class="v-sell" style="background:#f0f9fc">160.7</td>
+            <td class="v-neg" style="background:#f0f9fc">-134.9</td>
+            <td class="v-buy" style="background:#f4f2fd">35.3</td>
+            <td class="v-sell" style="background:#f4f2fd">51.8</td>
+            <td class="v-neg" style="background:#f4f2fd">-16.5</td>
+            <td class="v-buy" style="background:#f2f7f2">61.2</td>
+            <td class="v-sell" style="background:#f2f7f2">212.6</td>
+            <td class="v-neg" style="background:#f2f7f2;font-weight:700">-151.4</td>
+          </tr>
+          <tr>
+            <td>4/10 <span class="dt">週五</span></td>
+            <td class="v-buy" style="background:#eaf4f8">21.5</td>
+            <td class="v-sell" style="background:#eaf4f8">128.4</td>
+            <td class="v-neg" style="background:#eaf4f8">-106.8</td>
+            <td class="v-buy" style="background:#ede9fb">31.7</td>
+            <td class="v-sell" style="background:#ede9fb">29.1</td>
+            <td class="v-pos" style="background:#ede9fb">+2.6</td>
+            <td class="v-buy" style="background:#eaf2ea">53.2</td>
+            <td class="v-sell" style="background:#eaf2ea">157.4</td>
+            <td class="v-neg" style="background:#eaf2ea;font-weight:700">-104.2</td>
+          </tr>
+          <tr class="tr-total">
+            <td>期間合計</td>
+            <td style="background:#d4ecf5">117.1</td>
+            <td style="background:#d4ecf5">452.1</td>
+            <td class="v-neg" style="background:#d4ecf5">-334.9</td>
+            <td style="background:#dcd6f7">130.0</td>
+            <td style="background:#dcd6f7">147.1</td>
+            <td class="v-neg" style="background:#dcd6f7">-17.0</td>
+            <td style="background:#cfe8cf">247.2</td>
+            <td style="background:#cfe8cf">599.1</td>
+            <td class="v-neg" style="background:#cfe8cf;font-weight:900">-352.0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 8：鉅亨投顧 -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><div class="card-ico">🔶</div>鉅亨投顧銷售明細（已含於各通路總額，勿重複加計）</div>
+  </div>
+  <div class="card-body">
+    <div style="background:var(--anue-bg);border:1px solid #fdba74;border-radius:7px;padding:10px 14px;font-size:12px;color:var(--anue);margin-bottom:14px">
+      ⚠️ 鉅亨投顧屬成效標籤，其申贖金額已涵蓋在各日通路總額內，以下數字僅供銷售追蹤參考。
+    </div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr>
+        <th>日期</th>
+        <th style="background:#92400e">01_台灣基金 申購</th><th style="background:#92400e">贖回</th><th style="background:#92400e">淨申購</th>
+        <th style="background:#92400e">16_台灣高科技 申購</th><th style="background:#92400e">贖回</th><th style="background:#92400e">淨申購</th>
+        <th style="background:#7c2d12">日合計申購</th>
+      </tr></thead>
+      <tbody style="background:var(--anue-bg)">
+        <tr class="tr-anue"><td>4/7 二</td><td>955,677</td><td>462,561</td><td class="v-pos">+493,116</td><td>1,311,723</td><td>371,561</td><td class="v-pos">+940,162</td><td>2,267,400</td></tr><tr class="tr-anue"><td>4/8 三</td><td>1,342,444</td><td>816,543</td><td class="v-pos">+525,901</td><td>296,181</td><td>729,038</td><td class="v-neg">-432,857</td><td>1,638,625</td></tr><tr class="tr-anue"><td>4/9 四</td><td>833,715</td><td>610,600</td><td class="v-pos">+223,115</td><td>141,000</td><td>2,329,060</td><td class="v-neg">-2,188,060</td><td>974,715</td></tr><tr class="tr-anue"><td>4/10 五</td><td>1,021,491</td><td>5,261,531</td><td class="v-neg">-4,240,040</td><td>312,555</td><td>2,123,718</td><td class="v-neg">-1,811,163</td><td>1,334,046</td></tr><tr class="tr-total"><td>期間合計</td><td>4,153,327</td><td>7,151,235</td><td class="v-neg">-2,997,908</td><td>2,061,459</td><td>5,553,377</td><td class="v-neg">-3,491,918</td><td>6,214,786</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- 附錄 -->
+<div style="display:flex;align-items:center;gap:12px;padding:16px 0 10px"><div style="flex:1;height:1px;background:linear-gradient(90deg,#e5e7eb,transparent)"></div><span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#9ca3af;white-space:nowrap;text-transform:uppercase">附錄 ── 逐日排行原始明細</span><div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#e5e7eb)"></div></div>
+
+<!-- SEC 5：申購 Top 3 -->
+<div class="card">
+  <div class="card-hdr"><div class="card-ttl"><div class="card-ico">📈</div>逐日申購 Top 3 明細</div><span class="card-note">金額單位：新台幣元</span></div>
+  <div class="card-body"><div class="tbl-scroll"><table class="tbl">
+    <thead><tr>
+      <th>日期</th>
+      <th class="th-buy">第一名</th><th>通路</th><th class="th-buy">金額</th>
+      <th class="th-buy">第二名</th><th>通路</th><th class="th-buy">金額</th>
+      <th class="th-buy">第三名</th><th>通路</th><th class="th-buy">金額</th>
+      <th class="th-buy">三名合計</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>4/7 <span class="dt">二</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">15,106,231</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">8,863,622</td><td>12_AI電動車</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">5,058,545</td><td class="v-buy" style="font-weight:700">29,028,398</td></tr>
+          <tr><td>4/8 <span class="dt">三</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">7,985,574</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">5,673,745</td><td>01_台灣基金</td><td><span class="cp cp-dir">基富通證</span></td><td class="v-buy">4,010,282</td><td class="v-buy" style="font-weight:700">17,669,601</td></tr>
+          <tr><td>4/9 <span class="dt">四</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">8,990,872</td><td>27_入息多重資產</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">7,153,550</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">3,288,000</td><td class="v-buy" style="font-weight:700">19,432,422</td></tr>
+          <tr><td>4/10 <span class="dt">五</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">6,413,000</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">6,154,377</td><td>12_AI電動車</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-buy">2,206,833</td><td class="v-buy" style="font-weight:700">14,774,210</td></tr>
+    </tbody>
+  </table></div></div>
+</div>
+
+<!-- SEC 6：贖回 Top 3 -->
+<div class="card">
+  <div class="card-hdr"><div class="card-ttl"><div class="card-ico">📉</div>逐日贖回 Top 3 明細</div><span class="card-note">金額單位：新台幣元</span></div>
+  <div class="card-body"><div class="tbl-scroll"><table class="tbl">
+    <thead><tr>
+      <th>日期</th>
+      <th class="th-sell">第一名</th><th>通路</th><th class="th-sell">金額</th>
+      <th class="th-sell">第二名</th><th>通路</th><th class="th-sell">金額</th>
+      <th class="th-sell">第三名</th><th>通路</th><th class="th-sell">金額</th>
+      <th class="th-sell">三名合計</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>4/7 <span class="dt">二</span></td><td>21_全球醫療照護</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">17,248,996</td><td>30_全球複合收益債</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">14,776,061</td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">13,689,006</td><td class="v-sell" style="font-weight:700">45,714,063</td></tr>
+          <tr><td>4/8 <span class="dt">三</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">41,502,590</td><td>30_全球複合收益債</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">16,760,220</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">11,731,697</td><td class="v-sell" style="font-weight:700">69,994,507</td></tr>
+          <tr><td>4/9 <span class="dt">四</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">74,739,501</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">32,499,129</td><td>30_全球複合收益債</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">22,635,858</td><td class="v-sell" style="font-weight:700">129,874,488</td></tr>
+          <tr><td>4/10 <span class="dt">五</span></td><td>16_台灣高科技</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">30,355,182</td><td>01_台灣基金</td><td><span class="cp cp-tcb">合庫商銀</span></td><td class="v-sell">22,313,209</td><td>22_環境社會責任★</td><td><span class="cp cp-anue">玉山銀行</span></td><td class="v-sell">108,906,679</td><td class="v-sell" style="font-weight:700">161,575,070</td></tr>
+    </tbody>
+  </table></div></div>
+</div>
+
+<div class="pg-footer">
+  本報告依每日交易彙總表整理製作，數據僅供內部管理參考，不得作為對外引用或投資建議之依據。<br>
+  資料期間：4/7（二）至 4/10（五）　｜　製表日：2026-04-10　｜　合庫投信 投資管理部
+</div>
+
+</div><!-- /pg-body -->
+
+<script>
+const SEND_PROMPT_TEMPLATE = "請產生 20260407 至 20260410 的基金交易分析報表。\\n執行步驟（請依序完成）：\\n1. Gmail 搜尋：subject:每日交易彙總表 after:2026/04/07 before:2026/04/11\\n2. 逐封讀取郵件，記錄每日原始數據（元）\\n3. 執行 python3 /home/claude/report_generator.py（驗算數字並產生報表）\\n   → 填寫 DATA 區塊後執行，確認 STEP 2 驗算通過\\n   → 評論億元數字必須直接複製自 STEP 2 輸出，禁止腦算\\n4. 輸出至 /mnt/user-data/outputs/tcb_analysis_20260407_20260410.html";
+function dlHTML(){
+  const b=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`合庫投信_分析_20260407_20260410.html`;a.click();
+}
+function fmtDate(d){return d.toISOString().split('T')[0]}
+function parseDate(s){return new Date(s+'T00:00:00')}
+function weekdayTW(d){return['日','一','二','三','四','五','六'][d.getDay()]}
+function updatePeriodDisplay(){
+  const f=document.getElementById('dpFrom').value;
+  const t=document.getElementById('dpTo').value;
+  if(!f||!t)return;
+  const fd=parseDate(f),td=parseDate(t);
+  const rangeText=`${f.replace(/-/g,'/')}（${weekdayTW(fd)}）至 ${t.replace(/-/g,'/')}（${weekdayTW(td)}）`;
+  const shortText=f.replace(/-/g,'/')+' – '+t.replace(/-/g,'/');
+  document.getElementById('periodBadge').textContent=shortText;
+  document.getElementById('hdrPeriod').textContent=rangeText;
+  document.getElementById('actBarLbl') && (document.getElementById('actBarLbl').textContent='📌 '+shortText);
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.dp-input').forEach(el=>el.addEventListener('change',updatePeriodDisplay));
+});
+function setLastWeek(){
+  const today=new Date();const dow=today.getDay();
+  const toFri=dow===0?2:dow===6?1:dow+1;
+  const fri=new Date(today);fri.setDate(today.getDate()-toFri);
+  const mon=new Date(fri);mon.setDate(fri.getDate()-4);
+  document.getElementById('dpFrom').value=fmtDate(mon);
+  document.getElementById('dpTo').value=fmtDate(fri);
+  updatePeriodDisplay();
+}
+function requestNewReport(){
+  const from=document.getElementById('dpFrom').value;
+  const to=document.getElementById('dpTo').value;
+  if(!from||!to){alert('請先選擇起訖日期');return}
+  const fd=parseDate(from),td=parseDate(to);
+  const toNext=new Date(td);toNext.setDate(td.getDate()+1);
+  const msg=`請產生 ${from} 至 ${to} 的基金交易分析報表。\n執行步驟（請依序完成）：\n1. Gmail 搜尋：subject:每日交易彙總表 after:${from.replace(/-/g,'/')} before:${toNext.toISOString().split('T')[0].replace(/-/g,'/')}\n2. 逐封讀取郵件，記錄每日原始數據（元）\n3. 執行 python3 /home/claude/report_generator.py（驗算數字並產生報表）\n   → 填寫 DATA 區塊後執行，確認 STEP 2 驗算通過\n   → 評論億元數字必須直接複製自 STEP 2 輸出，禁止腦算\n4. 輸出至 /mnt/user-data/outputs/tcb_analysis_${from.replace(/-/g,'')}_${to.replace(/-/g,'')}.html`;
+  if(typeof window.sendPrompt==='function'){window.sendPrompt(msg);}
+  else{
+    const tip=document.getElementById('sendTip');
+    function showOK(){tip.textContent='✅ 已複製，請貼入 Claude.ai 對話框';tip.style.display='inline';setTimeout(()=>tip.style.display='none',6000)}
+    function execCopy(){
+      try{
+        const ta=document.createElement('textarea');
+        ta.value=msg;ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+        document.body.appendChild(ta);ta.focus();ta.select();
+        const ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(ok){showOK()}else{window.prompt('請複製以下指令後貼入 Claude.ai：',msg)}
+      }catch(e){window.prompt('請複製以下指令後貼入 Claude.ai：',msg)}
+    }
+    if(navigator.clipboard&&window.isSecureContext){
+      navigator.clipboard.writeText(msg).then(showOK).catch(execCopy);
+    }else{
+      execCopy();
+    }
+  }
+}
+function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta)}
+</script>
+
+</body></html>
