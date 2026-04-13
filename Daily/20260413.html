@@ -1,6 +1,570 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
+<html lang="zh-TW"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1ODA5YzI0OTlhNDMxNDcyMjY2ZDljOTY0ZWRiZjAyZTJhMjYwNjgiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMTYyNzg3NDM4ODM1OTc2Mjk5OCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2ZiMmEzYmIzMDkxZGM1N2NfMjAyNjA0MTMuaHRtbC0xMTgifSwiZXhwIjoxNzc2MTI1NTE5LCJpYXQiOjE3NzYxMjE5MTksImFsZyI6IlJTMjU2In0.Qz39qKb-VmbockNJZnbj-4E6MG0drMfliNN5oemIKA0AzSKyltBnswpffGaYs3o_9Y6HVL5wJ9rxVVqykGv4hIetKrizXJ61SdBUM1TsqrsiG2ZKBjYze9aT3HlY19sFCA_2kB9n26qSFtror9S1gCrbNlLYu6GudfoeUXUtgEv6wrmr55ysatZiq6AxFz6lmRGNDZm7iG6ssH6IYKxlwHlpZW1FovJpLqWUn6tPnoRVGS6NPLB0Jt5hplZKa32R-7wajs0sEpHnN_yvP0bnoYq-rbJm1XjQ-AEn-e22A2z2281BsGYgTBeOH0IR8V3m_-X9TZzNrKmUqeBP_w5l4Q","c_fb2a3bb3091dc57c_20260413.html-118")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,f){if(b==Array.prototype||b==Object.prototype)return b;b[d]=f.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var f=b[d];if(f&&f.Math==Math)return f}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var f=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in f))break a;f=f[k]}b=b[b.length-1];h=f[b];d=d(h);d!=h&&d!=null&&u(f,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function f(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,f).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function f(){}f.prototype=d.prototype;b.i=d.prototype;b.prototype=new f;b.prototype.constructor=b;b.g=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,f="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);const e={type:"send",data:new Uint8Array(a)};let g;(g=r)==null||g.postMessage(e,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let e;(e=c.onmessage)==null||e.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var e=new Event("open"),g;(g=c.onopen)==null||g.call(c,e);c.dispatchEvent(e);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(e=c.onclose)==null||e.call(c,g);c.dispatchEvent(g);break;case "error":l=3;e=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,e);c.dispatchEvent(e)}}}function p(a){return z(function*(){const e=new MessageChannel;t=e.port1;const g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},f,[e.port2,g.port2])}())}const c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.h="";let l=0,t=null,r=null,q=[];const F=new TextEncoder,
+G=new TextDecoder;c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{let a=0;q.forEach(e=>{a+=typeof e==="string"?e.length:e.byteLength});return a},enumerable:!0,configurable:!0});const I=function(){let a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,e=>{const g=Math.random()*
+16|0;return(e==="x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(e=>{k(e)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,e="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:e,wasClean:a===1E3};var g;
+(g=t)==null||g.postMessage(a)}};Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);const C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");const E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(f,h){try{const k=(new URL(f)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(f,h,b.parentOrigin)}catch(k){}throw new DOMException(`WebSocket connection to '${f}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||
+[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026-04-13（週一） 金融市場日報|洞察•解構•透視全球資產</title>
@@ -635,7 +1199,7 @@
 <body>
 
 <!-- 進度條 -->
-<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0; transition: opacity 0.5s ease-out; display: none;"></div>
 
 <!-- 導覽工具列 -->
 <div class="nav-sticky">
@@ -719,10 +1283,10 @@
                     <div class="heat-item"><div class="heat-bar heat-bar-3">輝達否認收購傳聞</div></div>
                     <div class="heat-item"><div class="heat-bar heat-bar-4">英國拒挺封鎖行動</div></div>
                     <div class="heat-item"><div class="heat-bar heat-bar-5">法國提議海上護航</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-6">寧德時代尋求聯貸</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-7">中裕決議辦理私募</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-8">富邦啟動分割投票</div></div>
-                    <div class="heat-item"><div class="heat-bar heat-bar-9">金居實施庫藏股</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">超微發表全新晶片</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">台積電擴大封裝</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">微軟擴大算力投資</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">特斯拉大砍車價</div></div>
                     <div class="heat-item"><div class="heat-bar heat-bar-10">傳輝達擬收購同業</div></div>
                 </div>
                 <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度基於過去24小時新聞與社群討論量標準化</p>
@@ -732,12 +1296,12 @@
                 <h3 class="table-title">市場關鍵時間軸</h3>
                 <div class="structured-analysis space-y-4 timeline-container">
                     <p><span class="timeline-tag timeline-tag-taiwan">台股盤前 08:29</span>美國軍方正式宣布啟動荷莫茲海峽封鎖行動，直接引發市場對全球能源運輸可能全面中斷的極端擔憂</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:45</span>中裕新藥董事會正式決議辦理3000萬股私募案以引進策略投資人，藉此加速旗下新藥全球授權的布局</p>
+                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 10:45</span>台積電傳出將進一步擴大先進封裝產能以應對人工智慧晶片強勁需求，成功帶動半導體供應鏈逆勢抗跌。</p>
                     <p><span class="timeline-tag timeline-tag-taiwan">台股盤中 11:48</span>國內投信發行之16檔台股高股息指數型基金正式宣布配息，預計將為集中市場挹注高達200億元活水</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 16:33</span>富邦投信正式啟動那斯達克指數型基金分割投票作業，藉此大幅降低散戶入手門檻並提升市場流動性</p>
-                    <p><span class="timeline-tag timeline-tag-taiwan">台股盤後 17:19</span>銅箔基板廠金居決議自明日起進場買回1000張庫藏股，展現公司管理階層對未來營運前景的強烈信心</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 18:30</span>科技巨頭微軟高層對外重申將持續擴大全球資料中心與人工智慧算力投資，帶動相關科技股強力反彈。</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤前 19:15</span>電動車龍頭特斯拉為因應市場激烈競爭與龐大庫存壓力，無預警宣布大幅調降主力車款售價引發擔憂。</p>
                     <p><span class="timeline-tag timeline-tag-us">美股盤前 20:10</span>英國政府正式表態拒絕參與美國封鎖伊朗行動，同時法國提議發起多國聯合海上行動以護航商船通行</p>
-                    <p><span class="timeline-tag timeline-tag-us">美股盤中 00:00</span>中國電池龍頭寧德時代向外資銀行尋求高達50億美元的聯貸案，以支持其在全球市場的供應鏈擴張</p>
+                    <p><span class="timeline-tag timeline-tag-us">美股盤中 00:00</span>處理器大廠超微無預警召開全球發表會，正式推出專為大型語言模型設計的全新一代人工智慧加速運算晶片</p>
                     <p><span class="timeline-tag timeline-tag-us">美股盤中 02:00</span>美國總統川普對外宣稱伊朗高層主動接觸並尋求談判，此舉大幅緩解原先劍拔弩張的波斯灣封鎖危機</p>
                     <p><span class="timeline-tag timeline-tag-us">美股盤中 02:40</span>市場傳出人工智慧晶片龍頭輝達有意併購知名個人電腦製造商，此消息立刻引爆相關硬體供應鏈關注</p>
                     <p><span class="timeline-tag timeline-tag-us">美股盤後 06:04</span>輝達官方出面正式否認收購個人電腦製造商的市場傳聞，導致原先受惠併購題材的相關個股股價走弱</p>
@@ -755,8 +1319,8 @@
         <div class="tldr-block" style="background: #fef2f2;">
             <ul>
                 <li style="color: #dc2626;"><strong>科技族群重新奪回領漲主導權：</strong>避險情緒消退促使資金轉向擁抱高成長類股，費城半導體上漲逾1.6%表現最佳。</li>
-                <li style="color: #dc2626;"><strong>道瓊表現落後透露資金輪動：</strong>道瓊指數單日漲幅不及那斯達克1半，顯示市場資金正從傳統防禦板塊積極回流電子股。</li>
-                <li style="color: #dc2626;"><strong>歐洲股市逆勢收黑承壓最重：</strong>道瓊歐洲50逆勢下跌反映其對能源價格高度敏感，高油價正嚴重侵蝕歐洲工業獲利預期。</li>
+                <li style="color: #dc2626;"><strong>道瓊表現落後透露資金輪動：</strong>道瓊指數單日漲幅不及那斯達克一半，顯示市場資金正從傳統防禦板塊積極回流電子股。</li>
+                <li style="color: #dc2626;"><strong>歐洲股市逆勢收黑承壓最重：</strong>道瓊歐洲五十逆勢下跌反映其對能源價格高度敏感，高油價正嚴重侵蝕歐洲工業獲利預期。</li>
             </ul>
         </div>
 
@@ -769,7 +1333,7 @@
                         <th>指標名稱</th>
                         <th>最新收盤價</th>
                         <th>日漲跌</th>
-                        <th>5日漲跌</th>
+                        <th>五日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -839,7 +1403,7 @@
             <h4>深度分析:</h4>
             <div class="structured-analysis">
                  <p><strong>中東危機降溫帶動美股強力反彈</strong>川普宣稱伊朗主動來電尋求談判，大幅削減原油斷供風險並帶動風險偏好回溫。資金迅速撤出避險資產轉進成長股，推升科技板塊（XLK）大漲逾1.2%。指標股微軟迎來顯著買盤，顯示市場資金正趁地緣政治壓力短暫解除的空窗期，積極回補先前遭錯殺的高本益比人工智慧相關族群，奠定美股單日全面收紅的堅實基礎。</p>
-                 <p><strong>歐洲股市逆勢收黑透露景氣隱憂</strong>相較美股狂飆，道瓊歐洲50指數逆勢下跌0.35%，表現與主流方向不符。這代表歐洲對高油價引發的輸入型通膨更為敏感，資金擔憂企業獲利遭雙重夾擊而提前降低區域曝險。若後續油價回落至90美元下方，歐股有望迎來評價回升；若中東局勢惡化推升原油破百，歐洲工業板塊（EXI）將面臨更嚴峻的本益比下修壓力。</p>
+                 <p><strong>歐洲股市逆勢收黑透露景氣隱憂</strong>相較美股狂飆，道瓊歐洲五十指數逆勢下跌0.35%，表現與主流方向不符。這代表歐洲對高油價引發的輸入型通膨更為敏感，資金擔憂企業獲利遭雙重夾擊而提前降低區域曝險。若後續油價回落至90美元下方，歐股有望迎來評價回升；若中東局勢惡化推升原油破百，歐洲工業板塊（EXI）將面臨更嚴峻的本益比下修壓力。</p>
             </div>
         </div>
     </section>
@@ -852,7 +1416,7 @@
 
         <div class="tldr-block" style="background: #eff6ff;">
             <ul>
-                <li style="color: #2563eb;"><strong>通膨預期降溫帶動美債強彈：</strong>中東危機緩解使2次通膨擔憂顯著降溫，吸引逢低買盤進駐，帶動十年期公債殖利率回落。</li>
+                <li style="color: #2563eb;"><strong>通膨預期降溫帶動美債強彈：</strong>中東危機緩解使二次通膨擔憂顯著降溫，吸引逢低買盤進駐，帶動十年期公債殖利率回落。</li>
                 <li style="color: #2563eb;"><strong>高收益債逆勢上漲優於公債：</strong>高收益債券單日上漲反映市場追求收益的心態依舊旺盛，資金並未因短期地緣波動而退縮。</li>
                 <li style="color: #2563eb;"><strong>殖利率曲線後端展現強大韌性：</strong>長天期債券在歷經急跌後首度迎來明確止穩訊號，顯示市場對聯準會利率路徑仍具備信心。</li>
             </ul>
@@ -867,7 +1431,7 @@
                         <th>指標名稱</th>
                         <th>最新殖利率/價格</th>
                         <th>日變動</th>
-                        <th>5日變動</th>
+                        <th>五日變動</th>
                         <th>月變動</th>
                         <th>季變動</th>
                         <th>年初至今變動</th>
@@ -936,8 +1500,8 @@
         <div class="analysis-block">
             <h4>深度分析:</h4>
             <div class="structured-analysis">
-                <p><strong>通膨降溫帶動長債殖利率回落</strong>原油受和談消息影響暫緩飆漲，大幅減輕市場對2次通膨的反彈預期，資金重新買入固定收益資產。十年期公債殖利率單日下跌2 bps至4.30%，指標公債ETF（TLT）亦獲買盤進駐。這顯示市場已迅速消化中東衝突帶來的短期物價干擾，焦點重新轉回聯準會後續利率路徑定價，長天期公債價格暫時止穩並重獲支撐。</p>
-                <p><strong>高收益債利差走勢透露資金動向</strong>高收益債券ETF（HYG）單日上漲38 bps優於公債表現，反映利率壓力減輕之際，追求收益的風險偏好依然旺盛。這代表資金並未擔憂經濟衰退，反而傾向擁抱具備信用風險但能提供高配息的資產。若未來就業數據意外走弱，信用利差恐快速擴大引發拋售；若總體景氣維持軟著陸，高收益債將持續吸引尋求穩健收益的熱錢流入。</p>
+                <p><strong>通膨降溫帶動長債殖利率回落</strong>原油受和談消息影響暫緩飆漲，大幅減輕市場對二次通膨的反彈預期，資金重新買入固定收益資產。十年期公債殖利率單日下跌2 bps至4.30%，指標公債ETF（TLT）亦獲買盤進駐。這顯示市場已迅速消化中東衝突帶來的短期物價干擾，焦點重新轉回聯準會後續利率路徑定價，長天期公債價格暫時止穩並重獲支撐。</p>
+                <p><strong>高收益債利差走勢透露資金動向</strong>高收益債券ETF（HYG）單日上漲0.38%優於公債表現，反映利率壓力減輕之際，追求收益的風險偏好依然旺盛。這代表資金並未擔憂經濟衰退，反而傾向擁抱具備信用風險但能提供高配息的資產。若未來就業數據意外走弱，信用利差恐快速擴大引發拋售；若總體景氣維持軟著陸，高收益債將持續吸引尋求穩健收益的熱錢流入。</p>
             </div>
         </div>
     </section>
@@ -965,7 +1529,7 @@
                         <th>指標名稱</th>
                         <th>最新價格</th>
                         <th>日漲跌</th>
-                        <th>5日漲跌</th>
+                        <th>五日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1017,7 +1581,7 @@
             <h4>深度分析:</h4>
             <div class="structured-analysis">
                 <p><strong>中東和談傳聞難阻國際原油多頭</strong>儘管川普釋出伊朗有意和談的訊號，布蘭特原油單日仍大漲3.05%收在98.10美元，能源板塊（XLE）維持強勢。這顯示實體市場對海峽封鎖的實質供應中斷風險仍高度警戒，不願輕易拋售部位。買盤持續逢低承接原油期貨，反映地緣政治溢價的僵固性，只要實質停戰協議尚未簽署，市場就不敢完全解除全球能源斷供的紅色警報。</p>
-                <p><strong>黃金逆勢收黑透露避險資金轉向</strong>在油價飆與股市漲之際，黃金期貨逆勢下跌0.35%至4770.50美元，表現與能源氛圍不1致。這代表資金判定中東局勢可控，已率先將避險部位獲利了結並轉往風險資產。若美伊對峙後續出現實質降溫，金價恐面臨更深度的修正壓力；若雙方談判破裂導致戰火實質擴大，黃金（GLD）才有機會重新吸引避險買盤進駐避風港。</p>
+                <p><strong>黃金逆勢收黑透露避險資金轉向</strong>在油價飆與股市漲之際，黃金期貨逆勢下跌0.35%至4770.50美元，表現與能源氛圍不一致。這代表資金判定中東局勢可控，已率先將避險部位獲利了結並轉往風險資產。若美伊對峙後續出現實質降溫，金價恐面臨更深度的修正壓力；若雙方談判破裂導致戰火實質擴大，黃金（GLD）才有機會重新吸引避險買盤進駐避風港。</p>
             </div>
         </div>
     </section>
@@ -1044,7 +1608,7 @@
                         <th>指標名稱</th>
                         <th>最新收盤價</th>
                         <th>日漲跌</th>
-                        <th>5日漲跌</th>
+                        <th>五日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1147,7 +1711,7 @@
             <h4>深度分析:</h4>
             <div class="structured-analysis">
                 <p><strong>權王撐盤台股無懼外資百億賣超</strong>面對外資單日大幅賣超161.31億元的沉重壓力，加權指數仍微幅上漲0.11%，主要歸功台積電與供應鏈強勢撐盤。內資投信單日買超71.37億元接手籌碼，顯示半導體ETF（00891）的基本面護城河成功抵禦外資的避險提款操作。此舉確立台股在全球科技產業供應鏈中的核心定價地位，有效支撐大盤展現極強的抗跌韌性。</p>
-                <p><strong>印度股市重挫透露新興市場隱憂</strong>相較台股抗跌，印度SENSEX指數單日大跌0.91%，表現與亞洲科技主流背離。這代表外資因油價飆漲收縮部位時，缺乏人工智慧題材且高度依賴能源進口的國家首當其衝承受壓力。若外資賣壓持續集中於內需傳產，印度ETF（INDA）恐面臨進1步下探；若國際原油價格回穩，新興市場熱錢才有望重新回流並重啟多頭佈局。</p>
+                <p><strong>印度股市重挫透露新興市場隱憂</strong>相較台股抗跌，印度SENSEX指數單日大跌0.91%，表現與亞洲科技主流背離。這代表外資因油價飆漲收縮部位時，缺乏人工智慧題材且高度依賴能源進口的國家首當其衝承受壓力。若外資賣壓持續集中於內需傳產，印度ETF（INDA）恐面臨進一步下探；若國際原油價格回穩，新興市場熱錢才有望重新回流並重啟多頭佈局。</p>
             </div>
         </div>
     </section>
@@ -1175,7 +1739,7 @@
                         <th>指標名稱</th>
                         <th>最新匯率</th>
                         <th>日漲跌</th>
-                        <th>5日漲跌</th>
+                        <th>五日漲跌</th>
                         <th>月漲跌</th>
                         <th>季漲跌</th>
                         <th>年初至今</th>
@@ -1227,7 +1791,7 @@
             <h4>深度分析:</h4>
             <div class="structured-analysis">
                 <p><strong>避險需求降溫拖累美元指數回落</strong>受美伊和談的樂觀情緒驅動，市場對中東爆發全面戰爭的恐慌削減，避險資金流出美元部位。美元指數單日下跌0.26%至98.40，歐元ETF（FXE）隨之迎來強勢反彈。這顯示匯市交易主軸已迅速從極端避險，重新切換回反映美國總體經濟韌性與聯準會後續貨幣政策路徑，導致美元多頭短線上遭遇沉重的獲利了結賣壓而回測支撐。</p>
-                <p><strong>日圓逆勢走弱透露利差劣勢仍在</strong>在美元整體走弱環境下，美元兌日圓仍微幅上漲17 bps，顯示日圓未受惠非美貨幣的反彈浪潮。這代表日本央行未釋出強烈緊縮訊號前，美日龐大實質利差依然是主導資金流向的關鍵。若未來美國強勁數據推升升息預期，日圓（FXY）恐面臨破底危機；若日本央行意外出手實質干預匯市，短期內才有機會引發規模性的軋空反彈行情。</p>
+                <p><strong>日圓逆勢走弱透露利差劣勢仍在</strong>在美元整體走弱環境下，美元兌日圓仍微幅上漲0.17%，顯示日圓未受惠非美貨幣的反彈浪潮。這代表日本央行未釋出強烈緊縮訊號前，美日龐大實質利差依然是主導資金流向的關鍵。若未來美國強勁數據推升升息預期，日圓（FXY）恐面臨破底危機；若日本央行意外出手實質干預匯市，短期內才有機會引發規模性的軋空反彈行情。</p>
             </div>
         </div>
     </section>
@@ -1242,7 +1806,7 @@
             <ul>
                 <li style="color: #7c3aed;"><strong>[看多]</strong> 人工智慧與半導體：全球AI伺服器基礎建設需求大爆發，次世代架構晶片量產進度大幅優於市場原先預期。</li>
                 <li style="color: #7c3aed;"><strong>[看多]</strong> 雲端運算與軟體：企業雲端基礎設施需求強勁，Copilot訂閱服務滲透率持續攀升。</li>
-                <li style="color: #7c3aed;"><strong>[看空]</strong> 傳統能源板塊：全球各國政府加速推動淨0碳排政策，導致傳統化石燃料面臨長線需求嚴重萎縮的沉重壓力。</li>
+                <li style="color: #7c3aed;"><strong>[看空]</strong> 傳統能源板塊：全球各國政府加速推動淨零碳排政策，導致傳統化石燃料面臨長線需求嚴重萎縮的沉重壓力。</li>
                 <li style="color: #7c3aed;"><strong>[看空]</strong> 電動車製造業：中國電動車品牌持續採取流血價格戰，導致市佔率與毛利率雙雙下滑。</li>
             </ul>
         </div>
@@ -1301,7 +1865,7 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>強大產業護城河抵禦總經波動</strong><br>輝達（NVDA）身為人工智慧發展核心，護城河足以抵禦總經短期波動。市場資金趁局勢暫緩迅速回補，顯示長線多頭未受地緣風險破壞。股價修正後迅速站穩支撐，代表法人承接意願依舊強烈。若後續能帶量突破前波高點，將帶動半導體板塊展開新1波大漲；若再度遭遇獲利了結，上揚季線將提供堅實防守。</p>
+                    <p><strong>強大產業護城河抵禦總經波動</strong><br>輝達（NVDA）身為人工智慧發展核心，護城河足以抵禦總經短期波動。市場資金趁局勢暫緩迅速回補，顯示長線多頭未受地緣風險破壞。股價修正後迅速站穩支撐，代表法人承接意願依舊強烈。若後續能帶量突破前波高點，將帶動半導體板塊展開新一波大漲；若再度遭遇獲利了結，上揚季線將提供堅實防守。</p>
                 </div>
             </div>
         </div>
@@ -1324,7 +1888,7 @@
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">防禦屬性</td>
-                            <td>具備極強的現金流與多角化業務，能有效抵禦單1產業的景氣下行。</td>
+                            <td>具備極強的現金流與多角化業務，能有效抵禦單一產業的景氣下行。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">策略佈局</td>
@@ -1360,7 +1924,7 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>避險首選兼具成長動能</strong><br>微軟（MSFT）憑藉雲端設施與人工智慧雙引擎，成功將技術轉化為實質營收。在市場震盪之際，其龐大市值與現金流成為機構避險首選。若企業資本支出持續超乎預期，將進1步推升其本益比上限；若科技板塊遭遇系統性修正，微軟抗跌特性亦能為投資組合提供保護，穩居兼具成長與防禦的核心。</p>
+                    <p><strong>避險首選兼具成長動能</strong><br>微軟（MSFT）憑藉雲端設施與人工智慧雙引擎，成功將技術轉化為實質營收。在市場震盪之際，其龐大市值與現金流成為機構避險首選。若企業資本支出持續超乎預期，將進一步推升其本益比上限；若科技板塊遭遇系統性修正，微軟抗跌特性亦能為投資組合提供保護，穩居兼具成長與防禦的核心。</p>
                 </div>
             </div>
         </div>
@@ -1379,7 +1943,7 @@
                     <tbody>
                         <tr>
                             <td class="font-semibold text-slate-600">政策風險</td>
-                            <td>各國加速推動淨0碳排政策，傳統化石燃料面臨長線需求萎縮壓力。</td>
+                            <td>各國加速推動淨零碳排政策，傳統化石燃料面臨長線需求萎縮壓力。</td>
                         </tr>
                         <tr>
                             <td class="font-semibold text-slate-600">價格僵固</td>
@@ -1419,7 +1983,7 @@
             <div class="analysis-block">
                  <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>地緣溢價脆弱隨時回調</strong><br>艾克森美孚（XOM）雖受惠中東緊張帶動油價短線狂飆，但基於恐慌情緒的溢價極度脆弱。1旦美伊和談取得實質進展，失去戰火支撐的油價恐迎來猛烈報復性修正。若後續原油價格無法站穩百元大關，能源板塊將面臨嚴峻獲利了結賣壓；若經濟數據證實實質需求陷入停滯，傳統能源巨頭將面臨基本面與評價雙殺的空頭格局。</p>
+                    <p><strong>地緣溢價脆弱隨時回調</strong><br>艾克森美孚（XOM）雖受惠中東緊張帶動油價短線狂飆，但基於恐慌情緒的溢價極度脆弱。一旦美伊和談取得實質進展，失去戰火支撐的油價恐迎來猛烈報復性修正。若後續原油價格無法站穩百元大關，能源板塊將面臨嚴峻獲利了結賣壓；若經濟數據證實實質需求陷入停滯，傳統能源巨頭將面臨基本面與評價雙殺的空頭格局。</p>
                 </div>
             </div>
         </div>
@@ -1478,7 +2042,7 @@
             <div class="analysis-block">
                 <h4>深度分析:</h4>
                 <div class="structured-analysis">
-                    <p><strong>基本面惡化引發評價修正</strong><br>特斯拉（TSLA）正面臨業務成長失速的挑戰。在高利率與中國對手削價競爭夾擊下，其高毛利優勢正迅速消退。市場對自動駕駛系統變現能力耐心漸失，導致本益比大幅下修。若下半年無法推出具競爭力的平價新車，股價恐進1步破底下探；若自動駕駛監管法規意外鬆綁，短線上才有望迎來1波跌深反彈的行情。</p>
+                    <p><strong>基本面惡化引發評價修正</strong><br>特斯拉（TSLA）正面臨業務成長失速的挑戰。在高利率與中國對手削價競爭夾擊下，其高毛利優勢正迅速消退。市場對自動駕駛系統變現能力耐心漸失，導致本益比大幅下修。若下半年無法推出具競爭力的平價新車，股價恐進一步破底下探；若自動駕駛監管法規意外鬆綁，短線上才有望迎來一波跌深反彈的行情。</p>
                 </div>
             </div>
         </div>
@@ -1492,7 +2056,7 @@
 </div>
 
 <!-- 回頂按鈕 -->
-<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部" style="display: none;">↑</button>
 
 <script>
 /* 進度條功能 */
@@ -1576,7 +2140,7 @@ window.addEventListener('load', function() {
 
 <script>
 /* ── 外部連結修復腳本 ──────────────────────────────────────────
-   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入1段 JS，
+   Claude.ai 的 Artifact 預覽框架會在下載的 HTML 中注入一段 JS，
    攔截所有連結點擊並改用 postMessage 通知父框架開啟外部連結。
    在 Claude.ai 以外的環境（Netlify、本機瀏覽器等），
    父框架不存在，外部連結會تدائي因此完全失效。
@@ -1614,5 +2178,5 @@ window.addEventListener('load', function() {
   }, true);  /* ← true = capture 模式，比 bubble 模式更早執行 */
 })();
 </script>
-</body>
-</html>
+
+</body></html>
