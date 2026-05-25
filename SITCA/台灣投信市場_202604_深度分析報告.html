@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣投信市場 2026年4月深度分析報告</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --ink: #0d1117;
+    --ink-light: #3a3f4b;
+    --ink-muted: #6b7280;
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface-warm: #fdfcf8;
+    --accent-gold: #c8973a;
+    --accent-red: #c0392b;
+    --accent-green: #1a7a4a;
+    --accent-blue: #1a4a7a;
+    --accent-teal: #167a6a;
+    --border: #e0dbd0;
+    --border-strong: #c8c0b0;
+    --shadow: rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border: 1px solid rgba(200,151,58,0.2);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: 200px;
+    width: 600px; height: 600px;
+    border: 1px solid rgba(200,151,58,0.1);
+    border-radius: 50%;
+  }
+  .cover-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .cover-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .cover-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    border-left: 2px solid var(--accent-gold);
+    padding-left: 16px;
+  }
+  .cover-meta-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cover-meta-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+  /* ===== SECTION ===== */
+  .section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ===== KPI GRID ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .kpi-card {
+    background: var(--surface);
+    padding: 24px 20px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi-change {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+  .up { color: var(--accent-green); }
+  .down { color: var(--accent-red); }
+
+  /* ===== TABLE ===== */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 32px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead tr {
+    background: var(--ink);
+    color: #fff;
+  }
+  thead th {
+    padding: 12px 14px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  thead th.num { text-align: right; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: #faf9f5; }
+  tbody td { padding: 11px 14px; color: var(--ink-light); }
+  tbody td.num { text-align: right; font-family: 'Space Mono', monospace; font-size: 13px; }
+  tbody td.name { font-weight: 500; color: var(--ink); max-width: 280px; }
+  tbody td.badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+  tr.total td {
+    font-weight: 700;
+    background: #f0ede6;
+    color: var(--ink);
+    border-top: 2px solid var(--border-strong);
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.3px;
+  }
+  .tag-etf { background: #e8f3ff; color: var(--accent-blue); }
+  .tag-etf-a { background: #fff0e0; color: #c06800; }
+  .tag-mm { background: #f0f8f0; color: var(--accent-green); }
+  .tag-eq { background: #fdf0f0; color: var(--accent-red); }
+  .tag-fi { background: #f5f0ff; color: #5a3a9a; }
+  .tag-ma { background: #fff8e0; color: #7a6000; }
+
+  /* ===== HIGHLIGHT BARS ===== */
+  .bar-wrap { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .bar-row { display: grid; grid-template-columns: 160px 1fr 120px; align-items: center; gap: 14px; }
+  .bar-label { font-size: 13px; color: var(--ink-light); text-align: right; }
+  .bar-track { background: var(--border); border-radius: 3px; height: 10px; }
+  .bar-fill { height: 10px; border-radius: 3px; transition: width 0.3s; }
+  .bar-value { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--ink); }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    border-left: 3px solid var(--accent-gold);
+    background: var(--surface-warm);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .callout p { font-size: 14px; color: var(--ink-light); line-height: 1.8; }
+
+  .callout.alert { border-left-color: var(--accent-red); }
+  .callout.alert .callout-title { color: var(--accent-red); }
+  .callout.positive { border-left-color: var(--accent-green); }
+  .callout.positive .callout-title { color: var(--accent-green); }
+
+  /* ===== COMPANY GRID ===== */
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .company-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .company-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .company-stat { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .company-stat-label { font-size: 12px; color: var(--ink-muted); }
+  .company-stat-value { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; }
+
+  /* ===== ANALYSIS TEXT ===== */
+  .analysis { margin: 24px 0; }
+  .analysis p {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.85;
+    margin-bottom: 14px;
+  }
+  .analysis strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 32px 60px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .cover { padding: 48px 24px 40px; }
+    .container { padding: 0 20px; }
+    .bar-row { grid-template-columns: 120px 1fr 100px; }
+    .cover-meta { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div style="max-width:1100px; margin:0 auto; position:relative; z-index:1;">
+    <div class="cover-eyebrow">SITCA Monthly Report ● Confidential</div>
+    <h1 class="cover-title">台灣投信市場<br>2026年4月深度分析報告</h1>
+    <p class="cover-subtitle">全市場規模突破13.8兆、主動型ETF單月規模暴增逾1倍，資金流向呈現重大結構轉移</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">報告期間</div>
+        <div class="cover-meta-value">2026.04</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">全市場規模</div>
+        <div class="cover-meta-value">13.86兆</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">月增規模</div>
+        <div class="cover-meta-value">+1.71兆</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">月淨申購</div>
+        <div class="cover-meta-value">7,393億</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== SECTION 1: 三層驗證 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">三層數據驗證結果</h2>
+  </div>
+  <div class="callout positive">
+    <div class="callout-title">✓ 三層驗證全數通過</div>
+    <p>
+      <strong>第一層（基金逐筆加總）：</strong>有效基金受益類別 4,368 筆，逐筆加總 AUM 138,572.55 億元。<br>
+      <strong>第二層（全投信公司合計）：</strong>所有投信機構 AUM 加總 = 138,572.55 億元，與全市場一致。<br>
+      <strong>第三層（類別分項加總）：</strong>ETF(被動)+ETF(主動)+股票型+固定收益+平衡型+組合型+多重資產+貨幣市場+指數型(非ETF)+ETF連結+其他 = 138,572.55 億元。<br>
+      <strong>三層差異均為 0.00 億元，驗證通過，以下數據可信。</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: 全市場總覽 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">全市場規模總覽</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">4月末全市場 AUM</div>
+      <div class="kpi-value">13.86兆</div>
+      <div class="kpi-change up">▲ +1.71兆 vs 3月（+14.1%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">4月淨申購總額</div>
+      <div class="kpi-value">7,393億</div>
+      <div class="kpi-change down">▼ -2,325億 vs 3月（-23.9%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">市價上漲貢獻</div>
+      <div class="kpi-value">9,698億</div>
+      <div class="kpi-change">(AUM增量 – 淨申購額)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">2025年底基準</div>
+      <div class="kpi-value">11.38兆</div>
+      <div class="kpi-change up">▲ +2.49兆 YTD（+21.9%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">主動ETF 規模</div>
+      <div class="kpi-value">6,183億</div>
+      <div class="kpi-change up">▲ +3,201億（+107.3%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">主動ETF 淨申購</div>
+      <div class="kpi-value">2,159億</div>
+      <div class="kpi-change up">▲ +1,359億 vs 3月</div>
+    </div>
+  </div>
+
+  <div class="analysis">
+    <p>2026年4月台灣投信市場整體規模達 <strong>138,572億元（約13.86兆）</strong>，較3月末的 121,482億元大幅增加 <strong>17,091億元（+14.1%）</strong>，創下近年單月最大增幅之一。值得注意的是，當月淨申購合計 7,393億，而AUM增量高達 17,091億，兩者差額約 9,698億元來自持有資產之市值上揚，顯示4月台股及國際市場均有顯著漲幅。</p>
+    <p>年初至今（2025年12月底至2026年4月底），全市場AUM累計增加 24,808億元，增幅達 <strong>+21.9%</strong>，顯示2026年投信市場整體呈現強勁擴張態勢。</p>
+  </div>
+
+  <!-- AUM by category bar chart -->
+  <div class="bar-wrap">
+    <div class="bar-row">
+      <div class="bar-label">ETF（被動）</div>
+      <div class="bar-track"><div class="bar-fill" style="width:61.8%; background:#1a4a7a;"></div></div>
+      <div class="bar-value">85,590億 61.8%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">股票型基金</div>
+      <div class="bar-track"><div class="bar-fill" style="width:15.5%; background:#c0392b;"></div></div>
+      <div class="bar-value">21,502億 15.5%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">貨幣市場基金</div>
+      <div class="bar-track"><div class="bar-fill" style="width:8.8%; background:#1a7a4a;"></div></div>
+      <div class="bar-value">12,215億  8.8%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">ETF（主動）</div>
+      <div class="bar-track"><div class="bar-fill" style="width:4.5%; background:#c8973a;"></div></div>
+      <div class="bar-value">6,183億  4.5%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">多重資產基金</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2.4%; background:#7a6000;"></div></div>
+      <div class="bar-value">3,370億  2.4%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">固定收益/債券型</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2.4%; background:#5a3a9a;"></div></div>
+      <div class="bar-value">3,315億  2.4%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">組合型基金</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2.1%; background:#4a7a6a;"></div></div>
+      <div class="bar-value">2,946億  2.1%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">其他類別</div>
+      <div class="bar-track"><div class="bar-fill" style="width:2.5%; background:#999;"></div></div>
+      <div class="bar-value">3,451億  2.5%</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SECTION 3: 類別月比 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">各類別 3月 → 4月 詳細比較</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>類別</th>
+          <th class="num">3月末AUM(億)</th>
+          <th class="num">4月末AUM(億)</th>
+          <th class="num">月增減(億)</th>
+          <th class="num">增減%</th>
+          <th class="num">3月淨申購(億)</th>
+          <th class="num">4月淨申購(億)</th>
+          <th class="num">淨申購Δ(億)</th>
+          <th class="num">4月檔數</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name"><span class="tag tag-etf">ETF 被動</span></td>
+          <td class="num">78,168.3</td>
+          <td class="num">85,590.2</td>
+          <td class="num up">+7,421.9</td>
+          <td class="num up">+9.5%</td>
+          <td class="num">4,576.1</td>
+          <td class="num">1,500.6</td>
+          <td class="num down">-3,075.5</td>
+          <td class="num">290</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="tag tag-etf-a">ETF 主動</span></td>
+          <td class="num">2,982.4</td>
+          <td class="num">6,182.9</td>
+          <td class="num up">+3,200.5</td>
+          <td class="num up">+107.3%</td>
+          <td class="num">800.8</td>
+          <td class="num">2,159.4</td>
+          <td class="num up">+1,358.6</td>
+          <td class="num">30</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="tag tag-eq">股票型基金</span></td>
+          <td class="num">15,892.5</td>
+          <td class="num">21,502.0</td>
+          <td class="num up">+5,609.5</td>
+          <td class="num up">+35.3%</td>
+          <td class="num">1,183.3</td>
+          <td class="num">1,437.0</td>
+          <td class="num up">+253.7</td>
+          <td class="num">1,040</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="tag tag-fi">固定收益/債券型</span></td>
+          <td class="num">3,381.4</td>
+          <td class="num">3,314.9</td>
+          <td class="num down">-66.5</td>
+          <td class="num down">-2.0%</td>
+          <td class="num">105.3</td>
+          <td class="num">55.6</td>
+          <td class="num down">-49.7</td>
+          <td class="num">1,245</td>
+        </tr>
+        <tr>
+          <td class="name">平衡型基金</td>
+          <td class="num">1,280.3</td>
+          <td class="num">1,605.9</td>
+          <td class="num up">+325.6</td>
+          <td class="num up">+25.4%</td>
+          <td class="num">61.2</td>
+          <td class="num">70.6</td>
+          <td class="num up">+9.4</td>
+          <td class="num">170</td>
+        </tr>
+        <tr>
+          <td class="name">組合型基金</td>
+          <td class="num">2,723.7</td>
+          <td class="num">2,946.1</td>
+          <td class="num up">+222.4</td>
+          <td class="num up">+8.2%</td>
+          <td class="num">142.8</td>
+          <td class="num">141.4</td>
+          <td class="num down">-1.4</td>
+          <td class="num">452</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="tag tag-ma">多重資產基金</span></td>
+          <td class="num">3,135.4</td>
+          <td class="num">3,370.1</td>
+          <td class="num up">+234.7</td>
+          <td class="num up">+7.5%</td>
+          <td class="num">216.0</td>
+          <td class="num">168.4</td>
+          <td class="num down">-47.6</td>
+          <td class="num">924</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="tag tag-mm">貨幣市場基金</span></td>
+          <td class="num">12,264.5</td>
+          <td class="num">12,215.3</td>
+          <td class="num down">-49.2</td>
+          <td class="num down">-0.4%</td>
+          <td class="num">2,495.7</td>
+          <td class="num">1,784.3</td>
+          <td class="num down">-711.4</td>
+          <td class="num">47</td>
+        </tr>
+        <tr>
+          <td class="name">指數型(非ETF)</td>
+          <td class="num">973.7</td>
+          <td class="num">1,027.6</td>
+          <td class="num up">+53.9</td>
+          <td class="num up">+5.5%</td>
+          <td class="num">72.4</td>
+          <td class="num">28.3</td>
+          <td class="num down">-44.1</td>
+          <td class="num">74</td>
+        </tr>
+        <tr>
+          <td class="name">ETF連結基金</td>
+          <td class="num">558.2</td>
+          <td class="num">691.3</td>
+          <td class="num up">+133.2</td>
+          <td class="num up">+23.9%</td>
+          <td class="num">62.8</td>
+          <td class="num">46.6</td>
+          <td class="num down">-16.2</td>
+          <td class="num">16</td>
+        </tr>
+        <tr class="total">
+          <td class="name">全市場合計</td>
+          <td class="num">121,481.6</td>
+          <td class="num">138,572.6</td>
+          <td class="num up">+17,090.9</td>
+          <td class="num up">+14.1%</td>
+          <td class="num">9,717.6</td>
+          <td class="num">7,392.9</td>
+          <td class="num down">-2,324.7</td>
+          <td class="num">4,368</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <p><strong>關鍵發現一：市值大幅反彈支撐AUM增長。</strong>本月 AUM 增量 17,091億遠超淨申購額 7,393億，其中約 9,698億來自市值回升。股票型基金 AUM 單月激增 +5,610億（+35.3%），絕大部分為市值上揚所貢獻（其淨申購僅 1,437億），反映4月台股及全球股市有顯著漲幅。</p>
+    <p><strong>關鍵發現二：主動型ETF規模單月翻倍。</strong>主動ETF的 AUM 從3月的 2,982億大幅跳升至 6,183億（+107.3%），月淨申購高達 2,159億，超越被動ETF的 1,501億，顯示市場對於主動ETF的熱情持續高漲。統一台股增長（876億）、統一台股升級50（776億）兩檔為主要貢獻來源，兩者合計貢獻主動ETF淨申購的逾75%。</p>
+    <p><strong>關鍵發現三：貨幣市場基金淨申購降溫明顯。</strong>貨幣市場基金淨申購從3月的 2,496億大幅滑落至 1,784億（-28.5%），月末規模亦小幅縮水49億，顯示投資人可能將資金由避險停泊轉往積極型資產，契合股票型及主動ETF資金流入增加之趨勢。</p>
+    <p><strong>關鍵發現四：固定收益/債券型基金承壓。</strong>本類別 AUM 小幅下滑 -66.5億（-2.0%），淨申購亦由103億降至 56億，顯示在股票類資產表現強勁的4月，固定收益類基金受到相對冷落。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: ETF被動 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">被動型ETF 市場分析</h2>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">市場地位</div>
+    <p>被動型ETF 4月末規模 <strong>85,590億元（8.56兆）</strong>，占全市場 <strong>61.8%</strong>，月增 7,422億（+9.5%）。現有 290 檔（較3月新增2檔）。</p>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif; font-size:16px; margin:24px 0 16px; color:var(--ink);">▸ 被動ETF — AUM 規模前10大</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>基金名稱</th>
+          <th class="num">4月末AUM(億)</th>
+          <th class="num">4月淨申購(億)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td class="name">元大台灣卓越50基金 (0050)</td><td class="num">16,510.6</td><td class="num up">+193.6</td></tr>
+        <tr><td>2</td><td class="name">元大台灣高股息基金 (0056)</td><td class="num">5,756.7</td><td class="num up">+130.7</td></tr>
+        <tr><td>3</td><td class="name">國泰台灣ESG永續高股息ETF (00878)</td><td class="num">4,839.0</td><td class="num up">+2.4</td></tr>
+        <tr><td>4</td><td class="name">群益台灣精選高息ETF (00919)</td><td class="num">4,469.3</td><td class="num up">+18.1</td></tr>
+        <tr><td>5</td><td class="name">富邦台灣采吉50基金 (006208)</td><td class="num">3,857.6</td><td class="num up">+1.8</td></tr>
+        <tr><td>6</td><td class="name">群益ESG BBB投資等級公司債ETF (00878B相關)</td><td class="num">2,656.2</td><td class="num up">+23.8</td></tr>
+        <tr><td>7</td><td class="name">元大美國政府20年期以上債券 (00679B)</td><td class="num">2,003.4</td><td class="num up">+9.2</td></tr>
+        <tr><td>8</td><td class="name">元大20年期AAA~A級美元公司債ETF</td><td class="num">1,657.1</td><td class="num up">+7.2</td></tr>
+        <tr><td>9</td><td class="name">國泰20年期以上美國公債指數基金</td><td class="num">1,597.1</td><td class="num up">+18.7</td></tr>
+        <tr><td>10</td><td class="name">元大20年期BBB美元公司債ETF</td><td class="num">1,325.8</td><td class="num">0.0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif; font-size:16px; margin:24px 0 16px; color:var(--ink);">▸ 被動ETF — 4月淨申購前15大</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>基金名稱</th>
+          <th class="num">AUM(億)</th>
+          <th class="num">淨申購(億)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td class="name">元大納斯達克100增強成長精選ETF</td><td class="num">191.1</td><td class="num up">+200.5</td></tr>
+        <tr><td>2</td><td class="name">元大台灣卓越50基金 (0050)</td><td class="num">16,510.6</td><td class="num up">+193.6</td></tr>
+        <tr><td>3</td><td class="name">元大台灣高股息基金 (0056)</td><td class="num">5,756.7</td><td class="num up">+130.7</td></tr>
+        <tr><td>4</td><td class="name">元大台灣50單日正向2倍基金</td><td class="num">1,154.0</td><td class="num up">+117.9</td></tr>
+        <tr><td>5</td><td class="name">中國信託美國數據中心及電力ETF</td><td class="num">69.8</td><td class="num up">+78.6</td></tr>
+        <tr><td>6</td><td class="name">群益臺灣加權單日正向2倍基金</td><td class="num">78.8</td><td class="num up">+70.9</td></tr>
+        <tr><td>7</td><td class="name">元大台灣50單日反向1倍基金</td><td class="num">272.5</td><td class="num up">+52.6</td></tr>
+        <tr><td>8</td><td class="name">富邦全球金融業10年以上美元投等債ETF</td><td class="num">386.8</td><td class="num up">+49.5</td></tr>
+        <tr><td>9</td><td class="name">群益台灣半導體收益ETF</td><td class="num">220.9</td><td class="num up">+45.4</td></tr>
+        <tr><td>10</td><td class="name">永豐台灣ESG永續優質ETF</td><td class="num">116.6</td><td class="num up">+42.7</td></tr>
+        <tr><td>11</td><td class="name">國泰10年期以上BBB美元息收公司債ETF</td><td class="num">1,320.1</td><td class="num up">+28.9</td></tr>
+        <tr><td>12</td><td class="name">富邦彭博10年期BBB美元息收公司債ETF</td><td class="num">781.3</td><td class="num up">+28.1</td></tr>
+        <tr><td>13</td><td class="name">群益ESG BBB投資等級公司債ETF</td><td class="num">2,656.2</td><td class="num up">+23.8</td></tr>
+        <tr><td>14</td><td class="name">凱基全球10年期以上美元A級公司債ETF</td><td class="num">538.4</td><td class="num up">+19.1</td></tr>
+        <tr><td>15</td><td class="name">國泰20年期以上美國公債指數基金</td><td class="num">1,597.1</td><td class="num up">+18.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <p><strong>槓桿/反向ETF明顯放量。</strong>4月淨申購排名中，「元大台灣50單日正向2倍」（+118億）及「群益臺灣加權單日正向2倍」（+71億）、「元大台灣50單日反向1倍」（+53億）均大量出現，顯示投資人在市場波動加大之際，積極運用槓桿工具進行方向性操作或避險。</p>
+    <p><strong>主題性新ETF吸引資金流入。</strong>「中國信託美國數據中心及電力ETF」（+79億）、「群益台灣半導體收益ETF」（+45億）、「元大納斯達克100增強成長精選ETF」（+201億）等均獲大量資金，AI基礎設施及半導體主題仍是市場主旋律。</p>
+    <p><strong>台灣高息股ETF稱霸規模榜。</strong>0050（16,511億）、0056（5,757億）、00878（4,839億）、00919（4,469億）持續壟斷規模前四名，合計占被動ETF總規模的36.4%，高股息與寬基策略仍是台灣散戶核心配置。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: 主動ETF ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">主動型ETF — 爆發式成長</h2>
+  </div>
+
+  <div class="callout alert">
+    <div class="callout-title">⚡ 單月規模翻倍：最值得關注的結構性變化</div>
+    <p>主動ETF 4月末規模達 <strong>6,183億元</strong>，較3月末 2,982億暴增 <strong>+3,200億（+107%）</strong>，30檔基金月淨申購合計 <strong>2,159億</strong>，超越同期被動ETF的 1,501億，成為全市場淨申購最大的單一產品類別。</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>基金名稱</th>
+          <th>類型</th>
+          <th class="num">AUM(億)</th>
+          <th class="num">4月淨申購(億)</th>
+          <th class="num">占主動ETF規模%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td class="name">統一台股增長主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">2,389.5</td><td class="num up">+876.1</td><td class="num">38.6%</td></tr>
+        <tr><td>2</td><td class="name">統一台股升級50主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">775.7</td><td class="num up">+776.5</td><td class="num">12.5%</td></tr>
+        <tr><td>3</td><td class="name">群益台灣科技創新主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">497.5</td><td class="num up">+214.6</td><td class="num">8.0%</td></tr>
+        <tr><td>4</td><td class="name">群益台灣精選強棒主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">389.9</td><td class="num up">+5.4</td><td class="num">6.3%</td></tr>
+        <tr><td>5</td><td class="name">復華台灣未來50主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">377.9</td><td class="num up">+35.0</td><td class="num">6.1%</td></tr>
+        <tr><td>6</td><td class="name">元大全球AI新經濟主動式ETF基金</td><td class="badge">AL21 跨國</td><td class="num">281.8</td><td class="num up">+9.8</td><td class="num">4.6%</td></tr>
+        <tr><td>7</td><td class="name">統一全球創新主動式ETF基金</td><td class="badge">AL21 跨國</td><td class="num">250.5</td><td class="num up">+58.9</td><td class="num">4.1%</td></tr>
+        <tr><td>8</td><td class="name">國泰台股動能高息主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">187.7</td><td class="num up">+86.9</td><td class="num">3.0%</td></tr>
+        <tr><td>9</td><td class="name">野村臺灣智慧優選主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">144.7</td><td class="num">+0.3</td><td class="num">2.3%</td></tr>
+        <tr><td>10</td><td class="name">安聯台灣主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">121.2</td><td class="num">+0.4</td><td class="num">2.0%</td></tr>
+        <tr><td>11</td><td class="name">群益美國增長主動式ETF基金</td><td class="badge">AL21 跨國</td><td class="num">108.9</td><td class="num up">+24.4</td><td class="num">1.8%</td></tr>
+        <tr><td>12</td><td class="name">野村臺灣增強50主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">103.0</td><td class="num">+1.5</td><td class="num">1.7%</td></tr>
+        <tr><td>13</td><td class="name">第一金台股趨勢優選主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">42.3</td><td class="num up">+20.3</td><td class="num">0.7%</td></tr>
+        <tr><td>14</td><td class="name">兆豐台灣豐收主動式ETF基金</td><td class="badge">AL11 股票</td><td class="num">39.8</td><td class="num up">+5.9</td><td class="num">0.6%</td></tr>
+        <tr class="total">
+          <td colspan="3">全部主動ETF合計 (30檔)</td>
+          <td class="num">6,182.9</td>
+          <td class="num up">+2,159.4</td>
+          <td class="num">100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <p><strong>統一投信雙星領軍。</strong>「統一台股增長」（876億）與「統一台股升級50」（777億）兩檔在同一個月分別吸引市場高度關注，兩者4月淨申購合計 1,652億，占全部主動ETF淨申購的 <strong>76.5%</strong>。其中「統一台股升級50」規模才776億，淨申購已達776億，幾乎等同於全部本金於當月流入，為極為罕見的新基金集中募集現象，此二檔可能均為新成立不久（或當月募集）的基金。</p>
+    <p><strong>主動ETF生態快速成熟。</strong>從2025年底的18檔、1,730億，到2026年4月的30檔、6,183億，短短4個月增加12檔、增幅達257%，顯示主動ETF已從利基產品演進為台灣投信業核心競爭賽道。</p>
+    <p><strong>官股投信參與情況。</strong>第一金台股趨勢優選（42.3億、+20.3億淨申購）、兆豐台灣豐收（39.8億、+5.9億）均有進場，但規模僅占主動ETF市場的1.3%，與民間大型投信（統一、群益、復華）的差距仍十分懸殊，顯示官股投信在主動ETF的佈局仍屬初期。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 6: 股票型基金 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">股票型共同基金分析</h2>
+  </div>
+
+  <div class="callout positive">
+    <div class="callout-title">市值反彈主導</div>
+    <p>股票型基金 AUM 本月大幅增加 <strong>+5,610億（+35.3%）</strong>，但淨申購僅 1,437億，差額 4,173億為純市值上漲貢獻，反映4月全球股市明顯走揚。</p>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif; font-size:16px; margin:24px 0 16px; color:var(--ink);">▸ 股票型基金 — 4月淨申購前10大</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>排名</th><th>基金名稱</th><th class="num">AUM(億)</th><th class="num">4月淨申購(億)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td class="name">安聯台灣科技基金</td><td class="num">2,072.4</td><td class="num up">+219.0</td></tr>
+        <tr><td>2</td><td class="name">安聯台灣大壩基金（A類型新台幣）</td><td class="num">805.1</td><td class="num up">+70.6</td></tr>
+        <tr><td>3</td><td class="name">統一奔騰基金</td><td class="num">676.0</td><td class="num up">+55.2</td></tr>
+        <tr><td>4</td><td class="name">路博邁台灣5G股票基金</td><td class="num">140.1</td><td class="num up">+52.3</td></tr>
+        <tr><td>5</td><td class="name">元大新主流基金</td><td class="num">197.3</td><td class="num up">+51.4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <p>安聯台灣科技基金（2,072億）持續為台灣規模最大的股票型共同基金之一，4月再吸金 219億，顯示台股科技主題仍受資金青睞，且以傳統共同基金形式（非ETF）仍吸引大量資金，安聯的主動管理聲望在此類別中具有相當競爭優勢。</p>
+    <p>值得觀察的是，前5大淨申購的股票型基金仍以台股主題為主（台灣科技、台灣5G、奔騰等），顯示即便主動ETF崛起，傳統股票型共同基金在部分通路（特別是保險業及固定扣款客群）仍維持相當的吸引力。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: 貨幣市場 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">貨幣市場基金分析</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">4月末規模</div>
+      <div class="kpi-value">12,215億</div>
+      <div class="kpi-change down">▼ -49億 vs 3月（-0.4%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">4月淨申購</div>
+      <div class="kpi-value">1,784億</div>
+      <div class="kpi-change down">▼ -712億 vs 3月（-28.5%）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">基金檔數</div>
+      <div class="kpi-value">47檔</div>
+      <div class="kpi-change">AD1(國內)36檔, AD2(跨國)11檔</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">占全市場比重</div>
+      <div class="kpi-value">8.8%</div>
+      <div class="kpi-change down">▼ 3月為10.1%</div>
+    </div>
+  </div>
+
+  <div class="analysis">
+    <p>貨幣市場基金4月末規模 12,215億，較3月微縮 49億，市占率由10.1%降至 8.8%。值得注意的是，本月淨申購仍有 1,784億，但AUM反而微降，說明有資金陸續贖回離場（贖回金額 > 申購金額的淨效果加上利息收益後仍為負），或部分資金轉向主動ETF及股票型基金等高 beta 資產。</p>
+    <p>從結構觀察，台灣貨幣市場基金具有約 1.5% 的年化收益，主要功能為短期資金停泊，而非長期投資工具。當市場行情轉好、風險偏好上揚時，貨幣市場的資金吸納力自然下降，4月的降溫具有季節性及市況輪動意義。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 8: 官股投信 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2 class="section-title">官股投信個別分析</h2>
+  </div>
+
+  <div class="analysis">
+    <p>以下針對與貴公司同屬官股金控投信體系的四家業者（兆豐、第一金、合庫、華南永昌）進行 2026年4月個別分析，並評估各家在市場結構轉型下的戰略定位。</p>
+  </div>
+
+  <div class="company-grid">
+    <div class="company-card">
+      <div class="company-name" style="color:#c8973a;">兆豐投信</div>
+      <div class="company-stat"><span class="company-stat-label">總AUM</span><span class="company-stat-value">1,261億</span></div>
+      <div class="company-stat"><span class="company-stat-label">4月淨申購</span><span class="company-stat-value up">+162億</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(主動)</span><span class="company-stat-value">39.8億 (1檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(被動)</span><span class="company-stat-value">152.4億 (8檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣市場</span><span class="company-stat-value">879.5億 (4檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">股票型</span><span class="company-stat-value">128.1億</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣依存度</span><span class="company-stat-value" style="color:var(--accent-red);">69.8%</span></div>
+    </div>
+
+    <div class="company-card">
+      <div class="company-name" style="color:#1a4a7a;">第一金投信</div>
+      <div class="company-stat"><span class="company-stat-label">總AUM</span><span class="company-stat-value">1,748億</span></div>
+      <div class="company-stat"><span class="company-stat-label">4月淨申購</span><span class="company-stat-value up">+218億</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(主動)</span><span class="company-stat-value">42.3億 (1檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(被動)</span><span class="company-stat-value">212.9億 (4檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣市場</span><span class="company-stat-value">913.5億 (2檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">股票型</span><span class="company-stat-value">481.5億</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣依存度</span><span class="company-stat-value" style="color:var(--accent-red);">52.2%</span></div>
+    </div>
+
+    <div class="company-card">
+      <div class="company-name" style="color:#1a7a4a;">合庫投信</div>
+      <div class="company-stat"><span class="company-stat-label">總AUM</span><span class="company-stat-value">370億</span></div>
+      <div class="company-stat"><span class="company-stat-label">4月淨申購</span><span class="company-stat-value up">+28億</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(主動)</span><span class="company-stat-value" style="color:var(--accent-red);">無</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(被動)</span><span class="company-stat-value" style="color:var(--accent-red);">無</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣市場</span><span class="company-stat-value">256.0億 (1檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">股票型</span><span class="company-stat-value">33.4億</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣依存度</span><span class="company-stat-value" style="color:var(--accent-red);">69.2%</span></div>
+    </div>
+
+    <div class="company-card">
+      <div class="company-name" style="color:#5a3a9a;">華南永昌投信</div>
+      <div class="company-stat"><span class="company-stat-label">總AUM</span><span class="company-stat-value">548億</span></div>
+      <div class="company-stat"><span class="company-stat-label">4月淨申購</span><span class="company-stat-value up">+77億</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(主動)</span><span class="company-stat-value" style="color:var(--accent-red);">無</span></div>
+      <div class="company-stat"><span class="company-stat-label">ETF(被動)</span><span class="company-stat-value">23.1億 (2檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣市場</span><span class="company-stat-value">446.9億 (2檔)</span></div>
+      <div class="company-stat"><span class="company-stat-label">股票型</span><span class="company-stat-value">46.9億</span></div>
+      <div class="company-stat"><span class="company-stat-label">貨幣依存度</span><span class="company-stat-value" style="color:var(--accent-red);">81.6%</span></div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>投信機構</th>
+          <th class="num">總AUM(億)</th>
+          <th class="num">4月淨申購</th>
+          <th class="num">ETF規模(億)</th>
+          <th class="num">非貨幣AUM(億)</th>
+          <th class="num">貨幣依存度</th>
+          <th>ETF佈局評估</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">第一金投信</td>
+          <td class="num">1,748</td>
+          <td class="num up">+218</td>
+          <td class="num">255</td>
+          <td class="num">1,267</td>
+          <td class="num" style="color:var(--accent-red);">52.2%</td>
+          <td>主動ETF 1檔起步，被動4檔，相對最均衡</td>
+        </tr>
+        <tr>
+          <td class="name">兆豐投信</td>
+          <td class="num">1,261</td>
+          <td class="num up">+162</td>
+          <td class="num">192</td>
+          <td class="num">1,133</td>
+          <td class="num" style="color:var(--accent-red);">69.8%</td>
+          <td>主動ETF 1檔，被動8檔，有一定基礎</td>
+        </tr>
+        <tr>
+          <td class="name">華南永昌投信</td>
+          <td class="num">548</td>
+          <td class="num up">+77</td>
+          <td class="num">23</td>
+          <td class="num">501</td>
+          <td class="num" style="color:var(--accent-red);">81.6%</td>
+          <td>僅2檔被動ETF，主動ETF尚未佈局</td>
+        </tr>
+        <tr>
+          <td class="name">合庫投信</td>
+          <td class="num">370</td>
+          <td class="num up">+28</td>
+          <td class="num">0</td>
+          <td class="num">337</td>
+          <td class="num" style="color:var(--accent-red);">69.2%</td>
+          <td>ETF完全缺席，轉型挑戰最大</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <p><strong>共同結構弱點：貨幣市場依存度偏高。</strong>四家官股投信的貨幣市場 AUM 依存度均超過50%（兆豐70%、合庫69%、第一金52%、華南永昌82%），這意味著高達一半以上的規模集中在收費率僅約0.1～0.15%的低利潤產品。根據業界估算，非貨幣市場基金的每元AUM利潤密度是貨幣市場基金的 <strong>約11倍</strong>，因此貨幣市場依存過高對盈利能力形成長期拖累。</p>
+    <p><strong>合庫投信：ETF轉型最為迫切。</strong>合庫投信至今尚未推出任何ETF產品（被動或主動均無），在全市場ETF規模已達 91,773億（占全市場66.2%）的背景下，此缺口代表極大的競爭弱勢。其 122檔基金中，固定收益、多重資產、組合型等偏向傳統通路的產品占大多數，短期若不推出ETF，未來市占率壓縮風險極高。</p>
+    <p><strong>第一金投信：官股中最均衡，但仍有差距。</strong>第一金以 1,748億的規模位居官股第一，其非貨幣 AUM（1,267億）在官股中最大，且同時擁有主動及被動ETF產品。然而對比市場第一大元大投信或國泰投信動輒數萬億的 ETF 規模，第一金的 ETF 規模（255億）仍屬微小，未來需藉助母行通路大幅放量。</p>
+    <p><strong>華南永昌投信：主動ETF是下一步。</strong>華南永昌的非貨幣AUM（501億）在官股中相對不差，但貨幣依存度達82%，顯示仍高度依賴貨幣市場業務。目前僅有2檔被動ETF（23億），在主動ETF熱潮中的缺席是明顯的市場機會損失。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 9: 市場趨勢 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2 class="section-title">結構性趨勢與策略意涵</h2>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">趨勢一 / ETF化浪潮持續深化</div>
+    <p>被動ETF（85,590億）+ 主動ETF（6,183億）= <strong>91,773億</strong>，占全市場 <strong>66.2%</strong>，較2025年底（75,382億、66.3%）幾乎持平於三分之二以上。ETF化的結構性轉變已無懸念，重點在於被動 vs. 主動ETF的競爭格局如何演變。</p>
+  </div>
+
+  <div class="callout alert">
+    <div class="callout-title">趨勢二 / 主動ETF的爆炸性成長</div>
+    <p>4月主動ETF淨申購（2,159億）首次超越被動ETF淨申購（1,501億）。統一投信憑藉兩檔新ETF（台股增長 876億 + 台股升級50 777億），在單月捲走全台ETF淨申購的近20%，這對其他尚未佈局主動ETF的業者而言是明確的競爭訊號。</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">趨勢三 / 市值驅動貢獻顯著</div>
+    <p>4月 AUM 增量 17,091億中，約 9,698億（57%）來自市值漲幅而非資金淨流入，顯示當前高 AUM 與市場行情密切連動，在多頭環境中規模擴張速度快，但反向市場亦可能快速回縮。風控角度需注意高度的市場Beta曝險。</p>
+  </div>
+
+  <div class="callout positive">
+    <div class="callout-title">趨勢四 / 資金輪動：貨幣 → 股票/主動ETF</div>
+    <p>本月貨幣市場淨申購降溫（-28.5%），同步伴隨股票型基金（+22%）及主動ETF（+170%）淨申購增加，顯示投資人風險偏好明顯上揚，資金從停泊轉向積極配置。若4月的股市反彈能夠持續，此輪動效應可能延伸至5月及後續月份。</p>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif; font-size:16px; margin:28px 0 16px; color:var(--ink);">▸ 官股投信策略行動建議</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>優先順序</th><th>策略行動</th><th>預期效益</th><th>最適對象</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="badge">高</td>
+          <td class="name">加速推出主動ETF</td>
+          <td>搶占市場最熱類別，改善利潤密度（費率 0.4-0.8% vs. 被動ETF的 0.1-0.3%）</td>
+          <td>合庫（0檔）、華南永昌（0檔）</td>
+        </tr>
+        <tr>
+          <td class="badge">高</td>
+          <td class="name">降低貨幣市場依存度</td>
+          <td>改善整體費收比，提升盈利能力</td>
+          <td>華南永昌（82%）、兆豐（70%）、合庫（69%）</td>
+        </tr>
+        <tr>
+          <td class="badge">中</td>
+          <td class="name">擴大主動ETF規模</td>
+          <td>以母行通路力量大量銷售，縮小與民間投信差距</td>
+          <td>第一金（42億）、兆豐（40億）</td>
+        </tr>
+        <tr>
+          <td class="badge">中</td>
+          <td class="name">台灣科技/AI主題基金</td>
+          <td>搭乘台股科技主題熱潮，提升股票型基金競爭力</td>
+          <td>全體官股投信</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECTION 10: 附錄 ===== -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2 class="section-title">附錄：類型代號對應說明</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>類型代號</th><th>說明</th><th>本報告分類</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="badge">AH11/AH12/AH13/AH21/AH22/AH23/AH24/AH25/AH26</td><td>指數股票型基金（ETF）— 被動型，含股票型、債券型、槓桿反向型、跨國型</td><td><span class="tag tag-etf">ETF(被動)</span></td></tr>
+        <tr><td class="badge">AL11/AL12/AL19/AL21/AL22/AL29</td><td>主動式交易所交易基金（Active ETF）— 國內/跨國</td><td><span class="tag tag-etf-a">ETF(主動)</span></td></tr>
+        <tr><td class="badge">AA1/AA2</td><td>股票型基金（國內/跨國投資股票型）</td><td><span class="tag tag-eq">股票型基金</span></td></tr>
+        <tr><td class="badge">AD1/AD2</td><td>貨幣市場基金（國內/跨國投資）</td><td><span class="tag tag-mm">貨幣市場基金</span></td></tr>
+        <tr><td class="badge">AC12/AC21/AC22/AC23/AC11</td><td>固定收益/債券型（含高收益債、資產證券化、類貨幣市場型）</td><td><span class="tag tag-fi">固定收益/債券型</span></td></tr>
+        <tr><td class="badge">AJ1/AJ2</td><td>多重資產型基金</td><td><span class="tag tag-ma">多重資產基金</span></td></tr>
+        <tr><td class="badge">AB1/AB2</td><td>平衡型基金</td><td>平衡型基金</td></tr>
+        <tr><td class="badge">AE1/AE21/AE22/AE23/AE24</td><td>組合型基金（Fund of Funds）</td><td>組合型基金</td></tr>
+        <tr><td class="badge">AI1/AI2</td><td>指數型基金（非ETF上市）</td><td>指數型(非ETF)</td></tr>
+        <tr><td class="badge">AK1/AK2</td><td>ETF連結基金</td><td>ETF連結基金</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <div style="max-width:1100px; margin:0 auto;">
+    <strong style="color:rgba(255,255,255,0.7);">台灣投信市場 2026年4月深度分析報告</strong><br>
+    資料來源：中華民國投信投顧公會（SITCA）2026年4月月報（202604.xlsx）及2026年3月月報（202603.xlsx）<br>
+    三層驗證：通過。全市場 AUM 138,572.55億元，差異 0.00億元。<br>
+    本報告所有數據均直接取自 SITCA 官方月報，未做任何推算或估計。機密文件，僅供內部參考使用。
+  </div>
+</div>
+
+</body>
+</html>
