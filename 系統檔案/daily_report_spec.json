@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "active_release": "v4.9",
+  "confirmed_at": "2026-05-24",
+  "note": "本檔給 run_gpt_daily.py / qc_check.py 讀取，不放入 GPT Knowledge。正式 Knowledge 仍只放七檔。",
+  "word_count": {
+    "subtitle": {
+      "target": [
+        24,
+        30
+      ],
+      "tolerance": [
+        22,
+        38
+      ],
+      "level": "soft"
+    },
+    "chapter1_point": {
+      "target": [
+        60,
+        80
+      ],
+      "tolerance": [
+        54,
+        88
+      ],
+      "level": "soft"
+    },
+    "core_card_desc": {
+      "target": [
+        24,
+        28
+      ],
+      "tolerance": [
+        22,
+        30
+      ],
+      "level": "soft"
+    },
+    "top10_item": {
+      "target": [
+        6,
+        8
+      ],
+      "tolerance": [
+        6,
+        14
+      ],
+      "level": "hard"
+    },
+    "sec2_to_sec6_per_chapter_total": {
+      "target": [
+        240,
+        320
+      ],
+      "tolerance": [
+        220,
+        340
+      ],
+      "level": "soft"
+    },
+    "chapter7_stock_depth": {
+      "target": [
+        95,
+        165
+      ],
+      "tolerance": [
+        85,
+        180
+      ],
+      "level": "soft"
+    }
+  },
+  "hard_gates": {
+    "chapter1_points": [
+      "美股",
+      "美債",
+      "台股"
+    ],
+    "core_cards": [
+      "美股",
+      "台股",
+      "債券",
+      "黃金",
+      "原油",
+      "匯率"
+    ],
+    "top10_count": 10,
+    "chapter7_dimensions": [
+      "產業趨勢／個股財報",
+      "營運／市場前景",
+      "關鍵利多／利空",
+      "基本面",
+      "技術面"
+    ],
+    "chapter7_forbid_etf": true,
+    "date_anchor": "index_table_observe_date"
+  },
+  "finviz": {
+    "basis": "latest_us_trading_day",
+    "no_heatmap_when_taiwan_open_us_closed": true,
+    "allow_weekend_report_if_latest_us_session_exists": true,
+    "alt_text": "Finviz S&P 500 熱力圖"
+  },
+  "tradingview": {
+    "candidate_count": [
+      6,
+      10
+    ],
+    "must_read_financials_overview": true,
+    "must_read_technicals": true,
+    "formal_hard_if_no_verifiable_tv_content": true,
+    "official_stock_can_be_outside_watchlist": true,
+    "fallback_news_window_days": 5,
+    "financial_keywords": [
+      "本益比",
+      "EPS",
+      "營收",
+      "獲利",
+      "毛利率",
+      "現金流",
+      "負債",
+      "財報",
+      "評價",
+      "股價營收比",
+      "EBITDA",
+      "利潤率"
+    ],
+    "technical_keywords": [
+      "技術評級",
+      "RSI",
+      "相對強弱",
+      "移動平均",
+      "MA50",
+      "MA200",
+      "均線",
+      "震盪指標",
+      "MACD",
+      "買進",
+      "賣出",
+      "中立",
+      "強力買進",
+      "強力賣出"
+    ]
+  },
+  "terms": {
+    "memory_storage_category": "記憶體/存儲",
+    "industry_etf_format": "中文產業名（ETF代碼）",
+    "bond_yield_change_unit": "bps",
+    "forbidden_output_terms": [
+      "資料不足",
+      "不延伸判讀",
+      "AI 補查",
+      "經查詢後"
+    ]
+  },
+  "news_package": {
+    "formal_skip_forbidden": true,
+    "max_kb_default": 250,
+    "fallback_max_kb": 180,
+    "high_risk_terms": [
+      "宣誓就任Fed主席",
+      "接掌Fed",
+      "聯準會主席",
+      "Fed主席",
+      "升息押注",
+      "升息預期",
+      "戰爭升級",
+      "封鎖荷姆茲",
+      "荷姆茲海峽",
+      "熔斷",
+      "崩盤",
+      "金融危機",
+      "違約",
+      "主權降評",
+      "制裁升級"
+    ],
+    "annotation": "[高風險需核對]"
+  },
+  "sector": {
+    "ai_category_standard": "記憶體/存儲",
+    "forbidden_category_terms": [
+      "記憶體/儲存"
+    ],
+    "industry_etf_format": "中文產業名（ETF代碼）",
+    "sector_source_priority": "index_table_sector_data"
+  },
+  "prompt_rules": {
+    "high_risk_marker_rule": "新聞全文包若出現 [高風險需核對]，GPT 第二段 QC 必須回核全文包；若不能確認，正文必須降階或刪除，不得照寫。",
+    "tv_rule": "第7章基本面與技術面按鈕右側說明必須來自實際查閱 TradingView financials-overview / technicals。",
+    "non_watchlist_stock_rule": "第7章正式標的不必限於個股整理表；若不在 watchlist，先用新聞內容，不足時查交易日前5天海外新聞補前三維度。"
+  },
+  "cross_check": {
+    "aichain_source": "YYYYMMDD_個股整理表.txt 末段 AI 產業鏈：最強2＋最弱2",
+    "aichain_level": "hard",
+    "sector_source": "YYYYMMDD_指數整理表_含法人資料.txt 五日產業強弱排行",
+    "sector_level": "hard_if_source_exists",
+    "watchlist_not_required_for_chapter7": true
+  },
+  "runner_qc_prompt_mode": {
+    "mode": "dynamic_full_qc_prompt_plus_local_qc_report",
+    "description": "runner 會讀取本機 QC提示詞_GPT版.md 全文，接上 qc_check.py 錯誤清單後送出；不是只靠 Knowledge 靜態讀取。",
+    "version_guard": "prompt_manifest.json 的 qc_prompt sha256 必須等於本機 QC提示詞_GPT版.md，否則不送出第二段 QC。"
+  }
+}
