@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>調查報告勘誤與待更正一覽表（去識別化）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b2a38; --slate:#37454f; --muted:#6a7580;
+    --paper:#fff; --wash:#f5f6f2; --line:#e2e4dd; --line-strong:#c6cabf;
+    --teal:#1e5560; --teal-soft:#e8f0ef;
+    --burgundy:#8a2f2f; --burgundy-soft:#f6ecec;
+    --warn:#9a3412; --warn-soft:#fbf1e8;
+    --amber:#8a6a12; --amber-soft:#f7f0dd;
+    --steel:#3f5460; --steel-soft:#eaf0f2;
+    --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+    --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--wash);color:var(--slate);font-family:var(--sans);font-size:15px;line-height:1.8;letter-spacing:.01em;}
+  .sheet{max-width:960px;margin:32px auto;background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--ink);
+    padding:52px 56px 46px;box-shadow:0 1px 2px rgba(27,42,56,.05),0 12px 40px rgba(27,42,56,.07);}
+
+  .eyebrow{font-size:12px;letter-spacing:.28em;color:var(--teal);font-weight:700;margin:0 0 14px;display:flex;gap:12px;align-items:center;}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line-strong);}
+  h1{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:28px;line-height:1.4;margin:0 0 8px;}
+  .subtitle{font-size:14.5px;color:var(--muted);margin:0 0 20px;font-weight:500;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 22px;padding:13px 18px;margin:0 0 4px;background:var(--wash);border:1px solid var(--line);border-radius:2px;font-size:12.5px;}
+  .meta b{color:var(--ink);}
+
+  .note{margin:22px 0 6px;padding:15px 20px;border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 3px 3px 0;font-size:13.5px;color:var(--slate);}
+  .note strong{color:var(--warn);}
+  .note.teal{border-left-color:var(--teal);background:var(--teal-soft);}
+  .note.teal strong{color:var(--teal);}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:20px 0 6px;font-size:12px;}
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.03em;padding:2px 9px;border-radius:2px;white-space:nowrap;}
+  .b-fix{background:var(--teal-soft);color:var(--teal);}          /* 您已更正 */
+  .b-conflict{background:var(--burgundy-soft);color:var(--burgundy);} /* 卷內矛盾·需統一 */
+  .b-ocr{background:var(--amber-soft);color:var(--amber);}        /* OCR疑義·待正本 */
+  .b-logic{background:var(--steel-soft);color:var(--steel);}      /* 非誤植·邏輯瑕疵 */
+
+  section{margin-top:34px;}
+  .cat{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-bottom:9px;border-bottom:2px solid var(--ink);}
+  .cat .g{font-family:var(--serif);font-weight:700;font-size:19px;color:var(--teal);flex:none;}
+  .cat h2{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--ink);margin:0;}
+
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px;}
+  thead th{background:var(--ink);color:#fff;font-weight:700;text-align:left;padding:9px 12px;font-size:12.5px;letter-spacing:.03em;}
+  tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7;}
+  tbody tr:nth-child(even){background:#fafbf8;}
+  td.no{font-family:var(--serif);font-weight:700;color:var(--teal);width:34px;text-align:center;}
+  .doc{color:var(--muted);font-size:12.5px;}
+  .was{color:var(--burgundy);}
+  .now{color:var(--ink);font-weight:500;}
+  .strike{text-decoration:line-through;text-decoration-color:var(--burgundy);color:var(--muted);}
+  .arrow{color:var(--teal);font-weight:700;padding:0 2px;}
+  col.c-no{width:4%;} col.c-doc{width:20%;} col.c-was{width:22%;} col.c-now{width:22%;} col.c-why{width:24%;} col.c-st{width:8%;}
+
+  footer{margin-top:38px;padding-top:16px;border-top:2px solid var(--ink);font-size:12px;color:var(--muted);line-height:1.8;}
+  footer b{color:var(--slate);}
+
+  @media (max-width:760px){
+    .sheet{padding:30px 18px;margin:0;border-top-width:4px;}
+    h1{font-size:22px;}
+    table,thead,tbody,th,td,tr{display:block;}
+    thead{display:none;}
+    tbody tr{border:1px solid var(--line);border-radius:3px;margin-bottom:12px;padding:6px 10px;background:#fff;}
+    tbody td{border-bottom:1px dashed var(--line);padding:7px 2px;}
+    tbody td::before{content:attr(data-l);display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:2px;}
+    td.no{width:auto;text-align:left;}
+  }
+  @media print{
+    body{background:#fff;font-size:11pt;}
+    .sheet{box-shadow:none;border:none;max-width:none;margin:0;padding:0 4mm;}
+    section{break-inside:avoid;} tr{break-inside:avoid;}
+    thead th{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    a[href]::after{content:"";}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <p class="eyebrow">內部法遵校對文件 ・ 機密 ・ 去識別化</p>
+  <h1>調查報告勘誤與待更正一覽表</h1>
+  <p class="subtitle">彙整卷內誤植、卷證互相矛盾與應更正之處，供人評會前全案勘誤、版本統一使用</p>
+
+  <div class="meta">
+    <span><b>製作日期</b>　中華民國115年7月4日</span>
+    <span><b>去識別化代稱</b>　王員（被申訴人）／范員・黃員・第三案申訴人／賴員・吳員（關係人／法遵）</span>
+  </div>
+
+  <div class="note">
+    <strong>重要前提（請務必先讀）：</strong>本表多數項目源自<strong>掃描文件之 OCR 辨識</strong>與對談中之交叉比對，<strong>原始正本可能其實正確</strong>。更正前，請逐項以<strong>正本、申訴書、人事資料核對</strong>，避免反把正確者改錯。凡標「OCR疑義」「需統一」者，均應以正本為準。
+  </div>
+
+  <div class="legend">
+    <span class="badge b-fix">您已更正</span>
+    <span class="badge b-conflict">卷內矛盾·需統一</span>
+    <span class="badge b-ocr">OCR疑義·待正本</span>
+    <span class="badge b-logic">非誤植·邏輯瑕疵</span>
+  </div>
+
+  <!-- 甲 人名 -->
+  <section>
+    <div class="cat"><span class="g">甲</span><h2>人名（含 OCR 誤植與更正）</h2></div>
+    <table>
+      <colgroup><col class="c-no"><col class="c-doc"><col class="c-was"><col class="c-now"><col class="c-why"><col class="c-st"></colgroup>
+      <thead><tr><th>#</th><th>所在／文件</th><th>卷內原記載</th><th>應更正／正確</th><th>說明與影響</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="no" data-l="#">1</td>
+          <td data-l="文件">行為人姓名<br><span class="doc">申訴書標頭 vs 郵件署名／7/3通知函</span></td>
+          <td data-l="原記載" class="was">王志<b>騰</b>（部分報告標頭，OCR）</td>
+          <td data-l="更正" class="now">王志<b>勝</b>（郵件署名、7/3通知函受文者）</td>
+          <td data-l="說明">部分報告標頭經 OCR 呈「王志騰」，與郵件署名及通知函之「王志勝」形近不一致。<b>以人事資料為準統一為「王志勝」並全案一致。</b></td>
+          <td data-l="狀態"><span class="badge b-ocr">OCR疑義·待正本</span></td>
+        </tr>
+        <tr>
+          <td class="no" data-l="#">2</td>
+          <td data-l="文件">第一案申訴人（秘書）<br><span class="doc">7/3通知函 vs 您之更正</span></td>
+          <td data-l="原記載" class="was">范瀞<b>云</b>（7/3通知函）<br>范湘勻／范源勻（OCR）</td>
+          <td data-l="更正" class="now">范瀞<b>勻</b>（您已更正）</td>
+          <td data-l="說明">末字「云／勻」不一致；通知函與更正版不同。以正本統一為「范瀞勻」。</td>
+          <td data-l="狀態"><span class="badge b-fix">您已更正</span></td>
+        </tr>
+        <tr>
+          <td class="no" data-l="#">3</td>
+          <td data-l="文件">第三案申訴人（資訊部專員）<br><span class="doc">訪談紀錄／報告</span></td>
+          <td data-l="原記載" class="was">王渝<b>量</b>（OCR 多處）</td>
+          <td data-l="更正" class="now">王渝<b>晴</b></td>
+          <td data-l="說明">「晴／量」屬 OCR 形近誤辨，正確應為王渝晴。</td>
+          <td data-l="狀態"><span class="badge b-ocr">OCR疑義</span></td>
+        </tr>
+        <tr>
+          <td class="no" data-l="#">4</td>
+          <td data-l="文件">其他人名<br><span class="doc">逐字稿、代號表</span></td>
+          <td data-l="原記載" class="was">黃語<b>女</b>、鄭<b>寡</b>淇、賴華林、吳唯瑄等</td>
+          <td data-l="更正" class="now">黃語婕、鄭宥淇（以正本為準）</td>
+          <td data-l="說明">逐字稿與代號表多處同音／形近誤植（如「黃語女→黃語婕」「鄭寡淇→鄭宥淇」）。需以正本統一。</td>
+          <td data-l="狀態"><span class="badge b-ocr">OCR疑義</span></td>
+        </tr>
+        <tr>
+          <td class="no" data-l="#">5</td>
+          <td data-l="文件">英文名<br><span class="doc">行為人訪談代號表等</span></td>
+          <td data-l="原記載" class="was">Candice／Vivian／Harper／Jason 等</td>
+          <td data-l="更正" class="now">一律移除（改代稱）</td>
+          <td data-l="說明">屬可識別資訊，依去識別化原則應全數移除，改以角色代稱。<span class="doc">（此為去識別化作業，非原件誤植）</span></td>
+          <td data-l="狀態"><span class="badge b-logic">去識別化</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 乙 日期 -->
+  <section>
+    <div class="cat"><span class="g">乙</span><h2>日期</h2></div>
+    <table>
+      <colgroup><col class="c-no"><col class="c-doc"><col class="c-was"><col class="c-now"><col class="c-why"><col class="c-st"></colgroup>
+      <thead><tr><th>#</th><th>所在／文件</th><th>卷內原記載</th><th>應更正／正確</th><th>說明與影響</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="no" data-l="#">6</td>
+          <td data-l="文件">第二案由（營運長管理違失）<br><span class="doc">簽陳 115-417</span></td>
+          <td data-l="原記載" class="was">自「<b>115</b>年1月起至8月底」多次反應</td>
+          <td data-l="更正" class="now">應為「<b>114</b>年」</td>
+          <td data-l="說明">調查時點為115年6月，<b>115年8月尚未到來</b>，研判為年份筆誤。若不更正，易被質疑事實基礎不實。</td>
+          <td data-l="狀態"><span class="badge b-ocr">疑筆誤·待正本</span></td>
+        </tr>
+        <tr>
+          <td class="no" data-l="#">7</td>
+          <td data-l="文件">第三案申訴人之申訴日<br><span class="doc">7/3通知函 vs 申訴書/報告</span></td>
+          <td data-l="原記載" class="was">7/3通知函載「王君 <b>115/5/12</b>」</td>
+          <td data-l="更正" class="now">應以申訴書登載為準（報告作 <b>5/8</b>）</td>
+          <td data-l="說明">5/12 實為關係人（賴員）受訪日，恐誤植為申訴日。<b>直接影響結案 2 個月期限之起算</b>，務必以申訴書正本確認統一。</td>
+          <td data-l="狀態"><span class="badge b-conflict">卷內矛盾·需統一</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 丙 委員名單／組成 -->
+  <section>
+    <div class="cat"><span class="g">丙</span><h2>委員名單與組成</h2></div>
+    <table>
+      <colgroup><col class="c-no"><col class="c-doc"><col class="c-was"><col class="c-now"><col class="c-why"><col class="c-st"></colgroup>
+      <thead><tr><th>#</th><th>所在／文件</th><th>卷內原記載</th><th>應更正／正確</th><th>說明與影響</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="no" data-l="#">8</td>
+          <td data-l="文件">調查小組委員名單<br><span class="doc">5/22改組函 vs 各案報告/會議紀錄</span></td>
+          <td data-l="原記載" class="was">5/22改組函僅列 <b>3 人</b>（王慎中、雷淑萍、黃美瑜），<b>漏列延任</b></td>
+          <td data-l="更正" class="now">實際決議為 <b>4 人</b>（含延任）</td>
+          <td data-l="說明">改組函與報告/會議紀錄之委員人數不一致。應補正改組函或於卷內說明，使名單前後一致。</td>
+          <td data-l="狀態"><span class="badge b-conflict">卷內矛盾·需統一</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 丁 認定與證據欄 -->
+  <section>
+    <div class="cat"><span class="g">丁</span><h2>認定欄與證據欄之邏輯</h2></div>
+    <table>
+      <colgroup><col class="c-no"><col class="c-doc"><col class="c-was"><col class="c-now"><col class="c-why"><col class="c-st"></colgroup>
+      <thead><tr><th>#</th><th>所在／文件</th><th>卷內原記載</th><th>應更正／處理</th><th>說明與影響</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="no" data-l="#">9</td>
+          <td data-l="文件">第一案（范員）調查報告<br><span class="doc">證據欄 vs 認定欄勾選</span></td>
+          <td data-l="原記載" class="was">證據欄：「<b>無直接人證與直接物證</b>」；認定欄卻勾「<b>有相關佐證資料</b>」</td>
+          <td data-l="更正" class="now">修正措辭使一致，並補寫認定理由</td>
+          <td data-l="說明">同一報告內「有／無佐證」並存，屬邏輯衝突。宜改為「以行為模式＋關係人（黃員）佐證間接補強」並寫入理由，或修正勾選，以免被指認定草率。</td>
+          <td data-l="狀態"><span class="badge b-logic">邏輯瑕疵</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 戊 其他待確認 -->
+  <section>
+    <div class="cat"><span class="g">戊</span><h2>其他待確認（非必為誤植）</h2></div>
+    <table>
+      <colgroup><col class="c-no"><col class="c-doc"><col class="c-was"><col class="c-now"><col class="c-why"><col class="c-st"></colgroup>
+      <thead><tr><th>#</th><th>所在／文件</th><th>卷內記載</th><th>建議</th><th>說明</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="no" data-l="#">10</td>
+          <td data-l="文件">案件編號<br><span class="doc">三案報告/關係人紀錄</span></td>
+          <td data-l="原記載" class="was">1150401、1150402、1150503 混用</td>
+          <td data-l="更正" class="now">確認流水號規則一致</td>
+          <td data-l="說明">三案編號格式不一（其一為 05 開頭），宜確認編號規則並使全案一致，避免被指文件管理不嚴。</td>
+          <td data-l="狀態"><span class="badge b-ocr">待確認</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <b>使用方式：</b>建議以本表逐項對照正本勘誤後，於卷內附一份「勘誤說明」，載明各項原記載、更正後內容及依據（正本／申訴書／人事資料），使送人評會之文件版本統一、可追溯。<br>
+    <b>去識別化說明：</b>本表之王員（被申訴人）、范員／黃員／第三案申訴人（三名申訴人）、賴員（關係人）、吳員（法遵主管）均為代稱；已移除英文名。<br>
+    <b>免責：</b>本表為內部校對參考，非法律意見；多數項目源自掃描 OCR 或卷證比對，實際更正應以正本為準。
+  </footer>
+
+</div>
+</body>
+</html>
