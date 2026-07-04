@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職場性騷擾案：攻守策略、法遵角色與程序強化備忘錄（去識別化）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b2a38;
+    --slate:#37454f;
+    --muted:#6a7580;
+    --paper:#ffffff;
+    --wash:#f5f6f2;
+    --wash-2:#eef0ea;
+    --line:#e2e4dd;
+    --line-strong:#c6cabf;
+    --teal:#1e5560;        /* 結構標記／中性 */
+    --teal-soft:#e8f0ef;
+    --burgundy:#8a2f2f;    /* 攻／加重 */
+    --burgundy-soft:#f6ecec;
+    --steel:#3f5460;       /* 守 */
+    --steel-soft:#eaf0f2;
+    --warn:#9a3412;        /* 警示／期限 */
+    --warn-soft:#fbf1e8;
+    --serif:"Noto Serif TC","Songti TC","PMingLiU","MingLiU",serif;
+    --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--wash);color:var(--slate);
+    font-family:var(--sans);font-size:16px;line-height:1.85;
+    letter-spacing:.01em;
+  }
+  .sheet{
+    max-width:840px;margin:32px auto;background:var(--paper);
+    border:1px solid var(--line);border-top:5px solid var(--ink);
+    padding:56px 60px 48px;
+    box-shadow:0 1px 2px rgba(27,42,56,.05),0 12px 40px rgba(27,42,56,.07);
+  }
+
+  /* Header */
+  .eyebrow{
+    font-size:12px;letter-spacing:.28em;color:var(--teal);
+    font-weight:700;text-transform:none;margin:0 0 14px;
+    display:flex;gap:12px;align-items:center;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line-strong);}
+  h1{
+    font-family:var(--serif);font-weight:700;color:var(--ink);
+    font-size:30px;line-height:1.4;margin:0 0 10px;letter-spacing:.01em;
+  }
+  .subtitle{font-size:15px;color:var(--muted);margin:0 0 22px;font-weight:500;}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:8px 22px;padding:14px 18px;margin:0 0 6px;
+    background:var(--wash);border:1px solid var(--line);border-radius:2px;
+    font-size:12.5px;color:var(--slate);
+  }
+  .meta b{color:var(--ink);font-weight:700;}
+
+  /* Callout: 定位/免責 */
+  .note{
+    margin:26px 0 8px;padding:16px 20px;border-left:3px solid var(--teal);
+    background:var(--teal-soft);border-radius:0 3px 3px 0;font-size:14px;color:var(--slate);
+  }
+  .note strong{color:var(--ink);}
+
+  /* Section */
+  section{margin-top:44px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 6px;
+    padding-bottom:12px;border-bottom:2px solid var(--ink);}
+  .sec-num{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--teal);flex:none;line-height:1;}
+  .sec-title{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--ink);line-height:1.35;margin:0;}
+  .lead{font-size:15px;color:var(--slate);margin:16px 0 20px;}
+
+  /* Numbered violation cards */
+  .cards{display:flex;flex-direction:column;gap:14px;margin-top:18px;}
+  .card{
+    border:1px solid var(--line);border-left:4px solid var(--burgundy);
+    background:var(--paper);border-radius:0 3px 3px 0;padding:16px 20px;
+  }
+  .card h4{margin:0 0 6px;font-size:16px;color:var(--ink);font-weight:700;font-family:var(--sans);
+    display:flex;gap:10px;align-items:baseline;}
+  .card .tag{flex:none;font-family:var(--serif);color:var(--burgundy);font-weight:700;font-size:15px;}
+  .card p{margin:0;font-size:14.5px;color:var(--slate);}
+
+  /* Bullet list */
+  ul.clean{list-style:none;margin:16px 0 0;padding:0;}
+  ul.clean>li{position:relative;padding:10px 0 10px 26px;border-bottom:1px dashed var(--line);font-size:14.5px;}
+  ul.clean>li:last-child{border-bottom:none;}
+  ul.clean>li::before{content:"";position:absolute;left:4px;top:19px;width:7px;height:7px;
+    border:1.5px solid var(--teal);border-radius:50%;}
+  ul.clean b{color:var(--ink);}
+  .hl{background:linear-gradient(transparent 62%, #f4e2c9 62%);padding:0 1px;font-weight:500;color:var(--ink);}
+
+  /* 攻守 signature panel */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  .panel{border:1px solid var(--line);border-radius:3px;padding:20px 22px;background:var(--paper);position:relative;overflow:hidden;}
+  .panel .kanji{position:absolute;top:-14px;right:6px;font-family:var(--serif);font-weight:700;
+    font-size:104px;line-height:1;opacity:.06;color:var(--ink);pointer-events:none;}
+  .panel h3{margin:0 0 4px;font-family:var(--serif);font-size:19px;font-weight:700;}
+  .panel .sub{font-size:12.5px;color:var(--muted);margin:0 0 12px;}
+  .panel.def{border-top:4px solid var(--steel);}
+  .panel.def h3{color:var(--steel);}
+  .panel.atk{border-top:4px solid var(--burgundy);}
+  .panel.atk h3{color:var(--burgundy);}
+  .panel ul{list-style:none;margin:0;padding:0;font-size:14px;}
+  .panel ul li{padding:7px 0 7px 20px;position:relative;border-bottom:1px solid var(--line);}
+  .panel ul li:last-child{border-bottom:none;}
+  .panel.def ul li::before{content:"守";position:absolute;left:0;top:7px;font-size:11px;color:var(--steel);font-weight:700;}
+  .panel.atk ul li::before{content:"攻";position:absolute;left:0;top:7px;font-size:11px;color:var(--burgundy);font-weight:700;}
+  .panel .kick{margin:12px 0 0;font-size:12.5px;color:var(--slate);font-style:normal;padding-top:10px;border-top:1px dashed var(--line);}
+
+  /* 分層 (吳員) */
+  .layer{margin-top:18px;padding:18px 20px 18px 22px;border:1px solid var(--line);border-radius:3px;background:var(--paper);border-left:4px solid var(--teal);}
+  .layer h4{margin:0 0 8px;font-size:16px;color:var(--ink);font-weight:700;}
+  .layer h4 .q{color:var(--teal);font-family:var(--serif);}
+  .layer p{margin:0 0 8px;font-size:14.5px;}
+  .layer p:last-child{margin-bottom:0;}
+  .verdict{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;
+    padding:2px 10px;border-radius:2px;margin-left:6px;vertical-align:middle;}
+  .verdict.no{background:var(--steel-soft);color:var(--steel);}
+  .verdict.small{background:var(--warn-soft);color:var(--warn);}
+  .verdict.good{background:var(--teal-soft);color:var(--teal);}
+
+  /* 更新研判 box */
+  .update{margin-top:18px;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;}
+  .update .u-head{background:var(--ink);color:#fff;padding:10px 20px;font-weight:700;font-size:14.5px;font-family:var(--sans);letter-spacing:.03em;}
+  .update .u-body{padding:16px 22px;font-size:14.5px;}
+  .update ol{margin:10px 0 0;padding-left:22px;}
+  .update ol li{margin-bottom:8px;}
+  .update b{color:var(--ink);}
+
+  /* 流程強化 grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
+  .tile{border:1px solid var(--line);border-radius:3px;padding:14px 16px 14px 16px;background:var(--wash);}
+  .tile .n{font-family:var(--serif);font-weight:700;color:var(--teal);font-size:14px;}
+  .tile h5{margin:2px 0 5px;font-size:14.5px;color:var(--ink);font-weight:700;}
+  .tile p{margin:0;font-size:13px;color:var(--slate);line-height:1.7;}
+
+  /* 公文 回函 */
+  .gongwen{margin-top:22px;border:1.5px solid var(--ink);background:#fff;padding:0;}
+  .gw-title{text-align:center;font-family:var(--serif);font-weight:700;color:var(--ink);
+    font-size:20px;padding:18px 20px 4px;letter-spacing:.06em;}
+  .gw-org{text-align:center;font-size:13px;color:var(--muted);padding:0 20px 14px;border-bottom:1px solid var(--line);}
+  .gw-meta{padding:14px 26px;font-size:13.5px;border-bottom:1px dashed var(--line);color:var(--slate);}
+  .gw-meta div{padding:2px 0;}
+  .gw-meta b{color:var(--ink);}
+  .gw-body{padding:16px 26px 6px;font-size:14.5px;}
+  .gw-body .zhuzhi{font-weight:700;color:var(--ink);margin:0 0 12px;line-height:1.9;}
+  .gw-body .shuoming-h{font-weight:700;color:var(--ink);margin:0 0 6px;}
+  .gw-item{display:flex;gap:8px;margin:0 0 11px;line-height:1.9;}
+  .gw-item .gi-n{flex:none;color:var(--ink);font-weight:500;}
+  .gw-sign{padding:8px 26px 22px;text-align:right;font-size:14px;color:var(--ink);line-height:2;}
+  .gw-foot-note{padding:12px 26px;background:var(--warn-soft);border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--warn);}
+  .gw-foot-note b{color:var(--warn);}
+
+  footer{margin-top:44px;padding-top:18px;border-top:2px solid var(--ink);font-size:12px;color:var(--muted);line-height:1.8;}
+  footer b{color:var(--slate);}
+
+  @media (max-width:680px){
+    .sheet{padding:34px 22px;margin:0;border-top-width:4px;}
+    h1{font-size:24px;}
+    .duo,.grid{grid-template-columns:1fr;}
+    .panel .kanji{font-size:80px;}
+  }
+  @media print{
+    body{background:#fff;font-size:12pt;line-height:1.7;}
+    .sheet{box-shadow:none;border:none;max-width:none;margin:0;padding:0 6mm;}
+    .panel .kanji{opacity:.05;}
+    section{break-inside:avoid;}
+    .card,.layer,.update,.tile,.gongwen{break-inside:avoid;}
+    a[href]::after{content:"";}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <p class="eyebrow">內部法遵工作文件 ・ 機密 ・ 去識別化</p>
+  <h1>職場性騷擾案：攻守策略、法遵主管角色與程序強化備忘錄</h1>
+  <p class="subtitle">供人事評審委員會前之內部研判與程序整備使用</p>
+
+  <div class="meta">
+    <span><b>製作日期</b>　中華民國115年7月4日</span>
+    <span><b>人評會</b>　115年7月8日</span>
+    <span><b>去識別化代稱</b>　王員（被申訴人）／范員・黃員・第三案申訴人／吳員（法遵主管）</span>
+  </div>
+
+  <div class="note">
+    <strong>文件定位：</strong>本備忘錄係協助承辦釐清爭點與整備程序之內部參考，<strong>非法律意見、亦非最終事實認定</strong>。三案性騷擾成立之認定業於115年6月8日由四人申訴處理單位作成；最終懲處由人事評審委員會審議、總經理核定。
+  </div>
+
+  <!-- 一 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">一</span><h2 class="sec-title">對被申訴人（王員）新違失之分流追究</h2></div>
+    <p class="lead">王員近期之行為已非單純「答辯」；下列事項均應與性騷擾本案<strong>分流、獨立</strong>處理。其中對外洩漏當事人身分、恫嚇攻擊已可認定，得作為量處之加重情節；對法遵之檢舉則屬另案、現調查中，不宜預斷。</p>
+    <div class="cards">
+      <div class="card">
+        <h4><span class="tag">1</span>對法遵主管提出私交及偽造文書之檢舉（另案調查中）</h4>
+        <p>王員以法遵主管與當事人有私交為由質疑調查公正性，並另檢舉其涉偽造文書。該檢舉與性騷擾案無關，現由公司另循程序獨立調查中、尚無結論；是否構成不實指控、應否據以查處，俟該案調查認定，不宜預斷。就性騷擾本案而言，宜與此另案清楚切開處理。</p>
+      </div>
+      <div class="card">
+        <h4><span class="tag">2</span>未經去識別化，將載有申訴人姓名之文件私自轉送董監事</h4>
+        <p>縱董監事有知悉權能，亦應由公司循治理程序、以保密方式為之；由被申訴人本人挾帶三名申訴人真實姓名對外擴散，係對申訴人之二次傷害與洩密風險，違反其所簽保密切結。此節應以書面明確要求其停止並留存。</p>
+      </div>
+      <div class="card">
+        <h4><span class="tag">3</span>對主管、總經理之攻擊與恫嚇</h4>
+        <p>以檢舉相脅意圖影響懲處、對主管及總經理發動攻擊，屬犯後態度惡劣、毫無悔意，為人評會加重量處之正當理由。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 二 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">二</span><h2 class="sec-title">對其「向金管會／勞動局申訴」恫嚇之研判</h2></div>
+    <ul class="clean">
+      <li><b>向勞動局（性平法第32條之1）：</b>該救濟係給予<b>申訴人（被害人）</b>；被申訴人不服調查結果，現行法並未賦予其向勞動局推翻認定之機制。此招大半屬誤解或虛張。</li>
+      <li><b>向金管會：</b>對官股金控子公司確有聲譽壓力，惟金管會不會直接推翻性騷擾懲處，至多檢視內控／法遵獨立性。<span class="hl">因應之道即把「迴避一致性」做乾淨</span>——程序無瑕，此牌即無著力點。</li>
+      <li><b>若提勞資爭議調解：</b>係其受懲處後之正常救濟途徑，公司依法到場、以卷證應對即可，<b>不必因「怕被調解」而先軟化懲處</b>。</li>
+    </ul>
+  </section>
+
+  <!-- 三 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">三</span><h2 class="sec-title">把「攻」與「守」講白</h2></div>
+    <p class="lead">先前建議之「補正」並非讓步，而是讓懲處<strong>扛得住申訴</strong>；同時對其新違失<strong>主動追究</strong>，才是公司應有之強勢作為。</p>
+    <div class="duo">
+      <div class="panel def">
+        <span class="kanji">守</span>
+        <h3>守</h3>
+        <p class="sub">把程序做到無懈可擊</p>
+        <ul>
+          <li>補充答辯機會（列席陳述＋書面補呈不限篇幅）</li>
+          <li>統一文件、勘誤到位</li>
+          <li>對外文書由未涉爭議者／機關名義具名</li>
+          <li>吳員角色與退出事由講清楚並入卷</li>
+        </ul>
+        <p class="kick">→ 這不是讓步，是讓懲處扛得住。</p>
+      </div>
+      <div class="panel atk">
+        <span class="kanji">攻</span>
+        <h3>攻</h3>
+        <p class="sub">對其新違失主動追究</p>
+        <ul>
+          <li>檢舉法遵（私交／偽造文書）另案獨立調查</li>
+          <li>洩漏申訴人身分、違反保密切結</li>
+          <li>恫嚇攻擊主管、總經理</li>
+          <li>資安爭議獨立查證；先停職／收權控管風險</li>
+        </ul>
+        <p class="kick">→ 均得列為量處加重情節，此為公司應有之強勢作為。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 四 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">四</span><h2 class="sec-title">法遵主管（吳員）之角色，究竟有無問題？</h2></div>
+    <p class="lead">結論先行：<strong>吳員於性騷擾案無致命瑕疵</strong>；其5/21退出所本之「私交」並非法定迴避事由，該檢舉又與本案無關、現另案調查中；於人資離職後由其承接性騷擾案，具正當必要性。</p>
+
+    <div class="layer">
+      <h4><span class="q">層次一｜</span>有無「法定應迴避」事由？<span class="verdict no">無</span></h4>
+      <p>《工作場所性騷擾防治措施準則》第15條所定「應自行迴避」，限於本人為申訴人／被申訴人，或與當事人有配偶、四親等內血親、三親等內姻親、家長家屬關係。吳員均不屬之，其調查／審議角色正當。</p>
+    </div>
+
+    <div class="layer">
+      <h4><span class="q">層次二｜</span>5/21退出的真正性質<span class="verdict good">與本案無關．另案調查中</span></h4>
+      <p>吳員當初退出，<b>非因其與性騷擾案任一當事人有利害關係</b>，而係因<b>被申訴人片面以「其與當事人有私交」質疑調查公正性</b>，本於審慎認為退出能使案件更乾淨。</p>
+      <p>王員對法遵之檢舉（涉私交及偽造文書），<b>與性騷擾案無關，且現由公司另循程序獨立調查中、尚無結論，不宜預斷</b>。惟就性騷擾案而言：其一，<b>「私交」並非《準則》第15條之法定迴避事由</b>，須由主張者舉證至「具體事實足致偏頗」之程度，空言不生迴避效果；其二，該另案與性騷擾三案應<b>清楚切開</b>，其成立與否不影響性騷擾案已於6/8完成之認定。故縱該另案尚無結論，亦不影響吳員於本案之角色正當性。</p>
+    </div>
+
+    <div class="layer">
+      <h4><span class="q">層次三｜</span>「私交」的門檻與舉證責任<span class="verdict small">別被低門檻牽著走</span></h4>
+      <p><b>法律上的「私交」不是「認不認識、有沒有一起吃飯」，而是關係密切到「有具體事實足認執行職務有偏頗之虞」的程度。</b>在約50人的公司，同事彼此認識、偶有群體性聚餐，屬正常職場往來，<b>不構成迴避事由</b>；須是多年密友、常態單獨往來、金錢往來或明確恩怨等，才可能達到偏頗之虞。</p>
+      <p><b>舉證方向與直覺相反：主張迴避者（王員）負舉證責任。</b>他須提出「具體事實」證明關係密切至足以偏頗；空言「有私交」而無具體事證，依法不生迴避效果。正確姿態是「<b>請其先具體舉證，否則不生迴避</b>」，而非要求吳員自證「零互動」。</p>
+      <p>穩健作法：吳員得主動出具簡短聲明入卷，據實載明與該當事人<b>無法定迴避關係、僅屬一般同事公務往來、無足以影響公正之密切私誼或利害</b>，並具結其能客觀公正處理——作用在於「界定往來性質」，非證明零互動。</p>
+    </div>
+
+    <div class="update">
+      <div class="u-head">承接本案之更新研判（人資離職後）</div>
+      <div class="u-body">
+        <p>人資（原承辦）已於115年6月30日離職，公司內<b>具備正常執行本案適格與能力者僅餘法遵單位</b>，由吳員承接具正當、必要事由。就王員可能主張之「表面迴避、實質主辦」，以下三點入卷即可徹底化解：</p>
+        <ol>
+          <li>吳員5/21退出，係因被申訴人<b>片面以「私交」質疑調查公正性</b>而為之<b>超額審慎</b>之舉，非因其與本性騷擾案任一當事人有法定利害關係。</li>
+          <li>王員對法遵之檢舉（涉私交及偽造文書）<b>與性騷擾案無關，且現由公司另循程序獨立調查中、尚無結論</b>，不宜預斷；惟「私交」本身非法定迴避事由，不影響其承接性騷擾案。</li>
+          <li>因承辦人資離職，<b>公司內適格處理者僅餘法遵</b>，基於案件不中斷之必要由其回任行政承接；<b>性騷擾成立之認定業於6/8由四人委員會作成，吳員之承接屬結案後之行政提報與文書處理，不涉重啟認定</b>。</li>
+          <li><b>兩案切開之提醒：</b>就王員檢舉法遵涉偽造文書之另案，法遵為<b>被檢舉人</b>，本人不得主辦或參與該案調查，應由稽核或其他適格單位（必要時外部）獨立處理，避免自查自身被檢舉之案件。</li>
+        </ol>
+        <p style="margin:12px 0 0;"><b>釜底抽薪：</b>認定已完成、懲處決定權在人評會與總經理核定；縱退一步假設有一般私交，亦影響不到已完成之認定與最終懲處。故「私交」爭議於本案結果不具重要性。</p>
+        <p style="margin:10px 0 0;"><b>仍建議之兩個低成本動作：</b>①對王員之對外文書一律以「法遵部機關名義」發出，不由吳員個人具名，維持外觀中立；②於文件中點明懲處決定權在人評會，凸顯吳員非認定者、非決定者，僅為行政承辦。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 五 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">五</span><h2 class="sec-title">流程強化建議（讓全案守得穩、攻得出）</h2></div>
+    <p class="lead">以下為在既有補正之外，可再強化程序韌性與正當性之做法，多數於7/8前即可著手。</p>
+    <div class="grid">
+      <div class="tile"><span class="n">01</span><h5>單一對外窗口＋機關名義發文</h5><p>指定單一承辦窗口，對王員文書一律以法遵部機關名義發出，避免多頭與文件前後不一。</p></div>
+      <div class="tile"><span class="n">02</span><h5>卷證與送達管理</h5><p>各文書編發文字號、記載收發日期與承辦；送達採 email 讀取回條，必要時輔以存證信函雙軌，全案一份卷證清單可稽。</p></div>
+      <div class="tile"><span class="n">03</span><h5>委員紀錄與簽認</h5><p>會議紀錄、時間裁量、迴避情形均書面記載並經委員簽名，避免「事後恐懼」被曲解為撤回決議。</p></div>
+      <div class="tile"><span class="n">04</span><h5>證人與委員保護、先行停職</h5><p>書面告知禁止報復、指定聯絡窗口；依性平法第13-1條第1項對王員先行停職／調整職務、收回系統權限，同時控管資安與報復管道。</p></div>
+      <div class="tile"><span class="n">05</span><h5>資安爭議獨立分流</h5><p>由稽核／資安循內控程序查證，與性騷擾案切開，避免稀釋認定或拖延結案。</p></div>
+      <div class="tile"><span class="n">06</span><h5>保密與最小揭露</h5><p>知悉範圍限必要之人、文件去識別化編號；董監事以保密、去識別方式循治理程序報告。</p></div>
+      <div class="tile"><span class="n">07</span><h5>期限列管到日</h5><p>2個月＋1個月結案、30日免預告終止除斥期間、通報主管機關，逐案列管屆滿日並確認已通知延長。</p></div>
+      <div class="tile"><span class="n">08</span><h5>量處理由書面化</h5><p>依「合理被害人／綜合審酌」記載審酌情節與比例原則，並將已認定之加重情節（洩漏當事人身分、恫嚇攻擊）納入審酌。</p></div>
+      <div class="tile"><span class="n">09</span><h5>事後追蹤考核</h5><p>依準則採取追蹤，確保懲處有效執行、避免相同事件或報復再生。</p></div>
+      <div class="tile"><span class="n">10</span><h5>教育訓練補強</h5><p>依準則第9條對主管及參與人員辦理防治訓練，兼回應第二案由（管理違失）之系統性改善。</p></div>
+    </div>
+  </section>
+
+  <!-- 六 回函 -->
+  <section>
+    <div class="sec-head"><span class="sec-num">六</span><h2 class="sec-title">7/6 回函內容（法遵部機關名義版）</h2></div>
+    <p class="lead">回覆王員115年7月3日之異議函，採公文「主旨／說明」格式，以法遵部機關名義發出（不由吳員個人具名），第二點含「列席陳述＋書面補呈」以補正答辯機會。</p>
+
+    <div class="gongwen">
+      <div class="gw-title">合作金庫證券投資信託股份有限公司　函</div>
+      <div class="gw-org">（法務暨法令遵循部）</div>
+      <div class="gw-meta">
+        <div><b>受文者：</b>王員（本案被申訴人；實際發文時填列受文者本名）</div>
+        <div><b>發文日期：</b>中華民國115年7月6日</div>
+        <div><b>發文字號：</b>　　　　字第　　　　號</div>
+        <div><b>密等及解密條件：</b>密（本案依法應以不公開方式處理）</div>
+      </div>
+      <div class="gw-body">
+        <p class="zhuzhi">主旨：台端民國115年7月3日就本公司性騷擾申訴案調查結果所提異議乙案，復如說明，請查照。</p>
+        <p class="shuoming-h">說明：</p>
+        <div class="gw-item"><span class="gi-n">一、</span><span>本案性騷擾申訴之調查，係依性別平等工作法、工作場所性騷擾防治措施準則及本公司相關規範辦理，調查程序秉持客觀、公正、專業原則進行。台端來函所指程序瑕疵各節，與事實不符，本公司歉難認同。</span></div>
+        <div class="gw-item"><span class="gi-n">二、</span><span>為保障台端充分陳述及答辯之機會，本公司謹通知台端得於本案提報人事評審委員會審議時列席陳述意見；台端並得於115年7月7日下班前，以書面補呈答辯及相關佐證（篇幅不限），本委員會將併同審酌。</span></div>
+        <div class="gw-item"><span class="gi-n">三、</span><span>台端如對議處結果有意見，得依本公司員工獎懲要點第16點規定申復。</span></div>
+        <div class="gw-item"><span class="gi-n">四、</span><span>本案屬依法應以不公開方式處理之事件。關於董事、監察人對本案之知悉，本公司自當依內部治理程序，以保密及必要揭露方式辦理；台端逕以個人名義於函件中揭露申訴當事人之身分並轉送，無助於當事人隱私之維護，亦非正當之陳述管道。就本案，請台端逕循本公司指定之申訴處理及申復管道為之，勿再自行對外揭露當事人身分，以維護當事人權益。</span></div>
+        <div class="gw-item"><span class="gi-n">五、</span><span>本公司保留一切法律權利。</span></div>
+      </div>
+      <div class="gw-sign">合作金庫證券投資信託股份有限公司　法務暨法令遵循部　敬啟<br>中華民國115年7月6日</div>
+      <div class="gw-foot-note">
+        <b>發送提醒：</b>只寄王員本人，副本限本案必要知悉之在職權責主管；<b>切勿</b>沿用其7/3名單 Cc 予董監事、母行或校外信箱。以公司正式帳號寄出、開啟讀取回條並將寄件備份入卷存證。
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <b>去識別化說明：</b>本文件之王員（被申訴人）、范員／黃員／第三案申訴人（三名申訴人）、吳員（法遵主管）等均為代稱；已移除英文名。因同姓衝突，第三案申訴人以角色標示。<br>
+    <b>免責：</b>本備忘錄為內部辦案參考，非法律意見。三案性騷擾成立之認定業於115年6月8日作成；最終懲處由人事評審委員會審議、總經理核定，必要時應循法定程序辦理。
+  </footer>
+
+</div>
+</body>
+</html>
