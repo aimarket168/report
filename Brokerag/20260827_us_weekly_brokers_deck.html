@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="editorial-serif">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>錢燒得更兇，股票卻更挑食 · 美股外資週報 2026/08/03–08/07</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+/* ===== assets/base.css ===== */
+/* html-ppt :: base.css — reset + shared tokens + layout primitives */
+/* Default tokens. Themes in assets/themes/*.css override the :root block. */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --border: rgba(0,0,0,.08);
+  --border-strong: rgba(0,0,0,.16);
+  --text-1: #111216;
+  --text-2: #55596a;
+  --text-3: #8a8f9e;
+  --accent: #3b6cff;
+  --accent-2: #7a5cff;
+  --accent-3: #ff5c8a;
+  --good: #1aaf6c;
+  --warn: #f5a524;
+  --bad:  #e0445a;
+  --grad: linear-gradient(135deg,#3b6cff,#7a5cff 55%,#ff5c8a);
+  --grad-soft: linear-gradient(135deg,#eef2ff,#f5ecff 55%,#ffeef5);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 26px;
+  --shadow: 0 10px 30px rgba(18,24,40,.08), 0 2px 6px rgba(18,24,40,.04);
+  --shadow-lg: 0 24px 60px rgba(18,24,40,.14), 0 6px 16px rgba(18,24,40,.06);
+  --font-sans: 'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --font-serif: 'Playfair Display','Noto Serif SC',Georgia,serif;
+  --font-mono: 'JetBrains Mono','IBM Plex Mono',SFMono-Regular,Menlo,monospace;
+  --font-display: var(--font-sans);
+  --letter-tight: -.03em;
+  --letter-normal: -.01em;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text-1);
+  font-family:var(--font-sans);font-weight:400;line-height:1.6;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  letter-spacing:var(--letter-normal)}
+img,svg,video{max-width:100%;display:block}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd,pre,samp{font-family:var(--font-mono)}
+
+/* ================= SLIDE SYSTEM ================= */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--bg)}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 96px;
+  box-sizing:border-box;
+  opacity:0;pointer-events:none;
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  transform:translateX(30px);
+  overflow:hidden;
+}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.slide.is-prev{transform:translateX(-30px)}
+
+/* single-page standalone (used when a layout file is opened directly) */
+body.single .slide{position:relative;width:100vw;height:100vh;opacity:1;transform:none;pointer-events:auto}
+
+/* ================= TYPOGRAPHY ================= */
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
+.kicker{font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1.title,.h1{font-family:var(--font-display);font-size:72px;line-height:1.05;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
+h2.title,.h2{font-family:var(--font-display);font-size:54px;line-height:1.1;font-weight:700;letter-spacing:var(--letter-tight);margin:0 0 14px}
+h3,.h3{font-size:32px;line-height:1.2;font-weight:600;letter-spacing:var(--letter-normal);margin:0 0 10px}
+h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
+.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:300;max-width:62ch}
+.dim{color:var(--text-2)}
+.dim2{color:var(--text-3)}
+.mono{font-family:var(--font-mono)}
+.serif{font-family:var(--font-serif)}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+/* ================= LAYOUT PRIMITIVES ================= */
+.stack>*+*{margin-top:14px}
+.row{display:flex;gap:24px;align-items:center}
+.row.wrap{flex-wrap:wrap}
+.grid{display:grid;gap:24px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.center{display:flex;align-items:center;justify-content:center;text-align:center}
+.fill{flex:1}
+.sp-t{padding-top:24px}.sp-b{padding-bottom:24px}
+.mt-s{margin-top:8px}.mt-m{margin-top:18px}.mt-l{margin-top:32px}
+.mb-s{margin-bottom:8px}.mb-m{margin-bottom:18px}.mb-l{margin-bottom:32px}
+
+/* ================= CARDS ================= */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card-soft{background:var(--surface-2);border:1px solid var(--border)}
+.card-outline{background:transparent;border:1.5px solid var(--border-strong);box-shadow:none}
+.card-accent{background:var(--surface);border-top:3px solid var(--accent)}
+.card-hover{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.card-hover:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:500;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
+.pill-accent{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+
+/* ================= BARS / DIVIDERS ================= */
+.divider{height:1px;background:var(--border);width:100%}
+.divider-accent{height:3px;width:72px;background:var(--accent);border-radius:2px}
+
+/* ================= CHROME (header/footer/progress) ================= */
+.deck-header{position:absolute;top:24px;left:40px;right:40px;display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase;z-index:10;pointer-events:none}
+.deck-footer{position:absolute;bottom:24px;left:40px;right:40px;display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--text-3);z-index:10;pointer-events:none}
+.slide-number::before{content:attr(data-current)}
+.slide-number::after{content:" / " attr(data-total)}
+.progress-bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:transparent;z-index:20}
+.progress-bar > span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s var(--ease)}
+
+/* ================= PRESENTER / OVERVIEW ================= */
+.notes{display:none!important}
+.notes-overlay{position:fixed;inset:auto 0 0 0;max-height:42vh;background:rgba(20,22,30,.95);color:#e8ebf4;
+  padding:20px 32px;font-size:16px;line-height:1.6;border-top:1px solid rgba(255,255,255,.1);transform:translateY(100%);
+  transition:transform .3s var(--ease);z-index:40;overflow:auto;font-family:var(--font-sans)}
+.notes-overlay.open{transform:translateY(0)}
+.overview{position:fixed;inset:0;background:rgba(10,12,18,.92);backdrop-filter:blur(12px);z-index:50;
+  display:none;padding:40px;overflow:auto}
+.overview.open{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-content:start}
+.overview .thumb{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  aspect-ratio:16/9;overflow:hidden;cursor:pointer;position:relative;color:var(--text-1);padding:16px;
+  font-size:11px;transition:transform .2s var(--ease)}
+.overview .thumb:hover{transform:scale(1.04)}
+.overview .thumb .n{position:absolute;top:8px;left:10px;font-weight:700;font-size:14px;color:var(--text-3)}
+.overview .thumb .t{position:absolute;bottom:10px;left:14px;right:14px;font-weight:600;color:var(--text-1)}
+
+/* ================= PRESENTER VIEW ================= */
+/* Presenter view opens in a separate popup window (S key).
+ * All presenter styles are self-contained in the popup HTML generated by runtime.js.
+ * The audience window (this file) is NOT affected — it stays as normal deck view.
+ * Only the .notes class below is needed to hide speaker notes from audience. */
+
+/* ================= UTILITY ================= */
+.hidden{display:none!important}
+.nowrap{white-space:nowrap}
+.tr{text-align:right}.tc{text-align:center}.tl{text-align:left}
+.uppercase{text-transform:uppercase;letter-spacing:.12em}
+
+/* ================= PRINT ================= */
+@media print{
+  .slide{position:relative;opacity:1!important;transform:none!important;page-break-after:always;height:100vh}
+  .deck-header,.deck-footer,.progress-bar,.notes-overlay,.overview{display:none!important}
+}
+
+/* ===== assets/themes/editorial-serif.css ===== */
+/* theme: editorial-serif — 杂志风衬线，高级 */
+:root{
+  --bg:#faf7f2;--bg-soft:#f3efe6;--surface:#ffffff;--surface-2:#f7f2e8;
+  --border:rgba(40,28,18,.12);--border-strong:rgba(40,28,18,.24);
+  --text-1:#1b1410;--text-2:#5c4a3e;--text-3:#8a7868;
+  --accent:#8a2a1c;--accent-2:#c97a4a;--accent-3:#1b1410;
+  --good:#3f7d4f;--warn:#b07a1f;--bad:#8a2a1c;
+  --grad:linear-gradient(135deg,#8a2a1c,#c97a4a);
+  --grad-soft:linear-gradient(135deg,#faf7f2,#f3efe6);
+  --radius:4px;--radius-sm:2px;--radius-lg:8px;
+  --shadow:0 2px 12px rgba(40,28,18,.06);
+  --shadow-lg:0 20px 50px rgba(40,28,18,.14);
+  --font-sans:'Playfair Display','Noto Serif SC',serif;
+  --font-display:'Playfair Display','Noto Serif SC',serif;
+  --font-serif:'Playfair Display','Noto Serif SC',serif;
+  --letter-tight:-.02em;
+}
+.h1,.h2,h1.title,h2.title{font-style:italic;font-weight:600}
+
+/* ===== assets/animations/animations.css ===== */
+/* html-ppt :: animations.css
+ * Apply by adding class="anim-<name>" or data-anim="<name>".
+ * Durations are deliberately snappy; tweak --anim-dur per element.
+ */
+:root{--anim-dur:.7s;--anim-ease:cubic-bezier(.4,0,.2,1)}
+
+/* ---------- FADE DIRECTIONALS ---------- */
+@keyframes kf-fade-up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+@keyframes kf-fade-down{from{opacity:0;transform:translateY(-32px)}to{opacity:1;transform:none}}
+@keyframes kf-fade-left{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes kf-fade-right{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.anim-fade-up{animation:kf-fade-up var(--anim-dur) var(--anim-ease) both}
+.anim-fade-down{animation:kf-fade-down var(--anim-dur) var(--anim-ease) both}
+.anim-fade-left{animation:kf-fade-left var(--anim-dur) var(--anim-ease) both}
+.anim-fade-right{animation:kf-fade-right var(--anim-dur) var(--anim-ease) both}
+
+/* ---------- RISE / DROP / ZOOM / BLUR / GLITCH ---------- */
+@keyframes kf-rise{from{opacity:0;transform:translateY(60px) scale(.97);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes kf-drop{from{opacity:0;transform:translateY(-60px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes kf-zoom{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
+@keyframes kf-blur{from{opacity:0;filter:blur(18px)}to{opacity:1;filter:none}}
+@keyframes kf-glitch{0%{opacity:0;transform:translateX(0);clip-path:inset(0 0 0 0)}
+  20%{opacity:1;transform:translateX(-6px);clip-path:inset(20% 0 30% 0)}
+  40%{transform:translateX(4px);clip-path:inset(50% 0 10% 0)}
+  60%{transform:translateX(-3px);clip-path:inset(10% 0 60% 0)}
+  80%{transform:translateX(2px);clip-path:inset(0 0 0 0)}
+  100%{opacity:1;transform:none}}
+.anim-rise-in{animation:kf-rise .9s var(--anim-ease) both}
+.anim-drop-in{animation:kf-drop .8s var(--anim-ease) both}
+.anim-zoom-pop{animation:kf-zoom .7s cubic-bezier(.22,1.3,.36,1) both}
+.anim-blur-in{animation:kf-blur .8s var(--anim-ease) both}
+.anim-glitch-in{animation:kf-glitch .8s steps(5,end) both}
+
+/* ---------- TYPEWRITER ---------- */
+.anim-typewriter{display:inline-block;overflow:hidden;white-space:nowrap;border-right:2px solid currentColor;
+  width:0;animation:kf-type 2.4s steps(40,end) forwards, kf-caret 1s step-end infinite}
+@keyframes kf-type{to{width:100%}}
+@keyframes kf-caret{50%{border-color:transparent}}
+
+/* ---------- GLOW / SHIMMER / GRADIENT-FLOW ---------- */
+@keyframes kf-neon{0%,100%{text-shadow:0 0 8px var(--accent),0 0 20px var(--accent)}
+  50%{text-shadow:0 0 16px var(--accent),0 0 40px var(--accent),0 0 80px var(--accent)}}
+.anim-neon-glow{animation:kf-neon 2s ease-in-out infinite}
+
+.anim-shimmer-sweep{position:relative;overflow:hidden}
+.anim-shimmer-sweep::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);
+  transform:translateX(-100%);animation:kf-shimmer 2.4s var(--anim-ease) infinite}
+@keyframes kf-shimmer{to{transform:translateX(100%)}}
+
+.anim-gradient-flow{background:linear-gradient(90deg,var(--accent),var(--accent-2,var(--accent)),var(--accent-3,var(--accent)),var(--accent));
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:kf-gradflow 4s linear infinite}
+@keyframes kf-gradflow{to{background-position:300% 0}}
+
+/* ---------- STAGGER LIST ---------- */
+.anim-stagger-list > *{opacity:0;animation:kf-rise .65s var(--anim-ease) both}
+.anim-stagger-list > *:nth-child(1){animation-delay:.05s}
+.anim-stagger-list > *:nth-child(2){animation-delay:.15s}
+.anim-stagger-list > *:nth-child(3){animation-delay:.25s}
+.anim-stagger-list > *:nth-child(4){animation-delay:.35s}
+.anim-stagger-list > *:nth-child(5){animation-delay:.45s}
+.anim-stagger-list > *:nth-child(6){animation-delay:.55s}
+.anim-stagger-list > *:nth-child(7){animation-delay:.65s}
+.anim-stagger-list > *:nth-child(8){animation-delay:.75s}
+.anim-stagger-list > *:nth-child(n+9){animation-delay:.85s}
+
+/* ---------- COUNTER-UP (JS-driven, marker class only) ---------- */
+.counter{font-variant-numeric:tabular-nums}
+
+/* ---------- SVG PATH DRAW ---------- */
+.anim-path-draw path,.anim-path-draw line,.anim-path-draw polyline,.anim-path-draw circle,.anim-path-draw rect{
+  stroke-dasharray:1000;stroke-dashoffset:1000;animation:kf-draw 2s var(--anim-ease) forwards}
+@keyframes kf-draw{to{stroke-dashoffset:0}}
+
+/* ---------- PARALLAX TILT (hover) ---------- */
+.anim-parallax-tilt{transform-style:preserve-3d;transition:transform .4s var(--anim-ease)}
+.anim-parallax-tilt:hover{transform:perspective(900px) rotateX(6deg) rotateY(-8deg) translateZ(10px)}
+
+/* ---------- CARD FLIP 3D ---------- */
+@keyframes kf-flip{from{transform:perspective(1200px) rotateY(-90deg);opacity:0}
+  to{transform:perspective(1200px) rotateY(0);opacity:1}}
+.anim-card-flip-3d{animation:kf-flip .9s var(--anim-ease) both;transform-style:preserve-3d;backface-visibility:hidden}
+
+/* ---------- CUBE ROTATE 3D ---------- */
+@keyframes kf-cube{from{transform:perspective(1200px) rotateX(20deg) rotateY(-90deg) translateZ(-200px);opacity:0}
+  to{transform:perspective(1200px) rotateX(0) rotateY(0) translateZ(0);opacity:1}}
+.anim-cube-rotate-3d{animation:kf-cube 1s var(--anim-ease) both}
+
+/* ---------- PAGE TURN 3D ---------- */
+@keyframes kf-pageturn{from{transform:perspective(1600px) rotateY(-85deg);transform-origin:left center;opacity:0}
+  to{transform:perspective(1600px) rotateY(0);opacity:1}}
+.anim-page-turn-3d{animation:kf-pageturn 1s var(--anim-ease) both;transform-origin:left center}
+
+/* ---------- PERSPECTIVE ZOOM ---------- */
+@keyframes kf-pzoom{from{opacity:0;transform:perspective(1400px) translateZ(-400px) rotateX(12deg)}
+  to{opacity:1;transform:none}}
+.anim-perspective-zoom{animation:kf-pzoom 1s var(--anim-ease) both}
+
+/* ---------- MARQUEE SCROLL ---------- */
+.anim-marquee-scroll{display:flex;gap:48px;white-space:nowrap;animation:kf-marquee 20s linear infinite}
+@keyframes kf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- KEN BURNS ---------- */
+@keyframes kf-kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-2%,-1%)}}
+.anim-kenburns{animation:kf-kenburns 14s ease-in-out infinite alternate}
+
+/* ---------- CONFETTI BURST (pseudo — pure CSS sparkles) ---------- */
+.anim-confetti-burst{position:relative}
+.anim-confetti-burst::before,.anim-confetti-burst::after{
+  content:"";position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;
+  background:var(--accent);box-shadow:
+    20px -30px 0 var(--accent-2,var(--accent)),-25px -20px 0 var(--accent-3,var(--accent)),
+    30px 20px 0 var(--good,#1aaf6c),-30px 25px 0 var(--warn,#f5a524),
+    40px -10px 0 var(--bad,#e0445a),-45px 0 0 var(--accent),
+    10px 40px 0 var(--accent-2,var(--accent)),-15px -40px 0 var(--accent-3,var(--accent));
+  opacity:0;animation:kf-confetti 1.2s var(--anim-ease) forwards}
+.anim-confetti-burst::after{animation-delay:.15s;transform:rotate(45deg)}
+@keyframes kf-confetti{0%{opacity:0;transform:scale(.2)}30%{opacity:1}100%{opacity:0;transform:scale(2.2)}}
+
+/* ---------- SPOTLIGHT ---------- */
+@keyframes kf-spot{0%{clip-path:circle(0% at 50% 50%)}100%{clip-path:circle(140% at 50% 50%)}}
+.anim-spotlight{animation:kf-spot 1.1s var(--anim-ease) both}
+
+/* ---------- MORPH SHAPE (SVG) ---------- */
+.anim-morph-shape path{animation:kf-morph 6s ease-in-out infinite alternate}
+@keyframes kf-morph{0%{d:path("M60,120 Q120,20 180,120 T300,120")}
+  100%{d:path("M60,120 Q120,220 180,120 T300,120")}}
+
+/* ---------- RIPPLE REVEAL ---------- */
+@keyframes kf-ripple{0%{clip-path:circle(0% at 20% 80%);opacity:.4}
+  100%{clip-path:circle(160% at 20% 80%);opacity:1}}
+.anim-ripple-reveal{animation:kf-ripple 1.2s var(--anim-ease) both}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  [class*="anim-"]{animation:none!important;transition:none!important}
+}
+
+</style>
+<style>
+  /* 思源黑體（繁體）— fonts.css 只載了簡體，這裡補繁體字重 */
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+  /* ── Deck tokens：深藍 × 金品牌色 + editorial 銳角紙感，覆寫主題變數 ── */
+  :root, [data-theme] {
+    --bg: #F7F6F3;
+    --bg-soft: #EFEDE8;
+    --surface: #FFFFFF;
+    --surface-2: #EFEDE8;
+    --border: rgba(11,33,54,.14);
+    --border-strong: rgba(11,33,54,.30);
+    --text-1: #0B2136;
+    --text-2: #333333;
+    --text-3: #7A8B99;
+    --accent: #C5A880;
+    --accent-2: #0B2136;
+    --accent-3: #7A8B99;
+    --good: #1E7A5A;
+    --warn: #B8862B;
+    --bad: #9E2B2B;
+    --grad: linear-gradient(135deg,#0B2136,#2C4A63 55%,#C5A880);
+    /* editorial：銳角、極淡陰影 */
+    --radius: 3px;
+    --radius-sm: 2px;
+    --radius-lg: 4px;
+    --shadow: 0 1px 8px rgba(11,33,54,.05);
+    /* 思源黑體為主；拉丁數字用 Playfair 襯線，維持 editorial 質感 */
+    /* Inter 只供拉丁字母/數字/破折號（思源黑體會把 – − 當全形），中文一律走思源黑體 */
+    --font-sans: 'Inter','Noto Sans TC','Source Han Sans TC','思源黑體','PingFang TC','Microsoft JhengHei',sans-serif;
+    --font-display: 'Playfair Display','Noto Sans TC','Source Han Sans TC','思源黑體','PingFang TC',sans-serif;
+    --letter-tight: -.01em;
+  }
+  body { font-family: var(--font-sans); }
+
+  /* editorial 主題預設把標題設成斜體——中文斜體是假傾斜，關掉 */
+  .h1, .h2, h1.title, h2.title { font-style: normal !important; }
+
+  /* 【修正一】靠上對齊 + 放大字級級距，讓內容自然填滿版面 */
+  .slide {
+    display: flex;
+    flex-direction: column;
+    /* 剩餘空間平均分配到各區塊之間，不讓它全部堆在頁尾 */
+    justify-content: space-between !important;
+    padding: 38px 68px 70px !important;
+  }
+  /* 全域字級上調：簡報要能從會議室最後一排看清楚 */
+  .slide p, .slide li { font-size: 30px; line-height: 1.45; }
+  .slide td, .slide th { font-size: 26px; line-height: 1.4; }
+  .slide .card { padding: 14px 18px; }
+  .slide .g4 .card p, .slide .g4 .card .eyebrow { font-size: 24px; line-height: 1.3; }
+  .slide .g3 .card p { font-size: 27px; line-height: 1.35; }
+  .slide .grid p:last-child, .slide .card p:last-child { margin-bottom: 0 !important; }
+  .slide .grid { gap: 12px; }
+  .slide .mt-l { margin-top: 14px !important; }
+  .slide .mt-m { margin-top: 10px !important; }
+  .slide .mb-l { margin-bottom: 12px !important; }
+  .slide .eyebrow { font-size: 24px; }
+  .slide table.t td, .slide table.t th { padding: 6px 9px; }
+
+  /* 標題層次：金色左線 + 深藍粗體 */
+  .slide h2.h2, .slide h1.h1 {
+    border-left: 6px solid var(--accent);
+    padding-left: 18px;
+    color: var(--text-1);
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+  .slide h2.h2 { font-size: 72px; line-height: 1.12; margin-bottom: 8px; }
+  .slide .kicker {
+    color: var(--text-3); letter-spacing: .18em; font-weight: 500;
+    font-size: 24px; margin-bottom: 8px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .slide .lede { color: var(--text-2); font-weight: 400; font-size: 36px; line-height: 1.42; }
+  .slide p, .slide li { color: var(--text-2); }
+  .slide h3 { font-size: 40px; font-weight: 700; margin-bottom: 6px; }
+  .slide h4 { font-size: 32px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
+
+  /* 券商洞見重點標示：金色底 + 深藍字 */
+  mark, .hl {
+    background: rgba(197,168,128,.24);
+    color: var(--text-1);
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* 【修正二】圖表建議改為隨內容流動的頁尾註記，不再用 margin:auto 撐開版面 */
+  .chart-suggestion {
+    margin: 8px 0 0 !important;
+    padding: 0 0 0 14px;
+    background: transparent;
+    border-left: 2px solid var(--accent);
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--text-3);
+    font-style: italic;
+    border-radius: 0;
+  }
+
+  /* 封面 */
+  .cover-slide {
+    background: #0B2136 !important;
+    justify-content: flex-start !important;
+    padding: 54px 68px 70px !important;
+    text-align: left;
+  }
+  /* 主視覺區塊往下錨定：只留一段刻意的頂部留白，不做上下對稱空白 */
+  .cover-slide > div:nth-child(2) { margin-top: auto; }
+  .cover-slide > div:nth-child(3) { margin-top: 52px; }
+  .cover-slide h1 { color: #C5A880 !important; border-left: none !important; padding-left: 0 !important; }
+  .cover-slide .lede, .cover-slide p { color: #94A6B4 !important; }
+  .cover-slide .deck-footer span { color: #5C7182 !important; }
+  .cover-rule { height: 3px; background: #C5A880; width: 120px; }
+  .cover-stat {
+    font-family: var(--font-display);
+    font-size: 180px; line-height: 1.02; font-weight: 800; color: #C5A880;
+    letter-spacing: 0;
+  }
+  .cover-stat .cur { font-size: .55em; vertical-align: .28em; margin-right: .06em; letter-spacing: 0; }
+  .cover-stat .unit { font-family: var(--font-sans); font-size: .36em; font-weight: 700; margin-left: .06em; }
+  .cover-brokers {
+    font-size: 24px; letter-spacing: .1em; color: #5C7182;
+    border-top: 1px solid rgba(197,168,128,.28); padding-top: 14px;
+  }
+
+  /* 資料表 */
+  table.t { width: 100%; table-layout: auto; }
+  table.t th { color: var(--text-1); border-bottom: 1.5px solid var(--accent); font-weight: 700; white-space: nowrap; }
+  table.t td { color: var(--text-2); }
+  table.t td:first-child, table.t th:first-child { white-space: nowrap; }
+  .card { border-radius: var(--radius); border: 1px solid var(--border); }
+  .card-accent { border-left: 3px solid var(--accent); }
+  .src { font-size: 24px; color: var(--text-3); margin-top: 6px; }
+  .pill { border-radius: 2px; }
+
+
+  /* 【最小字級底線】base.css 的頁首/頁尾只有 12px，在 1920 畫布上等同不可讀，統一拉到 18px */
+  .deck-footer, .deck-header { font-size: 24px !important; }
+  .slide-number { font-size: 24px !important; }
+
+  /* 【導覽層】固定在視窗上，不隨 deck 縮放——手機上仍是可點擊的實體尺寸 */
+  .deck-nav{
+    position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+    display:flex; align-items:center; gap:6px; z-index:60;
+    background:rgba(11,33,54,.86); backdrop-filter:blur(8px);
+    border:1px solid rgba(197,168,128,.35); border-radius:999px;
+    padding:6px 10px; font-family:var(--font-sans);
+    opacity:0; transition:opacity .25s ease; pointer-events:none;
+  }
+  .deck-nav.show{opacity:1; pointer-events:auto}
+  .deck-nav button{
+    all:unset; cursor:pointer; color:#C5A880;
+    min-width:44px; height:44px; border-radius:999px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; line-height:1; user-select:none;
+  }
+  .deck-nav button:hover{background:rgba(197,168,128,.16)}
+  .deck-nav button:disabled{opacity:.3; cursor:default}
+  .deck-nav .count{color:#94A6B4; font-size:16px; letter-spacing:.06em; padding:0 8px; white-space:nowrap}
+  .deck-nav .count b{color:#F7F6F3; font-weight:700}
+  .deck-nav .ov{font-size:18px}
+  @media (hover:none){ .deck-nav{opacity:1; pointer-events:auto} }
+  /* 【RWD】固定 1920×1080 設計畫布，依視窗等比縮放：
+     視窗變小時整體縮小，版面比例不變，永遠不會擠壓或裁切文字 */
+  html, body { overflow: hidden; background: #10151A; }
+  .deck {
+    width: 1920px !important;
+    height: 1080px !important;
+    position: absolute !important;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(var(--deck-scale, 1));
+    transform-origin: center center;
+  }
+  /* 內容較密的頁面，收緊卡片內距 */
+  .slide[data-title="Palantir"] .card { padding: 14px 16px; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ═══ P.0 封面 ═══ -->
+<section class="slide is-active cover-slide" data-title="封面">
+  <div>
+    <div class="cover-rule"></div>
+    <p style="margin:18px 0 0;letter-spacing:.2em;font-size:24px;color:#7A8B99">外資券商研究彙整　·　2026/08/03–08/07</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:8px 0">
+    <div>
+      <h1 class="h1 anim-fade-up" data-anim="fade-up" style="font-size:108px;line-height:1.12;margin:0">錢燒得更兇，<br>股票卻更挑食</h1>
+      <p class="lede" style="margin:30px 0 0;font-size:36px;line-height:1.5">當 AI 投資從「用賺的錢」變成「用借的錢」，<br>投資人該站哪一邊？</p>
+      <p style="margin:18px 0 0;font-size:28px;color:#7A8B99">從十家外資券商上週報告，看懂 2026 下半年美股的真實劇本</p>
+    </div>
+    <div style="border-left:1px solid rgba(197,168,128,.28);padding-left:48px">
+      <p style="margin:0 0 10px;letter-spacing:.16em;font-size:24px;color:#7A8B99">2027 年雲端資本支出規模</p>
+      <div class="cover-stat anim-fade-up" data-anim="fade-up"><span class="cur">$</span>1.2<span class="unit">兆</span></div>
+      <p style="margin:22px 0 0;font-size:30px;color:#94A6B4;line-height:1.7">年增 38%，且已由客戶簽下<br><span style="color:#C5A880;font-weight:700;font-size:30px">2.3 兆美元</span>訂單背書</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="cover-brokers">GOLDMAN SACHS · MORGAN STANLEY · UBS · BARCLAYS · CITI · J.P. MORGAN · BOFA · RBC · CANTOR · JEFFERIES</div>
+  </div>
+  <div class="deck-footer"><span class="dim2">資料期間 2026/08/03–08/07</span><span class="slide-number" data-current="1" data-total="15"></span></div>
+  <div class="notes">開場：這週美股表面平靜，檯面下卻是一次歷史級的動能股洗盤。整份簡報回答一個問題——當 AI 資本支出從「用賺的錢投資」變成「用借的錢投資」，投資人該站哪一邊。</div>
+</section>
+
+<!-- ═══ P.1 ═══ -->
+<section class="slide" data-title="只塌一半的地震">
+  <p class="kicker">Market · 市場走勢</p>
+  <h2 class="h2">上週美股上演一場「只塌一半」的地震</h2>
+  <p class="lede mb-l">高盛：這是近幾十年來除衰退期外，動能股波動最劇烈的一次；摩根士丹利：歷史上數一數二嚴重的動能股回檔。</p>
+  <div class="grid g2" style="align-items:start;gap:20px">
+    <div class="card card-accent anim-fade-left" data-anim="fade-left">
+      <h4>檯面下崩得很兇</h4>
+      <p class="dim">高盛機構經紀部門數據：上週全球科技股多方賣壓是 <mark>2021 年 1 月以來最大</mark>，兩日賣超規模為近十年第二大。摩根士丹利指出，回檔在一位大型投資人幾乎清空公開市場持股後才落底。</p>
+    </div>
+    <div class="card card-accent anim-fade-right" data-anim="fade-right">
+      <h4>但指數沒有倒</h4>
+      <p class="dim"><mark>等權重標普 500 照樣往上走</mark>。資金不是離開股市，而是從擁擠的少數贏家，換到獲利更穩的另一群公司身上。</p>
+    </div>
+  </div>
+  <ul class="grid g3 mt-l anim-stagger-list" style="list-style:none;padding:0;margin:0;gap:14px" data-anim-target>
+    <li class="card"><h4>對沖基金</h4><p class="dim">總槓桿已回吐今年增幅的一半，淨槓桿今年以來轉為下降</p></li>
+    <li class="card"><h4>程式交易 CTA</h4><p class="dim">已清掉那斯達克部位，但標普與羅素 2000 仍是偏多滿手部位</p></li>
+    <li class="card"><h4>波動結構</h4><p class="dim">個股隱含波動度創 2020 年以來新高、指數相關性偏低＝選股的市場</p></li>
+  </ul>
+  <div class="chart-suggestion">圖表建議：雙線圖對比「動能因子累積報酬」與「等權重標普 500 指數」，凸顯指數穩、個股亂的分歧</div>
+  <div class="deck-footer"><span class="dim2">來源：GS Portfolio Strategy／GS GOAL Positioning／MS US Equity Strategy</span><span class="slide-number" data-current="2" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.2 ═══ -->
+<section class="slide" data-title="升息誤會">
+  <p class="kicker">Macro · 總體經濟</p>
+  <h2 class="h2">先搞懂最大的誤會：市場在怕升息，數據卻在降溫</h2>
+  <p class="lede mb-l">7 月底聯準會維持利率 <mark>3.50%–3.75%</mark> 不動，但有三位委員投下反對票，主張「立刻升息一碼」。</p>
+  <div class="vs" style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch">
+    <div class="card anim-fade-left" data-anim="fade-left" style="border-top:4px solid var(--bad)">
+      <h3>巴克萊：風險偏升息</h3>
+      <ul>
+        <li>基準情境：一路按兵不動到 <b>2027 年底</b></li>
+        <li>但風險明確偏向升息那一邊</li>
+        <li>新主席華許「看趨勢、不看單月數據」，政策反應更慢更鈍</li>
+      </ul>
+    </div>
+    <div class="mid" style="display:flex;align-items:center;font-size:40px;color:var(--accent)">⟷</div>
+    <div class="card anim-fade-right" data-anim="fade-right" style="border-top:4px solid var(--good)">
+      <h3>花旗：升息是虛驚</h3>
+      <ul>
+        <li>市場一度給出 <mark>三成升息機率是明顯高估</mark></li>
+        <li>6 月核心 CPI 年增率已降到 <b>2.6%</b></li>
+        <li>未來兩次數據可能再降到 <b>2.2%–2.3%</b>；核心 PCE 是所有指標裡的異類</li>
+      </ul>
+    </div>
+  </div>
+  <p class="mt-l"><b>對投資人的意義：</b>這個分歧本身就是機會——一旦市場發現升息只是虛驚，被錯殺的長天期資產最先反彈。摩根士丹利提醒，長天期公債殖利率在會後升到<mark>近二十年高點</mark>，這才是近期股市最大的變數。下一個關鍵時點是 8 月 28 日的傑克森霍爾年會。</p>
+  <div class="chart-suggestion">圖表建議：核心 CPI 與核心 PCE 年增率走勢，疊加期貨市場隱含的升息機率，一眼看出「數據」與「情緒」的落差</div>
+  <div class="deck-footer"><span class="dim2">來源：Barclays US Outlook／Citi US Economics Weekly／MS Weekly Warm-up</span><span class="slide-number" data-current="3" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.3 ═══ -->
+<section class="slide" data-title="獲利撐盤">
+  <p class="kicker">Earnings · 財報總覽</p>
+  <h2 class="h2">真正撐住盤面的不是聯準會，是企業獲利</h2>
+  <p class="lede mb-l">這一輪美股走的是「賺出來的行情」，不是「本益比膨脹的行情」。</p>
+  <div class="grid g4 anim-stagger-list" data-anim-target>
+    <div class="card"><p class="eyebrow">超預期一個標準差以上</p><div style="font-size:52px;font-weight:800;color:var(--text-1)"><span class="counter" data-to="64">0</span>%</div><p class="dim">有紀錄以來最高的幾次之一（高盛）</p></div>
+    <div class="card"><p class="eyebrow">2Q EPS 年增（剔除一次性）</p><div style="font-size:52px;font-weight:800;color:var(--text-1)"><span class="counter" data-to="26">0</span>%</div><p class="dim">含投資收益的帳面數字為 45%</p></div>
+    <div class="card"><p class="eyebrow">中位數公司 EPS 年增</p><div style="font-size:52px;font-weight:800;color:var(--text-1)"><span class="counter" data-to="12">0</span>%</div><p class="dim">優於季初預期的 9%</p></div>
+    <div class="card"><p class="eyebrow">全季 EPS 成長預估</p><div style="font-size:52px;font-weight:800;color:var(--text-1)"><span class="counter" data-to="29">0</span>%</div><p class="dim">瑞銀估，營收成長 13.5%</p></div>
+  </div>
+  <p class="mt-l">高盛統計標普 500 已有 61% 公司公布財報；瑞銀以市值計算，財報平均超出預期 <b>6.9%</b>、<b>79%</b> 公司交出超乎預期成績。<mark>這不是少數幾家公司在撐場面</mark>——第二季財報同時帶動 2027 年獲利預估上修 1%，且上修範圍遍及多數產業。</p>
+  <ul class="row wrap mt-m" style="list-style:none;padding:0;gap:10px">
+    <li class="pill">科技類 +48.9%</li><li class="pill">能源 +125.4%</li><li class="pill">金融 +18.5%</li>
+    <li class="pill">景氣循環（不含能源）+16.2%</li><li class="pill" style="border-color:var(--bad);color:var(--bad)">非景氣循環 −2.7%</li>
+  </ul>
+  <div class="chart-suggestion">圖表建議：橫向長條圖比較各族群 2Q26 每股盈餘年增率，並用不同顏色標出「含一次性收益」與「純本業」兩種標普 500 數字</div>
+  <div class="deck-footer"><span class="dim2">來源：GS US Weekly Kickstart／UBS 2Q26 Earnings Brief</span><span class="slide-number" data-current="4" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.4 ═══ -->
+<section class="slide" data-title="集中度真相">
+  <p class="kicker">Concentration · 集中度</p>
+  <h2 class="h2">但這波獲利有個真相：三分之一來自同一個故事</h2>
+  <div class="grid g2 mt-m" style="align-items:start;gap:24px">
+    <div>
+      <div class="card card-accent">
+        <h3 style="margin-top:0">AI 基礎建設 ≈ 標普 500 獲利成長的 <span style="color:var(--accent);font-size:1.4em">1/3</span></h3>
+        <p class="dim">高盛直接點出這個數字。換句話說，<mark>只要 AI 供應鏈的訂單出現雜音，整個指數的獲利動能就會立刻縮水</mark>。</p>
+      </div>
+      <ul class="mt-m" style="padding-left:20px">
+        <li>摩根士丹利：資金正從半導體，轉向雲端巨頭、保險與醫療設備服務</li>
+        <li>雲端巨頭近四週以等權重計算已勝過半導體股近 <b>20 個百分點</b></li>
+        <li>輝達 <b>8 月 26 日</b>財報，是驗證故事能否延續的下一個關卡</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:6px 14px">
+      <table class="t">
+        <thead><tr><th>六大科技股</th><th class="num">預期 EPS 年增</th><th class="num">實際</th></tr></thead>
+        <tbody>
+          <tr><td>微軟 MSFT</td><td class="num">16.3%</td><td class="num" style="color:var(--good);font-weight:700">22.4%</td></tr>
+          <tr><td>Google GOOGL</td><td class="num">26.3%</td><td class="num">24.3%</td></tr>
+          <tr><td>亞馬遜 AMZN</td><td class="num">12.2%</td><td class="num" style="color:var(--good);font-weight:700">15.9%</td></tr>
+          <tr><td>蘋果 AAPL</td><td class="num">18.5%</td><td class="num" style="color:var(--good);font-weight:700">19.6%</td></tr>
+          <tr><td><b>Meta</b></td><td class="num">2.6%</td><td class="num" style="color:var(--bad);font-weight:700">−12.5%</td></tr>
+          <tr><td>輝達 NVDA</td><td class="num">97.4%</td><td class="num">8/26 公布</td></tr>
+        </tbody>
+      </table>
+      <p class="src">同一個 AI 題材，有人賺到、有人先付出代價。市場已開始用「資本支出佔營收比重」分好壞。</p>
+    </div>
+  </div>
+  <div class="chart-suggestion">圖表建議：堆疊長條圖拆解標普 500 獲利成長來源（AI 基礎建設／其他科技／非科技），並附六大科技股實際 vs 預期的落差</div>
+  <div class="deck-footer"><span class="dim2">來源：GS US Weekly Kickstart／UBS 2Q26 Earnings Brief／MS Weekly Warm-up</span><span class="slide-number" data-current="5" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.5 ═══ -->
+<section class="slide" data-title="資本支出">
+  <p class="kicker">Capex · 資本支出</p>
+  <h2 class="h2">四大雲端的答案：錢不但照燒，還要燒更多</h2>
+  <p class="lede mb-l">市場最想知道的問題是：這些巨頭會不會踩煞車？上週財報給了很明確的答案——不會，油門還要再踩深一點。</p>
+  <div class="grid g3 anim-stagger-list" data-anim-target>
+    <div class="card" style="border-top:4px solid var(--accent)"><p class="eyebrow">CY26 雲端資本支出</p><div style="font-size:46px;font-weight:800;color:var(--text-1)">$8,600<span style="font-size:26px">億+</span></div><p class="dim">年增約 <b>80%</b>（美銀）</p></div>
+    <div class="card" style="border-top:4px solid var(--accent)"><p class="eyebrow">CY27 路徑</p><div style="font-size:46px;font-weight:800;color:var(--text-1)">$1.2<span style="font-size:26px">兆</span></div><p class="dim">高盛：2027 年將突破 1 兆美元，比財報季前預估再多 1,000 億以上</p></div>
+    <div class="card" style="border-top:4px solid var(--accent)"><p class="eyebrow">雲端營收成長</p><div style="font-size:46px;font-weight:800;color:var(--good)">48%</div><p class="dim">反而加速，代表算力仍供不應求</p></div>
+  </div>
+  <div class="card card-accent mt-l">
+    <h4 style="margin-top:0">最值得記住的一組對比（2Q26，四大雲端合計）</h4>
+    <p class="dim" style="font-size:28px">資本支出 <b style="color:var(--text-1)">1,820 億美元</b> ｜ 自由現金流僅剩 <b style="color:var(--bad)">50 億美元</b> ｜ 同期募集 <b style="color:var(--text-1)">1,010 億美元</b> 的債與股 → <mark>AI 建設已從「用賺來的錢投資」變成「用借來的錢投資」</mark></p>
+  </div>
+  <ul class="row wrap mt-m" style="list-style:none;padding:0;gap:10px">
+    <li class="pill">亞馬遜 FY26 資本支出由 $2,000 億上調至 $2,200 億</li>
+    <li class="pill">美銀點名五大受惠環節：運算晶片 · 記憶體 · 半導體設備 · 電源晶片 · 光通訊</li>
+  </ul>
+  <div class="chart-suggestion">圖表建議：柱狀圖呈現 2024–2027 年雲端資本支出（實際＋預估），並用折線疊上「資本支出／營運現金流」比率</div>
+  <div class="deck-footer"><span class="dim2">來源：BofA US Semiconductors／GS US Weekly Kickstart／UBS 2Q26 Earnings Brief</span><span class="slide-number" data-current="6" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.6 ═══ -->
+<section class="slide" data-title="訂單底氣">
+  <p class="kicker">Backlog · 訂單能見度</p>
+  <h2 class="h2">敢燒錢的底氣：客戶已先簽下 2.3 兆美元訂單</h2>
+  <p class="lede mb-l">如果只看支出，這故事很嚇人；但看訂單簿，畫面完全不同。<mark>四大雲端業者訂單餘額已從上季約 2.0 兆美元增加到超過 2.3 兆美元，單季成長 16%</mark>——這不是預測，是客戶已經簽字的長約。</p>
+  <div class="card" style="padding:6px 14px">
+    <table class="t">
+      <thead><tr><th>業者</th><th class="num">訂單／合約餘額</th><th class="num">一年內可認列</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td><b>微軟 MSFT</b></td><td class="num">$6,780 億</td><td class="num">約 30%</td><td>商業訂單餘額，季增 8%</td></tr>
+        <tr><td><b>甲骨文 ORCL</b></td><td class="num">$6,380 億</td><td class="num">僅 12%</td><td>另收客戶硬體預付款約 $750 億</td></tr>
+        <tr><td><b>Google 雲端</b></td><td class="num">$5,140 億</td><td class="num">—</td><td>上季約 $4,600 億</td></tr>
+        <tr><td><b>AWS</b></td><td class="num">$4,960 億</td><td class="num">—</td><td>年增超過一倍</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid g2 mt-l" style="gap:18px">
+    <div class="card card-accent"><h4>與 2000 年網路泡沫最大的不同</h4><p class="dim">訂單能見度拉到<b>三年以上</b>，資本支出有客戶簽約背書，而非純粹押注需求。</p></div>
+    <div class="card card-accent"><h4>對投資人的實用指標</h4><p class="dim"><mark>訂單餘額成長率，會比單季營收更早告訴你景氣何時轉彎</mark>。雲端業者也明說，資本支出預算已把記憶體、晶圓、載板漲價算進去。</p></div>
+  </div>
+  <div class="chart-suggestion">圖表建議：橫向長條圖比較四大業者訂單餘額規模，並標示「一年內可認列比例」，凸顯能見度長短差異</div>
+  <div class="deck-footer"><span class="dim2">來源：BofA US Semiconductors — Path to $1.2T in Cloud Capex</span><span class="slide-number" data-current="7" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.7 ═══ -->
+<section class="slide" data-title="現金流代價">
+  <p class="kicker">Cash Flow · 代價</p>
+  <h2 class="h2">代價寫在現金流量表：自由現金流轉負，改用借的</h2>
+  <div class="vs" style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch">
+    <div class="card anim-fade-left" data-anim="fade-left" style="border-top:4px solid var(--text-3)">
+      <h3>過去的常態</h3>
+      <div style="font-size:60px;font-weight:800;color:var(--good)">+15~20%</div>
+      <p class="dim">自由現金流利潤率，有餘裕買回庫藏股、發股利</p>
+    </div>
+    <div class="mid" style="display:flex;align-items:center;font-size:40px;color:var(--accent)">→</div>
+    <div class="card anim-fade-right" data-anim="fade-right" style="border-top:4px solid var(--bad)">
+      <h3>2027–2028 預估</h3>
+      <div style="font-size:60px;font-weight:800;color:var(--bad)">−5~6%</div>
+      <p class="dim">今年已降至 −1%；資本支出將佔營運現金流的 <b>100%–115%</b></p>
+    </div>
+  </div>
+  <p class="mt-l">缺口只能靠資本市場補。今年以來前五大雲端業者已募集約 <mark>2,700 億美元</mark>，主要是 3 到 40 年期的長天期債券。巴克萊向近 <b>300 位</b>債券投資人做的問卷顯示，多數人預期這群公司今年發債規模落在 <b>2,750 億到 3,250 億美元</b>，且 <b>65%</b> 認為明年還會再增加至少一成。</p>
+  <ul class="grid g3 mt-m anim-stagger-list" style="list-style:none;padding:0;margin:0;gap:14px" data-anim-target>
+    <li class="card"><h4>逾 60%</h4><p class="dim">認為「發債節奏與規模」才是未來一年利差關鍵，而非 AI 能不能賺錢</p></li>
+    <li class="card"><h4>約 50%</h4><p class="dim">最看好資料中心相關債券；最不想碰的反而是成長最快的晶片融資</p></li>
+    <li class="card"><h4>35%</h4><p class="dim">已表示單一發行人部位過度集中，成為實質限制</p></li>
+  </ul>
+  <div class="chart-suggestion">圖表建議：雙軸圖，長條為雲端業者年度發債金額，折線為整體自由現金流利潤率（%），呈現「舉債上升、現金流下降」的剪刀差</div>
+  <div class="deck-footer"><span class="dim2">來源：BofA US Semiconductors／Barclays IG TMT Hyperscaler Survey</span><span class="slide-number" data-current="8" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.8 ═══ -->
+<section class="slide" data-title="換一把尺">
+  <p class="kicker">Valuation · 評價方法</p>
+  <h2 class="h2">華爾街換了一把尺量 AI：別只看現金流，要看經濟利潤</h2>
+  <div class="grid g2 mt-m" style="align-items:start;gap:22px">
+    <div class="card anim-fade-left" data-anim="fade-left">
+      <h3 style="margin-top:0">兩把尺量的是不同東西</h3>
+      <p class="dim"><b>自由現金流</b>看的是「今年花了多少」；<b>經濟利潤</b>看的是「這些資產一輩子能不能賺回應有的報酬」。</p>
+      <p class="dim mt-m">瑞銀 HOLT 預估：到 2027 年，<mark>除 Meta 外每一家雲端巨頭的經濟利潤都會創歷史新高</mark>。資產規模成長在 2024–2027 年可貢獻約 <b>3,000 億美元</b>經濟利潤，足以抵銷約 <b>1,400 億美元</b>來自報酬率下滑與資金成本上升的逆風。</p>
+    </div>
+    <div class="card anim-fade-right" data-anim="fade-right">
+      <h3 style="margin-top:0">證據已經開始出現</h3>
+      <ul>
+        <li>AWS 的 AI 與自研晶片業務，年化營收<b>各自都超過 250 億美元</b>、年增逾一倍</li>
+        <li>伺服器投資回本時間<b>不到三年</b></li>
+        <li>高盛：科技股其實正在<mark>降低本益比</mark>，儘管獲利成長強勁——隱含成長預期仍低於網路泡沫時期高點</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="grid g3 mt-l anim-stagger-list" style="list-style:none;padding:0;margin:0;gap:14px" data-anim-target>
+    <li class="card card-accent"><h4>摩根士丹利</h4><p class="dim">雲端巨頭預估本益比落在 2023 年以來<b>第 3 個百分位</b>，相對便宜</p></li>
+    <li class="card card-accent"><h4>瑞銀 HOLT 篩選</h4><p class="dim">甲骨文、微軟、Meta 相對自身歷史較具吸引力</p></li>
+    <li class="card" style="border-left:4px solid var(--warn)"><h4>反面提醒</h4><p class="dim">到目前為止，<b>賣鏟子的公司</b>報酬明顯優於出錢挖礦的雲端業者</p></li>
+  </ul>
+  <div class="chart-suggestion">圖表建議：散布圖，X 軸為預估本益比所處歷史百分位，Y 軸為 2027 年經濟利潤成長率，標出各雲端巨頭位置</div>
+  <div class="deck-footer"><span class="dim2">來源：UBS HOLT TMT — The Hyperscaler Paradox／GS Global Weekly Kickstart／MS</span><span class="slide-number" data-current="9" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.9 ═══ -->
+<section class="slide" data-title="AMD">
+  <p class="kicker">Stock 01 · 個股實況</p>
+  <h2 class="h2">個股實況（一）：AMD 成長翻倍，四家外資給出四個價錢</h2>
+  <p class="lede mb-l">同一份財報、同一套數字，四家外資的目標價卻從 550 美元一路排到 730 美元——分歧不在基本面，在「這些好消息是不是已經反映在 <b>518 美元</b>的股價裡」。</p>
+  <div class="card" style="padding:6px 14px">
+    <table class="t">
+      <thead><tr><th>券商</th><th>評等</th><th class="num">目標價</th><th>核心論點</th></tr></thead>
+      <tbody>
+        <tr><td>摩根大通 JPM</td><td>中立</td><td class="num">$550</td><td>首次機櫃級產品量產<b>執行風險仍高</b>，MI450 產品組合稀釋毛利</td></tr>
+        <tr><td>巴克萊 Barclays</td><td style="color:var(--good);font-weight:700">加碼</td><td class="num">$665</td><td>2027 年資料中心 GPU 營收上調約 $70 億至 <b>$380 億</b>（市場僅 $332 億）</td></tr>
+        <tr><td>Cantor</td><td style="color:var(--good);font-weight:700">加碼</td><td class="num">$700</td><td>TAM 大幅擴張</td></tr>
+        <tr><td>瑞銀 UBS</td><td style="color:var(--good);font-weight:700">買進</td><td class="num">$730</td><td>由前次 $700 再上調</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid g3 mt-l" style="gap:14px">
+    <div class="card"><h4>基本面無爭議</h4><p class="dim">2Q 資料中心營收<b>年增超過一倍</b>；2027 年伺服器 CPU 營收將成長逾 70%，整個資料中心部門成長遠高於 100%</p></div>
+    <div class="card"><h4>產品節奏</h4><p class="dim">Helios／MI450 第三季末開始出貨、第四季放量，客戶拉貨進度<b>優於原先預期</b>；2Q 資本支出由 $3.89 億暴增至 $8.08 億投入封測設備</p></div>
+    <div class="card" style="border-left:4px solid var(--warn)"><h4>兩個逆風</h4><p class="dim">遊戲部門營收明顯下滑；2027 下半年開始生效的<b>認股權證稀釋</b></p></div>
+  </div>
+  <div class="chart-suggestion">圖表建議：目標價區間圖（子彈圖），以目前股價為基準線，橫向標出四家外資的目標價與評等</div>
+  <div class="deck-footer"><span class="dim2">來源：JPM／Barclays／Cantor／UBS AMD 研究報告（2026/08/04–08/05）</span><span class="slide-number" data-current="10" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.10 ═══ -->
+<section class="slide" data-title="Palantir">
+  <p class="kicker">Stock 02 · 個股實況</p>
+  <h2 class="h2">個股實況（二）：Palantir 成長 93%，多空價差卻超過一倍</h2>
+  <p class="lede" style="margin-bottom:14px">如果 AMD 的分歧只是程度問題，Palantir 就是<b>方向之爭</b>。</p>
+  <div class="grid g4 anim-stagger-list" style="gap:12px" data-anim-target>
+    <div class="card"><p class="eyebrow">2Q 營收</p><div style="font-size:38px;font-weight:800;color:var(--text-1)">+93%</div><p class="dim">$19.35 億，超預期 6.7%</p></div>
+    <div class="card"><p class="eyebrow">美國商業業務</p><div style="font-size:38px;font-weight:800;color:var(--good)">+149%</div><p class="dim">商業 +110%／政府 +79%</p></div>
+    <div class="card"><p class="eyebrow">調整後營業利益率</p><div style="font-size:38px;font-weight:800;color:var(--text-1)">61.7%</div><p class="dim">調整後 EPS $0.41</p></div>
+    <div class="card" style="border-left:4px solid var(--warn)"><p class="eyebrow">國際業務</p><div style="font-size:38px;font-weight:800;color:var(--warn)">+26%</div><p class="dim">季增僅 2%，成長幾乎全靠美國</p></div>
+  </div>
+  <div class="vs" style="margin-top:14px;display:grid;grid-template-columns:1fr auto 1fr;gap:18px">
+    <div class="card" style="border-top:4px solid var(--good)">
+      <h3>瑞銀 UBS · 買進　目標價 $220</h3>
+      <p class="dim">93% 的成長率完全看不到競爭加劇的痕跡，<mark>直接推翻空方最主要的論點</mark>。評價基準為 2027 年自由現金流的 44 倍。</p>
+    </div>
+    <div class="mid" style="display:flex;align-items:center;font-size:34px;color:var(--accent)">vs</div>
+    <div class="card" style="border-top:4px solid var(--bad)">
+      <h3>加拿大皇家銀行 RBC · 劣於大盤　目標價 $90</h3>
+      <p class="dim">相對於 <b>$125.65</b> 的股價，這是「腰斬」等級的看法。</p>
+    </div>
+  </div>
+  <p style="margin:14px 0 0"><b>真正該問的：</b>不是誰對誰錯，而是自己願意為這種成長付多少倍數。公司同步把今年營收成長目標由 71% 上調到 <b>82%</b>；<mark>成長股的爭論不會用財報解決，而是用下一季的續航力解決</mark>。</p>
+  <div class="chart-suggestion">圖表建議：分項長條圖呈現營收年增率（總體／美國商業／政府／國際），右側附上兩家外資目標價與現價的對照</div>
+  <div class="deck-footer"><span class="dim2">來源：UBS PLTR／RBC PLTR（2026/08/03）</span><span class="slide-number" data-current="11" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.11 ═══ -->
+<section class="slide" data-title="亞馬遜 vs 蘋果">
+  <p class="kicker">Stock 03 · 個股實況</p>
+  <h2 class="h2">個股實況（三）：亞馬遜與蘋果，同一場 AI 裡的兩種命運</h2>
+  <div class="vs" style="display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch">
+    <div class="card anim-fade-left" data-anim="fade-left" style="border-top:4px solid var(--good)">
+      <h3>亞馬遜 · 收錢的一方</h3>
+      <ul>
+        <li>2Q 營收 <b>$2,006 億</b>，優於預期</li>
+        <li><mark>AWS 營收年增 37%</mark>，遠高於市場預期的 31%</li>
+        <li>AI 與自研晶片兩塊業務年化營收<b>各自突破 $250 億</b></li>
+        <li>代價：資本支出再往上加，3Q 營收指引因 Prime 檔期提前而略為下修</li>
+      </ul>
+    </div>
+    <div class="mid" style="display:flex;align-items:center;font-size:34px;color:var(--accent)">vs</div>
+    <div class="card anim-fade-right" data-anim="fade-right" style="border-top:4px solid var(--bad)">
+      <h3>蘋果 · 付錢的一方</h3>
+      <ul>
+        <li>3Q 營收 <b>$1,094 億</b>符合預期，iPhone 年增約 22%</li>
+        <li>服務業務僅成長 <b>12%</b>，令人失望</li>
+        <li>下一季毛利率指引降到 <mark>47%–48%</mark>，公司明講是匯率與零組件成本</li>
+        <li>杰富瑞維持持有評等並下修目標價，直指記憶體成本影響將持續擴大</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card card-accent mt-l">
+    <h4 style="margin-top:0">接上另一條產業線索：記憶體</h4>
+    <p class="dim">美銀追蹤：7 月 DRAM 合約價<b>月增達低雙位數百分比、季增 30%–50%</b>，NAND 持平；三星有六到七成銷售綁在長約上。<mark>記憶體漲價是半導體股的紅利，卻是硬體品牌的成本。</mark>另一個受惠典型是 Arista：今年營收成長目標從 28% 一舉上調到 <b>40%</b>，美銀目標價升至 $240。</p>
+  </div>
+  <p class="mt-m"><b>選股原則：</b>同一個題材裡，先確認這家公司是收錢的一方，還是付錢的一方。</p>
+  <div class="chart-suggestion">圖表建議：左右對照圖，左側為 AWS 營收成長加速曲線，右側為蘋果毛利率指引下滑與 DRAM 合約價漲幅的疊圖</div>
+  <div class="deck-footer"><span class="dim2">來源：UBS 2Q26 Earnings Brief／Citi AMZN／JEF AAPL／BofA Global Memory Tech／BofA ANET</span><span class="slide-number" data-current="12" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.12 ═══ -->
+<section class="slide" data-title="禮來">
+  <p class="kicker">Non-AI · 另一條成長線</p>
+  <h2 class="h2">別把雞蛋都押在 AI：禮來正把減重藥做成千億美元生意</h2>
+  <p class="lede mb-l">在所有人盯著 AI 的時候，美股最大的非科技成長故事其實來自製藥。</p>
+  <div class="grid g4 anim-stagger-list" data-anim-target>
+    <div class="card"><p class="eyebrow">2Q 營收</p><div style="font-size:44px;font-weight:800;color:var(--text-1)">$230<span style="font-size:26px">億</span></div><p class="dim">上半年累積 $430 億</p></div>
+    <div class="card"><p class="eyebrow">公司全年指引</p><div style="font-size:44px;font-weight:800;color:var(--warn)">$850–870<span style="font-size:26px">億</span></div><p class="dim">等於假設下半年<b>零成長</b></p></div>
+    <div class="card"><p class="eyebrow">瑞銀 2027 預估</p><div style="font-size:44px;font-weight:800;color:var(--good)">$1,000<span style="font-size:26px">億+</span></div><p class="dim">EPS 上看 $50（共識 $45–46）</p></div>
+    <div class="card"><p class="eyebrow">瑞銀目標價</p><div style="font-size:44px;font-weight:800;color:var(--text-1)">$1,425</div><p class="dim">當時股價約 $1,152</p></div>
+  </div>
+  <div class="grid g2 mt-l" style="gap:18px">
+    <div class="card card-accent">
+      <h4 style="margin-top:0">增量來自通路，不是新藥</h4>
+      <p class="dim">7 月 1 日上路的 Medicare BRIDGE 方案，公司表示其中<mark>六到七成使用者是過去根本負擔不起這類藥物的新病人</mark>——代表市場正在擴大，而不是既有病人換藥。本季 EPS $11（已扣除一次性研發授權支出），年化約 $44 且持續成長。</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <h4 style="margin-top:0">為什麼這頁重要 · 以及風險</h4>
+      <p class="dim">投資組合需要一個<b>與 AI 資本支出循環無關</b>的成長引擎。但風險同樣明確：一旦供給或給付政策生變，高本益比的醫藥股回檔速度不會比科技股慢。</p>
+    </div>
+  </div>
+  <div class="chart-suggestion">圖表建議：階梯圖呈現禮來營收路徑（1H26 實際 → FY26 指引 → 2027 市場共識 → 瑞銀預估），凸顯指引與預估的落差</div>
+  <div class="deck-footer"><span class="dim2">來源：UBS Eli Lilly — Crushed the Q（2026/08/05）</span><span class="slide-number" data-current="13" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.13 ═══ -->
+<section class="slide" data-title="資金流">
+  <p class="kicker">Fund Flows · 資金流向</p>
+  <h2 class="h2">資金流的耳語：錢還在進場，但已經悄悄換位子</h2>
+  <div class="grid g2 mt-m" style="align-items:start;gap:22px">
+    <div>
+      <div class="card" style="padding:6px 14px">
+        <table class="t">
+          <thead><tr><th>上週資金流向</th><th class="num">單週</th><th class="num">年化／備註</th></tr></thead>
+          <tbody>
+            <tr><td>現金</td><td class="num">$537 億</td><td class="num">—</td></tr>
+            <tr><td>股票</td><td class="num">$329 億</td><td class="num">—</td></tr>
+            <tr><td>債券</td><td class="num">$231 億</td><td class="num">—</td></tr>
+            <tr><td><b>美股</b></td><td class="num" style="color:var(--good)">$96 億</td><td class="num"><b>$6,520 億（史上新高）</b></td></tr>
+            <tr><td><b>投資等級債</b></td><td class="num" style="color:var(--good)">$102 億</td><td class="num"><b>$5,270 億（創新高）</b></td></tr>
+            <tr><td>高收益債</td><td class="num" style="color:var(--good)">$41 億</td><td class="num">2024 年 7 月以來最大</td></tr>
+            <tr><td><b>科技型基金</b></td><td class="num" style="color:var(--bad)">−$7 億</td><td class="num">六週來首次流出</td></tr>
+            <tr><td><b>半導體 ETF</b></td><td class="num" style="color:var(--bad)">−$24 億</td><td class="num">六週來首次流出</td></tr>
+            <tr><td>新興市場股票</td><td class="num">$86 億</td><td class="num" style="color:var(--bad)">年化 −$550 億，2015 年來最差</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="card card-accent">
+        <h4 style="margin-top:0">翻成白話</h4>
+        <p class="dim" style="font-size:30px"><mark>資金沒有離開市場，只是從最擁擠的位子，移到收益比較確定的位子。</mark></p>
+      </div>
+      <ul class="mt-m" style="list-style:none;padding:0;display:grid;gap:12px">
+        <li class="card" style="border-left:4px solid var(--bad)"><b>美銀多空指標升到 9.7</b>（前值 9.4），2021 年以來最高，<b>已進入反向賣出訊號區</b></li>
+        <li class="card"><b>高盛口徑：</b>截至 7/29 當週全球股票型基金淨流入 <b>$640 億</b>，遠高於前一週的 $300 億</li>
+        <li class="card"><b>過熱程度已降溫：</b>高盛部位指標回落至第 <b>53 百分位</b>，主動型經理人部位（NAAIM）降至 <b>79.7</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="chart-suggestion">圖表建議：瀑布圖呈現上週各資產類別淨流入金額，右側附上美銀多空指標歷史走勢與 8.0 賣出訊號線</div>
+  <div class="deck-footer"><span class="dim2">來源：BofA The Flow Show／GS Global Weekly Fund Flows／GS GOAL Positioning</span><span class="slide-number" data-current="14" data-total="15"></span></div>
+</section>
+
+<!-- ═══ P.14 ═══ -->
+<section class="slide" data-title="展望與風險">
+  <p class="kicker">Outlook · 未來展望與風險</p>
+  <h2 class="h2">接下來三個月：三個必看訊號、三個真風險</h2>
+  <p class="lede mb-l">把上週十家外資的結論收攏成一句話：<mark>獲利仍是引擎，但金融環境才是變速箱。</mark>摩根士丹利維持標普 500 年底看到 <b>8,000 點</b>，前提是資金順利轉向獲利穩定、利潤率高的優質公司。</p>
+  <div class="grid g3" style="gap:16px;align-items:start">
+    <div class="card" style="border-top:4px solid var(--accent)">
+      <h4 style="margin-top:0">📅 三個必看訊號</h4>
+      <ul><li>8 月 26 日 輝達財報</li><li>8 月 28 日 傑克森霍爾年會</li><li>雲端業者的發債節奏</li></ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--bad)">
+      <h4 style="margin-top:0">⚠️ 三個真風險</h4>
+      <ul><li>長天期殖利率逼近二十年高點</li><li>荷姆茲海峽情勢推升油價</li><li>記憶體漲價侵蝕硬體毛利</li></ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--good)">
+      <h4 style="margin-top:0">💡 兩個機會</h4>
+      <ul><li>美國擬禁中國光收發模組進入資料中心，估替美系供應商打開<b>約 $100 億</b>市場</li><li>花旗提醒傳統評價指標已落在<b>第 9 至第 10 分位</b>，寧可等回檔再加碼</li></ul>
+    </div>
+  </div>
+  <div class="card card-accent mt-l">
+    <h4 style="margin-top:0">巴克萊的選股檢查表：AI 劇變下，活下來的公司只有四個共同特徵</h4>
+    <p class="dim">回測數位廣告取代平面媒體、串流取代實體影音、電商侵蝕實體零售等五次產業劇變後，唯四具統計顯著性的指標是——<mark>淨利率 · 自由現金流利潤率 · 淨負債／EBITDA · 每位員工創造的 EBITDA</mark>。在 AI 重寫產業規則的此刻，這四個數字比任何題材都值得先看。</p>
+  </div>
+  <div class="chart-suggestion">圖表建議：儀表板式版面，左側為三大風險指標的現況燈號（殖利率／油價／記憶體價格），右側為巴克萊四項體質指標的檢查清單</div>
+  <div class="deck-footer"><span class="dim2">來源：MS US Equity Strategy／Barclays Food for Thought: Resilience／Citi PULSE Monitor／JPM Hardware &amp; Networking</span><span class="slide-number" data-current="15" data-total="15"></span></div>
+</section>
+
+</div><!-- /.deck -->
+
+<nav class="deck-nav" aria-label="投影片導覽">
+  <button data-nav="prev" aria-label="上一頁">&lsaquo;</button>
+  <button class="ov" data-nav="overview" aria-label="所有投影片總覽">&#9638;</button>
+  <span class="count"><b id="navCur">1</b> / <span id="navTot">15</span></span>
+  <button data-nav="next" aria-label="下一頁">&rsaquo;</button>
+</nav>
+<script>
+/* 依視窗大小等比縮放整個 deck（設計畫布 1920×1080） */
+(function () {
+  var W = 1920, H = 1080;
+  function fit() {
+    var k = Math.min(window.innerWidth / W, window.innerHeight / H);
+    document.documentElement.style.setProperty('--deck-scale', k);
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+})();
+</script>
+<script>
+/* 【導覽】滑動 / 點擊 / 按鈕 / 滾輪，全部轉成 runtime.js 認得的方向鍵 */
+(function () {
+  var TOTAL = document.querySelectorAll('.deck > .slide').length;
+  function key(k){ document.dispatchEvent(new KeyboardEvent('keydown',{key:k,bubbles:true})); }
+  function next(){ key('ArrowRight'); } function prev(){ key('ArrowLeft'); }
+
+  var nav = document.querySelector('.deck-nav');
+  /* 匯出 PNG 用 headless 瀏覽器，導覽列不應入鏡 */
+  if (navigator.webdriver && nav) { nav.remove(); nav = null; }
+  var cur = document.getElementById('navCur'), tot = document.getElementById('navTot');
+  if (tot) tot.textContent = TOTAL;
+
+  function idx(){ var m=(location.hash||'').match(/(\d+)/); return m?+m[1]:1; }
+  function sync(){
+    var i = idx();
+    if (cur) cur.textContent = i;
+    var p = nav && nav.querySelector('[data-nav=prev]'), n = nav && nav.querySelector('[data-nav=next]');
+    if (p) p.disabled = i <= 1;
+    if (n) n.disabled = i >= TOTAL;
+  }
+  window.addEventListener('hashchange', sync); setTimeout(sync, 300); sync();
+
+  if (nav) nav.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-nav]'); if (!b) return;
+    var a = b.dataset.nav;
+    if (a === 'next') next(); else if (a === 'prev') prev(); else key('o');
+    setTimeout(sync, 60);
+  });
+
+  /* 桌機：滑鼠不動 2.5 秒後淡出導覽列 */
+  var t;
+  function show(){ if(!nav) return; nav.classList.add('show'); clearTimeout(t);
+    t = setTimeout(function(){ nav.classList.remove('show'); }, 2500); }
+  window.addEventListener('mousemove', show); show();
+
+  /* 觸控：左右滑動翻頁（垂直滑動不攔截） */
+  var x0=null, y0=null, t0=0;
+  document.addEventListener('touchstart', function(e){
+    var p=e.changedTouches[0]; x0=p.clientX; y0=p.clientY; t0=Date.now();
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0===null) return;
+    var p=e.changedTouches[0], dx=p.clientX-x0, dy=p.clientY-y0;
+    var fast = Date.now()-t0 < 800;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)*1.5 && fast) { dx<0 ? next() : prev(); setTimeout(sync,60); }
+    else if (Math.abs(dx)<10 && Math.abs(dy)<10) {           /* 單點：左右緣輕觸翻頁 */
+      var w=window.innerWidth;
+      if (p.clientX > w*0.75) { next(); setTimeout(sync,60); }
+      else if (p.clientX < w*0.25) { prev(); setTimeout(sync,60); }
+    }
+    x0=null;
+  }, {passive:true});
+
+  /* 觸控板橫向滑動 */
+  var acc=0, lock=false;
+  window.addEventListener('wheel', function(e){
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    acc += e.deltaX;
+    if (!lock && Math.abs(acc) > 120) { acc>0 ? next() : prev(); lock=true; acc=0;
+      setTimeout(function(){ lock=false; sync(); }, 500); }
+  }, {passive:true});
+})();
+</script>
+<script>
+/* ===== assets/runtime.js ===== */
+/* html-ppt :: runtime.js
+ * Keyboard-driven deck runtime. Zero dependencies.
+ *
+ * Features:
+ *   ← → / space / PgUp PgDn / Home End  navigation
+ *   F  fullscreen
+ *   S  presenter mode (opens a NEW WINDOW with current/next slide preview + notes + timer)
+ *       The original window stays as audience view, synced via BroadcastChannel.
+ *       Slide previews use CSS transform:scale() at design resolution for pixel-perfect layout.
+ *   N  quick notes overlay (bottom drawer)
+ *   O  slide overview grid
+ *   T  cycle themes (reads data-themes on <html> or <body>)
+ *   A  cycle demo animation on current slide
+ *   URL hash #/N  deep-link to slide N (1-based)
+ *   Progress bar auto-managed
+ */
+(function () {
+  'use strict';
+
+  const ANIMS = ['fade-up','fade-down','fade-left','fade-right','rise-in','drop-in',
+    'zoom-pop','blur-in','glitch-in','typewriter','neon-glow','shimmer-sweep',
+    'gradient-flow','stagger-list','counter-up','path-draw','parallax-tilt',
+    'card-flip-3d','cube-rotate-3d','page-turn-3d','perspective-zoom',
+    'marquee-scroll','kenburns','confetti-burst','spotlight','morph-shape','ripple-reveal'];
+
+  function ready(fn){ if(document.readyState!='loading')fn(); else document.addEventListener('DOMContentLoaded',fn);}
+
+  /* ========== Parse URL for preview-only mode ==========
+   * When loaded as iframe.src = "index.html?preview=3", runtime enters a
+   * locked single-slide mode: only slide N is visible, no chrome, no keys,
+   * no hash updates. This is how the presenter window shows pixel-perfect
+   * previews — by loading the actual deck file in an iframe and telling it
+   * to display only a specific slide.
+   */
+  function getPreviewIdx() {
+    const m = /[?&]preview=(\d+)/.exec(location.search || '');
+    return m ? parseInt(m[1], 10) - 1 : -1;
+  }
+
+  ready(function () {
+    const deck = document.querySelector('.deck');
+    if (!deck) return;
+    const slides = Array.from(deck.querySelectorAll('.slide'));
+    if (!slides.length) return;
+
+    const previewOnlyIdx = getPreviewIdx();
+    const isPreviewMode = previewOnlyIdx >= 0 && previewOnlyIdx < slides.length;
+
+    /* ===== Preview-only mode: show one slide, hide everything else ===== */
+    if (isPreviewMode) {
+      function showSlide(i) {
+        slides.forEach((s, j) => {
+          const active = (j === i);
+          s.classList.toggle('is-active', active);
+          s.style.display = active ? '' : 'none';
+          if (active) {
+            s.style.opacity = '1';
+            s.style.transform = 'none';
+            s.style.pointerEvents = 'auto';
+          }
+        });
+      }
+      showSlide(previewOnlyIdx);
+      /* Hide chrome that the presenter shouldn't see in preview */
+      const hideSel = '.progress-bar, .notes-overlay, .overview, .notes, aside.notes, .speaker-notes';
+      document.querySelectorAll(hideSel).forEach(el => { el.style.display = 'none'; });
+      document.documentElement.setAttribute('data-preview', '1');
+      document.body.setAttribute('data-preview', '1');
+      /* Auto-detect theme base path for theme switching in preview mode */
+      function getPreviewThemeBase() {
+        const base = document.documentElement.getAttribute('data-theme-base');
+        if (base) return base;
+        const tl = document.getElementById('theme-link');
+        if (tl) {
+          const raw = tl.getAttribute('href') || '';
+          const ls = raw.lastIndexOf('/');
+          if (ls >= 0) return raw.substring(0, ls + 1);
+        }
+        return 'assets/themes/';
+      }
+      const previewThemeBase = getPreviewThemeBase();
+
+      /* Listen for postMessage from parent presenter window:
+       *  - preview-goto: switch visible slide WITHOUT reloading
+       *  - preview-theme: switch theme CSS link to match audience window */
+      window.addEventListener('message', function(e) {
+        if (!e.data) return;
+        if (e.data.type === 'preview-goto') {
+          const n = parseInt(e.data.idx, 10);
+          if (n >= 0 && n < slides.length) showSlide(n);
+        } else if (e.data.type === 'preview-theme' && e.data.name) {
+          let link = document.getElementById('theme-link');
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.id = 'theme-link';
+            document.head.appendChild(link);
+          }
+          link.href = previewThemeBase + e.data.name + '.css';
+          document.documentElement.setAttribute('data-theme', e.data.name);
+        }
+      });
+      /* Signal to parent that preview iframe is ready */
+      try { window.parent && window.parent.postMessage({ type: 'preview-ready' }, '*'); } catch(e) {}
+      return;
+    }
+
+    let idx = 0;
+    const total = slides.length;
+
+    /* ===== BroadcastChannel for presenter sync ===== */
+    const CHANNEL_NAME = 'html-ppt-presenter-' + location.pathname;
+    let bc;
+    try { bc = new BroadcastChannel(CHANNEL_NAME); } catch(e) { bc = null; }
+
+    // Are we running inside the presenter popup? (legacy flag, now unused)
+    const isPresenterWindow = false;
+
+    /* ===== progress bar ===== */
+    let bar = document.querySelector('.progress-bar');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.className = 'progress-bar';
+      bar.innerHTML = '<span></span>';
+      document.body.appendChild(bar);
+    }
+    const barFill = bar.querySelector('span');
+
+    /* ===== notes overlay (N key) ===== */
+    let notes = document.querySelector('.notes-overlay');
+    if (!notes) {
+      notes = document.createElement('div');
+      notes.className = 'notes-overlay';
+      document.body.appendChild(notes);
+    }
+
+    /* ===== overview grid (O key) ===== */
+    let overview = document.querySelector('.overview');
+    if (!overview) {
+      overview = document.createElement('div');
+      overview.className = 'overview';
+      slides.forEach((s, i) => {
+        const t = document.createElement('div');
+        t.className = 'thumb';
+        // Force 16:9 aspect ratio robustly
+        t.style.padding = '0 0 56.25% 0';
+        t.style.height = '0';
+        t.style.position = 'relative';
+        t.style.overflow = 'hidden';
+
+        const title = s.getAttribute('data-title') ||
+          (s.querySelector('h1,h2,h3')||{}).textContent || ('Slide '+(i+1));
+        
+        // Create a container for the mini-slide
+        const mini = document.createElement('div');
+        mini.className = 'mini-slide';
+        mini.style.position = 'absolute';
+        mini.style.top = '0';
+        mini.style.left = '0';
+        mini.style.width = '1920px';
+        mini.style.height = '1080px';
+        mini.style.transformOrigin = 'top left';
+        mini.style.pointerEvents = 'none';
+        mini.style.background = 'var(--bg)';
+        
+        // Clone the slide content
+        const clone = s.cloneNode(true);
+        clone.className = 'slide is-active'; // force active styles
+        clone.style.position = 'absolute';
+        clone.style.inset = '0';
+        clone.style.transform = 'none';
+        clone.style.opacity = '1';
+        clone.style.padding = '72px 96px'; // ensure padding is kept
+        
+        mini.appendChild(clone);
+        t.appendChild(mini);
+
+        // Add the number and title overlay
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.inset = '0';
+        overlay.style.background = 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.8) 100%)';
+        overlay.style.color = '#fff';
+        overlay.style.zIndex = '10';
+        overlay.style.pointerEvents = 'none';
+        
+        const n = document.createElement('div');
+        n.className = 'n';
+        n.textContent = i + 1;
+        n.style.position = 'absolute';
+        n.style.top = '12px';
+        n.style.left = '16px';
+        n.style.fontWeight = '700';
+        n.style.fontSize = '16px';
+        n.style.color = '#fff';
+        n.style.textShadow = '0 1px 4px rgba(0,0,0,0.8)';
+        
+        const text = document.createElement('div');
+        text.className = 't';
+        text.textContent = title.trim().slice(0,80);
+        text.style.position = 'absolute';
+        text.style.bottom = '12px';
+        text.style.left = '16px';
+        text.style.right = '16px';
+        text.style.fontWeight = '600';
+        text.style.fontSize = '14px';
+        text.style.color = '#fff';
+        text.style.textShadow = '0 1px 4px rgba(0,0,0,0.8)';
+        
+        overlay.appendChild(n);
+        overlay.appendChild(text);
+        t.appendChild(overlay);
+
+        t.addEventListener('click', () => { go(i); toggleOverview(false); });
+        overview.appendChild(t);
+      });
+      document.body.appendChild(overview);
+    }
+
+    /* ===== navigation ===== */
+    function go(n, fromRemote){
+      n = Math.max(0, Math.min(total-1, n));
+      slides.forEach((s,i) => {
+        s.classList.toggle('is-active', i===n);
+        s.classList.toggle('is-prev', i<n);
+      });
+      idx = n;
+      barFill.style.width = ((n+1)/total*100)+'%';
+      const numEl = document.querySelector('.slide-number');
+      if (numEl) { numEl.setAttribute('data-current', n+1); numEl.setAttribute('data-total', total); }
+
+      // notes (bottom overlay)
+      const note = slides[n].querySelector('.notes, aside.notes, .speaker-notes');
+      notes.innerHTML = note ? note.innerHTML : '';
+
+      // hash
+      const hashTarget = '#/'+(n+1);
+      if (location.hash !== hashTarget && !isPresenterWindow) {
+        history.replaceState(null,'', hashTarget);
+      }
+
+      // re-trigger entry animations
+      slides[n].querySelectorAll('[data-anim]').forEach(el => {
+        const a = el.getAttribute('data-anim');
+        el.classList.remove('anim-'+a);
+        void el.offsetWidth;
+        el.classList.add('anim-'+a);
+      });
+
+      // counter-up
+      slides[n].querySelectorAll('.counter').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-to')||el.textContent);
+        const dur = parseInt(el.getAttribute('data-dur')||'1200',10);
+        const start = performance.now();
+        const from = 0;
+        function tick(now){
+          const t = Math.min(1,(now-start)/dur);
+          const v = from + (target-from)*(1-Math.pow(1-t,3));
+          el.textContent = (target % 1 === 0) ? Math.round(v) : v.toFixed(1);
+          if (t<1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+
+      // Broadcast to other window (audience ↔ presenter)
+      if (!fromRemote && bc) {
+        bc.postMessage({ type: 'go', idx: n });
+      }
+    }
+
+    /* ===== listen for remote navigation / theme changes ===== */
+    if (bc) {
+      bc.onmessage = function(e) {
+        if (!e.data) return;
+        if (e.data.type === 'go' && typeof e.data.idx === 'number') {
+          go(e.data.idx, true);
+        } else if (e.data.type === 'theme' && e.data.name) {
+          /* Sync theme across windows */
+          const i = themes.indexOf(e.data.name);
+          if (i >= 0) themeIdx = i;
+          applyTheme(e.data.name);
+        }
+      };
+    }
+
+    function toggleNotes(force){ notes.classList.toggle('open', force!==undefined?force:!notes.classList.contains('open')); }
+    function toggleOverview(force){
+      const isOpen = force!==undefined ? force : !overview.classList.contains('open');
+      overview.classList.toggle('open', isOpen);
+      if (isOpen) {
+        requestAnimationFrame(() => {
+          const thumbs = overview.querySelectorAll('.thumb');
+          if (thumbs.length) {
+            const scale = thumbs[0].clientWidth / 1920;
+            overview.querySelectorAll('.mini-slide').forEach(m => {
+              m.style.transform = 'scale(' + scale + ')';
+            });
+          }
+        });
+      }
+    }
+
+    /* ========== PRESENTER MODE — Magnetic-card popup window ========== */
+    /* Opens a new window with 4 draggable, resizable cards:
+     *   CURRENT  — iframe(?preview=N)   pixel-perfect preview of current slide
+     *   NEXT     — iframe(?preview=N+1) pixel-perfect preview of next slide
+     *   SCRIPT   — large speaker notes (逐字稿)
+     *   TIMER    — elapsed timer + page counter + controls
+     * Cards remember position/size in localStorage.
+     * Two windows sync via BroadcastChannel.
+     */
+    let presenterWin = null;
+
+    function openPresenterWindow() {
+      if (presenterWin && !presenterWin.closed) {
+        presenterWin.focus();
+        return;
+      }
+
+      // Build absolute URL of THIS deck file (without hash/query)
+      const deckUrl = location.protocol + '//' + location.host + location.pathname;
+
+      // Collect slide titles + notes (HTML strings)
+      const slideMeta = slides.map((s, i) => {
+        const note = s.querySelector('.notes, aside.notes, .speaker-notes');
+        return {
+          title: s.getAttribute('data-title') ||
+            (s.querySelector('h1,h2,h3')||{}).textContent || ('Slide '+(i+1)),
+          notes: note ? note.innerHTML : ''
+        };
+      });
+
+      /* Capture current theme so presenter previews match the audience */
+      const currentTheme = root.getAttribute('data-theme') || (themes[themeIdx] || '');
+      const presenterHTML = buildPresenterHTML(deckUrl, slideMeta, total, idx, CHANNEL_NAME, currentTheme);
+
+      presenterWin = window.open('', 'html-ppt-presenter', 'width=1280,height=820,menubar=no,toolbar=no');
+      if (!presenterWin) {
+        alert('请允许弹出窗口以使用演讲者视图');
+        return;
+      }
+      presenterWin.document.open();
+      presenterWin.document.write(presenterHTML);
+      presenterWin.document.close();
+    }
+
+    function buildPresenterHTML(deckUrl, slideMeta, total, startIdx, channelName, currentTheme) {
+      const metaJSON = JSON.stringify(slideMeta);
+      const deckUrlJSON = JSON.stringify(deckUrl);
+      const channelJSON = JSON.stringify(channelName);
+      const themeJSON = JSON.stringify(currentTheme || '');
+      const storageKey = 'html-ppt-presenter:' + location.pathname;
+
+      // Build the document as a single template string for clarity
+      return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Presenter View</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: #1a1d24;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(88,166,255,.04), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(188,140,255,.04), transparent 50%);
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  }
+  /* Stage: positioned area where cards live */
+  #stage { position: absolute; inset: 0; overflow: hidden; }
+
+  /* Magnetic card */
+  .pcard {
+    position: absolute;
+    background: #0d1117;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.02);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    min-width: 180px; min-height: 100px;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .pcard.dragging { box-shadow: 0 16px 48px rgba(0,0,0,.6), 0 0 0 2px rgba(88,166,255,.5); border-color: #58a6ff; transition: none; z-index: 9999; }
+  .pcard.resizing { box-shadow: 0 16px 48px rgba(0,0,0,.6), 0 0 0 2px rgba(63,185,80,.5); border-color: #3fb950; transition: none; z-index: 9999; }
+  .pcard:hover { border-color: rgba(88,166,255,.3); }
+
+  /* Card header (drag handle) */
+  .pcard-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,.04);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    cursor: move;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .pcard-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dot-color, #58a6ff); flex-shrink: 0; }
+  .pcard-title {
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    font-weight: 700; color: #8b949e; flex: 1;
+  }
+  .pcard-meta { font-size: 11px; color: #6e7681; }
+
+  /* Card body */
+  .pcard-body { flex: 1; position: relative; overflow: hidden; min-height: 0; }
+
+  /* Preview cards (CURRENT/NEXT) — iframe-based pixel-perfect render */
+  .pcard-preview .pcard-body { background: #000; }
+  .pcard-preview iframe {
+    position: absolute; top: 0; left: 0;
+    width: 1920px; height: 1080px;
+    border: none;
+    transform-origin: top left;
+    pointer-events: none;
+    background: transparent;
+  }
+  .pcard-preview .preview-end {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #484f58; font-size: 14px; letter-spacing: .12em;
+  }
+
+  /* Notes card */
+  .pcard-notes .pcard-body {
+    padding: 14px 18px;
+    overflow-y: auto;
+    font-size: 18px; line-height: 1.75;
+    color: #d0d7de;
+    font-family: "Noto Sans SC", -apple-system, sans-serif;
+  }
+  .pcard-notes .pcard-body p { margin: 0 0 .7em 0; }
+  .pcard-notes .pcard-body strong { color: #f0883e; }
+  .pcard-notes .pcard-body em { color: #58a6ff; font-style: normal; }
+  .pcard-notes .pcard-body code {
+    font-family: "SF Mono", monospace; font-size: .9em;
+    background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 4px;
+  }
+  .pcard-notes .empty { color: #484f58; font-style: italic; }
+
+  /* Timer card */
+  .pcard-timer .pcard-body {
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 18px 20px; justify-content: center;
+  }
+  .timer-display {
+    font-family: "SF Mono", "JetBrains Mono", monospace;
+    font-size: 42px; font-weight: 700;
+    color: #3fb950;
+    letter-spacing: .04em;
+    line-height: 1;
+  }
+  .timer-row {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: #8b949e;
+  }
+  .timer-row .label { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #6e7681; }
+  .timer-row .val { color: #e6edf3; font-weight: 600; font-family: "SF Mono", monospace; }
+  .timer-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+  .timer-btn {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    color: #e6edf3;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .timer-btn:hover { background: rgba(88,166,255,.15); border-color: #58a6ff; }
+  .timer-btn:active { transform: translateY(1px); }
+
+  /* Resize handle */
+  .pcard-resize {
+    position: absolute; right: 0; bottom: 0;
+    width: 18px; height: 18px;
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,.25) 50%, rgba(255,255,255,.25) 60%, transparent 60%, transparent 70%, rgba(255,255,255,.25) 70%, rgba(255,255,255,.25) 80%, transparent 80%);
+    z-index: 5;
+  }
+  .pcard-resize:hover { background: linear-gradient(135deg, transparent 50%, #58a6ff 50%, #58a6ff 60%, transparent 60%, transparent 70%, #58a6ff 70%, #58a6ff 80%, transparent 80%); }
+
+  /* Bottom hint bar */
+  .hint-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,.6);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 6px 16px;
+    font-size: 11px; color: #8b949e;
+    display: flex; gap: 18px; align-items: center;
+    z-index: 1000;
+  }
+  .hint-bar kbd {
+    background: rgba(255,255,255,.08);
+    padding: 1px 6px; border-radius: 3px;
+    font-family: "SF Mono", monospace;
+    font-size: 10px;
+    border: 1px solid rgba(255,255,255,.1);
+    color: #e6edf3;
+  }
+  .hint-bar .reset-layout {
+    margin-left: auto;
+    background: transparent; border: 1px solid rgba(255,255,255,.15);
+    color: #8b949e; padding: 3px 10px; border-radius: 4px;
+    font-size: 11px; cursor: pointer; font-family: inherit;
+  }
+  .hint-bar .reset-layout:hover { background: rgba(248,81,73,.15); border-color: #f85149; color: #f85149; }
+
+  body.is-dragging-card * { user-select: none !important; }
+  body.is-dragging-card iframe { pointer-events: none !important; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="pcard pcard-preview" id="card-cur" style="--dot-color:#58a6ff">
+    <div class="pcard-head" data-drag>
+      <span class="pcard-dot"></span>
+      <span class="pcard-title">CURRENT</span>
+      <span class="pcard-meta" id="cur-meta">—</span>
+    </div>
+    <div class="pcard-body"><iframe id="iframe-cur"></iframe></div>
+    <div class="pcard-resize" data-resize></div>
+  </div>
+
+  <div class="pcard pcard-preview" id="card-nxt" style="--dot-color:#bc8cff">
+    <div class="pcard-head" data-drag>
+      <span class="pcard-dot"></span>
+      <span class="pcard-title">NEXT</span>
+      <span class="pcard-meta" id="nxt-meta">—</span>
+    </div>
+    <div class="pcard-body"><iframe id="iframe-nxt"></iframe></div>
+    <div class="pcard-resize" data-resize></div>
+  </div>
+
+  <div class="pcard pcard-notes" id="card-notes" style="--dot-color:#f0883e">
+    <div class="pcard-head" data-drag>
+      <span class="pcard-dot"></span>
+      <span class="pcard-title">SPEAKER SCRIPT · 逐字稿</span>
+    </div>
+    <div class="pcard-body" id="notes-body"></div>
+    <div class="pcard-resize" data-resize></div>
+  </div>
+
+  <div class="pcard pcard-timer" id="card-timer" style="--dot-color:#3fb950">
+    <div class="pcard-head" data-drag>
+      <span class="pcard-dot"></span>
+      <span class="pcard-title">TIMER</span>
+    </div>
+    <div class="pcard-body">
+      <div class="timer-display" id="timer-display">00:00</div>
+      <div class="timer-row">
+        <span class="label">Slide</span>
+        <span class="val" id="timer-count">1 / ${total}</span>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-btn" id="btn-prev">← Prev</button>
+        <button class="timer-btn" id="btn-next">Next →</button>
+        <button class="timer-btn" id="btn-reset">⏱ Reset</button>
+      </div>
+    </div>
+    <div class="pcard-resize" data-resize></div>
+  </div>
+</div>
+
+<div class="hint-bar">
+  <span><kbd>← →</kbd> 翻页</span>
+  <span><kbd>R</kbd> 重置计时</span>
+  <span><kbd>Esc</kbd> 关闭</span>
+  <span style="color:#6e7681">拖动卡片头部移动 · 拖动右下角调整大小</span>
+  <button class="reset-layout" id="reset-layout">重置布局</button>
+</div>
+
+<script>
+(function(){
+  var slideMeta = ${metaJSON};
+  var total = ${total};
+  var idx = ${startIdx};
+  var deckUrl = ${deckUrlJSON};
+  var STORAGE_KEY = ${JSON.stringify(storageKey)};
+  var bc;
+  try { bc = new BroadcastChannel(${channelJSON}); } catch(e) {}
+
+  var iframeCur = document.getElementById('iframe-cur');
+  var iframeNxt = document.getElementById('iframe-nxt');
+  var notesBody = document.getElementById('notes-body');
+  var curMeta = document.getElementById('cur-meta');
+  var nxtMeta = document.getElementById('nxt-meta');
+  var timerDisplay = document.getElementById('timer-display');
+  var timerCount = document.getElementById('timer-count');
+
+  /* ===== Default card layout ===== */
+  function defaultLayout() {
+    var w = window.innerWidth;
+    var h = window.innerHeight - 36; /* leave room for hint bar */
+    return {
+      'card-cur':   { x: 16,        y: 16,            w: Math.round(w*0.55) - 24, h: Math.round(h*0.62) - 16 },
+      'card-nxt':   { x: Math.round(w*0.55) + 8, y: 16, w: w - Math.round(w*0.55) - 24, h: Math.round(h*0.42) - 16 },
+      'card-notes': { x: Math.round(w*0.55) + 8, y: Math.round(h*0.42) + 8, w: w - Math.round(w*0.55) - 24, h: h - Math.round(h*0.42) - 16 },
+      'card-timer': { x: 16,        y: Math.round(h*0.62) + 8, w: Math.round(w*0.55) - 24, h: h - Math.round(h*0.62) - 16 }
+    };
+  }
+
+  /* ===== Apply / save / restore layout ===== */
+  function applyLayout(layout) {
+    Object.keys(layout).forEach(function(id){
+      var el = document.getElementById(id);
+      var l = layout[id];
+      if (el && l) {
+        el.style.left = l.x + 'px';
+        el.style.top = l.y + 'px';
+        el.style.width = l.w + 'px';
+        el.style.height = l.h + 'px';
+      }
+    });
+    rescaleAll();
+  }
+  function readLayout() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch(e) {}
+    return defaultLayout();
+  }
+  function saveLayout() {
+    var layout = {};
+    ['card-cur','card-nxt','card-notes','card-timer'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) {
+        layout[id] = {
+          x: parseInt(el.style.left,10) || 0,
+          y: parseInt(el.style.top,10) || 0,
+          w: parseInt(el.style.width,10) || 300,
+          h: parseInt(el.style.height,10) || 200
+        };
+      }
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(layout)); } catch(e) {}
+  }
+
+  /* ===== iframe rescale to fit card body ===== */
+  function rescaleIframe(iframe) {
+    if (!iframe || iframe.style.display === 'none') return;
+    var body = iframe.parentElement;
+    var cw = body.clientWidth, ch = body.clientHeight;
+    if (!cw || !ch) return;
+    var s = Math.min(cw / 1920, ch / 1080);
+    iframe.style.transform = 'scale(' + s + ')';
+    /* Center the scaled iframe in the body */
+    var sw = 1920 * s, sh = 1080 * s;
+    iframe.style.left = Math.max(0, (cw - sw) / 2) + 'px';
+    iframe.style.top = Math.max(0, (ch - sh) / 2) + 'px';
+  }
+  function rescaleAll() {
+    rescaleIframe(iframeCur);
+    rescaleIframe(iframeNxt);
+  }
+  window.addEventListener('resize', rescaleAll);
+
+  /* ===== Drag (move card by header) ===== */
+  document.querySelectorAll('[data-drag]').forEach(function(handle){
+    handle.addEventListener('mousedown', function(e){
+      if (e.button !== 0) return;
+      var card = handle.closest('.pcard');
+      if (!card) return;
+      e.preventDefault();
+      card.classList.add('dragging');
+      document.body.classList.add('is-dragging-card');
+      var startX = e.clientX, startY = e.clientY;
+      var startL = parseInt(card.style.left,10) || 0;
+      var startT = parseInt(card.style.top,10)  || 0;
+      function onMove(ev){
+        var nx = Math.max(0, Math.min(window.innerWidth - 100, startL + ev.clientX - startX));
+        var ny = Math.max(0, Math.min(window.innerHeight - 50, startT + ev.clientY - startY));
+        card.style.left = nx + 'px';
+        card.style.top = ny + 'px';
+      }
+      function onUp(){
+        card.classList.remove('dragging');
+        document.body.classList.remove('is-dragging-card');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        saveLayout();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+
+  /* ===== Resize (drag bottom-right corner) ===== */
+  document.querySelectorAll('[data-resize]').forEach(function(handle){
+    handle.addEventListener('mousedown', function(e){
+      if (e.button !== 0) return;
+      var card = handle.closest('.pcard');
+      if (!card) return;
+      e.preventDefault(); e.stopPropagation();
+      card.classList.add('resizing');
+      document.body.classList.add('is-dragging-card');
+      var startX = e.clientX, startY = e.clientY;
+      var startW = parseInt(card.style.width,10)  || card.offsetWidth;
+      var startH = parseInt(card.style.height,10) || card.offsetHeight;
+      function onMove(ev){
+        var nw = Math.max(180, startW + ev.clientX - startX);
+        var nh = Math.max(100, startH + ev.clientY - startY);
+        card.style.width = nw + 'px';
+        card.style.height = nh + 'px';
+        if (card.querySelector('iframe')) rescaleIframe(card.querySelector('iframe'));
+      }
+      function onUp(){
+        card.classList.remove('resizing');
+        document.body.classList.remove('is-dragging-card');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        rescaleAll();
+        saveLayout();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+
+  /* ===== Preview iframe ready tracking =====
+   * Each iframe loads the deck ONCE with ?preview=1 on init. Subsequent
+   * slide changes are sent via postMessage('preview-goto') so the iframe
+   * just toggles visibility of a different .slide — no reload, no flicker.
+   */
+  var iframeReady = { cur: false, nxt: false };
+  var currentTheme = ${themeJSON};
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.type !== 'preview-ready') return;
+    var iframe = null;
+    if (e.source === iframeCur.contentWindow) {
+      iframeReady.cur = true;
+      iframe = iframeCur;
+      postPreviewGoto(iframeCur, idx);
+    } else if (e.source === iframeNxt.contentWindow) {
+      iframeReady.nxt = true;
+      iframe = iframeNxt;
+      postPreviewGoto(iframeNxt, idx + 1 < total ? idx + 1 : idx);
+    }
+    /* Sync current theme to the iframe */
+    if (iframe && currentTheme) {
+      try { iframe.contentWindow.postMessage({ type: 'preview-theme', name: currentTheme }, '*'); } catch(err) {}
+    }
+    if (iframe) rescaleIframe(iframe);
+  });
+
+  function postPreviewGoto(iframe, n) {
+    try {
+      iframe.contentWindow.postMessage({ type: 'preview-goto', idx: n }, '*');
+    } catch(e) {}
+  }
+
+  /* ===== Update content =====
+   * Smooth (no-reload) navigation: send postMessage to iframes instead of
+   * resetting src. Iframes stay loaded, just switch visible .slide.
+   */
+  function update(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    idx = n;
+
+    /* Current preview — postMessage (smooth) */
+    if (iframeReady.cur) postPreviewGoto(iframeCur, n);
+    curMeta.textContent = (n + 1) + '/' + total;
+
+    /* Next preview */
+    if (n + 1 < total) {
+      iframeNxt.style.display = '';
+      var endEl = document.querySelector('#card-nxt .preview-end');
+      if (endEl) endEl.remove();
+      if (iframeReady.nxt) postPreviewGoto(iframeNxt, n + 1);
+      nxtMeta.textContent = (n + 2) + '/' + total;
+    } else {
+      iframeNxt.style.display = 'none';
+      var body = document.querySelector('#card-nxt .pcard-body');
+      if (body && !body.querySelector('.preview-end')) {
+        var end = document.createElement('div');
+        end.className = 'preview-end';
+        end.textContent = '— END OF DECK —';
+        body.appendChild(end);
+      }
+      nxtMeta.textContent = 'END';
+    }
+
+    /* Notes */
+    var note = slideMeta[n].notes;
+    notesBody.innerHTML = note || '<span class="empty">（这一页还没有逐字稿）</span>';
+
+    /* Timer count */
+    timerCount.textContent = (n + 1) + ' / ' + total;
+  }
+
+  /* ===== Timer ===== */
+  var tStart = Date.now();
+  setInterval(function(){
+    var s = Math.floor((Date.now() - tStart) / 1000);
+    var mm = String(Math.floor(s/60)).padStart(2,'0');
+    var ss = String(s%60).padStart(2,'0');
+    timerDisplay.textContent = mm + ':' + ss;
+  }, 1000);
+  function resetTimer(){ tStart = Date.now(); timerDisplay.textContent = '00:00'; }
+
+  /* ===== BroadcastChannel sync ===== */
+  if (bc) {
+    bc.onmessage = function(e){
+      if (!e.data) return;
+      if (e.data.type === 'go') update(e.data.idx);
+      else if (e.data.type === 'theme' && e.data.name) {
+        currentTheme = e.data.name;
+        /* Forward theme change to preview iframes */
+        [iframeCur, iframeNxt].forEach(function(iframe){
+          try {
+            iframe.contentWindow.postMessage({ type: 'preview-theme', name: e.data.name }, '*');
+          } catch(err) {}
+        });
+      }
+    };
+  }
+  function go(n) {
+    update(n);
+    if (bc) bc.postMessage({ type: 'go', idx: idx });
+  }
+
+  /* ===== Buttons ===== */
+  document.getElementById('btn-prev').addEventListener('click', function(){ go(idx - 1); });
+  document.getElementById('btn-next').addEventListener('click', function(){ go(idx + 1); });
+  document.getElementById('btn-reset').addEventListener('click', resetTimer);
+  document.getElementById('reset-layout').addEventListener('click', function(){
+    if (confirm('恢复默认卡片布局？')) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+      applyLayout(defaultLayout());
+    }
+  });
+
+  /* ===== Keyboard ===== */
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    switch(e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown': go(idx + 1); e.preventDefault(); break;
+      case 'ArrowLeft':  case 'PageUp':   go(idx - 1); e.preventDefault(); break;
+      case 'Home': go(0); break;
+      case 'End':  go(total - 1); break;
+      case 'r': case 'R': resetTimer(); break;
+      case 'Escape': window.close(); break;
+    }
+  });
+
+  /* ===== Iframe load → rescale (catches initial size) ===== */
+  iframeCur.addEventListener('load', function(){ rescaleIframe(iframeCur); });
+  iframeNxt.addEventListener('load', function(){ rescaleIframe(iframeNxt); });
+
+  /* ===== Init =====
+   * Load each iframe ONCE with the deck file. After they post
+   * 'preview-ready', all subsequent navigation is via postMessage
+   * (smooth, no reload, no flicker).
+   */
+  applyLayout(readLayout());
+  iframeCur.src = deckUrl + '?preview=' + (idx + 1);
+  if (idx + 1 < total) iframeNxt.src = deckUrl + '?preview=' + (idx + 2);
+  /* Initialize notes/timer/count without touching iframes */
+  notesBody.innerHTML = slideMeta[idx].notes || '<span class="empty">（这一页还没有逐字稿）</span>';
+  curMeta.textContent = (idx + 1) + '/' + total;
+  nxtMeta.textContent = (idx + 2) + '/' + total;
+  timerCount.textContent = (idx + 1) + ' / ' + total;
+})();
+</` + `script>
+</body></html>`;
+    }
+
+    function fullscreen(){ const el=document.documentElement;
+      if (!document.fullscreenElement) el.requestFullscreen&&el.requestFullscreen();
+      else document.exitFullscreen&&document.exitFullscreen();
+    }
+
+    // theme cycling
+    const root = document.documentElement;
+    const themesAttr = root.getAttribute('data-themes') || document.body.getAttribute('data-themes');
+    const themes = themesAttr ? themesAttr.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    let themeIdx = 0;
+
+    // Auto-detect theme base path from existing <link id="theme-link">
+    let themeBase = root.getAttribute('data-theme-base');
+    if (!themeBase) {
+      const existingLink = document.getElementById('theme-link');
+      if (existingLink) {
+        // el.getAttribute('href') gives the raw relative path written in HTML
+        const rawHref = existingLink.getAttribute('href') || '';
+        const lastSlash = rawHref.lastIndexOf('/');
+        themeBase = lastSlash >= 0 ? rawHref.substring(0, lastSlash + 1) : 'assets/themes/';
+      } else {
+        themeBase = 'assets/themes/';
+      }
+    }
+
+    function applyTheme(name) {
+      let link = document.getElementById('theme-link');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.id = 'theme-link';
+        document.head.appendChild(link);
+      }
+      link.href = themeBase + name + '.css';
+      root.setAttribute('data-theme', name);
+      const ind = document.querySelector('.theme-indicator');
+      if (ind) ind.textContent = name;
+    }
+    function cycleTheme(fromRemote){
+      if (!themes.length) return;
+      themeIdx = (themeIdx+1) % themes.length;
+      const name = themes[themeIdx];
+      applyTheme(name);
+      /* Broadcast to other window (audience ↔ presenter) */
+      if (!fromRemote && bc) bc.postMessage({ type: 'theme', name: name });
+    }
+
+    // animation cycling on current slide
+    let animIdx = 0;
+    function cycleAnim(){
+      animIdx = (animIdx+1) % ANIMS.length;
+      const a = ANIMS[animIdx];
+      const target = slides[idx].querySelector('[data-anim-target]') || slides[idx];
+      ANIMS.forEach(x => target.classList.remove('anim-'+x));
+      void target.offsetWidth;
+      target.classList.add('anim-'+a);
+      target.setAttribute('data-anim', a);
+      const ind = document.querySelector('.anim-indicator');
+      if (ind) ind.textContent = a;
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.metaKey||e.ctrlKey||e.altKey) return;
+      switch (e.key) {
+        case 'ArrowRight': case ' ': case 'PageDown': case 'Enter': go(idx+1); e.preventDefault(); break;
+        case 'ArrowLeft': case 'PageUp': case 'Backspace': go(idx-1); e.preventDefault(); break;
+        case 'Home': go(0); break;
+        case 'End': go(total-1); break;
+        case 'f': case 'F': fullscreen(); break;
+        case 's': case 'S': openPresenterWindow(); break;
+        case 'n': case 'N': toggleNotes(); break;
+        case 'o': case 'O': toggleOverview(); break;
+        case 't': case 'T': cycleTheme(); break;
+        case 'a': case 'A': cycleAnim(); break;
+        case 'Escape': toggleOverview(false); toggleNotes(false); break;
+      }
+    });
+
+    // hash deep-link
+    function fromHash(){
+      const m = /^#\/(\d+)/.exec(location.hash||'');
+      if (m) go(Math.max(0, parseInt(m[1],10)-1));
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+    go(idx);
+  });
+})();
+
+</script>
+</body>
+</html>
