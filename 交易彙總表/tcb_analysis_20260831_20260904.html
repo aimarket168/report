@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合庫投信｜一週交易彙總分析 2026/08/31–09/04</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@600;700&display=swap');
+:root{
+  --ink:#0d1b2a; --ink-mid:#1e3a5f; --ink-light:#2d5986;
+  --gold:#b8892a; --gold-pale:#f5ecd6; --gold-line:#d4ac5a;
+  --buy:#0a6b3a; --buy-bg:#e6f4ec; --buy-light:#34a85a;
+  --sell:#b91c1c; --sell-bg:#fde8e8; --sell-light:#ef4444;
+  --mm:#5b4fcf; --mm-bg:#ede9fb; --mm-light:#7c72e0;
+  --anue:#c05621; --anue-bg:#fff3e8;
+  --tcb:#0a6b3a; --chb:#c2410c; --direct:#1d4ed8; --other:#4b5563;
+  --border:#e5e7eb; --surface:#f8f9fa;
+  --r:10px; --sh:0 2px 16px rgba(13,27,42,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:#eef1f5;color:var(--ink);font-size:14px;line-height:1.6}
+
+/* HEADER */
+.pg-hdr{background:var(--ink);color:#fff;padding:0 40px;display:flex;align-items:stretch;position:relative;overflow:hidden}
+.pg-hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 38px,rgba(255,255,255,.03) 38px,rgba(255,255,255,.03) 39px)}
+.hdr-l{flex:1;padding:26px 0;position:relative;z-index:1}
+.hdr-eye{font-size:10px;letter-spacing:3px;color:var(--gold-line);font-family:'DM Mono',monospace;margin-bottom:8px}
+.hdr-ttl{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:5px}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.3px}
+.hdr-r{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:8px;padding:20px 0 20px 32px;position:relative;z-index:1}
+.period-badge{background:var(--gold);color:var(--ink);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
+.gen-at{font-size:10px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace}
+
+/* ACTION BAR */
+.act-bar{background:#fff;border-bottom:2px solid var(--gold-line);padding:9px 40px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.act-bar-lbl{font-size:11px;color:var(--other);margin-right:auto;font-family:'DM Mono',monospace}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 15px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-ink{background:var(--ink);color:#fff} .btn-ink:hover{background:var(--ink-mid)}
+.btn-ol{background:#fff;color:var(--ink);border:1px solid var(--border)} .btn-ol:hover{border-color:var(--ink)}
+
+/* LAYOUT */
+.pg-body{max-width:1180px;margin:24px auto;padding:0 20px 40px;display:flex;flex-direction:column;gap:20px}
+
+/* ALERT */
+.alert-warn{background:#fffbeb;border:1px solid #fbbf24;border-radius:var(--r);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:#92400e}
+
+/* CARD */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.card-hdr{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-ttl{font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:9px}
+.card-ico{width:27px;height:27px;border-radius:7px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.card-body{padding:20px}
+.card-note{font-size:11px;color:var(--other)}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:#fff;border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);border-top:3px solid var(--border);transition:transform .2s}
+.kpi:hover{transform:translateY(-2px)}
+.kpi.k-buy{border-top-color:var(--buy)} .kpi.k-sell{border-top-color:var(--sell)}
+.kpi.k-net{border-top-color:var(--sell)} .kpi.k-mm{border-top-color:var(--mm)}
+.kpi.k-anue{border-top-color:var(--anue)}
+.kpi-lbl{font-size:10px;letter-spacing:1.5px;color:var(--other);font-weight:500;margin-bottom:8px}
+.kpi-val{font-size:21px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:3px}
+.kv-buy{color:var(--buy)} .kv-sell{color:var(--sell)} .kv-neg{color:var(--sell)}
+.kv-mm{color:var(--mm)} .kv-anue{color:var(--anue)}
+.kpi-unit{font-size:10px;color:var(--other)}
+.kpi-note{font-size:11px;color:var(--other);margin-top:5px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl thead tr{background:var(--ink)}
+.tbl th{color:rgba(255,255,255,.82);padding:8px 11px;text-align:right;font-weight:600;font-size:11px;white-space:nowrap}
+.tbl th:first-child{text-align:left}
+.th-buy{color:#6ee7b7!important} .th-sell{color:#fca5a5!important}
+.tbl td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px}
+.tbl td:first-child{text-align:left;font-family:'Noto Sans TC',sans-serif;font-size:13px}
+.tbl th.fund{text-align:left}
+.tbl td.fund{text-align:left;font-family:'Noto Sans TC',sans-serif;font-size:12.5px}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover{background:var(--surface)}
+.tr-total{background:var(--gold-pale)!important}
+.tr-total td{border-top:2px solid var(--gold-line)!important;font-weight:700;color:var(--ink)}
+.tr-anue{background:var(--anue-bg)!important}
+.tr-anue td{color:var(--anue)}
+.tr-mm{background:var(--mm-bg)!important}
+.v-buy{color:var(--buy);font-weight:600} .v-sell{color:var(--sell);font-weight:600}
+.v-pos{color:var(--buy)} .v-neg{color:var(--sell)}
+.v-mm{color:var(--mm);font-weight:600}
+
+/* SCROLL */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two-col>div{min-width:0;overflow:hidden}
+
+/* CHANNEL PILL */
+.cp{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.cp-tcb{background:#dcfce7;color:#166534} .cp-chb{background:#ffedd5;color:#9a3412}
+.cp-dir{background:#dbeafe;color:#1e40af} .cp-oth{background:#f1f5f9;color:#475569}
+.cp-anue{background:var(--anue-bg);color:var(--anue)} .cp-life{background:#f3e8ff;color:#7e22ce}
+
+/* DAY TAG */
+.dt{font-size:10px;color:var(--other);font-family:'DM Mono',monospace;margin-left:3px}
+
+/* CHART LEGEND */
+.chart-legend{display:flex;gap:16px;margin-bottom:14px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--other)}
+.legend-dash{width:16px;height:3px;border-radius:2px;flex-shrink:0}
+
+/* CHART SVG */
+.chart-svg{width:100%;overflow:visible;display:block}
+
+/* SEC LABEL */
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--other);text-transform:uppercase;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+
+/* TOP FUND RANK */
+.top-rank{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+.r1{background:#fef3c7;color:#92400e} .r2{background:#f1f5f9;color:#475569} .r3{background:#ffedd5;color:#9a3412}
+
+/* REMARK CARDS */
+.rmk{border-radius:8px;padding:13px 15px;border:1px solid var(--border);border-left:4px solid;background:var(--surface)}
+.rmk-warn{border-left-color:var(--sell)} .rmk-note{border-left-color:var(--gold)}
+.rmk-good{border-left-color:var(--buy)} .rmk-info{border-left-color:var(--direct)}
+.rmk-watch{border-left-color:var(--anue)}
+.rmk-icon{font-size:17px;margin-bottom:6px}
+.rmk-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.rmk-body{font-size:12px;color:#374151;line-height:1.8}
+.remark-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+
+/* CHANNEL BAR */
+.ch-bar-wrap{display:flex;flex-direction:column;gap:0}
+.ch-bar-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.ch-bar-row:last-child{border-bottom:none}
+.ch-bar-lbl{width:80px;font-size:12px;font-weight:500;flex-shrink:0}
+.ch-bar-cnt{font-size:11px;color:var(--other);width:20px;flex-shrink:0;text-align:right}
+.ch-bar-track{flex:1;height:16px;background:var(--surface);border-radius:4px;overflow:hidden}
+.ch-bar-fill{height:100%;border-radius:4px;min-width:4px}
+.ch-bar-val{width:65px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0}
+
+/* FOOTER */
+.pg-footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:14px;font-size:10.5px;border-radius:var(--r);line-height:1.9}
+
+/* DATE PICKER */
+.date-picker-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dp-label{font-size:11px;font-weight:600;color:var(--other);white-space:nowrap;letter-spacing:.5px}
+.dp-input{border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Mono',monospace;color:var(--ink);background:#fff;transition:border-color .2s;height:32px}
+.dp-input:focus{outline:none;border-color:var(--ink-mid)}
+.dp-sep{font-size:12px;color:var(--other);flex-shrink:0}
+.btn-ghost{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px dashed #d4ac5a;background:#fffbf0;color:#92400e;transition:all .2s;height:32px}
+.btn-ghost:hover{background:#fef3c7}
+.btn.btn-ink,.btn.btn-ol{height:32px}
+@media(max-width:700px){.date-picker-group{gap:6px}.dp-label{display:none}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card,.kpi{animation:fadeUp .45s ease both}
+.kpi:nth-child(1){animation-delay:.05s} .kpi:nth-child(2){animation-delay:.10s}
+.kpi:nth-child(3){animation-delay:.15s} .kpi:nth-child(4){animation-delay:.20s}
+.kpi:nth-child(5){animation-delay:.25s}
+
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.two-col,.remark-grid{grid-template-columns:1fr}.pg-body{padding:0 12px 40px}.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:10px 10px 9px}.kpi-cur{font-size:17px}}
+@media print{.act-bar{display:none!important}body{background:#fff}.card{box-shadow:none;border:1px solid var(--border)}}
+
+/* ── 9-Metric KPI Panel ── */
+.kpi-panel{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.kpi-row{display:grid;grid-template-columns:68px 1fr 1fr 1fr;align-items:stretch}
+.kpi-divider{height:1px;background:linear-gradient(90deg,transparent 68px,var(--border) 68px)}
+.kpi-row-label{display:flex;align-items:center;justify-content:center;padding:18px 6px;background:#f9fafb;border-right:2px solid var(--border)}
+.kpi-row-badge{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:800;letter-spacing:3px;padding:6px 4px;border-radius:5px}
+.kpi-cell{padding:14px 18px 12px;border-left:1px solid var(--border);position:relative}
+.kpi-lbl{font-size:10px;letter-spacing:1.4px;color:var(--other);font-weight:600;text-transform:uppercase;margin-bottom:5px}
+.kpi-cur{font-size:22px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:6px}
+.kpi-unit{font-size:9.5px;color:var(--other);font-family:'DM Mono',monospace;margin-left:2px}
+.kpi-compare{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.kpi-prev{font-size:11px;color:#9ca3af;font-family:'DM Mono',monospace}
+.kpi-prev span{color:#6b7280;font-weight:600}
+.kpi-delta{font-size:11.5px;font-family:'DM Mono',monospace;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.delta-pos{background:#dcfce7;color:#166534}
+.delta-neg{background:#fde8e8;color:#991b1b}
+.delta-neu{background:#f1f5f9;color:#475569}
+.k-net{border-top:3px solid var(--border)}
+.k-net-pos{border-top-color:var(--buy)}
+.k-net-neg{border-top-color:var(--sell)}
+.badge-total{background:var(--gold-pale);color:#92400e}
+.badge-gen{background:#dbeafe;color:#1e40af}
+.badge-mm{background:#ede9fb;color:#5b21b6}
+.badge-total{background:var(--ink);color:#fff}
+.badge-gen{background:#d1fae5;color:#065f46}
+.badge-mm{background:#ede9fb;color:#3730a3}
+.kpi-cell{padding:18px 20px;border-right:1px solid #f3f4f6;transition:background .2s}
+.kpi-cell:last-child{border-right:none}
+.kpi-cell:hover{background:#fafafa}
+.k-net{background:linear-gradient(135deg,rgba(255,255,255,0),rgba(248,250,252,.7))}
+.k-net-pos .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--buy);border-radius:2px;margin-bottom:6px}
+.k-net-neg .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--sell);border-radius:2px;margin-bottom:6px}
+.kpi-lbl{font-size:10px;letter-spacing:1.2px;color:#6b7280;font-weight:600;margin-bottom:7px;text-transform:uppercase}
+.kpi-val{font-size:24px;font-weight:900;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
+.kpi-unit{font-size:10px;color:#9ca3af;margin-bottom:4px}
+.kpi-note{font-size:11px;color:#6b7280;font-style:italic}
+@media(max-width:900px){.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:14px 12px}.kpi-val{font-size:18px}}
+@media(max-width:600px){.kpi-row{grid-template-columns:36px 1fr 1fr}.kpi-row .kpi-cell:nth-child(4){grid-column:2/5;border-top:1px solid #f3f4f6}}
+
+
+/* ── v2 additions ── */
+.rankcell{text-align:left!important;font-family:'Noto Sans TC',sans-serif!important;line-height:1.5}
+.rankcell .fd{display:block;font-size:12px;font-weight:600;color:var(--ink)}
+.rankcell .am{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-mid);margin-left:5px}
+.concl-box{margin-top:12px}
+.pct-hot{background:#fde8e8;border-radius:6px;padding:0 5px;color:var(--sell);font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="pg-hdr">
+  <div class="hdr-l">
+    <div class="hdr-eye">TAIWAN COOPERATIVE BANK INVESTMENT TRUST · WEEKLY TRADING REPORT</div>
+    <div class="hdr-ttl">一週交易彙總表分析</div>
+    <div class="hdr-sub">分析期間：<span id="hdrPeriod">2026/08/31（一）至 2026/09/04（五）</span>　｜　資料來源：每日交易彙總表、預報信、基金日報表</div>
+  </div>
+  <div class="hdr-r">
+    <div class="period-badge" id="periodBadge">2026/08/31 – 2026/09/04</div>
+    <div class="gen-at">製表日期：2026-09-05</div>
+  </div>
+</header>
+
+<div class="act-bar">
+  <div class="date-picker-group">
+    <label class="dp-label">分析期間</label>
+    <input type="date" id="dpFrom" class="dp-input" value="2026-08-31">
+    <span class="dp-sep">至</span>
+    <input type="date" id="dpTo" class="dp-input" value="2026-09-04">
+    <button class="btn btn-ink" onclick="requestNewReport()">🔍 產生週報</button>
+    <span id="sendTip" style="display:none;font-size:11px;color:#0a6b3a;font-weight:600;white-space:nowrap">✅ 已複製，請貼至 Claude 對話框送出</span>
+    <button class="btn btn-ghost" onclick="setLastWeek()">⚡ 上週</button>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-ol" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-ink" onclick="dlHTML()">⬇️ 下載</button>
+  </div>
+</div>
+
+<div class="pg-body">
+<div style="background:#fffbeb;border:1px solid #fde68a;border-left:5px solid #a16207;border-radius:var(--r);padding:16px 20px;font-size:13.5px;line-height:2"><span style="margin-right:8px">🟡</span><b style="color:#a16207">執行摘要</b>　本週整體淨進 14.28 億（上週是淨出 2.40 億），但錢幾乎全是貨幣型法人的：貨幣型淨進 14.12 億，一般型只有 0.16 億。一般型雖然由負轉正，規模反而少了 3.04 億——因為台股 9/2、9/3 連跌，行情吃掉 2.90 億，資金只走 0.14 億。上週示警的「8/27 貨幣型 335.90 億是虛胖」已如期回落：8/28 規模掉到 313.75 億，正好是廣達 22 億付款，判斷成立。本週最該盯的是彰銀：連五個交易日賣全球複合收益債，合計 0.46 億，是一般型最大的單一賣壓。<ul style="margin:12px 0 0;padding:12px 0 0 20px;border-top:1px dashed #fde68a;font-size:13px;color:#374151;line-height:2"><li style="margin-bottom:6px"><b style="color:#a16207">整體流量</b>｜五天整體淨進 14.28 億，上週是淨出 2.40 億；但改善全部來自貨幣型法人（+14.12 億），一般型只貢獻 0.16 億。</li><li style="margin-bottom:6px"><b style="color:#a16207">一般型</b>｜申購 1.97 億（上週 1.51 億）、贖回 1.80 億（上週 2.14 億），買方變強、賣方變弱，是四週來第一次淨進。但五天裡有三天是淨出，正數全靠 8/31 與 9/3 兩天撐住。</li><li style="margin-bottom:6px"><b style="color:#a16207">全球複合收益債</b>｜本週最大單一賣壓：彰銀連五個交易日賣，合計 0.46 億，加上合庫商銀的 0.06 億，這檔在排行榜上共被賣 0.52 億，比一般型全週淨額還大。淨值幾乎沒動（10.2552→10.2110），不是行情因素。</li><li style="margin-bottom:6px"><b style="color:#a16207">AI電力創新</b>｜本週全通路合計贖回 0.16 億（上週 0.33 億），賣壓幾乎停了；9/3 反而出現合庫商銀 1,201 萬申購，是當日申購第一名。但淨值從 9.75 元跌到 9.54 元，離 10 元發行價更遠——上週設定的「淨值站回 10 元就是下一波贖回觸發點」目前沒有逼近。</li><li style="margin-bottom:6px"><b style="color:#a16207">貨幣型法人</b>｜淨進 14.12 億，只有兩筆共 7 億事先有預報信（新光人壽 8/31 申購 2 億、南山人壽 9/3 申購 5 億），另外 10.66 億申購與 3.54 億贖回沒有預報紀錄。下週一（9/7）已預告全球人壽申購 3 億。</li><li style="margin-bottom:6px"><b style="color:#a16207">規模</b>｜一般型 141.90 → 138.86 億，少 3.04 億，其中行情 -2.90 億、資金 -0.14 億，是行情造成的、不是客戶跑掉。貨幣型 313.75 → 327.04 億。合計 455.65 → 465.90 億。</li></ul></div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">📌</span>1｜本週三個數字</div><span class="card-note">單位：億元</span>
+  </div>
+  <div class="card-body">
+<div class="tbl-scroll"><table class="tbl" style="min-width:640px">
+<thead><tr><th class="fund">類別</th><th class="th-buy">申購</th><th class="th-sell">贖回</th>
+<th>淨額</th><th>上週淨額</th><th>週差</th></tr></thead>
+<tbody>
+<tr><td><span class='cp cp-oth'>整體</span></td><td class='v-buy'>19.62</td><td class='v-sell'>5.34</td><td class='v-pos' style='font-weight:700'>+14.28</td><td style='color:#6b7280'>-2.40</td><td><span class='kpi-delta delta-pos'>+16.68</span></td></tr>
+<tr><td><span class='cp cp-tcb'>一般型</span></td><td class='v-buy'>1.97</td><td class='v-sell'>1.80</td><td class='v-pos' style='font-weight:700'>+0.16</td><td style='color:#6b7280'>-0.63</td><td><span class='kpi-delta delta-pos'>+0.79</span></td></tr>
+<tr><td><span class='cp cp-life'>貨幣型</span></td><td class='v-buy'>17.66</td><td class='v-sell'>3.54</td><td class='v-pos' style='font-weight:700'>+14.12</td><td style='color:#6b7280'>-1.77</td><td><span class='kpi-delta delta-pos'>+15.89</span></td></tr>
+</tbody></table></div>
+<div style="font-size:11px;color:var(--other);margin-top:8px">上週（08/24–08/28）同為五個交易日；貨幣型大額進出見區塊 3，全部為事先預告的法人交易。</div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>本週五天買進合計 19.62 億、贖回 5.34 億，淨進 14.28 億；上週同樣五天是淨出 2.40 億。</li><li>但這個大逆轉幾乎全是貨幣型法人的錢：貨幣型淨進 14.12 億（上週淨出 1.77 億），一般型只有 0.16 億。看公司真正的通路動能要看一般型那一行。</li><li>一般型是四週來第一次由負轉正：申購 1.97 億比上週的 1.51 億增加，贖回 1.80 億比上週的 2.14 億減少，買方變強、賣方變弱，兩邊同時往好的方向走。</li><li>只是 0.16 億非常薄——五個交易日裡有三天是淨出，正數全靠 8/31（+1,375 萬）與 9/3（+2,097 萬）兩天撐住，其中 9/3 又有 AI電力創新 1,201 萬這筆一次性的大單。扣掉那一筆，本週一般型幾乎是打平。</li><li>貨幣型的 14.12 億裡只有 7 億事先有預報信，逐筆見區塊 3。</li></ul></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">📈</span>2｜一般型逐日趨勢</div><span class="card-note">排行榜只排一般型；集中度分母＝當日一般型總量</span>
+  </div>
+  <div class="card-body">
+<div class="sec-lbl">逐日申贖淨額（單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:520px">
+<thead><tr><th class="fund">日期</th><th class="th-buy">申購</th><th class="th-sell">贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td>08/31<span class='dt'>一</span></td><td class='v-buy'>5,597</td><td class='v-sell'>4,221</td><td class='v-pos' style='font-weight:700'>+1,375</td></tr><tr><td>09/01<span class='dt'>二</span></td><td class='v-buy'>4,750</td><td class='v-sell'>5,399</td><td class='v-neg' style='font-weight:700'>-649</td></tr><tr><td>09/02<span class='dt'>三</span></td><td class='v-buy'>3,110</td><td class='v-sell'>3,785</td><td class='v-neg' style='font-weight:700'>-675</td></tr><tr><td>09/03<span class='dt'>四</span></td><td class='v-buy'>4,160</td><td class='v-sell'>2,063</td><td class='v-pos' style='font-weight:700'>+2,097</td></tr><tr><td>09/04<span class='dt'>五</span></td><td class='v-buy'>2,038</td><td class='v-sell'>2,541</td><td class='v-neg' style='font-weight:700'>-503</td></tr><tr class='tr-total'><td>五日合計</td><td>19,654</td><td>18,010</td><td class='v-pos'>+1,645</td></tr></tbody></table></div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>五天淨額是 +1,375 → -649 → -675 → +2,097 → -503 萬，兩正三負，全週合計 +1,645 萬。型態是「頭尾各一天大進、中間三天小出」，不是穩定的買盤回流。</li><li>贖回最大的一天是 9/1 的 5,399 萬，那天台股大漲 1.78%；贖回最小的一天是 9/3 的 2,063 萬，那天台股是跌的。申購剛好相反：買最多的 8/31（5,597 萬）是下跌日，買最少的 9/4（2,038 萬）是大漲日。漲了就賣、跌了才買，和上週完全一樣的型態，連續兩週成立，這是通路生態、不是偶然。</li><li>9/3 的 +2,097 萬要小心解讀：當天申購 4,160 萬裡有 1,201 萬是 AI電力創新一筆大單，贖回又剛好是全週最低的 2,063 萬，兩件事同時發生才有這個數字。</li><li>賣壓的主角換人了：上週是 AI電力創新與台灣高科技，本週變成全球複合收益債，五天全部在贖回榜、榜上合計 0.52 億，比整個一般型全週淨額還大。台灣高科技只剩三天上榜（9/3、9/4 沒有），AI電力創新兩天。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">指數 × 淨值 × 申贖 交叉分析（漲跌為日變動；申贖單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:860px">
+<thead><tr><th class="fund">交易日</th><th>台灣加權指數</th><th>台灣基金淨值</th><th>台灣高科技淨值</th>
+<th class="th-buy">一般型申購</th><th class="th-sell">一般型贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td>08/31<span class='dt'>一</span></td><td class='v-neg' style='font-family:DM Mono,monospace;font-weight:700'>-0.44%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-1.19%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-1.27%</td><td class='v-buy'>5,597</td><td class='v-sell'>4,221</td><td class='v-pos' style='font-weight:700'>+1,375</td></tr><tr><td>09/01<span class='dt'>二</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+1.78%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+1.79%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+1.87%</td><td class='v-buy'>4,750</td><td class='v-sell'>5,399</td><td class='v-neg' style='font-weight:700'>-649</td></tr><tr><td>09/02<span class='dt'>三</span></td><td class='v-neg' style='font-family:DM Mono,monospace;font-weight:700'>-1.67%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-1.79%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-1.94%</td><td class='v-buy'>3,110</td><td class='v-sell'>3,785</td><td class='v-neg' style='font-weight:700'>-675</td></tr><tr><td>09/03<span class='dt'>四</span></td><td class='v-neg' style='font-family:DM Mono,monospace;font-weight:700'>-0.67%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-3.44%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-3.62%</td><td class='v-buy'>4,160</td><td class='v-sell'>2,063</td><td class='v-pos' style='font-weight:700'>+2,097</td></tr><tr><td>09/04<span class='dt'>五</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+1.51%</td><td style='color:#9ca3af'>—</td><td style='color:#9ca3af'>—</td><td class='v-buy'>2,038</td><td class='v-sell'>2,541</td><td class='v-neg' style='font-weight:700'>-503</td></tr></tbody></table></div>
+<div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">國內股票型淨值＝當日；09/04 的淨值報表下一個營業日才寄達，先以指數對照。海外型淨值落後一日，與費半／那斯達克的對照見解讀。指數：臺灣證券交易所官方每日收盤指數（並與財經日報 20260901~20260904 指數整理表逐日核對相符）；淨值：基金日報表附件 NAV PDF 台幣A類。</div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li><b>淨值跌得比大盤兇很多，這是本週規模縮水的主因。</b>8/31～9/3 四個交易日，台灣基金淨值累計跌 4.61%、台灣高科技跌 4.94%；同一段時間加權指數只跌 1.03%、櫃買指數跌 1.88%、電子類指數跌 1.81%。差距最大的是 9/3：指數只跌 0.67%，兩檔基金淨值卻跌 3.44%、3.62%（當天櫃買指數跌 2.88%，中小型股殺得比大盤重，但仍解釋不了全部）。這不是資金問題，請投研部說明是哪幾檔持股造成的。</li><li><b>賣在漲日、買在跌日，連續第二週成立。</b>贖回最高的 9/1（5,399 萬）是台股漲 1.78% 的大漲日，贖回最低的 9/3（2,063 萬）是下跌日；申購最高的 8/31（5,597 萬）是下跌日，申購最低的 9/4（2,038 萬）是漲 1.51% 的大漲日。上週已看到同樣型態，本週再度重演——銀行通路的理專在客戶獲利 3～5% 時勸贖回轉申購，這是台灣銀行通路的固定生態，不是投資人看壞後市。</li><li><b>但買的量遠小於賣的量。</b>逢低買進的紀律在，力道卻不夠：五天申購 1.97 億對贖回 1.80 億，只多出 0.16 億。指數往下時客戶願意進場，但單筆金額愈來愈小（9/4 前三名合計只有 1,371 萬）。</li><li><b>債券端的賣壓和行情完全無關。</b>全球複合收益債淨值四天只從 10.2552 動到 10.2110（每日 ±0.3% 內），卻連五天在贖回榜、彰銀一家就賣 0.46 億。淨值不動的基金對通路是沒有故事可講的商品，這和上週的判斷一致，本週金額還放大了四倍。</li><li><b>下週淨值要留意兩件事。</b>美元兌台幣 9/3 收 31.729，整週幾乎沒動，匯率暫時不是變數；但 9/4 台股大漲 1.51%，海外型與國內型的淨值都要到下週一的報表才看得到，本週的規模數字沒有反映這一天的反彈，下期期初會自己補回來一部分。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">申購前三名集中度（分母＝當日一般型總申購；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:980px">
+<thead><tr><th class="fund">日期</th><th class="fund">第 1 名</th><th class="fund">第 2 名</th>
+<th class="fund">第 3 名</th><th class="th-buy">前三合計</th><th>當日總申購</th>
+<th>前三占比</th><th>第1名占比</th></tr></thead>
+<tbody><tr><td>08/31<span class='dt'>一</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,151 萬</span></td><td class='rankcell'><span class='fd'>27_入息多重資產</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,083 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,053 萬</span></td><td>3,288</td><td style='color:#6b7280'>5,597</td><td style='font-weight:700'>58.7%</td><td style='font-weight:700'>20.6%</td></tr><tr><td>09/01<span class='dt'>二</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,759 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-anue'>鉅亨投顧</span><span class='am'>858 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>591 萬</span></td><td>3,209</td><td style='color:#6b7280'>4,750</td><td style='font-weight:700'>67.6%</td><td style='font-weight:700'><span class='pct-hot'>37.0%</span></td></tr><tr><td>09/02<span class='dt'>三</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>948 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-oth'>一銀</span><span class='am'>344 萬</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-anue'>鉅亨投顧</span><span class='am'>305 萬</span></td><td>1,598</td><td style='color:#6b7280'>3,110</td><td style='font-weight:700'>51.4%</td><td style='font-weight:700'><span class='pct-hot'>30.5%</span></td></tr><tr><td>09/03<span class='dt'>四</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,201 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-dir'>基富通證</span><span class='am'>1,041 萬</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>989 萬</span></td><td>3,231</td><td style='color:#6b7280'>4,160</td><td style='font-weight:700'>77.7%</td><td style='font-weight:700'>28.9%</td></tr><tr><td>09/04<span class='dt'>五</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>849 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>263 萬</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>258 萬</span></td><td>1,371</td><td style='color:#6b7280'>2,038</td><td style='font-weight:700'>67.3%</td><td style='font-weight:700'><span class='pct-hot'>41.7%</span></td></tr><tr class='tr-total'><td>五日合計</td><td colspan='3'></td><td>12,696</td><td>19,654</td><td>64.6%</td><td></td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>前三名占當日一般型申購的比重，五天依序 58.7%、67.6%、51.4%、77.7%、67.3%，全週 64.6%（上週 59.7%）——買進比上週更集中在少數幾檔。</li><li>第 1 名占比在 9/4 衝到 41.7%（台灣高科技 849 萬），9/1 是 37.0%（台灣高科技 1,759 萬），9/2 是 30.5%。有三天靠一檔就撐起當日三成以上的買盤，前三名以外的長尾非常薄。</li><li>台灣高科技五天全在申購榜（其中四天第一名，榜上合計 6,003 萬），台灣基金五天全在榜（合計 4,151 萬），這兩檔就是一般型的買盤主力。</li><li>外部通路本週明顯活躍：鉅亨投顧兩筆（9/1 台灣基金 858 萬、9/2 台灣高科技 305 萬）、基富通證一筆（9/3 台灣基金 1,041 萬）、一銀一筆（9/2 台灣基金 344 萬），十五個名次裡有四個不是合庫商銀，比上週的一筆明顯好轉，而且買的都是國內股票型。</li><li>9/3 的第一名是 AI電力創新 1,201 萬（合庫商銀），這是這檔 8/17 開放買回以來第一次出現在申購榜第一名，性質和日常買盤不同，見區塊 4 的觀察卡。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">贖回前三名集中度（分母＝當日一般型總贖回；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:980px">
+<thead><tr><th class="fund">日期</th><th class="fund">第 1 名</th><th class="fund">第 2 名</th>
+<th class="fund">第 3 名</th><th class="th-sell">前三合計</th><th>當日總贖回</th>
+<th>前三占比</th><th>第1名占比</th></tr></thead>
+<tbody><tr><td>08/31<span class='dt'>一</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>989 萬</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>914 萬</span></td><td class='rankcell'><span class='fd'>23_2032目標日期</span><span class='cp cp-life'>合作金庫人壽</span><span class='am'>535 萬</span></td><td>2,437</td><td style='color:#6b7280'>4,221</td><td style='font-weight:700'>57.7%</td><td style='font-weight:700'>23.4%</td></tr><tr><td>09/01<span class='dt'>二</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,959 萬</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>1,167 萬</span></td><td class='rankcell'><span class='fd'>21_全球醫療照護</span><span class='cp cp-chb'>彰銀</span><span class='am'>379 萬</span></td><td>3,505</td><td style='color:#6b7280'>5,399</td><td style='font-weight:700'>64.9%</td><td style='font-weight:700'><span class='pct-hot'>36.3%</span></td></tr><tr><td>09/02<span class='dt'>三</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>1,672 萬</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>701 萬</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>291 萬</span></td><td>2,665</td><td style='color:#6b7280'>3,785</td><td style='font-weight:700'>70.4%</td><td style='font-weight:700'><span class='pct-hot'>44.2%</span></td></tr><tr><td>09/03<span class='dt'>四</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>285 萬</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>284 萬</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>273 萬</span></td><td>843</td><td style='color:#6b7280'>2,063</td><td style='font-weight:700'>40.8%</td><td style='font-weight:700'>13.8%</td></tr><tr><td>09/04<span class='dt'>五</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>580 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>398 萬</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>334 萬</span></td><td>1,313</td><td style='color:#6b7280'>2,541</td><td style='font-weight:700'>51.7%</td><td style='font-weight:700'>22.8%</td></tr><tr class='tr-total'><td>五日合計</td><td colspan='3'></td><td>10,762</td><td>18,010</td><td>59.8%</td><td></td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>前三名占當日一般型贖回的比重，五天依序 57.7%、64.9%、70.4%、40.8%、51.7%，全週 59.8%（上週 50.4%）——賣壓也比上週集中。</li><li>第 1 名占比最高的是 9/2 的 44.2%（全球複合收益債 彰銀 1,672 萬），其次 9/1 的 36.3%（台灣高科技 合庫商銀 1,959 萬）。單一基金單一通路一天就占掉當日四成以上的贖回，這種集中度要盯。</li><li>全球複合收益債是本週唯一五天全上榜的基金：彰銀 914、1,167、1,672、284、580 萬合計 0.46 億，合庫商銀 9/3、9/4 再賣 285、334 萬，榜上共 0.52 億。這是一般型最大的單一賣壓來源。</li><li>台灣高科技三天上榜共 3,648 萬（9/1 單日 1,959 萬），比它 6,003 萬的申購少，同一通路一邊買一邊賣，仍是停利換手的型態；9/3、9/4 完全沒有出現在贖回榜，賣壓有停下來。</li><li>AI電力創新只剩 9/2、9/3 兩天上榜共 564 萬，元大銀行整週沒有出現在榜上，上週判斷的「解鎖賣壓收尾」本週進一步確認。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">上榜基金歸戶淨額（申購榜＋贖回榜相抵；顯示名稱已歸戶；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:720px">
+<thead><tr><th class="fund">基金</th><th class="th-buy">榜上申購</th><th>上榜天數</th>
+<th class="th-sell">榜上贖回</th><th>上榜天數</th><th>淨額</th></tr></thead>
+<tbody><tr><td class='fund'>01_台灣基金</td><td class='v-buy'>4,151</td><td style='color:#6b7280'>6</td><td class='v-sell'>398</td><td style='color:#6b7280'>1</td><td class='v-pos' style='font-weight:700'>+3,753</td></tr><tr><td class='fund'>16_台灣高科技</td><td class='v-buy'>6,003</td><td style='color:#6b7280'>6</td><td class='v-sell'>3,648</td><td style='color:#6b7280'>3</td><td class='v-pos' style='font-weight:700'>+2,354</td></tr><tr><td class='fund'>27_入息多重資產</td><td class='v-buy'>1,083</td><td style='color:#6b7280'>1</td><td class='v-sell'>—</td><td style='color:#6b7280'>—</td><td class='v-pos' style='font-weight:700'>+1,083</td></tr><tr><td class='fund'>31_AI電力創新多重資產基金</td><td class='v-buy'>1,201</td><td style='color:#6b7280'>1</td><td class='v-sell'>564</td><td style='color:#6b7280'>2</td><td class='v-pos' style='font-weight:700'>+637</td></tr><tr><td class='fund'>12_AI電動車</td><td class='v-buy'>258</td><td style='color:#6b7280'>1</td><td class='v-sell'>—</td><td style='color:#6b7280'>—</td><td class='v-pos' style='font-weight:700'>+258</td></tr><tr><td class='fund'>21_全球醫療照護</td><td class='v-buy'>—</td><td style='color:#6b7280'>—</td><td class='v-sell'>379</td><td style='color:#6b7280'>1</td><td class='v-neg' style='font-weight:700'>-379</td></tr><tr><td class='fund'>23_2032目標日期</td><td class='v-buy'>—</td><td style='color:#6b7280'>—</td><td class='v-sell'>535</td><td style='color:#6b7280'>1</td><td class='v-neg' style='font-weight:700'>-535</td></tr><tr><td class='fund'>30_全球複合收益債</td><td class='v-buy'>—</td><td style='color:#6b7280'>—</td><td class='v-sell'>5,237</td><td style='color:#6b7280'>7</td><td class='v-neg' style='font-weight:700'>-5,237</td></tr></tbody></table></div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>把申購榜與贖回榜歸戶相抵後，淨買最大的是台灣基金 +3,753 萬（五天全在申購榜，只有 9/4 被賣 398 萬），其次台灣高科技 +2,354 萬、入息多重資產 +1,083 萬、AI電力創新 +637 萬、AI電動車 +258 萬。</li><li>淨賣只有三檔：全球複合收益債 -5,237 萬、2032目標日期 -535 萬（合作金庫人壽 8/31 一筆）、全球醫療照護 -379 萬（彰銀 9/1 一筆）。上榜基金裡淨賣的家數比上週少，但金額集中在一檔。</li><li>全球複合收益債一檔的 -5,237 萬，比其他七檔加起來的 +8,085 萬還要關鍵：把它拿掉，榜上其他基金合計是 +8,085 萬；加回來就只剩 +2,848 萬。一般型能不能站穩，關鍵在這一檔的賣壓何時停。</li><li>台灣高科技本週是買多賣少（買 6,003 萬、賣 3,648 萬），和上週的「買賣幾乎相抵、小輸 211 萬」不同，賣壓退了；但區塊 4 的規模拆解顯示這檔資金是 -1,106 萬，兩者不衝突：這張表只涵蓋每天前三名，且規模資料比交易資料晚一個營業日。</li><li>注意這張表只涵蓋上榜的前三名，榜外的零星申贖不在內；全貌請看區塊 1 的總量。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-warn"><div class="rmk-icon">🔴</div><div class="rmk-title">彰銀連五天賣全球複合收益債 0.46 億</div><div class="rmk-body">8/31 到 9/4 每一天都在贖回榜：914、1,167、1,672、284、580 萬。這檔淨值四天只從 10.2552 動到 10.2110，幾乎沒動，所以不是行情因素。加上合庫商銀 9/3、9/4 的 285、334 萬，這檔榜上共被賣 0.52 億，比一般型全週淨額還大。彰銀本週在申購榜完全沒出現，是純賣方。請通路部門查是單一大客戶分批出場還是理專整批換手，以及錢轉去哪裡。</div></div><div class="rmk rmk-good"><div class="rmk-icon">🔓</div><div class="rmk-title">AI電力創新賣壓幾乎停了，還出現第一筆大額申購</div><div class="rmk-body">本週全通路合計贖回 1,574 萬（上週 3,266 萬、前一週 4.74 億），只剩 9/2、9/3 兩天上榜；元大銀行整週沒賣。9/3 反而出現合庫商銀 1,201 萬的申購，拿下當日申購第一名，是 8/17 開放買回以來第一次。但淨值從 9.75 元（8/27）跌到 9.54 元（9/2），離 10 元發行價更遠——上週設定的「淨值站回 10 元＝下一波贖回觸發點」目前沒有逼近，這波賣壓暫時被套牢的部位壓住。</div></div><div class="rmk rmk-watch"><div class="rmk-icon">📉</div><div class="rmk-title">基金淨值跌得比大盤兇很多，要投研說明</div><div class="rmk-body">8/31～9/3 四個交易日，台灣基金淨值跌 4.61%、台灣高科技跌 4.94%；同期加權指數只跌 1.03%、櫃買指數跌 1.88%、電子類指數跌 1.81%。9/3 一天基金就跌 3.44%、3.62%，指數只跌 0.67%（櫃買 -2.88%）。落差不是一兩天的雜訊，而且這是本週一般型規模少掉 3.04 億的主因。請投研部說明是哪幾檔持股造成的、部位有沒有調整。</div></div><div class="rmk rmk-note"><div class="rmk-icon">🌱</div><div class="rmk-title">外部通路的買盤回來了</div><div class="rmk-body">上週十五個申購名次裡只有一筆不是合庫商銀，本週有四筆：鉅亨投顧 9/1 買台灣基金 858 萬、9/2 買台灣高科技 305 萬，基富通證 9/3 買台灣基金 1,041 萬，一銀 9/2 買台灣基金 344 萬。買的都是國內股票型，且集中在台股下跌的日子。金額不大，但是本週少數明確變好的訊號，值得業務單位追。</div></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">🏦</span>3｜貨幣型法人時間軸</div><span class="card-note">單位：億元；全部為預報信載明之大額交易</span>
+  </div>
+  <div class="card-body">
+<div class="tbl-scroll"><table class="tbl" style="min-width:760px">
+<thead><tr><th class="fund">日期</th><th class="fund">法人</th><th>動作</th><th>金額（億）</th>
+<th>當日貨幣型同向總量（億）</th><th class="fund">預告紀錄</th></tr></thead>
+<tbody><tr><td>08/31<span class='dt'>一</span></td><td class='fund'>新光人壽</td><td><span class='v-buy'>申購</span></td><td style='font-weight:700'>2.00</td><td style='color:#6b7280'>3.32</td><td class='fund' style='font-size:11.5px;color:var(--other)'>8/28 預告</td></tr><tr><td>09/03<span class='dt'>四</span></td><td class='fund'>南山人壽</td><td><span class='v-buy'>申購</span></td><td style='font-weight:700'>5.00</td><td style='color:#6b7280'>5.71</td><td class='fund' style='font-size:11.5px;color:var(--other)'>9/1 預告</td></tr><tr style='background:var(--surface)'><td>09/07<span class='dt'>下週</span></td><td class='fund'>全球人壽</td><td><span class='v-buy'>申購</span></td><td style='font-weight:700'>3.00</td><td style='color:#6b7280'>—</td><td class='fund' style='font-size:11.5px;color:var(--other)'>9/4 預告；下週一</td></tr></tbody></table></div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>貨幣型全週申購 17.66 億、贖回 3.54 億，淨進 14.12 億，是本週公司規模成長的全部來源。</li><li>但只有兩筆共 7 億事先有預報信：新光人壽 8/31 申購 2 億（8/28 預告，當日貨幣型申購 3.32 億）、南山人壽 9/3 申購 5 億（9/1 預告，當日貨幣型申購 5.71 億）。兩筆金額都與當日總量對得起來。</li><li><b>其餘 10.66 億申購與 3.54 億贖回完全沒有預報紀錄。</b>最大的兩天是 9/2 申購 5.22 億與 9/1 申購 2.82 億，兩天都查無預報信。合理推測是多筆未達預報門檻的中小額法人與企業戶，但需要確認——本週是錢進來所以沒事，若哪天同樣規模的錢沒預告就出去，現金調度會來不及。</li><li>好消息是本週沒有任何大額贖回預告，贖回最大的一天只有 9/2 的 1.68 億，和上週動輒 4～22 億的單日大額完全不同，經理人不必被迫提前處分部位。</li><li>下週一（9/7）已預告全球人壽申購 3 億。若加上這一筆，下期一開始貨幣型又是淨進。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-warn"><div class="rmk-icon">🏦</div><div class="rmk-title">貨幣型 14.12 億進帳，只有 7 億有預報</div><div class="rmk-body">有預報的是新光人壽 8/31 申購 2 億、南山人壽 9/3 申購 5 億，兩筆都與當日總量對得起來。其餘 10.66 億申購（最大是 9/2 的 5.22 億、9/1 的 2.82 億）與 3.54 億贖回，信箱內查無預報信。本週因為是錢進來所以沒有影響，但同樣規模的錢若哪天沒預告就出去，現金調度會來不及。請確認預報門檻與有無漏報。</div></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">💼</span>4｜AUM 變動與貢獻度</div><span class="card-note">資料日 08/28 → 09/03｜規模為 T-1 落後資料，與交易日差一個營業日，不得直接相減</span>
+  </div>
+  <div class="card-body">
+<div class="sec-lbl">兩型摘要（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:600px">
+<thead><tr><th class="fund">類別</th><th>期初</th><th>期末</th><th>變動</th><th>％</th></tr></thead>
+<tbody><tr><td><span class='cp cp-tcb'>一般型</span></td><td>141.90</td><td>138.86</td><td class='v-neg' style='font-weight:700'>-3.04</td><td class='v-neg'>-2.14%</td></tr><tr><td><span class='cp cp-life'>貨幣型</span></td><td>313.75</td><td>327.04</td><td class='v-pos' style='font-weight:700'>+13.28</td><td class='v-pos'>+4.23%</td></tr><tr><td><span class='cp cp-oth'>合計</span></td><td>455.65</td><td>465.90</td><td class='v-pos' style='font-weight:700'>+10.25</td><td class='v-pos'>+2.25%</td></tr></tbody></table></div>
+
+<div class="sec-lbl" style="margin-top:22px">一般型逐檔貢獻拆解（規模變動＝淨值漲跌＋資金進出；逐檔與合計皆與官方報表相符，差異 0；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:880px">
+<thead><tr><th class="fund">基金</th><th>期間規模變動</th><th>其中：淨值漲跌</th><th>其中：資金進出</th>
+<th class="fund">型態</th><th>資金數字可信度</th></tr></thead>
+<tbody><tr><td class='fund'>合庫AI電力創新多重資產基金</td><td class='v-neg' style='font-weight:700'>-7,966</td><td class='v-neg'>-6,661</td><td class='v-neg' style='font-weight:700'>-1,305</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫台灣高科技基金</td><td class='v-neg' style='font-weight:700'>-6,668</td><td class='v-neg'>-5,562</td><td class='v-neg' style='font-weight:700'>-1,106</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫台灣基金</td><td class='v-neg' style='font-weight:700'>-4,622</td><td class='v-neg'>-7,705</td><td class='v-pos' style='font-weight:700'>+3,083</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>全球複合收益債券基金</td><td class='v-neg' style='font-weight:700'>-2,981</td><td class='v-neg'>-808</td><td class='v-neg' style='font-weight:700'>-2,173</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td>高</td></tr><tr><td class='fund'>合庫2032目標日期多重資產收益基金</td><td class='v-neg' style='font-weight:700'>-2,155</td><td class='v-neg'>-1,062</td><td class='v-neg' style='font-weight:700'>-1,093</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫AI電動車及車聯網創新基金</td><td class='v-neg' style='font-weight:700'>-2,123</td><td class='v-neg'>-3,450</td><td class='v-pos' style='font-weight:700'>+1,327</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫全球醫療照護產業多重資產收益基金</td><td class='v-neg' style='font-weight:700'>-901</td><td class='v-neg'>-305</td><td class='v-neg' style='font-weight:700'>-597</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td>高</td></tr><tr><td class='fund'>合庫標普利變特別股收益指數基金</td><td class='v-neg' style='font-weight:700'>-896</td><td class='v-neg'>-105</td><td class='v-neg' style='font-weight:700'>-792</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td>高</td></tr><tr><td class='fund'>合庫入息優化多重資產基金</td><td class='v-pos' style='font-weight:700'>+875</td><td class='v-neg'>-639</td><td class='v-pos' style='font-weight:700'>+1,514</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td>高</td></tr><tr><td class='fund'>合庫核心趨勢多重基金</td><td class='v-neg' style='font-weight:700'>-859</td><td class='v-neg'>-517</td><td class='v-neg' style='font-weight:700'>-341</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫樂活安養ESG穩健成長組合基金</td><td class='v-neg' style='font-weight:700'>-831</td><td class='v-neg'>-315</td><td class='v-neg' style='font-weight:700'>-516</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td>高</td></tr><tr><td class='fund'>合庫樂活安養ESG積極成長組合基金</td><td class='v-neg' style='font-weight:700'>-685</td><td class='v-neg'>-369</td><td class='v-neg' style='font-weight:700'>-316</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫AI多重資產基金</td><td class='v-neg' style='font-weight:700'>-443</td><td class='v-neg'>-761</td><td class='v-pos' style='font-weight:700'>+318</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫全球非投資等級債券基金</td><td class='v-pos' style='font-weight:700'>+391</td><td class='v-neg'>-149</td><td class='v-pos' style='font-weight:700'>+539</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td>高</td></tr><tr><td class='fund'>全球核心基礎建設基金</td><td class='v-neg' style='font-weight:700'>-370</td><td class='v-neg'>-479</td><td class='v-pos' style='font-weight:700'>+108</td><td class='fund'><span class='cp cp-dir'>淨值跌、但資金進</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫新興多重收益基金</td><td class='v-neg' style='font-weight:700'>-129</td><td class='v-neg'>-93</td><td class='v-neg' style='font-weight:700'>-36</td><td class='fund'><span class='cp cp-oth'>變動極小</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr class='tr-total'><td>合計</td><td>-30,365</td><td>-28,980</td><td>-1,384</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值跌＋資金出</span></td><td></td></tr></tbody></table></div>
+<div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">讀法：每一列都是「規模變動 ＝ 淨值漲跌 ＋ 資金進出」，資金欄為正就是有人淨買進、為負就是被淨贖回。「資金進出」是推算值（規模變動減掉淨值影響），當一檔的資金量比淨值波動還小（可信度標「低」），淨值稍有誤差就會蓋過資金數字——方向可參考、金額別當精確；多級別基金取台幣 A 類淨值當代表，級別間的誤差範圍見下方觀察卡。</div>
+<div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>一般型規模 141.90 → 138.86 億，少了 3.04 億、跌破 140 億；但拆開是「行情 -2.90 億、資金 -0.14 億」——九成五是淨值下跌造成的，客戶並沒有大舉贖回。對外說明時這兩件事一定要分開講。</li><li>規模掉最多的三檔都是行情造成：AI電力創新 -7,966 萬（行情 -6,661 萬、資金 -1,305 萬）、台灣高科技 -6,668 萬（行情 -5,562 萬、資金 -1,106 萬）、台灣基金 -4,622 萬（行情 -7,705 萬，資金反而 +3,083 萬）。台灣基金是本週最典型的「淨值跌、但資金進」——客戶在跌的時候買進來。</li><li>真正靠資金流出的是全球複合收益債：規模 -2,981 萬裡有 -2,173 萬是資金（行情只有 -808 萬），而且這一檔的資金金額是行情影響的 2.69 倍、數字可信度高。這和區塊 2 彰銀連五天賣的觀察互相印證。標普利變 -792 萬（7.56 倍）、全球非投等債 +539 萬（3.63 倍）、入息優化 +1,514 萬（2.37 倍）也都是可信度高的資金訊號。</li><li>資金淨流入的有六檔，最大三檔是台灣基金 +3,083 萬、入息優化 +1,514 萬、AI電動車 +1,327 萬；淨流出最大三檔是全球複合收益債 -2,173 萬、AI電力創新 -1,305 萬、台灣高科技 -1,106 萬。全部相加是 -1,384 萬，接近打平。</li><li>貨幣型 313.75 → 327.04 億（+13.28 億）。這裡要回頭驗一件事：上週報告示警「8/27 的 335.90 億是虛胖、下期期初會回落到三百一十幾億」，本期期初 8/28 實際是 313.75 億（單日少 22.14 億），正是廣達那筆 22 億的付款，判斷完全成立。本週的 +13.28 億則是真的新錢進來，沒有隔日付款的虛胖成分。</li><li>合計規模 455.65 → 465.90 億（+10.25 億、+2.25%），但成長全在貨幣型。一般型跌破 140 億主要是行情，若下週台股延續 9/4 的反彈，規模會自己回來一部分，不需要靠加大促銷去補。</li></ul></div></div>
+
+<div class="sec-lbl" style="margin-top:22px">逐日規模（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:720px">
+<thead><tr><th class="fund">資料日</th><th>一般型</th><th>增減</th><th>貨幣型</th><th>增減</th><th>合計</th><th>增減</th></tr></thead>
+<tbody><tr><td>08/28</td><td>141.90</td><td class='v-pos'>+0.10</td><td>313.75</td><td class='v-neg'>-22.14</td><td>455.65</td><td class='v-neg'>-22.05</td></tr><tr><td>08/31</td><td>140.44</td><td class='v-neg'>-1.46</td><td>316.18</td><td class='v-pos'>+2.43</td><td>456.62</td><td class='v-pos'>+0.97</td></tr><tr><td>09/01</td><td>140.67</td><td class='v-pos'>+0.23</td><td>318.97</td><td class='v-pos'>+2.79</td><td>459.64</td><td class='v-pos'>+3.02</td></tr><tr><td>09/02</td><td>139.85</td><td class='v-neg'>-0.82</td><td>322.99</td><td class='v-pos'>+4.02</td><td>462.84</td><td class='v-pos'>+3.20</td></tr><tr><td>09/03</td><td>138.86</td><td class='v-neg'>-0.98</td><td>327.04</td><td class='v-pos'>+4.05</td><td>465.90</td><td class='v-pos'>+3.06</td></tr></tbody></table></div>
+<div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-good"><div class="rmk-icon">✅</div><div class="rmk-title">上週示警的「8/27 虛胖 22 億」如期回落</div><div class="rmk-body">上週報告指出貨幣型 8/27 的 335.90 億含著隔天才付給廣達的 22 億、下期期初會掉回三百一十幾億。本期期初 8/28 實際是 313.75 億，單日減少 22.14 億，正是那筆付款，判斷完全成立。本週增加的 13.28 億則沒有隔日付款的虛胖成分，是真的新錢。</div></div><div class="rmk rmk-watch"><div class="rmk-icon">📊</div><div class="rmk-title">一般型規模跌破 140 億，但不是客戶跑掉</div><div class="rmk-body">141.90 → 138.86 億，少 3.04 億，其中行情 -2.90 億、資金只有 -0.14 億。十六檔裡有六檔是資金淨流入。對內對外說明時請把「規模縮水」與「資金流失」分開講，否則容易被誤讀成通路在流失。</div></div><div class="rmk rmk-info"><div class="rmk-icon">📐</div><div class="rmk-title">資金流估算的可信度</div><div class="rmk-body">規模變動拆成「行情」與「資金」時，本週有十檔基金的資金金額不到行情影響的 1.5 倍——因為台股跌得深、行情這一項變大，資金那一項相對變小。這十檔的資金數字只能當方向參考，包括 AI電力創新 0.20 倍、台灣高科技 0.20 倍、全球核心基礎建設 0.23 倍、AI電動車 0.38 倍、台灣基金 0.40 倍。可信度高的是本週真正有資金訊號的幾檔：標普利變 7.56 倍、全球非投等債 3.63 倍、全球複合收益債 2.69 倍、入息優化 2.37 倍、全球醫療照護 1.96 倍。</div></div><div class="rmk rmk-info"><div class="rmk-icon">🔢</div><div class="rmk-title">多級別基金的誤差範圍</div><div class="rmk-body">同一檔基金有多個級別與幣別，拆解時取台幣 A 類（累積型）當代表。本期各級別單日報酬差距最大的是入息優化 1.06 個百分點（12 個級別）、全球醫療照護 0.76（12 個）、全球核心基礎建設 0.64（10 個）、核心趨勢多重 0.41（6 個）、新興多重收益 0.35（10 個），這幾檔的行情貢獻有這個範圍的誤差。</div></div><div class="rmk rmk-info"><div class="rmk-icon">🕐</div><div class="rmk-title">規模資料只到 9/3，不是漏掉週五</div><div class="rmk-body">規模報表隔日上午才寄前一日的資料，所以本期規模涵蓋 8/28、8/31、9/1、9/2、9/3 五個資料日；9/4 的規模要下週一才收得到，屬於下一期的期初。交易金額與規模金額差一個營業日，兩者不能直接相減。同理，9/4 的基金淨值也還沒寄達，區塊 2 的交叉分析該格以「—」表示、僅以指數對照。</div></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">✅</span>5｜要交辦的事</div>
+  </div>
+  <div class="card-body"><div style='margin-top:-6px'><div style='display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9'><span class='top-rank r1' style='flex-shrink:0;margin-top:3px'>1</span><div>彰銀連五個交易日賣全球複合收益債（914、1,167、1,672、284、580 萬，合計 0.46 億），這檔淨值幾乎沒動，不是行情因素。請通路部門查清楚：是同一位大客戶分批出場，還是彰銀理專整批換手；錢轉去了哪裡（若轉進我們別檔基金是中性的，轉出去才是真流失）。彰銀 9/1 同一天還賣了全球醫療照護 379 萬，建議一併問。</div></div><div style='display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9'><span class='top-rank r1' style='flex-shrink:0;margin-top:3px'>2</span><div>貨幣型本週進 14.12 億，但只有 7 億有預報信（新光 2 億、南山 5 億），其餘 10.66 億申購與 3.54 億贖回都沒有預報紀錄。請確認預報信的通報門檻是多少、這 10.66 億是由多筆未達門檻的中小額組成，還是有漏報。錢進來沒事，怕的是同樣規模的錢哪天沒預告就出去——現金調度會來不及。</div></div><div style='display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9'><span class='top-rank r1' style='flex-shrink:0;margin-top:3px'>3</span><div>9/3 合庫商銀單日申購 AI電力創新 1,201 萬，是這檔開放買回以來第一次拿下申購第一名。請通路確認是新客戶進場，還是原持有人在 9.54 元加碼攤平；若理專是用「攤平、拉低成本」在推，要先確認話術與商品適合度，避免淨值再往下時客訴。</div></div><div style='display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9'><span class='top-rank r1' style='flex-shrink:0;margin-top:3px'>4</span><div>台灣基金與台灣高科技的淨值本週跌得比任何一個大盤指標都兇：四個交易日（8/31～9/3）淨值各跌 4.61%、4.94%，同期加權指數只跌 1.03%、櫃買指數跌 1.88%、電子類指數跌 1.81%。單 9/3 一天淨值就跌 3.44%、3.62%，指數當天只跌 0.67%。請投研部說明是哪幾檔持股造成的、目前部位有沒有調整，這是本週規模少掉 3.04 億的主因。</div></div><div style='display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.9'><span class='top-rank r1' style='flex-shrink:0;margin-top:3px'>5</span><div>一般型規模掉到 138.86 億、跌破 140 億。對內對外說明時請把兩件事分開講：資金只走了 0.14 億，客戶並沒有大舉贖回；少掉的 2.90 億是淨值下跌。若只講規模數字，容易被誤解成通路在流失。</div></div></div></div>
+</div><div class="alert-warn" style="background:var(--surface);border-color:var(--border);color:#4b5563"><span>🧾</span><div style="line-height:1.9">【資料來源與驗算】① 逐日申贖與排行取自 8/31～9/4 五封「每日交易彙總表」原始郵件內文，每日「一般型＋貨幣型＝合計」的申購與贖回各自驗算相符；上週 8/24～8/28 五天的數字沿用上期報表已逐封重讀驗算過的原始值，作為對照基準。② 貨幣型法人進出取自三封「預報」原始郵件（新光人壽 8/31 申購 2 億、南山人壽 9/3 申購 5 億、全球人壽 9/7 申購 3 億），並與當日貨幣型申購金額對照相符；本週貨幣型另有 10.66 億申購與 3.54 億贖回在信箱內查無預報信，已在區塊 3 據實列出。③ AI電力創新逐日贖回取自 8/31～9/4 五封單日通知信：9/2、9/3 兩封為純文字內文，8/31、9/1、9/4 三封內文只有圖片、已逐張讀出，並與當日排行榜的合庫商銀金額交叉核對相符（9/2 為 291.3 萬、9/3 為 273.0 萬，兩者一致）；全通路全級別本週合計 1,574.1 萬。④ 規模資料採 8/28、8/31、9/1、9/2、9/3 共 5 個資料日（規模報表隔日上午才寄前一日資料，9/4 的規模要下週一才收得到，屬下一期的期初）。⑤ 規模拆解（哪些是行情、哪些是資金進出）逐日逐檔計算，四個變動日的逐檔加總與報表合計差異皆為 0，期間合計 -3.04 億與官方一般型期初期末相減完全相符。⑥ 指數漲跌以臺灣證券交易所官方每日收盤指數為準，並與財經日報指數整理表逐日核對相符；9/4 因財經日報當日檔案尚未產出，直接採用證交所官方資料（46,551.13 點、+1.51%）。台灣基金與台灣高科技的淨值漲跌取自 NAV 報表台幣 A 類，9/4 的淨值報表下週一才寄達，該格以「—」表示。⑦ 交易金額與規模金額涵蓋的日子差一個營業日，兩組數字不能直接相減比對。</div></div>
+<div class="pg-footer">
+  本報告依每日交易彙總表整理製作，數據僅供內部管理參考，不得作為對外引用或投資建議之依據。<br>
+  資料期間：2026/08/31（一）至 2026/09/04（五）　｜　製表日：2026-09-05　｜　合庫投信 投資管理部
+</div>
+</div><!-- /pg-body -->
+
+<script>
+function dlHTML(){
+  const b=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`合庫投信_週報_20260831_20260904.html`;a.click();
+}
+function fmtDate(d){return d.toISOString().split('T')[0]}
+function parseDate(s){return new Date(s+'T00:00:00')}
+function weekdayTW(d){return['日','一','二','三','四','五','六'][d.getDay()]}
+function updatePeriodDisplay(){
+  const f=document.getElementById('dpFrom').value;
+  const t=document.getElementById('dpTo').value;
+  if(!f||!t)return;
+  const fd=parseDate(f),td=parseDate(t);
+  document.getElementById('periodBadge').textContent=f.replace(/-/g,'/')+' – '+t.replace(/-/g,'/');
+  document.getElementById('hdrPeriod').textContent=`${f.replace(/-/g,'/')}（${weekdayTW(fd)}）至 ${t.replace(/-/g,'/')}（${weekdayTW(td)}）`;
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.dp-input').forEach(el=>el.addEventListener('change',updatePeriodDisplay));
+});
+function setLastWeek(){
+  const today=new Date();const dow=today.getDay();
+  const toFri=dow===0?2:dow===6?1:dow+1;
+  const fri=new Date(today);fri.setDate(today.getDate()-toFri);
+  const mon=new Date(fri);mon.setDate(fri.getDate()-4);
+  document.getElementById('dpFrom').value=fmtDate(mon);
+  document.getElementById('dpTo').value=fmtDate(fri);
+  updatePeriodDisplay();
+}
+function requestNewReport(){
+  const from=document.getElementById('dpFrom').value;
+  const to=document.getElementById('dpTo').value;
+  if(!from||!to){alert('請先選擇起訖日期');return}
+  const msg='請製作一週交易彙總表與 AUM 分析，分析期間：'+from+' '+to+'（v2 五區塊版型，流程見 code/一週交易彙總表流程.md）';
+  if(typeof window.sendPrompt==='function'){window.sendPrompt(msg);}
+  else{
+    const tip=document.getElementById('sendTip');
+    navigator.clipboard&&navigator.clipboard.writeText(msg).then(()=>{tip.style.display='inline';setTimeout(()=>tip.style.display='none',4000)}).catch(()=>{});
+  }
+}
+</script>
+</body>
+</html>
