@@ -1,43 +1,625 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2026-09-04 金融市場日報|保守版</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif; color: #172554; line-height: 1.75; margin: 0; background: #f8fafc; }
-    main { max-width: 980px; margin: 0 auto; padding: 28px; background: #fff; }
-    h1 { font-size: 28px; margin-bottom: 8px; }
-    h2 { border-left: 6px solid #1d4ed8; padding-left: 10px; margin-top: 32px; }
-    .sub-title { color: #334155; font-size: 18px; font-weight: 700; }
-    .notice { background: #fff7ed; border: 1px solid #fed7aa; padding: 14px; color: #7c2d12; }
-    .heat-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-    .heat-bar { background: #eff6ff; border-left: 4px solid #2563eb; padding: 8px 10px; font-weight: 700; }
-    .analysis-block { background: #f8fafc; padding: 14px; border: 1px solid #e2e8f0; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026-09-04 金融市場日報|洞察•解構•透視全球資產</title>
+    <meta name="description" content="2026-09-04 金融市場日報|洞察•解構•透視全球資產">
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4f46e5, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sub-title {
+            font-size: 45px;
+            font-weight: 600;
+            color: #2563eb;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 1.5rem; }
+            .sub-title { font-size: 1.875rem; }
+        }
+
+        section { scroll-margin-top: 120px; }
+        h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; }
+        h3.table-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; text-align: left; color: #374151; }
+        .container { max-width: 80rem; margin: 0 auto; padding: 0.5rem; }
+        @media (min-width: 768px) { .container { padding: 1rem; } }
+
+        .table-styled {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0 0 0;
+        }
+        .table-styled caption { padding: 1rem; font-weight: 600; text-align: left; background: #f8fafc; border-bottom: 1px solid #e2e8f0; caption-side: top; }
+        .table-styled thead th { background: #f1f5f9; padding: 0.75rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; position: sticky; top: 0; text-align: center; }
+        .table-styled thead th:first-child { text-align: left; }
+        .table-styled tbody td { padding: 0.75rem; border-bottom: 1px solid #f1f5f9; font-weight: 400; text-align: center; }
+        .table-styled tbody td:first-child { text-align: left; font-weight: 500; }
+        .table-styled tbody td strong { font-weight: normal !important; }
+        .table-styled tbody tr.summary-row td { font-weight: 600 !important; border-top: 2px solid #e5e7eb; }
+
+        .text-up { color: #dc2626; font-weight: 600; }
+        .text-down { color: #059669; font-weight: 600; }
+        .text-flat { color: #6b7280; font-weight: 500; }
+        /* 2026-05-27 修補：分析表格的 <td class="up/down"> 原本無對應規則，導致漲跌不上色。
+           台灣慣例：上漲紅、下跌綠。複合選擇器(.market-card-change-new.up 等)特異性較高仍優先。 */
+        td.up, .up { color: #dc2626; font-weight: 600; }
+        td.down, .down { color: #059669; font-weight: 600; }
+        td.flat, .flat { color: #6b7280; font-weight: 500; }
+
+        .heat-container { margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+        .heat-item { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; overflow: hidden; position: relative; height: 2.5rem; }
+        .heat-bar { display: flex; align-items: center; justify-content: flex-start; padding: 0.5rem 1rem; font-weight: 700; font-size: 1rem; color: white; height: 100%; border-radius: 8px 0 0 8px; transition: all 0.3s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .heat-bar-1 { background: #dc2626; width: 100%; border-radius: 8px; }
+        .heat-bar-2 { background: #dc2626; width: 95.6%; }
+        .heat-bar-3 { background: #ea580c; width: 91.1%; }
+        .heat-bar-4 { background: #ea580c; width: 86.7%; }
+        .heat-bar-5 { background: #d97706; width: 82.2%; }
+        .heat-bar-6 { background: #d97706; width: 77.8%; }
+        .heat-bar-7 { background: #eab308; width: 73.3%; color: #1f2937; }
+        .heat-bar-8 { background: #eab308; width: 68.9%; color: #1f2937; }
+        .heat-bar-9 { background: #84cc16; width: 64.4%; color: #1f2937; }
+        .heat-bar-10 { background: #84cc16; width: 60%; color: #1f2937; }
+        @media (max-width: 768px) { .heat-bar { font-size: 0.875rem; padding: 0.4rem 0.75rem; } }
+        @media (max-width: 480px) { .heat-bar { font-size: 0.75rem; } }
+
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 2rem 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .section-card:first-child { margin-top: 0.25rem; }
+        .section-card:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-left-color: #4f46e5; }
+
+        .nav-sticky { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid #e2e8f0; padding: 1rem; backdrop-filter: blur(8px); }
+        .nav-content { max-width: 80rem; margin: 0 auto; display: flex; justify-content: center; align-items: center; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .nav-content::-webkit-scrollbar { display: none; }
+        .nav-links-group { display: flex; gap: 1rem; font-size: 0.875rem; white-space: nowrap; align-items: center; min-width: fit-content; }
+        .nav-links-group a { padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; background: #dc2626; color: white; font-weight: 700; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+        .nav-links-group a:hover { background: #b91c1c; transform: translateY(-1px); }
+        .nav-links-group .download-btn { background: #059669; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; flex-shrink: 0; }
+        .nav-links-group .download-btn:hover { background: #047857; transform: translateY(-1px); }
+
+        .timeline-tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-right: 0.75rem; vertical-align: top; }
+        .timeline-tag-taiwan { background: #f1f5f9; color: #1e293b; }
+        .timeline-tag-us { background: #f1f5f9; color: #dc2626; }
+        .timeline-container p { margin: 0; padding: 0.125rem 0; line-height: 1.4; }
+
+        .analysis-block { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px 1.5rem 15px; margin: 0 0 1.5rem 0; border-radius: 8px; }
+        .analysis-block h4 { font-weight: 600; color: #92400e; margin: 0 0 12px 0; font-size: 1.125rem; }
+        .structured-analysis p { line-height: 1.75; margin-bottom: 1rem; }
+        .structured-analysis p:last-child { margin-bottom: 0; }
+        .analysis-block .structured-analysis p { margin: 0; }
+        .analysis-block .structured-analysis p + p { margin-top: 12px; }
+        .structured-analysis strong { display: inline; margin-right: 0.5em; color: #92400e; font-size: 1rem; font-weight: 700; }
+        .structured-analysis br { display: none; }
+
+        .market-overview-custom { margin: 1.5rem 0; }
+        .market-overview-row-1, .market-overview-row-2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .dashboard-shell {
+            margin: 1.75rem 0 0 0;
+            padding: 1.25rem;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+            border: 1px solid #dbe7f5;
+        }
+        .dashboard-title-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .dashboard-title-row .table-title {
+            margin: 0;
+        }
+        /* 左欄 Top10 標題與右欄 AI產業鏈標題齊頂對齊：左欄 h3 預設 margin-top 會把它往下推、與右欄(margin:0)不齊，這裡歸零 */
+        .top10-health-row > div > h3.table-title {
+            margin-top: 0;
+        }
+        .dashboard-kicker {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: left;
+        }
+        /* 市場重要觀察指標：5 個方塊垂直堆疊，方塊內文字橫向（左指標、右數值） */
+        .health-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        /* 電腦版：Top 10 與市場重要觀察指標並排且等高，右側 5 個方塊平均拉伸填滿配合左側 Top 10 高度 */
+        @media (min-width: 1025px) {
+            .top10-health-row { align-items: stretch; }
+            .top10-health-row > div { display: flex; flex-direction: column; min-width: 0; }
+            .top10-health-row > div > .dashboard-shell { flex: 1 1 auto; display: flex; flex-direction: column; }
+            .top10-health-row .health-grid { flex: 1 1 auto; }
+            .top10-health-row .ai-chain-card { flex: 1 1 0; }
+        }
+        /* 文字排列與「市場核心數據速覽」一致：垂直 3 行（標題→數值→變化＋說明） */
+        .ai-chain-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0.6rem 0.85rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .ai-chain-card-label { font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 5px; }
+        .ai-chain-card-value { font-size: 1.125rem; font-weight: 700; color: #1e293b; margin-bottom: 0; }
+        .ai-chain-card-value strong { font-weight: 700 !important; }
+        .ai-chain-card-delta { font-size: 0.75rem; font-weight: 500; margin-top: 5px; }
+        .ai-chain-card-delta strong { font-weight: bold !important; }
+        .ai-chain-card-delta.up, .ai-chain-card-delta.text-up { color: #dc2626; font-weight: 600; }
+        .ai-chain-card-delta.down, .ai-chain-card-delta.text-down { color: #059669; font-weight: 600; }
+        .ai-chain-card-delta.flat, .ai-chain-card-delta.text-flat { color: #6b7280; font-weight: 500; }
+        /* AI 產業鏈強弱分組小標題：區分前 2 強勢 / 後 2 弱勢 */
+        .ai-chain-card-group-title {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #475569;
+            letter-spacing: 0.02em;
+            margin: 4px 2px 0;
+        }
+        .ai-chain-card-group-title.strong { color: #b91c1c; }
+        .ai-chain-card-group-title.weak { color: #047857; }
+        .rankings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .ranking-card {
+            background: white;
+            border-radius: 14px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+        }
+        .ranking-card-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin: 0 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ranking-card-title.up { color: #b91c1c; }
+        .ranking-card-title.down { color: #047857; }
+        .table-styled.compact thead th,
+        .table-styled.compact tbody td {
+            padding: 0.55rem 0.5rem;
+            font-size: 0.84rem;
+        }
+        .table-styled.compact tbody td:first-child {
+            font-weight: 600;
+        }
+        .dashboard-footnote {
+            margin-top: 0.85rem;
+            font-size: 0.78rem;
+            color: #64748b;
+            text-align: left;
+        }
+        .ai-chain-card-code { font-size: 0.75rem; font-weight: 400; color: #94a3b8; margin-left: 0.4rem; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        @media (min-width: 1024px) { .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        .market-card-new { background: white; border-radius: 12px; padding: 3px 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: flex-start; min-height: 82px; }
+        .market-card-new:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+        .market-card-new.us-stock { border-left: 4px solid #dc2626; }
+        .market-card-new.tw-stock { border-left: 4px solid #059669; }
+        .market-card-new.bond { border-left: 4px solid #2563eb; }
+        .market-card-new.commodity { border-left: 4px solid #f59e0b; }
+        .market-card-new.fx { border-left: 4px solid #0891b2; }
+        .market-card-title-new { font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 3px; }
+        .market-card-value-new { font-size: 1.125rem; font-weight: 700; color: #1e293b; margin-bottom: 0; }
+        .market-card-value-new strong { font-weight: 700 !important; }
+        .market-card-change-new { font-size: 0.75rem; font-weight: 500; margin-top: 3px; }
+        .market-card-change-new strong { font-weight: bold !important; }
+        .market-card-change-new.up, .market-card-change-new.text-up { color: #dc2626; font-weight: 600; }
+        .market-card-change-new.down, .market-card-change-new.text-down { color: #059669; font-weight: 600; }
+        .market-card-change-new.flat, .market-card-change-new.text-flat { color: #6b7280; font-weight: 500; }
+
+        .analysis-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; margin: 25px 0 0 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-spacing: 0; table-layout: fixed; }
+        .analysis-table th:first-child, .analysis-table td:first-child { width: 30%; padding-left: 0.75rem; vertical-align: top; }
+        .analysis-table th:last-child, .analysis-table td:last-child { width: 70%; padding-right: 0.75rem; vertical-align: top; }
+        .analysis-table td { padding-top: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9; word-wrap: break-word; text-align: left; font-weight: 400 !important; }
+        .analysis-table th { background: #f8fafc; padding-top: 0.75rem; padding-bottom: 0.75rem; font-weight: 600; text-align: left; color: #374151; }
+        .analysis-table td strong { font-weight: normal !important; }
+        .analysis-table .font-semibold { font-weight: 600 !important; }
+
+        .stock-recommendation { background: white; border-radius: 12px; padding: 20px 2rem 25px; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .stock-recommendation.bullish { border-left: 4px solid #dc2626; }
+        .stock-recommendation.bearish { border-left: 4px solid #059669; }
+        .recommendation-title { font-size: 1.125rem; font-weight: 700; margin: 0; }
+        .recommendation-title.bullish { color: #dc2626; }
+        .recommendation-title.bearish { color: #059669; }
+        .stock-recommendation .analysis-block { margin-bottom: 0; }
+        .link-button-container { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; align-items: flex-start; }
+        .link-button { display: block; padding: 7px 0.8rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; text-align: center; width: 95%; max-width: 150px; margin: 0; font-size: 0.875rem; box-sizing: border-box; }
+        .link-button.fundamental { background: #2563eb; color: white; }
+        .link-button.fundamental:hover { background: #1d4ed8; }
+        .link-button.technical { background: #374151; color: white; }
+        .link-button.technical:hover { background: #111827; }
+        .link-button-subtitle { display: block; font-size: 0.75rem; font-weight: 400; opacity: 0.9; margin-top: 3px; }
+
+        .back-to-top { position: fixed; left: 1.5rem; bottom: 1.5rem; background: #4f46e5; color: white; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 1.125rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 40; transition: all 0.2s ease; }
+        .back-to-top:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); }
+        .progress-bar { height: 3px; background: #4f46e5; position: fixed; top: 0; left: 0; z-index: 100; transition: width 0.3s ease; }
+        .grid { display: grid; }
+        .gap-8 { gap: 2rem; }
+        .tldr-block { padding: 20px 1rem 15px; border-radius: 8px; margin-bottom: 1.5rem; }
+        .tldr-block ul { list-style: none; padding: 0; margin: 0; font-size: 1rem; }
+        .tldr-block li { margin: 0; padding-left: 1rem; position: relative; }
+        .tldr-block li + li { margin-top: 10px; }
+        .tldr-block li::before { content: "•"; position: absolute; left: 0; font-weight: 700; }
+        .tldr-block li strong { font-weight: 700 !important; }
+        .tldr-block h3.table-title { margin: 0 0 12px 0; }
+
+        @media (max-width: 1024px) {
+            .market-overview-row-1, .market-overview-row-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .grid-cols-2, .lg\:grid-cols-2 { grid-template-columns: 1fr; }
+            .market-overview-row-1, .market-overview-row-2 { grid-template-columns: 1fr; }
+            .rankings-grid { grid-template-columns: 1fr; }
+            .back-to-top { left: 1rem; bottom: 5rem; }
+            .analysis-table th:first-child, .analysis-table td:first-child { width: 40%; }
+            .analysis-table th:last-child, .analysis-table td:last-child { width: 60%; }
+            .nav-content { justify-content: flex-start; padding-left: 0.5rem; padding-right: 0.5rem; }
+            .nav-links-group { gap: 0.75rem; }
+            .dashboard-title-row { flex-direction: column; align-items: flex-start; }
+            .dashboard-kicker, .dashboard-footnote { text-align: left; }
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-semibold { font-weight: 600; }
+        .text-xs { font-size: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .overflow-x-auto { overflow-x: auto; }
+        @media print { .nav-sticky, .back-to-top, .download-btn, .progress-bar { display: none; } }
+    </style>
 </head>
 <body>
-<main>
-  <h1>2026-09-04 金融市場日報</h1>
-  <p class="sub-title">自動資料完成彙整　採保守版出刊　重點事件先列示　後續解讀待完整稿補強</p>
-  <p class="notice">本版為保守版：GPT 完整生成流程未成功完成（GPT 未在 40 分鐘內完成（外層 1 次、內部重試 1 次））。為避免日報開天窗，系統先依已抓取資料產出低風險版本；不加入無法驗證的財務數字或推論。</p>
 
-  <section id="sec-1">
-    <h2>📋 第1章｜市場總覽與重點</h2>
-    <p><strong>今日處理原則：</strong>本版先保留可驗證資料與事件清單，不把單日漲跌幅包裝成市場洞見。正式解讀應回到後續完整稿與 QC 報告補強。</p>
-    <div class="heat-container"><div class="heat-bar">〈貴金屬盤後〉非農超強Fed本月升息機率增 黃金周線收黑</div>
-<div class="heat-bar">〈美股盤後〉非農意外強勁、升息機率衝破五成 三大指數盡墨、記憶體股逆</div></div>
-  </section>
+<div class="progress-bar" id="progressBar" style="width: 0%; opacity: 0;"></div>
 
-  <section id="sec-2"><h2>📈 第2章｜歐美股市</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>先保留事件脈絡：</strong>美股與歐股解讀需同時看經濟數據、利率與大型科技股消息。本版不以指數漲跌幅直接推論資金方向。</p><p><strong>後續觀察重點：</strong>完整稿應補上主要指數、產業輪動與公司事件之間的關係，並確認是否為科技集中調節或整體風險偏好下降。</p></div></div></section>
-  <section id="sec-3"><h2>🏛️ 第3章｜債券市場</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>利率訊號優先確認：</strong>債券章節應先確認各天期殖利率變化，再判斷市場對降息、通膨與財政供給的看法。</p><p><strong>信用風險另行判讀：</strong>若信用債同步走弱，完整稿需說明是利率壓力還是企業風險補償上升，不能只列價格變動。</p></div></div></section>
-  <section id="sec-4"><h2>🔥 第4章｜大宗商品</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>商品不混寫：</strong>黃金與原油的驅動不同，前者看美元與實質利率，後者看供需與地緣風險。</p><p><strong>事件需回到來源：</strong>完整稿需確認談判、制裁、庫存或需求消息，避免只用價格漲跌推論風險偏好。</p></div></div></section>
-  <section id="sec-5"><h2>🗻 第5章｜台股解析</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>台股先看籌碼與權值：</strong>台股章節應分清外資、投信、自營商與電子權值股的影響，不把單日跌幅當作唯一結論。</p><p><strong>承接力需驗證：</strong>若盤中跌幅收斂，完整稿仍需觀察成交量、外資賣超是否收斂，以及金融與傳產是否能延續承接。</p></div></div></section>
-  <section id="sec-6"><h2>💱 第6章｜匯率市場</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>匯率分清美元與本地因素：</strong>美元走勢、外資買賣超與實際匯出不能混為一談。</p><p><strong>後續看成交與利差：</strong>完整稿需同時看美元指數、台北匯市成交量與美台利差，避免把新台幣波動單因化。</p></div></div></section>
-  <section id="sec-7"><h2>🏭 第7章｜產業多空展望</h2><div class="analysis-block"><div class="structured-analysis"><p><strong>個股不補無來源數字：</strong>第 7 章完整稿必須依個股整理表與 TradingView 查閱紀錄；若資料未完成，不得自行補本益比、毛利率或技術位階。</p></div></div></section>
+<div class="nav-sticky">
+    <div class="nav-content">
+        <div class="nav-links-group">
+            <a href="#sec-1">市場總覽</a>
+            <a href="#sec-2">歐美股市</a>
+            <a href="#sec-3">債券市場</a>
+            <a href="#sec-4">大宗商品</a>
+            <a href="#sec-5">台股解析</a>
+            <a href="#sec-6">匯率市場</a>
+            <a href="#sec-7">產業展望</a>
+            <button class="download-btn" id="smartDownloadBtn">🔥 下載日報</button>
+        </div>
+    </div>
+</div>
 
-  <h2>資料來源</h2>
-  <ul><li>daily_spec_checklist.json</li><li>20260905_指數整理表_含法人資料.txt</li><li>20260905_個股整理表.txt</li><li>20260905_綜合新聞報導_精簡.html</li><li>20260903_前日摘要.txt</li><li>20260905_新聞全文包_收盤精選.txt</li><li>20260904_TradingView查閱紀錄.txt</li></ul>
-</main>
+<div class="container">
+    <header style="text-align: center; margin: 0;">
+        <h1 class="main-title" style="margin: 0; margin-bottom: 0.125rem;">2026-09-04 金融市場日報</h1>
+        <p class="sub-title" style="margin: 0;">非農暴增推升升息押注　美股收黑費半逆漲　外資回補台股重返四萬六</p>
+    </header>
+
+    <section id="sec-1" class="section-card">
+        <h2 style="color: #015fb4;"><span style="margin-right: 0.75rem;">📋</span>第1章｜市場總覽與重點</h2>
+
+        <div class="tldr-block" style="background: #f0f9ff;">
+            <h3 class="table-title">市場三大要點</h3>
+            <ul>
+                <li style="color: #015fb4;"><strong>美股｜非農推升升息押注：</strong>8月非農就業增加16.2萬人，遠高於市場預期，9月升息機率升至接近60%。三大指數收黑，但記憶體族群大漲，費半逆勢上升3.37%，顯示賣壓主要落在大型科技與消費股。</li>
+                <li style="color: #015fb4;"><strong>美債｜強勁就業推高殖利率：</strong>就業數據公布後，市場重新提高9月升息押注，5年期與10年期殖利率分別升4 bps與2.2 bps。30年期僅升0.3 bps，顯示當日壓力較集中在更接近政策變化的年期。</li>
+                <li style="color: #015fb4;"><strong>台股｜外資回補電子代工：</strong>華勒前一日釋出按兵不動訊號，美債殖利率回落，台股4日震盪走高，終場漲693點收46,551點。外資轉買562.13億元並加碼電子代工與國巨，三大法人合計買超616.72億元。</li>
+            </ul>
+        </div>
+
+        <div class="market-overview-custom">
+            <h3 class="table-title">市場核心數據速覽</h3>
+            <div class="market-overview-row-1">
+                <div class="market-card-new us-stock">
+                    <div class="market-card-title-new">美股市場</div>
+                    <div class="market-card-value-new">費半 <strong>11,735.26</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+3.37%</strong> • 記憶體股全面走強支撐費半，升息疑慮仍未壓垮晶片買盤</div>
+                </div>
+                <div class="market-card-new tw-stock">
+                    <div class="market-card-title-new">台股市場</div>
+                    <div class="market-card-value-new">加權 <strong>46,551.13</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+1.51%</strong> • 華勒按兵不動訊號激勵資金回補，電子代工與被動元件領漲</div>
+                </div>
+                <div class="market-card-new bond">
+                    <div class="market-card-title-new">債券市場</div>
+                    <div class="market-card-value-new">10年期殖利率 <strong>4.78%</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+2 bps</strong> • 強勁非農提高九月升息押注，五年期與十年期殖利率同步走高</div>
+                </div>
+            </div>
+            <div class="market-overview-row-2">
+                <div class="market-card-new commodity">
+                    <div class="market-card-title-new">黃金市場</div>
+                    <div class="market-card-value-new">黃金現貨 <strong>4,430.33</strong></div>
+                    <div class="market-card-change-new down">▼ <strong>-1.11%</strong> • 就業數據推升美元與升息預期，不配息黃金因此承受較大賣壓</div>
+                </div>
+                <div class="market-card-new commodity">
+                    <div class="market-card-title-new">原油市場</div>
+                    <div class="market-card-value-new">布蘭特 <strong>95.83</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+0.32%</strong> • 美伊恢復交火提高供應疑慮，布蘭特本週漲勢因此明顯擴大</div>
+                </div>
+                <div class="market-card-new fx">
+                    <div class="market-card-title-new">匯率市場</div>
+                    <div class="market-card-value-new">美元指數 <strong>99.15</strong></div>
+                    <div class="market-card-change-new up">▲ <strong>+0.24%</strong> • 非農帶動美元反彈，熱錢回流台股使新台幣當日仍維持強勢</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 top10-health-row">
+            <div>
+                <h3 class="table-title">Top 10 市場熱點事件榜</h3>
+                <div class="heat-container">
+                    <div class="heat-item"><div class="heat-bar heat-bar-1">美國非農增加16.2萬人</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-2">美伊恢復軍事交火推升油價</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-3">瑞銀上調AI資本支出預測</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-4">字節跳動融資296億美元</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-5">全球食品價格升至四年高點</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-6">Adobe換帥由老將接任</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-7">美房貸開放替代信用評分</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-8">標普500新增三家成分股</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-9">美貿易逆差創16個月新高</div></div>
+                    <div class="heat-item"><div class="heat-bar heat-bar-10">LULU再度下修全年財測</div></div>
+                </div>
+                <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">*熱度依當日新聞曝光綜合排序，僅供參考</p>
+            </div>
+            <div>
+                <div class="dashboard-title-row">
+                    <h3 class="table-title">AI 產業鏈強弱（美股）</h3>
+                </div>
+                <div class="dashboard-shell" style="margin-top: 0;">
+                    <div class="health-grid">
+                        <div class="ai-chain-card-group-title strong">強勢前 2</div>
+                        <div class="ai-chain-card">
+                            <div class="ai-chain-card-label">① 記憶體/存儲</div>
+                            <div class="ai-chain-card-value">當日 <strong class="up">+6.10%</strong> <span class="ai-chain-card-code">近5日 +4.36%</span></div>
+                            <div class="ai-chain-card-delta">希捷 +6.34%／美光 +6.10%</div>
+                        </div>
+                        <div class="ai-chain-card">
+                            <div class="ai-chain-card-label">② 光通訊/連接</div>
+                            <div class="ai-chain-card-value">當日 <strong class="up">+5.30%</strong> <span class="ai-chain-card-code">近5日 -0.29%</span></div>
+                            <div class="ai-chain-card-delta">Coherent +6.60%／Lumentum +4.00%</div>
+                        </div>
+                        <div class="ai-chain-card-group-title weak">弱勢前 2</div>
+                        <div class="ai-chain-card">
+                            <div class="ai-chain-card-label">③ 資料中心(REIT)</div>
+                            <div class="ai-chain-card-value">當日 <strong class="down">-0.07%</strong> <span class="ai-chain-card-code">近5日 +0.38%</span></div>
+                            <div class="ai-chain-card-delta">Equinix -0.47%／Digital Realty +0.32%</div>
+                        </div>
+                        <div class="ai-chain-card">
+                            <div class="ai-chain-card-label">④ EDA/設計工具</div>
+                            <div class="ai-chain-card-value">當日 <strong class="down">-4.70%</strong> <span class="ai-chain-card-code">近5日 -12.51%</span></div>
+                            <div class="ai-chain-card-delta">新思科技 -5.40%／Cadence -4.00%</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-2" class="section-card">
+        <h2 style="color: #dc2626;"><span style="margin-right: 0.75rem;">📈</span>第2章｜歐美股市</h2>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>歐美主要股市指數漲跌概覽</caption><thead><tr><th>指標名稱</th><th>最新收盤價</th><th>日漲跌</th><th>五日漲跌</th><th>月漲跌</th><th>季漲跌</th><th>年初至今</th></tr></thead><tbody>
+            <tr><td>道瓊工業指數</td><td><strong>53,414.25</strong></td><td class="down"><strong>-0.51%</strong></td><td class="down"><strong>-0.27%</strong></td><td class="down"><strong>-1.24%</strong></td><td class="up"><strong>+3.59%</strong></td><td class="up"><strong>+11.13%</strong></td></tr>
+            <tr><td>標普500</td><td><strong>7,718.60</strong></td><td class="down"><strong>-0.38%</strong></td><td class="up"><strong>+0.09%</strong></td><td class="down"><strong>-0.23%</strong></td><td class="up"><strong>+1.77%</strong></td><td class="up"><strong>+12.75%</strong></td></tr>
+            <tr><td>那斯達克</td><td><strong>26,506.99</strong></td><td class="down"><strong>-0.29%</strong></td><td class="up"><strong>+0.40%</strong></td><td class="down"><strong>-0.29%</strong></td><td class="down"><strong>-1.21%</strong></td><td class="up"><strong>+14.05%</strong></td></tr>
+            <tr><td>費城半導體指數</td><td><strong>11,735.26</strong></td><td class="up"><strong>+3.37%</strong></td><td class="up"><strong>+2.32%</strong></td><td class="down"><strong>-3.65%</strong></td><td class="down"><strong>-13.82%</strong></td><td class="up"><strong>+65.68%</strong></td></tr>
+            <tr><td>羅素2000</td><td><strong>2,975.65</strong></td><td class="up"><strong>+0.25%</strong></td><td class="up"><strong>+0.11%</strong></td><td class="down"><strong>-2.02%</strong></td><td class="up"><strong>+1.37%</strong></td><td class="up"><strong>+19.89%</strong></td></tr>
+            <tr><td>道瓊歐洲50</td><td><strong>6,394.45</strong></td><td class="up"><strong>+0.19%</strong></td><td class="down"><strong>-1.41%</strong></td><td class="down"><strong>-1.42%</strong></td><td class="up"><strong>+4.77%</strong></td><td class="up"><strong>+10.32%</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance</p>
+        <div class="rankings-grid">
+            <div class="ranking-card">
+                <h4 class="ranking-card-title up">📈 本日最強三大產業</h4>
+                <div class="overflow-x-auto">
+                    <table class="table-styled compact">
+                        <thead>
+                            <tr>
+                                <th>產業</th>
+                                <th>日</th>
+                                <th>五日</th>
+                                <th>月</th>
+                                <th>季</th>
+                                <th>YTD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>科技 (XLK)</td><td class="up">+0.70%</td><td class="up">+0.86%</td><td class="up">+0.20%</td><td class="down">-3.05%</td><td class="up">+30.08%</td></tr>
+                            <tr><td>工業 (XLI)</td><td class="up">+0.41%</td><td class="down">-1.06%</td><td class="down">-5.97%</td><td class="down">-0.51%</td><td class="up">+12.99%</td></tr>
+                            <tr><td>公用事業 (XLU)</td><td class="up">+0.12%</td><td class="up">+0.82%</td><td class="down">-2.34%</td><td class="down">-1.96%</td><td class="up">+0.91%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ranking-card">
+                <h4 class="ranking-card-title down">📉 本日最弱三大產業</h4>
+                <div class="overflow-x-auto">
+                    <table class="table-styled compact">
+                        <thead>
+                            <tr>
+                                <th>產業</th>
+                                <th>日</th>
+                                <th>五日</th>
+                                <th>月</th>
+                                <th>季</th>
+                                <th>YTD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>非必需消費 (XLY)</td><td class="down">-1.33%</td><td class="down">-1.96%</td><td class="down">-2.86%</td><td class="down">-2.00%</td><td class="down">-3.77%</td></tr>
+                            <tr><td>通訊服務 (XLC)</td><td class="down">-1.19%</td><td class="down">-0.85%</td><td class="down">-0.01%</td><td class="down">-0.95%</td><td class="down">-4.83%</td></tr>
+                            <tr><td>醫療保健 (XLV)</td><td class="down">-1.04%</td><td class="up">+0.17%</td><td class="up">+5.77%</td><td class="up">+12.74%</td><td class="up">+10.76%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance</p>
+        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>就業數據推升利率　美股收黑：</strong>美國8月新增就業16.2萬人，遠高於市場預期，市場隨即提高聯準會政策收緊押注。美股4日因此承壓，道瓊、標普500與那斯達克同步收黑。利率走高會提高企業與投資人的資金成本，也壓抑高本益比股票的吸引力。蘋果、微軟與特斯拉跌幅較大，反映大型成長股先遭調節。非必需消費類股也走弱，顯示高利率疑慮已影響對借貸與消費較敏感的公司。</p><p><strong>記憶體領軍反攻　費半逆勢收紅：</strong>科技股內部卻出現明顯分化。美光、希捷、威騰與SanDisk同步大漲，帶動費半逆勢上升3.37%，輝達也收紅。記憶體買盤因此抵銷部分大型科技賣壓。歐洲股市小幅收高，ASML走強也提供科技股支撐。當日盤面顯示，強勁就業壓低整體評價，但AI與記憶體仍能吸引資金。科技股並未全面轉弱，資金更集中到仍有成長證據的公司，選股差異因此明顯放大。</p></div></div>
+    </section>
+
+    <section id="sec-3" class="section-card">
+        <h2 style="color: #2563eb;"><span style="margin-right: 0.75rem;">🏛️</span>第3章｜債券市場</h2>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>主要債券與殖利率變動概覽</caption><thead><tr><th>指標名稱</th><th>最新殖利率/價格</th><th>日變動</th><th>五日變動</th><th>月變動</th><th>季變動</th><th>年初至今變動</th></tr></thead><tbody>
+            <tr><td>美國3月期殖利率</td><td><strong>3.76%</strong></td><td class="up"><strong>+2 bps</strong></td><td class="up"><strong>+3 bps</strong></td><td class="up"><strong>+3 bps</strong></td><td class="up"><strong>+14 bps</strong></td><td class="up"><strong>+21 bps</strong></td></tr>
+            <tr><td>美國5年期殖利率</td><td><strong>4.55%</strong></td><td class="up"><strong>+4 bps</strong></td><td class="up"><strong>+7 bps</strong></td><td class="up"><strong>+22 bps</strong></td><td class="up"><strong>+36 bps</strong></td><td class="up"><strong>+83 bps</strong></td></tr>
+            <tr><td>美國10年期殖利率</td><td><strong>4.78%</strong></td><td class="up"><strong>+2 bps</strong></td><td class="up"><strong>+6 bps</strong></td><td class="up"><strong>+16 bps</strong></td><td class="up"><strong>+31 bps</strong></td><td class="up"><strong>+62 bps</strong></td></tr>
+            <tr><td>美國30年期殖利率</td><td><strong>5.25%</strong></td><td class="flat"><strong>0 bps</strong></td><td class="up"><strong>+4 bps</strong></td><td class="up"><strong>+6 bps</strong></td><td class="up"><strong>+27 bps</strong></td><td class="up"><strong>+41 bps</strong></td></tr>
+            <tr><td>高收益債券ETF(HYG)</td><td><strong>79.16</strong></td><td class="down"><strong>-0.06%</strong></td><td class="down"><strong>-0.73%</strong></td><td class="down"><strong>-0.49%</strong></td><td class="down"><strong>-0.84%</strong></td><td class="down"><strong>-1.82%</strong></td></tr>
+            <tr><td>新興市場美元債ETF(EMB)</td><td><strong>94.47</strong></td><td class="up"><strong>+0.02%</strong></td><td class="down"><strong>-0.44%</strong></td><td class="down"><strong>-0.79%</strong></td><td class="down"><strong>-1.70%</strong></td><td class="down"><strong>-1.88%</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance</p>
+        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>強勁就業推升殖利率　債價承壓：</strong>非農就業遠優於預期後，市場重新提高聯準會升息預期，美債殖利率同步走高。5年期殖利率升4 bps至4.55%，10年期升2.2 bps至4.78%，顯示投資人重新反映政策可能收緊。殖利率上升代表公債價格下跌，也會提高房貸、企業融資與股票評價所面對的利率門檻。同日美元也轉強，進一步強化利率維持高檔的市場反應。公債賣壓因此較集中在對政策變化敏感的年期。</p><p><strong>五年期升幅領先　升息預期轉強：</strong>30年期殖利率當日僅升0.3 bps至5.25%，升幅明顯小於5年期與10年期，顯示本次賣壓較集中在與聯準會政策路徑更接近的年期。高收益債券ETF下跌0.06%，新興市場美元債ETF則小漲0.02%，信用市場沒有出現同幅度拋售。債市目前主要反映9月政策風險升高，並未顯示信用風險全面惡化。信用債價格相對穩定，也顯示投資人尚未全面轉向避險。</p></div></div>
+    </section>
+
+    <section id="sec-4" class="section-card">
+        <h2 style="color: #cc4e01;"><span style="margin-right: 0.75rem;">🔥</span>第4章｜大宗商品</h2>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>能源與商品市場價格變動概覽</caption><thead><tr><th>指標名稱</th><th>最新價格</th><th>日漲跌</th><th>五日漲跌</th><th>月漲跌</th><th>季漲跌</th><th>年初至今</th></tr></thead><tbody>
+            <tr><td>WTI原油</td><td><strong>91.22</strong></td><td class="down"><strong>-0.09%</strong></td><td class="up"><strong>+9.38%</strong></td><td class="up"><strong>+22.61%</strong></td><td class="up"><strong>+8.27%</strong></td><td class="up"><strong>+60.18%</strong></td></tr>
+            <tr><td>布蘭特原油</td><td><strong>95.83</strong></td><td class="up"><strong>+0.32%</strong></td><td class="up"><strong>+8.77%</strong></td><td class="up"><strong>+22.97%</strong></td><td class="up"><strong>+8.85%</strong></td><td class="up"><strong>+59.21%</strong></td></tr>
+            <tr><td>黃金現貨</td><td><strong>4,430.33</strong></td><td class="down"><strong>-1.11%</strong></td><td class="down"><strong>-1.16%</strong></td><td class="up"><strong>+7.82%</strong></td><td class="down"><strong>-2.04%</strong></td><td class="down"><strong>-0.45%</strong></td></tr>
+            <tr><td>基礎金屬ETF (DBB)</td><td><strong>25.75</strong></td><td class="down"><strong>-0.16%</strong></td><td class="up"><strong>+1.06%</strong></td><td class="up"><strong>+1.82%</strong></td><td class="down"><strong>-1.79%</strong></td><td class="up"><strong>+12.25%</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance</p>
+        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>強勁就業推高美元　金價承壓：</strong>美國就業數據明顯強於市場原先預期，美元與美債殖利率同步轉強，黃金現貨4日下跌1.11%至4,430.33美元。升息機率升高會增加持有不配息黃金的機會成本，美元走強也讓其他貨幣買家付出更高價格。因此金價在就業報告公布後承受賣壓。美元回升與殖利率上行同時出現，使黃金缺乏利率面的支撐。當日反應顯示利率因素壓過避險需求，金價周線也轉黑。</p><p><strong>美伊再度交火　油價周線走強：</strong>原油受到美伊恢復軍事交火支撐，荷姆茲海峽通行量仍低於正常水準，市場持續擔心中東供應與運輸受阻。布蘭特4日收在95.83美元，單日上漲0.32%，五日累計上漲8.77%。不過強勁非農也提高升息可能，較高利率會限制需求端追價。供應風險目前仍高於需求疑慮，因此油價周線維持強勢。地緣因素仍提供支撐，但利率上升已開始限制油價上行空間。</p></div></div>
+    </section>
+
+    <section id="sec-5" class="section-card">
+        <h2 style="color: #059669;"><span style="margin-right: 0.75rem;">🗻</span>第5章｜台股解析</h2>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>亞洲主要股市指數漲跌概覽</caption><thead><tr><th>指標名稱</th><th>最新收盤價</th><th>日漲跌</th><th>五日漲跌</th><th>月漲跌</th><th>季漲跌</th><th>年初至今</th></tr></thead><tbody>
+            <tr><td>台灣加權指數</td><td><strong>46,551.13</strong></td><td class="up"><strong>+1.51%</strong></td><td class="up"><strong>+0.47%</strong></td><td class="up"><strong>+7.36%</strong></td><td class="up"><strong>+1.91%</strong></td><td class="up"><strong>+60.72%</strong></td></tr>
+            <tr><td>日經225</td><td><strong>65,020.94</strong></td><td class="up"><strong>+1.26%</strong></td><td class="down"><strong>-2.09%</strong></td><td class="up"><strong>+1.66%</strong></td><td class="down"><strong>-3.63%</strong></td><td class="up"><strong>+29.16%</strong></td></tr>
+            <tr><td>香港恆生指數</td><td><strong>25,650.87</strong></td><td class="up"><strong>+1.74%</strong></td><td class="up"><strong>+0.26%</strong></td><td class="down"><strong>-0.78%</strong></td><td class="up"><strong>+1.57%</strong></td><td class="up"><strong>+0.08%</strong></td></tr>
+            <tr><td>韓國KOSPI</td><td><strong>6,687.21</strong></td><td class="up"><strong>+1.64%</strong></td><td class="down"><strong>-1.50%</strong></td><td class="up"><strong>+5.16%</strong></td><td class="down"><strong>-22.60%</strong></td><td class="up"><strong>+58.68%</strong></td></tr>
+            <tr><td>印度SENSEX</td><td><strong>76,515.43</strong></td><td class="up"><strong>+0.48%</strong></td><td class="down"><strong>-0.97%</strong></td><td class="down"><strong>-2.44%</strong></td><td class="up"><strong>+2.90%</strong></td><td class="down"><strong>-10.18%</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin-top: 24px; margin-bottom: 0;">資料來源: Yahoo Finance</p>
+        <h3 class="table-title" style="margin: 16px 0 0 0;">台股三大法人買賣超 (2026-09-04)</h3>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>台股三大法人買賣超統計</caption><thead><tr><th>法人別</th><th>當日淨額(億)</th><th>5日累計(億)</th><th>20日累計(億)</th></tr></thead><tbody>
+            <tr><td>外資</td><td class="up"><strong>+562.13</strong></td><td class="down"><strong>-709.72</strong></td><td class="up"><strong>+2735.47</strong></td></tr>
+            <tr><td>投信</td><td class="down"><strong>-9.11</strong></td><td class="up"><strong>+58.55</strong></td><td class="down"><strong>-84.80</strong></td></tr>
+            <tr><td>自營商</td><td class="up"><strong>+63.70</strong></td><td class="down"><strong>-218.22</strong></td><td class="up"><strong>+176.67</strong></td></tr>
+            <tr class="summary-row"><td>總計</td><td class="up"><strong>+616.72</strong></td><td class="down"><strong>-869.40</strong></td><td class="up"><strong>+2827.35</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: 交易所資料整理</p>
+        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>華勒按兵訊號　台股收復四萬六：</strong>華勒前一日表示若通膨持續降溫，傾向支持9月按兵不動，美債殖利率隨後回落。台股4日受此激勵，早盤震盪後一路走高，終場漲693.47點收46,551.13點，重返4萬6與5日線，周線連二紅。台積電上漲20元，電子代工與被動元件同步走強，顯示成長股買盤重新回流。指數站回5日線後，權值與電子族群同步回穩，反彈結構比前一日完整。成交值同步收斂，代表上漲仍有量能限制。</p><p><strong>外資回補電子代工　國巨獲加碼：</strong>法人籌碼同步轉暖。外資由連二賣轉為買超562.13億元，三大法人合計買超616.72億元；投信小幅賣超9.11億元，自營商買超63.70億元。外資主要加碼仁寶、鴻海、緯創、廣達與國巨，並調節面板與封測。現貨回補集中大型電子，顯示外資優先買進流動性較高的代工與權值股。資金回到大型電子與被動元件，但族群仍維持明顯分化。不過台指期淨空單增加，期現貨方向仍不同。</p></div></div>
+    </section>
+
+    <section id="sec-6" class="section-card">
+        <h2 style="color: #0891b2;"><span style="margin-right: 0.75rem;">💱</span>第6章｜匯率市場</h2>
+        <div class="overflow-x-auto"><table class="table-styled"><caption>主要貨幣兌美元匯率變動概覽</caption><thead><tr><th>指標名稱</th><th>最新匯率</th><th>日漲跌</th><th>五日漲跌</th><th>月漲跌</th><th>季漲跌</th><th>年初至今</th></tr></thead><tbody>
+            <tr><td>美元指數</td><td><strong>99.15</strong></td><td class="up"><strong>+0.24%</strong></td><td class="down"><strong>-0.54%</strong></td><td class="down"><strong>-0.73%</strong></td><td class="down"><strong>-0.25%</strong></td><td class="up"><strong>+0.89%</strong></td></tr>
+            <tr><td>美元兌台幣</td><td><strong>31.6400</strong></td><td class="down"><strong>-0.14%</strong></td><td class="down"><strong>-0.19%</strong></td><td class="down"><strong>-2.46%</strong></td><td class="up"><strong>+0.30%</strong></td><td class="up"><strong>+1.14%</strong></td></tr>
+            <tr><td>歐元兌美元</td><td><strong>1.1614</strong></td><td class="down"><strong>-0.12%</strong></td><td class="down"><strong>-0.30%</strong></td><td class="up"><strong>+0.99%</strong></td><td class="up"><strong>+0.10%</strong></td><td class="down"><strong>-1.07%</strong></td></tr>
+            <tr><td>美元兌日圓</td><td><strong>156.2500</strong></td><td class="up"><strong>+0.39%</strong></td><td class="down"><strong>-1.95%</strong></td><td class="down"><strong>-0.83%</strong></td><td class="down"><strong>-2.33%</strong></td><td class="down"><strong>-0.12%</strong></td></tr>
+        </tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: Yahoo Finance｜台幣匯率為紐約離岸收盤</p>
+        <div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>就業數據推升美元　利率預期轉強：</strong>美國8月新增就業達16.2萬人，明顯高於市場原先預估，投資人隨即提高聯準會升息可能性，美元4日反彈。美元指數上升0.24%至99.15，美元兌日圓也上升0.39%至156.25。前一日華勒偏鴿談話造成的美元壓力因此部分回補。就業數據重新拉高美國利率吸引力，資金短線回到美元。美元本週仍收跌，顯示單日反彈尚未扭轉整週方向。</p><p><strong>熱錢回流台股　新台幣同步轉強：</strong>台灣匯市則受到本地資金回流支撐。外資4日轉買台股562.13億元，帶動股匯同步走強，美元兌新台幣下跌0.14%至31.64。國際美元雖在美國就業報告公布後反彈，但台股交易時段主要反映前一日美債殖利率回落與外資回補，因此新台幣仍收升。美元與新台幣同日各自走強，反映兩地市場時序與資金來源不同。匯率短線仍需分開看國際利率與本地外資供需。</p></div></div>
+    </section>
+
+    <section id="sec-7" class="section-card">
+        <h2 style="color: #7c3aed;"><span style="margin-right: 0.75rem;">🏭</span>第7章｜產業多空展望</h2>
+        <div class="stock-recommendation bullish"><h3 class="recommendation-title bullish">[看多]:AI晶片 (以輝達(NVDA)為例)</h3><div class="overflow-x-auto"><table class="analysis-table"><thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead><tbody><tr><td class="font-semibold text-slate-600">營運情況</td><td>營收與獲利維持高速成長，自由現金流也處於高檔，顯示高速成長已轉化為獲利與現金，基本面可支撐較高評價。</td></tr><tr><td class="font-semibold text-slate-600">市場前景</td><td>預估本益比明顯低於目前本益比，反映市場預期未來獲利繼續增加；現有成長數字仍能支撐較高評價。</td></tr><tr><td class="font-semibold text-slate-600">關鍵利多／利空</td><td>現價已接近52週高點，TV技術評級仍為強力買進。趨勢偏多，但股價越靠近前高，短線波動與追價風險也會提高。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td><td>本益比29.16倍，預估本益比14.90倍，未來獲利預期可降低評價壓力。營收年增105.9%、獲利年增127.8%，自由現金流418億美元，成長與現金流同步偏強。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-NVDA/technicals/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td><td>現價230.36美元，站上50日均線210.57美元與200日均線196.68美元。TV評級為強力買進，且距52週高點236.54美元不遠，趨勢偏強但上檔接近前高。</td></tr></tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: 基本面 Yahoo Finance｜技術面與評級 TradingView（與按鈕頁面同源）</p><div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>成長支撐評價　趨勢維持偏多：</strong><br>投資人關心輝達，重點在高速成長能否繼續支撐高評價。營收與獲利年成長都超過100%，預估本益比也低於目前水準；均線結構維持偏多，TV訊號也偏強。股價距52週高點已近，偏多結構仍在，但短線追價空間相對收斂。成長與價格方向一致，支撐仍較完整。</p></div></div></div>
+        <div class="stock-recommendation bullish"><h3 class="recommendation-title bullish">[看多]:記憶體 (以美光(MU)為例)</h3><div class="overflow-x-auto"><table class="analysis-table"><thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead><tbody><tr><td class="font-semibold text-slate-600">營運情況</td><td>營收與獲利年成長幅度都很高，自由現金流為正，顯示公司營運改善已明顯反映在獲利與現金創造能力。</td></tr><tr><td class="font-semibold text-slate-600">市場前景</td><td>預估本益比大幅低於目前本益比，反映市場預期未來獲利持續增加，現有成長速度為評價提供明確支撐。</td></tr><tr><td class="font-semibold text-slate-600">關鍵利多／利空</td><td>價格位於兩條主要均線之上，TV評級維持強力買進；距52週高點仍有空間，但高波動特性仍會放大短線震盪。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-MU/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td><td>本益比22.96倍，預估本益比6.56倍，未來獲利預期明顯提高。營收年增345.7%、獲利年增1368.5%，自由現金流76億美元，基本面成長力道強。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NASDAQ-MU/technicals/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td><td>現價1,016.59美元，高於50日均線938.28美元與200日均線606.48美元。TV評級為強力買進，價格維持在兩條主要均線之上，多方趨勢仍有技術面支撐。</td></tr></tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: 基本面 Yahoo Finance｜技術面與評級 TradingView（與按鈕頁面同源）</p><div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>獲利成長強勁　記憶體維持多頭：</strong><br>美光的投資重點在獲利成長速度與價格趨勢是否同向。營收年成長345.7%，獲利年成長1368.5%，預估本益比僅6.56倍；價格位於兩條主要均線之上，TV訊號維持偏多。基本面與技術面方向一致，偏多判斷仍有支撐。評價與成長數字目前仍相互配合。</p></div></div></div>
+        <div class="stock-recommendation bearish"><h3 class="recommendation-title bearish">[看空]:餐飲 (以麥當勞(MCD)為例)</h3><div class="overflow-x-auto"><table class="analysis-table"><thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead><tbody><tr><td class="font-semibold text-slate-600">營運情況</td><td>營收與獲利仍維持正成長，但成長幅度有限，對成熟餐飲龍頭的評價支撐偏弱，股價更需要穩定成長才能吸引買盤。</td></tr><tr><td class="font-semibold text-slate-600">市場前景</td><td>非必需消費類股當日走弱，高利率疑慮壓抑消費股承接；麥當勞營運雖維持成長，評價擴張仍缺少更強的獲利動能。</td></tr><tr><td class="font-semibold text-slate-600">關鍵利多／利空</td><td>股價跌破主要均線且接近52週低點，TV評級維持強力賣出，顯示賣壓仍占上風，短線反彈尚未改變弱勢趨勢。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-MCD/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td><td>本益比20.77倍、預估本益比18.29倍，兩者差距有限。營收年增3.7%、獲利年增5.7%，自由現金流63億美元，營運仍有成長，但速度不足以明顯推升股價評價。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-MCD/technicals/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td><td>現價255.69美元，低於50日均線269.47美元與200日均線295.94美元。TV評級為強力賣出，且現價接近52週低點255.49美元，技術面仍由賣方掌握。</td></tr></tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: 基本面 Yahoo Finance｜技術面與評級 TradingView（與按鈕頁面同源）</p><div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>成長力道有限　股價維持弱勢：</strong><br>投資人關心麥當勞，在於高利率環境下成熟消費品牌能否靠穩定獲利守住評價。營收與獲利仍有成長，但幅度僅3.7%與5.7%，本益比也未呈現明顯折價。股價同時跌破50日與200日均線，TV評級為強力賣出。基本面缺少加速訊號，技術面又偏弱，因此股價仍有整理壓力。</p></div></div></div>
+        <div class="stock-recommendation bearish"><h3 class="recommendation-title bearish">[看空]:物流 (以UPS為例)</h3><div class="overflow-x-auto"><table class="analysis-table"><thead><tr><th>分析維度</th><th>觀點與數據</th></tr></thead><tbody><tr><td class="font-semibold text-slate-600">營運情況</td><td>營收仍有成長，但獲利年減幅度明顯，顯示目前營運改善尚未轉化為獲利回升，獲利端仍有明顯壓力。</td></tr><tr><td class="font-semibold text-slate-600">市場前景</td><td>預估本益比低於目前本益比，市場仍期待未來獲利改善，但現有數據顯示獲利下滑尚未結束，評價支撐有限。</td></tr><tr><td class="font-semibold text-slate-600">關鍵利多／利空</td><td>價格同時低於50日與200日均線，TV評級維持強力賣出，技術面仍缺少明確轉強訊號，反彈基礎偏弱。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-UPS/financials-overview/" target="_blank" class="link-button fundamental">基本面<span class="link-button-subtitle">按此看財務數據</span></a></td><td>營收年成長7.6%，但獲利年成長-53.0%，顯示營收改善尚未帶動獲利回升。本益比19.01倍、預估12.67倍，自由現金流56億美元，獲利壓力仍是主要限制。</td></tr><tr><td class="font-semibold text-slate-600"><a href="https://tw.tradingview.com/symbols/NYSE-UPS/technicals/" target="_blank" class="link-button technical">技術面<span class="link-button-subtitle">按此看技術圖表</span></a></td><td>現價102.29美元，低於50日均線107.72美元與200日均線104.89美元。TV評級為強力賣出，52週低點82.00美元，價格仍處於主要均線下方。</td></tr></tbody></table></div><p class="text-xs text-right" style="color: #64748b; margin: 12px 0;">資料來源: 基本面 Yahoo Finance｜技術面與評級 TradingView（與按鈕頁面同源）</p><div class="analysis-block"><h4>深度分析:</h4><div class="structured-analysis"><p><strong>獲利下滑未止　股價趨勢偏空：</strong><br>UPS的營收仍有成長，但獲利年減53.0%，基本面尚未出現同步改善。價格低於50日與200日均線，TV訊號維持偏空。預估本益比雖低於目前水準，仍需要獲利回升才能支撐評價；目前基本面與技術面都偏弱，偏空判斷較有依據。</p></div></div></div>
+    </section>
+
+    <footer class="text-center" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+        <p class="text-xs" style="color: #64748b;">© 2025 金融市場研究團隊 — 洞察•解構•透視全球資產</p>
+        <p class="text-xs" style="color: #64748b; margin-top: 0.5rem;">本報告僅為資訊分享，不構成任何投資建議，投資人應秉持獨立判斷，審慎評估並自負投資風險。</p>
+    </footer>
+</div>
+
+<button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">↑</button>
+
+<script>
+function updateProgressBar() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    const progressBar = document.getElementById("progressBar");
+    if (progressBar) {
+        progressBar.style.width = scrolled + "%";
+        progressBar.style.opacity = scrolled > 0 ? "1" : "0";
+    }
+}
+window.onscroll = function() { updateProgressBar(); };
+</script>
+
+<script>
+window.addEventListener('load', function() {
+    const smartDownloadBtn = document.getElementById('smartDownloadBtn');
+    if (smartDownloadBtn) {
+        smartDownloadBtn.addEventListener('click', function() {
+            const element = document.createElement('a');
+            const dateStr = '2026-09-04';
+            const filename = dateStr.replaceAll('-', '') + '.html';
+            const progressBar = document.getElementById('progressBar');
+            const backToTopButton = document.querySelector('.back-to-top');
+            const originalProgressBarStyle = progressBar ? progressBar.style.display : '';
+            const originalBackToTopStyle = backToTopButton ? backToTopButton.style.display : '';
+            if (progressBar) progressBar.style.display = 'none';
+            if (backToTopButton) backToTopButton.style.display = 'none';
+            const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+            if (progressBar) progressBar.style.display = originalProgressBarStyle;
+            if (backToTopButton) backToTopButton.style.display = originalBackToTopStyle;
+            const file = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            element.href = URL.createObjectURL(file);
+            element.download = filename;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            URL.revokeObjectURL(element.href);
+        });
+    }
+});
+</script>
+
 </body>
 </html>
