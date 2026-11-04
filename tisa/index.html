@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TISA 一次看懂</title>
+<meta name="description" content="台灣 TISA 個人投資帳戶 1.0 與 2.0：時間軸、規則、數據、租稅試算、與日本 NISA 對照。資料截至 2026-11-05。">
+<style>
+:root{
+  --bg:#fbfaf7; --panel:#ffffff; --ink:#1c1d1f; --muted:#5d6168; --rule:#e3e0d8; --soft:#f2f0ea;
+  --accent:#1f5c99; --accent-soft:#e6eef7;
+  --done:#2e7d4f; --done-soft:#e5f3ea;
+  --set:#1f5c99; --set-soft:#e6eef7;
+  --plan:#9a6a00; --plan-soft:#fbf1d9;
+  --open:#a33a2a; --open-soft:#f8e7e3;
+  --mark:#fff1a8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171a; --panel:#1d2024; --ink:#e9eaec; --muted:#a3a8b0; --rule:#33373d; --soft:#24282d;
+    --accent:#7fb0e6; --accent-soft:#1f2c3b;
+    --done:#7fcf9c; --done-soft:#1c2e24;
+    --set:#7fb0e6; --set-soft:#1f2c3b;
+    --plan:#e6c06a; --plan-soft:#33291a;
+    --open:#ee9a8b; --open-soft:#3a221f;
+    --mark:#5c5420;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171a; --panel:#1d2024; --ink:#e9eaec; --muted:#a3a8b0; --rule:#33373d; --soft:#24282d;
+  --accent:#7fb0e6; --accent-soft:#1f2c3b;
+  --done:#7fcf9c; --done-soft:#1c2e24;
+  --set:#7fb0e6; --set-soft:#1f2c3b;
+  --plan:#e6c06a; --plan-soft:#33291a;
+  --open:#ee9a8b; --open-soft:#3a221f;
+  --mark:#5c5420;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;
+  font-size:16px;line-height:1.75}
+a{color:var(--accent)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 80px}
+header.hero{padding:40px 0 18px;border-bottom:1px solid var(--rule)}
+header.hero .eyebrow{font-size:13px;letter-spacing:.08em;color:var(--muted)}
+header.hero h1{font-size:32px;line-height:1.3;margin:6px 0 10px}
+header.hero p{margin:0;color:var(--muted)}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);
+  margin:0 -16px;padding:8px 16px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav.toc::-webkit-scrollbar{display:none}
+nav.toc a{display:inline-block;font-size:14px;text-decoration:none;color:var(--muted);
+  padding:4px 10px;border-radius:999px;margin-right:4px}
+nav.toc a:hover{background:var(--soft);color:var(--ink)}
+section{padding:34px 0 6px;scroll-margin-top:52px}
+h2{font-size:24px;margin:0 0 6px;line-height:1.35}
+h2 .no{display:inline-block;min-width:34px;height:34px;line-height:34px;text-align:center;border-radius:50%;
+  background:var(--ink);color:var(--bg);font-size:16px;margin-right:10px;vertical-align:3px}
+.lede{font-size:17px;margin:4px 0 16px}
+.lede b, mark{background:var(--mark);color:inherit;padding:0 3px;border-radius:3px;font-weight:700}
+h3{font-size:18px;margin:22px 0 8px}
+p{margin:8px 0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* status tags */
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.t-done{background:var(--done-soft);color:var(--done)}
+.t-set{background:var(--set-soft);color:var(--set)}
+.t-plan{background:var(--plan-soft);color:var(--plan)}
+.t-open{background:var(--open-soft);color:var(--open)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--muted);margin:14px 0 0}
+.legend .tag{margin-left:0;margin-right:4px}
+
+/* summary cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px}
+.card .k{font-size:13px;color:var(--muted)}
+.card .v{font-size:22px;font-weight:800;margin:2px 0 6px}
+.card p{font-size:15px;margin:0}
+.card.hl{border:2px solid var(--accent)}
+
+/* glossary */
+dl.gl{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--panel)}
+dl.gl dt,dl.gl dd{margin:0;padding:10px 14px;border-bottom:1px solid var(--rule)}
+dl.gl dt{font-weight:700;background:var(--soft)}
+dl.gl dt:last-of-type,dl.gl dd:last-of-type{border-bottom:none}
+
+/* timeline */
+.tl{position:relative;margin:18px 0 0;padding-left:28px}
+.tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--rule)}
+.ev{position:relative;padding:0 0 18px}
+.ev::before{content:"";position:absolute;left:-25px;top:7px;width:14px;height:14px;border-radius:50%;
+  background:var(--panel);border:3px solid var(--muted)}
+.ev.past::before{border-color:var(--done);background:var(--done)}
+.ev.key::before{border-color:var(--accent);background:var(--accent);width:18px;height:18px;left:-27px;top:5px}
+.ev.future::before{border-style:dashed;border-color:var(--plan)}
+.ev .d{font-size:14px;font-weight:700;color:var(--muted)}
+.ev.key .d{color:var(--accent)}
+.ev .w{font-weight:700}
+.ev .x{font-size:15px;color:var(--muted)}
+.ev.key .box{background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin-top:4px}
+.phase{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--muted);margin:6px 0 10px -28px;padding-left:28px}
+
+/* steps */
+ol.steps{list-style:none;margin:14px 0;padding:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;background:var(--panel);border:1px solid var(--rule);
+  border-radius:12px;padding:12px 14px 12px 56px;margin:0 0 10px}
+ol.steps>li::before{content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--ink);color:var(--bg);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+ol.steps .q{font-weight:800}
+ol.steps .a{margin-top:2px}
+ol.steps .why{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* callouts */
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:14px 0}
+.callout.warn{border-color:var(--open);background:var(--open-soft)}
+.callout.tip{border-color:var(--done);background:var(--done-soft)}
+.callout .h{font-weight:800;margin-bottom:2px}
+
+/* tables */
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--rule);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.hl{font-weight:800;color:var(--accent)}
+
+/* bar chart */
+.bars{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin:12px 0}
+.bars .title{font-weight:800;margin-bottom:8px}
+.bar{display:grid;grid-template-columns:96px 1fr 84px;align-items:center;gap:10px;margin:7px 0;font-size:14px}
+.bar .track{height:18px;background:var(--soft);border-radius:4px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:4px}
+.bar .lbl{color:var(--muted)}
+.bar .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.split{display:flex;height:26px;border-radius:6px;overflow:hidden;margin:8px 0 6px;font-size:13px;font-weight:700}
+.split div{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;padding:0 6px}
+.split .a{background:var(--accent)}
+.split .b{background:#8c96a3}
+
+/* calculator */
+.calc{background:var(--panel);border:2px solid var(--accent);border-radius:14px;padding:16px;margin:14px 0}
+.calc .row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.calc label{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.calc select,.calc input{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+.calc .out{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.calc .o{background:var(--soft);border-radius:10px;padding:10px 12px}
+.calc .o .k{font-size:13px;color:var(--muted)}
+.calc .o .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.calc .o.big .v{color:var(--accent)}
+.calc .note{font-size:13px;color:var(--muted);margin-top:10px}
+
+ul.check{list-style:none;padding:0;margin:10px 0}
+ul.check li{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:10px 12px 10px 40px;margin:0 0 8px;position:relative}
+ul.check li::before{content:"?";position:absolute;left:12px;top:10px;width:20px;height:20px;border-radius:50%;
+  background:var(--open-soft);color:var(--open);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+ol.src{font-size:14px;padding-left:22px}
+ol.src li{margin:3px 0;word-break:break-all}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
+.themebtn{position:fixed;right:14px;bottom:14px;z-index:6;border:1px solid var(--rule);background:var(--panel);color:var(--ink);
+  border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+
+@media (max-width:720px){
+  header.hero h1{font-size:26px}
+  .cards{grid-template-columns:1fr}
+  dl.gl{grid-template-columns:1fr}
+  dl.gl dt{border-bottom:none;padding-bottom:2px}
+  .calc .row,.calc .out{grid-template-columns:1fr}
+  .bar{grid-template-columns:80px 1fr 70px}
+  table{font-size:14px}
+}
+@media print{
+  nav.toc,.themebtn{display:none}
+  body{background:#fff;font-size:12pt}
+  section{break-inside:auto}
+  .card,ol.steps>li,.ev,tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">台灣個人投資儲蓄帳戶 · 資料截至 2026 年 11 月 5 日</div>
+  <h1>TISA 一次看懂：1.0 怎麼運作、2.0 改了什麼</h1>
+  <p>從名詞、時間軸、規則到數字，照順序讀下來就能掌握全貌。每一項都標了狀態，分得出哪些已經上路、哪些只是方向。</p>
+  <div class="legend">
+    <span><span class="tag t-done">已實施</span>正在運作</span>
+    <span><span class="tag t-set">已拍板</span>行政院已定方向，尚未立法</span>
+    <span><span class="tag t-plan">預計</span>官方預定的時程</span>
+    <span><span class="tag t-open">未定</span>官方還沒說明</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目錄">
+  <a href="#s0">30 秒看懂</a><a href="#s1">先懂名詞</a><a href="#s2">時間軸</a><a href="#s3">1.0 規則</a><a href="#s4">1.0 成績</a><a href="#s5">2.0 規則</a><a href="#s6">省多少稅</a><a href="#s7">誰會開戶</a><a href="#s8">對照 NISA</a><a href="#s9">費用</a><a href="#s10">還沒確定</a><a href="#src">資料來源</a>
+</nav>
+
+<!-- 0 -->
+<section id="s0">
+  <h2><span class="no">0</span>30 秒看懂</h2>
+  <p class="lede">TISA 分兩階段：<b>1.0 是業者讓利</b>，2025 年 7 月已上路；<b>2.0 是政府給稅</b>，2026 年 10 月 22 日行政院拍板，預計 2028 年 5 月報稅才用得到。</p>
+  <div class="cards">
+    <div class="card">
+      <div class="k">TISA 1.0<span class="tag t-done">已實施</span></div>
+      <div class="v">便宜＋紀律</div>
+      <p>免申購手續費、經理費低於 1%，只能定期定額、連扣 24 個月。<b>沒有任何租稅優惠。</b></p>
+    </div>
+    <div class="card hl">
+      <div class="k">TISA 2.0<span class="tag t-set">已拍板</span></div>
+      <div class="v">每人每年 2.4 萬</div>
+      <p>放進專戶、實際買了 TISA 基金的錢，每人每年最多 2.4 萬元可從綜合所得總額減除；<b>這筆錢要到 60 歲才能免稅領出。</b></p>
+    </div>
+    <div class="card">
+      <div class="k">目前規模（2026-10-22）</div>
+      <div class="v">27.7 萬戶</div>
+      <p>累計申購 128 億元、帳戶資產 216.4 億元。其中一半以上是舊的好享退部位。</p>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="h">最常見的兩個誤會</div>
+    <p>1. 2.0 是「扣除所得」，不是「免稅額」，也不是「抵減稅額」。省下的稅＝扣除金額×你的邊際稅率，所以年薪不高的人幾乎省不到。</p>
+    <p>2. 鎖到 60 歲的只有「拿去抵稅的那筆錢」，不是整個帳戶、也不是 1.0 帳戶。</p>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="s1">
+  <h2><span class="no">1</span>先懂六個名詞</h2>
+  <p class="lede">後面每一段都會用到這幾個詞。</p>
+  <dl class="gl">
+    <dt>TISA</dt><dd>Taiwan Individual Savings Account，台灣個人投資儲蓄帳戶。由集保結算所建立的專戶機制，<b>只能買經過篩選的境內基金</b>。</dd>
+    <dt>TISA 級別基金</dt><dd>投信為 TISA 專門發行的低費率級別，經理費低於 1%。另有「R 級別」，是原本好享退等退休專案的級別。</dd>
+    <dt>ETF 連結基金</dt><dd>TISA 不能直接買上市 ETF，要透過「投資 ETF 的基金」間接持有，例如 0050 連結基金。</dd>
+    <dt>好享退</dt><dd>2019 年起集保推的退休理財專案。這些舊部位已納入 TISA 統計，所以 TISA 的資產數字會被墊高。</dd>
+    <dt>款戶・券戶</dt><dd>2.0 要另開的兩個帳戶。<b>款戶是銀行帳戶</b>（放錢），<b>券戶是基金帳戶</b>（放基金），兩者綁定。</dd>
+    <dt>自綜合所得總額減除</dt><dd>先從所得中扣掉，再算稅。效果是「少算一段所得」，不是「直接少繳那麼多稅」。</dd>
+  </dl>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <h2><span class="no">2</span>時間軸：從提出到報稅</h2>
+  <p class="lede">從政策提出到 2.0 拍板花了整整兩年；從拍板到真的能報稅，還要再等一年半。</p>
+
+  <div class="tl">
+    <div class="phase">第一階段　政策提出（2024）</div>
+    <div class="ev past"><div class="d">2024-10-24</div><div class="w">金管會首次提出台版 TISA</div><div class="x">在立法院財委會報告：由集保建專戶，業者在額度內讓利，並擬爭取租稅優惠。</div></div>
+    <div class="ev past"><div class="d">2024-12</div><div class="w">納入「亞洲資產管理中心」計畫</div></div>
+
+    <div class="phase">第二階段　1.0 上路（2025）</div>
+    <div class="ev past"><div class="d">2025-05</div><div class="w">集保成立 TISA 基金委員會</div><div class="x">產學專家負責篩選適格基金。</div></div>
+    <div class="ev past"><div class="d">2025-06-24</div><div class="w">金管會宣布分兩階段推動</div><div class="x">第一階段業者讓利，第二階段跨部會爭取租稅優惠。</div></div>
+    <div class="ev key"><div class="d">2025-06-30 ～ 07-01</div><div class="box"><div class="w">TISA 1.0 正式上路<span class="tag t-done">已實施</span></div><div class="x">6/30 集保系統啟動，首波 10 家投信、16 檔基金；7/1 開放民眾開戶。</div></div></div>
+    <div class="ev past"><div class="d">2025-10-23</div><div class="w">首次公布成績：4 萬 5,744 戶</div><div class="x">8 家銷售機構上線。</div></div>
+
+    <div class="phase">第三階段　累積與爭取租稅（2026 上半年）</div>
+    <div class="ev past"><div class="d">2026-04-23</div><div class="w">12 萬 3,699 戶</div><div class="x">金管會表示已提出不同稅賦方案與財政部協商。</div></div>
+    <div class="ev past"><div class="d">2026-07-21</div><div class="w">滿週年：19 萬 7,012 戶</div></div>
+    <div class="ev past"><div class="d">2026-09-03</div><div class="w">24 萬 4,218 戶，宣布全力推動第二階段</div></div>
+
+    <div class="phase">第四階段　2.0 拍板（2026-10）</div>
+    <div class="ev past"><div class="d">2026-10-13</div><div class="w">財政部：與金管會達成初步共識</div></div>
+    <div class="ev past"><div class="d">2026-10-19</div><div class="w">金管會主委：稅式支出評估可提前提出；企業 TISA 請集保研議</div></div>
+    <div class="ev key"><div class="d">2026-10-22</div><div class="box"><div class="w">行政院會拍板 TISA 2.0 租稅優惠<span class="tag t-set">已拍板</span></div><div class="x">每人每年 2.4 萬元自綜合所得總額減除；1.0 與 2.0 雙軌並行；2.0 要另開款戶與券戶。</div></div></div>
+
+    <div class="phase">第五階段　立法與上路（2026 年底～2028）</div>
+    <div class="ev future"><div class="d">2026 年底前</div><div class="w">預告《證券投資信託及顧問法》修正草案<span class="tag t-plan">預計</span></div><div class="x">截至 11/5 尚未預告。銷售機構資格、專戶能否轉移等細節要看草案。</div></div>
+    <div class="ev future"><div class="d">2027</div><div class="w">完成立法<span class="tag t-plan">預計</span></div><div class="x">企業 TISA 示範方案也可能在這年上路<span class="tag t-open">未定</span></div></div>
+    <div class="ev future key"><div class="d">2028-05</div><div class="box"><div class="w">第一次報稅適用<span class="tag t-plan">預計</span></div><div class="x">是否回溯適用前一年的提撥，還要跟財政部討論。</div></div></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <h2><span class="no">3</span>TISA 1.0 怎麼運作<span class="tag t-done">已實施</span></h2>
+  <p class="lede">1.0 的本質是<b>低成本、強紀律、只買基金</b>的專戶。照一個人開戶到贖回的順序看：</p>
+  <ol class="steps">
+    <li><div class="q">誰可以開？</div><div class="a">自然人，包括本國居民和因工作、婚姻、生活長居台灣的外籍人士。</div><div class="why">不能開：大陸地區人民、美國籍人士、法人。</div></li>
+    <li><div class="q">在哪裡開？能開幾個？</div><div class="a">基金平台、投顧、證券商、銀行（特定金錢信託）都可以。<b>同一家機構只能開一戶，但可以在不同機構各開一戶</b>，家數不限。</div></li>
+    <li><div class="q">能買什麼？</div><div class="a">只能買 TISA 基金委員會核准的境內基金（股票型、債券型、資產配置型）。<b>不能買個股，也不能直接買 ETF</b>；ETF 只能透過連結基金買。</div><div class="why">上架條件：成立滿 3 年、規模 5 億元以上、晨星或理柏 3 星以上、報酬穩定且在同類前 50%。</div></li>
+    <li><div class="q">怎麼買？</div><div class="a"><b>只能定期定額</b>，不能單筆，也不能用基金轉換轉入。TISA 級別每月最低 1,000 元，R 級別 3,000 元，以 1,000 元為級距調整。</div></li>
+    <li><div class="q">費用多少？</div><div class="a">銷售機構<b>不得收申購手續費</b>；經理費低於 1%，最低 0.5%。</div><div class="why">集保只規定不收申購手續費，銀行的信託管理費「依各銀行規定」。詳見第 9 節。</div></li>
+    <li><div class="q">有什麼紀律要求？</div><div class="a">第一次扣款成功後要<b>連續扣款 24 個月</b>，期間不能改標的、不能改扣款日。</div></li>
+    <li><div class="q">可以中途贖回嗎？</div><div class="a">可以，隨時贖回、不收費。但未滿 24 個月就贖回、停扣或扣款失敗，<b>6 個月內不能對同一級別再新增定期定額</b>（可以去另一家機構的 TISA 帳戶買同一檔）。</div><div class="why">第 25 個月起繼續扣款就繼續享優惠，部分或全部贖回都不影響。</div></li>
+    <li><div class="q">可以把帳戶搬到別家嗎？</div><div class="a"><b>不行。</b>不同機構的 TISA 帳戶之間不能移轉，要換只能贖回後在新機構重新扣款。</div><div class="why">帳戶也不能贈與、質押、借貸；繼承時轉到繼承人的一般帳戶。可用集保「TISA 帳戶查詢平台」或「集保 e 手掌握」跨機構查詢。</div></li>
+  </ol>
+  <p class="small muted">法源：1.0 沒有專法，規則由集保「TISA 帳戶開設、交易及相關作業問答集」與投信投顧公會「TISA 基金發行與銷售規則」訂定。</p>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <h2><span class="no">4</span>TISA 1.0 的成績</h2>
+  <p class="lede">16 個月從 4.6 萬戶成長到 27.7 萬戶，成長是<b>穩定、逐月</b>的，不是爆發。</p>
+
+  <div class="bars" role="img" aria-label="TISA 1.0 累計開戶數，2025-10 到 2026-10 由 4.6 萬戶增加到 27.7 萬戶">
+    <div class="title">累計開戶數（萬戶）</div>
+    <div class="bar"><span class="lbl">2025-10-17</span><span class="track"><span class="fill" style="width:16.5%;display:block"></span></span><span class="val">4.57</span></div>
+    <div class="bar"><span class="lbl">2026-04-17</span><span class="track"><span class="fill" style="width:44.7%;display:block"></span></span><span class="val">12.37</span></div>
+    <div class="bar"><span class="lbl">2026-06-30</span><span class="track"><span class="fill" style="width:71.1%;display:block"></span></span><span class="val">19.70</span></div>
+    <div class="bar"><span class="lbl">2026-08-21</span><span class="track"><span class="fill" style="width:88.2%;display:block"></span></span><span class="val">24.42</span></div>
+    <div class="bar"><span class="lbl">2026-10-22</span><span class="track"><span class="fill" style="width:100%;display:block"></span></span><span class="val">約 27.7</span></div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>統計日</th><th class="num">累計開戶數</th><th class="num">累計申購（億元）</th><th class="num">帳戶資產（億元）</th><th>公布來源</th></tr></thead>
+    <tbody>
+      <tr><td>2025-10-17</td><td class="num">45,744</td><td class="num">7.85</td><td class="num">60.67</td><td>金管會 10/23 記者會</td></tr>
+      <tr><td>2026-04-17</td><td class="num">123,699</td><td class="num">48.8</td><td class="num">137.7</td><td>金管會 4/23 記者會</td></tr>
+      <tr><td>2026-06-30</td><td class="num">197,012</td><td class="num">77.6</td><td class="num">187.0</td><td>金管會 7/21 新聞稿</td></tr>
+      <tr><td>2026-08-21</td><td class="num">244,218</td><td class="num">101.1</td><td class="num">210.6</td><td>金管會 9/3 新聞稿</td></tr>
+      <tr><td>2026-10-22</td><td class="num">約 277,000</td><td class="num">128</td><td class="num">216.4</td><td>行政院會、金管會記者會</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">每月申購：2026 年 6 月 10.40 億、7 月 10.90 億、8 月 10.99 億，連續三個月超過 10 億元。</p>
+
+  <h3>重點一：資產數字被舊部位墊高了</h3>
+  <p>金管會公布的資產包含原本的好享退、好好退休專案。只看新發行的 53 檔 TISA 級別基金（2026-08-21）：</p>
+  <div class="split" role="img" aria-label="帳戶資產 210.6 億元中，TISA 級別 88.3 億元，約 42%">
+    <div class="a" style="width:42%">TISA 級別 88.3 億（42%）</div>
+    <div class="b" style="width:58%">好享退等舊部位 約 122 億（58%）</div>
+  </div>
+  <p><mark>真正因 TISA 新進來的錢不到一百億元。</mark></p>
+
+  <h3>重點二：大家買的還是 0050</h3>
+  <p>投信投顧公會 2026 年 8 月底統計，53 檔 TISA 級別基金總規模 93.8 億元，其中<b>元大台灣卓越 50 ETF 連結基金一檔 53.2 億元，占 57%</b>。</p>
+
+  <h3>重點三：通路由基富通獨大</h3>
+  <div class="tw"><table>
+    <thead><tr><th>時點</th><th>銷售機構</th></tr></thead>
+    <tbody>
+      <tr><td>2025-10</td><td>8 家：基富通、中租投顧、鉅亨投顧、好好證券、第一銀行、元大銀行、中國信託、群益金鼎證券</td></tr>
+      <tr><td>2026-04</td><td>13 家：銀行有第一、彰化、兆豐、元大、玉山、中信；平台有基富通、好好證券、鉅亨投顧、中租投顧；券商有群益金鼎、兆豐、元大</td></tr>
+      <tr><td>2026-06</td><td>16 家</td></tr>
+    </tbody>
+  </table></div>
+  <p>基富通 2026 年 5 月股東會揭露 TISA 開戶數超過 10 萬戶，當時全市場約 13 萬戶，<b>市占約四分之三</b>。之後未再更新，10 月的占比不明。</p>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <h2><span class="no">5</span>TISA 2.0 怎麼運作<span class="tag t-set">已拍板</span></h2>
+  <p class="lede">2.0 的核心是：<b>提撥時扣所得、提領時免稅、抵稅的那筆錢鎖到 60 歲</b>。它比較像額度很小的勞退自提，不是日本那種免稅投資帳戶。</p>
+  <ol class="steps">
+    <li><div class="q">誰可以用？<span class="tag t-set">已拍板</span></div><div class="a">納稅義務人<b>本人、配偶、受扶養的未成年子女</b>，每人各有一個額度。一家四口就是四個額度。</div></li>
+    <li><div class="q">額度多少？<span class="tag t-set">已拍板</span></div><div class="a"><b>每人每年 2.4 萬元</b>。金管會傾向比照人身保險費列舉扣除額的上限。</div><div class="why">立委另提過加碼版本：兒少額度提高到 3 萬、青年加碼五成、設最低持有年限。<span class="tag t-open">未定</span></div></li>
+    <li><div class="q">怎麼扣？<span class="tag t-set">已拍板</span></div><div class="a"><b>實報實扣</b>：放 1 萬扣 1 萬，放 5 萬只扣 2.4 萬；入金但還沒扣款買基金的錢不算。從綜合所得總額減除，<b>不是列舉扣除額，也不是特別扣除額</b>。</div><div class="why">申報方式還沒公布：會由機構申報、列入所得資料清單，還是要自己填，要看草案。<span class="tag t-open">未定</span></div></li>
+    <li><div class="q">要開什麼帳戶？<span class="tag t-set">已拍板</span></div><div class="a">要<b>另開一個銀行「款戶」和一個 TISA 2.0「券戶」</b>，兩者綁定，原則上只能入金。已經有 1.0 或好享退帳戶的人可以「一鍵開戶」。</div><div class="why">哪些機構可以開 2.0 專戶、專戶能不能換機構，官方都還沒說明。<span class="tag t-open">未定</span></div></li>
+    <li><div class="q">能買什麼？<span class="tag t-set">已拍板</span></div><div class="a">現有 93 檔 TISA 基金移入 2.0，金管會預估未來會超過百檔。一樣<b>不能直接買 ETF 或個股</b>。</div><div class="why">金管會曾表示會研議納入 ETF。<span class="tag t-open">未定</span></div></li>
+    <li><div class="q">什麼時候能免稅領出？<span class="tag t-set">已拍板</span></div><div class="a">三種情況之一：<b>年滿 60 歲</b>；<b>專戶持有滿 30 年</b>；死亡、重大疾病或重大變故等特定事由。</div><div class="why">舉例：30 歲開始放，抵稅的錢要等 30 年；45 歲開始放，只要等 15 年。</div></li>
+    <li><div class="q">提前領會怎樣？<span class="tag t-set">已拍板</span></div><div class="a">不符合條件就領出，<b>歷年提撥金額合計會併入提領那一年的所得課稅</b>，等於當年省的稅要繳回去。</div></li>
+    <li><div class="q">跟 1.0 是什麼關係？<span class="tag t-set">已拍板</span></div><div class="a"><b>雙軌並行</b>。1.0 繼續運作，不強制轉換；1.0 帳戶和一般帳戶的錢都不受 60 歲的限制。</div></li>
+    <li><div class="q">法源是什麼？<span class="tag t-plan">預計</span></div><div class="a">修正《證券投資信託及顧問法》，以新增條文的方式納入，<b>不修所得稅法</b>。</div></li>
+  </ol>
+  <div class="callout">
+    <div class="h">為什麼台灣不能照抄日本？</div>
+    <p>日本只要讓額度內的投資免徵證券交易所得稅就很有吸引力。但台灣個人證券交易所得原則上不計入綜所稅，境內基金的資本利得本來就免稅，所以只能從「提撥時扣除所得」這條路設計。這是金管會主委在立法院的說明。</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <h2><span class="no">6</span>到底能省多少稅？</h2>
+  <p class="lede">算法只有一行：<b>省下的稅＝扣除金額×你的邊際稅率</b>。年收入不高、稅率 0% 或 5% 的人，幾乎省不到。</p>
+
+  <div class="calc" id="calc">
+    <div class="row">
+      <div><label for="rate">你的綜所稅適用稅率</label>
+        <select id="rate"><option value="0">0%（所得淨額為零）</option><option value="0.05">5%</option><option value="0.12" selected>12%</option><option value="0.2">20%</option><option value="0.3">30%</option><option value="0.4">40%</option></select></div>
+      <div><label for="ppl">家裡有幾個額度</label>
+        <select id="ppl"><option value="1">1 人（本人）</option><option value="2">2 人（夫妻）</option><option value="3">3 人</option><option value="4" selected>4 人（夫妻＋2 名子女）</option><option value="5">5 人</option></select></div>
+      <div><label for="amt">每人每年放進去（元）</label>
+        <input id="amt" type="number" min="0" step="1000" value="24000" inputmode="numeric"></div>
+    </div>
+    <div class="out">
+      <div class="o"><div class="k">可以扣除的所得</div><div class="v" id="ded">—</div></div>
+      <div class="o big"><div class="k">一年大約省下的稅</div><div class="v" id="save">—</div></div>
+    </div>
+    <div class="note">假設：每人最多扣 2.4 萬元；整筆扣除都落在同一個稅率級距。所得剛好卡在級距交界的人，實際省的會比較少。這是試算，不是報稅建議。</div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>適用稅率</th><th class="num">一人一年省稅</th><th class="num">一家四口一年省稅</th></tr></thead>
+    <tbody>
+      <tr><td>0%（所得淨額為零）</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr><td>5%</td><td class="num">1,200</td><td class="num">4,800</td></tr>
+      <tr><td>12%</td><td class="num">2,880</td><td class="num">11,520</td></tr>
+      <tr><td>20%</td><td class="num">4,800</td><td class="num">19,200</td></tr>
+      <tr><td>30%</td><td class="num">7,200</td><td class="num">28,800</td></tr>
+      <tr><td>40%</td><td class="num">9,600</td><td class="num">38,400</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">「60 歲免稅提領」的實質意義比較小：境內基金資本利得本來就免稅，累積型基金也幾乎沒有配息所得。它主要的作用，是讓當年扣除過的本金在領出時不會被課回去。</p>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <h2><span class="no">7</span>誰會因此去開戶？</h2>
+  <p class="lede">一年省幾千元，代價是錢鎖到 60 歲、只能定期定額、只能買百檔內的基金。所以 2.0 <b>不太會引起日本那種開戶海嘯</b>。</p>
+  <div class="cards">
+    <div class="card"><div class="k">會開的人</div><div class="v">雙薪家庭</div><p>有在繳稅、稅率 12% 以上、有未成年子女的三十五到五十歲家庭，一家四口每年可省一到三萬元。</p></div>
+    <div class="card"><div class="k">也會開的人</div><div class="v">退休族群</div><p>本來就在做退休準備、把它當成多一個勞退自提的人；報稅時被提醒「還有一個扣除額沒用」的人。</p></div>
+    <div class="card"><div class="k">不太會開的人</div><div class="v">年輕人</div><p>稅率 0～5% 省不到稅，而且他們的錢多在券商買 ETF：0050 一檔定期定額就有約 84 萬人。</p></div>
+  </div>
+  <div class="callout tip">
+    <div class="h">可對照的台灣經驗</div>
+    <p>勞退自提同樣是提撥時扣除所得，推行二十年參與率約一成多。合理的預期是：2.0 上路後開戶會明顯加速，但以家庭為單位、集中在報稅季前後。另外 2.0 要另開專戶，等於所有人重新選一次要在哪裡開。</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <h2><span class="no">8</span>跟日本 NISA 比一比</h2>
+  <p class="lede">NISA 免的是<b>一輩子的資本利得稅</b>，TISA 2.0 省的是<b>每年幾千元的所得稅</b>，誘因差了一個量級。</p>
+  <div class="tw"><table>
+    <thead><tr><th>項目</th><th>日本新 NISA（2024 年起）</th><th>台灣 TISA 1.0 / 2.0</th></tr></thead>
+    <tbody>
+      <tr><td>誘因</td><td>免徵資本利得與配息所得稅（約 20%）</td><td>1.0 業者讓利；2.0 提撥自所得總額減除</td></tr>
+      <tr><td>額度</td><td class="hl">每年 360 萬日圓，終身 1,800 萬日圓，免稅期間無期限</td><td class="hl">每人每年 2.4 萬元（約 11 萬日圓）</td></tr>
+      <tr><td>可投資商品</td><td>投信、ETF、上市股票、REIT（排除每月配息型、高槓桿等）</td><td>僅經審核的境內基金；ETF 以連結基金納入；不含個股</td></tr>
+      <tr><td>帳戶數</td><td>一人一戶</td><td>1.0 每家機構一戶、家數不限；2.0 規則未定</td></tr>
+      <tr><td>更換機構</td><td>每年可換一次；舊部位留在原機構，新額度移到新機構</td><td>1.0 不能轉；2.0 未定</td></tr>
+      <tr><td>提領</td><td>隨時可賣，額度隔年回復</td><td>1.0 隨時可贖；2.0 鎖到 60 歲或滿 30 年</td></tr>
+      <tr><td>規模</td><td>2025 年 12 月底 2,821 萬口座</td><td>2026 年 10 月 27.7 萬戶</td></tr>
+      <tr><td>通路</td><td>證券公司 2,030 萬戶（72%），2025 年買付額占 81.9%；新制上路首季六大銀行淨流失逾 6 萬戶</td><td>基富通一家曾占約四分之三</td></tr>
+      <tr><td>資金流向</td><td>2024 年全球股票指數基金一檔流入 2.36 兆日圓</td><td>0050 連結基金一檔占 TISA 級別規模 57%</td></tr>
+    </tbody>
+  </table></div>
+  <p>日本經驗的三個提示：稅務誘因越大，資金越往最便宜的指數商品集中；銀行在這種低費率、小額的帳戶上贏不了證券公司；「每年可換一次」的規則讓後進者每年都有機會搶客戶。</p>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <h2><span class="no">9</span>費用：誰可以收、誰不收</h2>
+  <p class="lede">規定只有一條：<b>TISA 基金不得收申購手續費</b>。信託管理費沒有禁止，由各銀行自己決定。</p>
+  <div class="callout">
+    <div class="h">集保問答集（信託業版，2026 年 2 月）原文</div>
+    <p>「TISA 基金僅規範不收取投資人申購手續費。其他費用政策則依各銀行規定辦理。」</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>銀行</th><th>TISA 信託管理費</th></tr></thead>
+    <tbody>
+      <tr><td>中國信託</td><td>2025-09-30 上線，承諾終身免收</td></tr>
+      <tr><td>第一銀行</td><td>限時免收，到 2025 年底</td></tr>
+      <tr><td>臺灣銀行</td><td>限時免收，到 2026 年底</td></tr>
+      <tr><td>其他銀行</td><td>未查到公開資訊</td></tr>
+    </tbody>
+  </table></div>
+  <h3>順帶一提：一般定期定額，銀行也免費了</h3>
+  <p>2024 年起，各大銀行陸續對<b>新的定期（不）定額</b>免申購手續費，平台過去的價格優勢在定期定額上已經沒有了。但<mark>單筆申購各銀行都還在收費</mark>。</p>
+  <div class="tw"><table>
+    <thead><tr><th>銀行</th><th>起始</th><th>申購手續費 0</th><th>信託管理費 0</th><th>單筆</th></tr></thead>
+    <tbody>
+      <tr><td>中信</td><td>2024-01</td><td>新設定期定額，限網銀/APP</td><td>全通路，含既有部位贖回</td><td>收費</td></tr>
+      <tr><td>台新</td><td>2024-01</td><td>新申購定期定額，網銀/APP/Richart</td><td>全通路，含既有部位贖回</td><td>收費</td></tr>
+      <tr><td>玉山</td><td>2024-01</td><td>新申購定期定額，限網銀/APP</td><td>新契約終身；既有部位限活動期內</td><td>收費</td></tr>
+      <tr><td>北富銀</td><td>2024</td><td>新申購定期定額，網銀/Fubon+</td><td>同左</td><td>收費</td></tr>
+      <tr><td>永豐</td><td>2025</td><td>新約定定期定額，每次 30 萬以下</td><td>不免</td><td>收費</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">各銀行活動多為「至公告截止日」，條件以各行最新公告為準。</p>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <h2><span class="no">10</span>還沒確定的事<span class="tag t-open">未定</span></h2>
+  <p class="lede">以下都要等修法草案預告（預計 2026 年底前）或財政部審查才會明朗。</p>
+  <ul class="check">
+    <li><b>哪些機構可以開 2.0 專戶</b>：投顧平台能不能開券戶？款戶能不能用現有的約定扣款帳戶，還是一定要另外去銀行開？</li>
+    <li><b>2.0 專戶能不能換機構</b>，以及會不會設最低持有年限。</li>
+    <li><b>會不會直接納入 ETF</b>（包括主動式 ETF）。</li>
+    <li><b>額度會不會調整</b>：財政部審查稅式支出評估報告後，2.4 萬元可能改變；立委的加碼版本會在公聽會和立法院討論。</li>
+    <li><b>申報方式</b>：由機構申報、自動列入所得資料清單，還是要自己填報。</li>
+    <li><b>是否回溯適用</b>：涉及資料掌握與稽徵作業，仍要跟財政部討論。</li>
+    <li><b>企業 TISA</b>：金管會已請集保研議示範，可能 2027 年上路；立委建議先從證交所、櫃買中心、公營事業開始。內容、雇主要不要出錢、通路都還沒說明。</li>
+  </ul>
+</section>
+
+<!-- sources -->
+<section id="src">
+  <h2>資料來源</h2>
+  <ol class="src">
+    <li><a href="https://tisa.tdcc.com.tw/">集保結算所 TISA 專區（制度說明與 Q&amp;A）</a></li>
+    <li><a href="https://web.tdcc.com.tw/boWeb/01/attach/114000005006.pdf">集保：TISA 帳戶開設、交易及相關作業問答集（交易平台銷售機構版）</a></li>
+    <li><a href="https://m.tdcc.com.tw/TDCCWEB/upload/4028c0b396fc8f590197865d135b006b.pdf">集保：TISA 問答集信託業版（2026 年 2 月）</a></li>
+    <li><a href="https://www.sitca.org.tw/ROC/TISA/tisa-about.html">投信投顧公會：TISA 專案介紹與基金發行銷售規則</a></li>
+    <li><a href="https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=730dd81e-09b8-447d-a62b-be445434fdf3">MoneyDJ：金管會將推台版 TISA（2024-10-24）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202506240350.aspx">中央社：TISA 帳戶預計 7 月上線（2025-06-24）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202506300249.aspx">中央社：TISA 帳戶啟動（2025-06-30）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202510230390.aspx">中央社：TISA 開戶數達 4.5 萬戶（2025-10-23）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202604230333.aspx">中央社：TISA 達 12 萬戶（2026-04-23）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202607210375.aspx">中央社：TISA 週年開戶數達 19.7 萬戶（2026-07-21）</a></li>
+    <li><a href="https://udn.com/news/story/7239/9733234">聯合報：TISA 周年 規模逾 210 億（2026-09-03）</a></li>
+    <li><a href="https://udn.com/news/story/7239/9567756">聯合報：基富通股東會 客戶數創新高（2026-06）</a></li>
+    <li><a href="https://money.udn.com/money/story/5613/9470312">經濟日報：TISA 租稅優惠拚全民適用（2026-04-29）</a></li>
+    <li><a href="https://www.businessinsider.tw/article/8485">Business Insider：TISA 免稅傳每年 2.4 萬？（2026-10-20）</a></li>
+    <li><a href="https://www.cna.com.tw/news/aipl/202610220112.aspx">中央社：政院拍板 TISA 租稅優惠（2026-10-22）</a></li>
+    <li><a href="https://www.cna.com.tw/news/afe/202610220385.aspx">中央社：金管會推 TISA 租稅優惠 拚年底前預告修法（2026-10-22）</a></li>
+    <li><a href="https://udn.com/news/story/7239/9830888">聯合報：TISA 1.0、2.0 雙軌並行（2026-10-22）</a></li>
+    <li><a href="https://www.ctee.com.tw/news/20261023700070-439901">工商時報：證券投資信託及顧問法 拚 2028 報稅適用（2026-10-23）</a></li>
+    <li><a href="https://money.udn.com/money/story/5613/9832213">經濟日報：TISA 減稅非免費午餐 藏 3 大限制（2026-10-23）</a></li>
+    <li><a href="https://tw.stock.yahoo.com/news/%E9%87%91%E7%AE%A1%E6%9C%83%E8%A6%8F%E5%8A%83%E4%BF%AE%E6%AD%A3%E6%8A%95%E4%BF%A1%E6%8A%95%E9%A1%A7%E6%B3%95-%E6%8E%A8%E5%8B%95tisa%E7%A7%9F%E7%A8%85%E5%84%AA%E6%83%A0-005200045.html">MoneyDJ：金管會規劃修正投信投顧法，推動 TISA 租稅優惠（2026-10-26）</a></li>
+    <li><a href="https://www.firstbank.com.tw/sites/fcb/touch/zh_TW/1565708866975">第一銀行：開賣 TISA 基金 年底前免信託管理費（2025-08）</a></li>
+    <li><a href="https://www.ctbcholding.com/content/dam/twhoo/file/news/2025/20250901.pdf">中信：TISA 終身免收信託管理費（2025-09-01）</a></li>
+    <li><a href="https://money.udn.com/money/story/11162/9567161">經濟日報：臺灣銀行推出 TISA（2026-06）</a></li>
+    <li><a href="https://www.businesstoday.com.tw/article/category/183012/post/202401020048/">今周刊：基金零手續費戰國時代（2024-01）</a></li>
+    <li><a href="https://www.fsa.go.jp/policy/nisa/20260703/2512nisa-graph.pdf">金融庁：NISA の利用状況（2025 年 12 月末）</a></li>
+    <li><a href="https://diamond.jp/articles/-/343667">ダイヤモンド：大手銀行 6 行から NISA 口座流出</a></li>
+    <li><a href="https://www.nikkei.com/article/DGXZQOFL161D70W5A110C2000000/">日経：2024 年の投資信託、オルカンに 2 兆円超</a></li>
+  </ol>
+</section>
+
+<footer>
+  整理日期：2026-11-05。數字以各機關公布為準；「未定」項目會隨修法草案預告更新。本頁為資訊整理，不構成投資或報稅建議。
+</footer>
+</div>
+
+<button class="themebtn" type="button" id="themebtn" aria-label="切換深淺色">深淺色</button>
+
+<script>
+(function(){
+  var f = new Intl.NumberFormat('zh-TW');
+  function calc(){
+    var r = parseFloat(document.getElementById('rate').value) || 0;
+    var n = parseInt(document.getElementById('ppl').value, 10) || 1;
+    var a = parseFloat(document.getElementById('amt').value);
+    if (!isFinite(a) || a < 0) a = 0;
+    var ded = Math.min(a, 24000) * n;
+    document.getElementById('ded').textContent = f.format(Math.round(ded)) + ' 元';
+    document.getElementById('save').textContent = f.format(Math.round(ded * r)) + ' 元';
+  }
+  ['rate','ppl','amt'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('input', calc); el.addEventListener('change', calc);
+  });
+  calc();
+
+  var root = document.documentElement, key = 'tisa-theme';
+  try { var t = localStorage.getItem(key); if (t) root.setAttribute('data-theme', t); } catch(e) {}
+  document.getElementById('themebtn').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    var dark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(key, next); } catch(e) {}
+  });
+})();
+</script>
+</body>
+</html>
