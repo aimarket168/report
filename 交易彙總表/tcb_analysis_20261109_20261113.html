@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合庫投信｜一週交易彙總分析 2026/11/09–11/13</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@600;700&display=swap');
+:root{
+  --ink:#0d1b2a; --ink-mid:#1e3a5f; --ink-light:#2d5986;
+  --gold:#b8892a; --gold-pale:#f5ecd6; --gold-line:#d4ac5a;
+  --buy:#0a6b3a; --buy-bg:#e6f4ec; --buy-light:#34a85a;
+  --sell:#b91c1c; --sell-bg:#fde8e8; --sell-light:#ef4444;
+  --mm:#5b4fcf; --mm-bg:#ede9fb; --mm-light:#7c72e0;
+  --anue:#c05621; --anue-bg:#fff3e8;
+  --tcb:#0a6b3a; --chb:#c2410c; --direct:#1d4ed8; --other:#4b5563;
+  --border:#e5e7eb; --surface:#f8f9fa;
+  --r:10px; --sh:0 2px 16px rgba(13,27,42,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:#eef1f5;color:var(--ink);font-size:14px;line-height:1.6}
+
+/* HEADER */
+.pg-hdr{background:var(--ink);color:#fff;padding:0 40px;display:flex;align-items:stretch;position:relative;overflow:hidden}
+.pg-hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 38px,rgba(255,255,255,.03) 38px,rgba(255,255,255,.03) 39px)}
+.hdr-l{flex:1;padding:26px 0;position:relative;z-index:1}
+.hdr-eye{font-size:10px;letter-spacing:3px;color:var(--gold-line);font-family:'DM Mono',monospace;margin-bottom:8px}
+.hdr-ttl{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:5px}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.3px}
+.hdr-r{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:8px;padding:20px 0 20px 32px;position:relative;z-index:1}
+.period-badge{background:var(--gold);color:var(--ink);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
+.gen-at{font-size:10px;color:rgba(255,255,255,.3);font-family:'DM Mono',monospace}
+
+/* ACTION BAR */
+.act-bar{background:#fff;border-bottom:2px solid var(--gold-line);padding:9px 40px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.act-bar-lbl{font-size:11px;color:var(--other);margin-right:auto;font-family:'DM Mono',monospace}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 15px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-ink{background:var(--ink);color:#fff} .btn-ink:hover{background:var(--ink-mid)}
+.btn-ol{background:#fff;color:var(--ink);border:1px solid var(--border)} .btn-ol:hover{border-color:var(--ink)}
+
+/* LAYOUT */
+.pg-body{max-width:1180px;margin:24px auto;padding:0 20px 40px;display:flex;flex-direction:column;gap:20px}
+
+/* ALERT */
+.alert-warn{background:#fffbeb;border:1px solid #fbbf24;border-radius:var(--r);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:#92400e}
+
+/* CARD */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.card-hdr{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-ttl{font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:9px}
+.card-ico{width:27px;height:27px;border-radius:7px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.card-body{padding:20px}
+.card-note{font-size:11px;color:var(--other)}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:#fff;border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);border-top:3px solid var(--border);transition:transform .2s}
+.kpi:hover{transform:translateY(-2px)}
+.kpi.k-buy{border-top-color:var(--buy)} .kpi.k-sell{border-top-color:var(--sell)}
+.kpi.k-net{border-top-color:var(--sell)} .kpi.k-mm{border-top-color:var(--mm)}
+.kpi.k-anue{border-top-color:var(--anue)}
+.kpi-lbl{font-size:10px;letter-spacing:1.5px;color:var(--other);font-weight:500;margin-bottom:8px}
+.kpi-val{font-size:21px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:3px}
+.kv-buy{color:var(--buy)} .kv-sell{color:var(--sell)} .kv-neg{color:var(--sell)}
+.kv-mm{color:var(--mm)} .kv-anue{color:var(--anue)}
+.kpi-unit{font-size:10px;color:var(--other)}
+.kpi-note{font-size:11px;color:var(--other);margin-top:5px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl thead tr{background:var(--ink)}
+.tbl th{color:rgba(255,255,255,.82);padding:8px 11px;text-align:right;font-weight:600;font-size:11px;white-space:nowrap}
+.tbl th:first-child{text-align:left}
+.th-buy{color:#6ee7b7!important} .th-sell{color:#fca5a5!important}
+.tbl td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:12px}
+.tbl td:first-child{text-align:left;font-family:'Noto Sans TC',sans-serif;font-size:13px}
+.tbl th.fund{text-align:left}
+.tbl td.fund{text-align:left;font-family:'Noto Sans TC',sans-serif;font-size:12.5px}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover{background:var(--surface)}
+.tr-total{background:var(--gold-pale)!important}
+.tr-total td{border-top:2px solid var(--gold-line)!important;font-weight:700;color:var(--ink)}
+.tr-anue{background:var(--anue-bg)!important}
+.tr-anue td{color:var(--anue)}
+.tr-mm{background:var(--mm-bg)!important}
+.v-buy{color:var(--buy);font-weight:600} .v-sell{color:var(--sell);font-weight:600}
+.v-pos{color:var(--buy)} .v-neg{color:var(--sell)}
+.v-mm{color:var(--mm);font-weight:600}
+
+/* SCROLL */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two-col>div{min-width:0;overflow:hidden}
+
+/* CHANNEL PILL */
+.cp{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.cp-tcb{background:#dcfce7;color:#166534} .cp-chb{background:#ffedd5;color:#9a3412}
+.cp-dir{background:#dbeafe;color:#1e40af} .cp-oth{background:#f1f5f9;color:#475569}
+.cp-anue{background:var(--anue-bg);color:var(--anue)} .cp-life{background:#f3e8ff;color:#7e22ce}
+
+/* DAY TAG */
+.dt{font-size:10px;color:var(--other);font-family:'DM Mono',monospace;margin-left:3px}
+
+/* CHART LEGEND */
+.chart-legend{display:flex;gap:16px;margin-bottom:14px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--other)}
+.legend-dash{width:16px;height:3px;border-radius:2px;flex-shrink:0}
+
+/* CHART SVG */
+.chart-svg{width:100%;overflow:visible;display:block}
+
+/* SEC LABEL */
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--other);text-transform:uppercase;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+
+/* TOP FUND RANK */
+.top-rank{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+.r1{background:#fef3c7;color:#92400e} .r2{background:#f1f5f9;color:#475569} .r3{background:#ffedd5;color:#9a3412}
+
+/* REMARK CARDS */
+.rmk{border-radius:8px;padding:13px 15px;border:1px solid var(--border);border-left:4px solid;background:var(--surface)}
+.rmk-warn{border-left-color:var(--sell)} .rmk-note{border-left-color:var(--gold)}
+.rmk-good{border-left-color:var(--buy)} .rmk-info{border-left-color:var(--direct)}
+.rmk-watch{border-left-color:var(--anue)}
+.rmk-icon{font-size:17px;margin-bottom:6px}
+.rmk-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.rmk-body{font-size:12px;color:#374151;line-height:1.8}
+.remark-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+
+/* CHANNEL BAR */
+.ch-bar-wrap{display:flex;flex-direction:column;gap:0}
+.ch-bar-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.ch-bar-row:last-child{border-bottom:none}
+.ch-bar-lbl{width:80px;font-size:12px;font-weight:500;flex-shrink:0}
+.ch-bar-cnt{font-size:11px;color:var(--other);width:20px;flex-shrink:0;text-align:right}
+.ch-bar-track{flex:1;height:16px;background:var(--surface);border-radius:4px;overflow:hidden}
+.ch-bar-fill{height:100%;border-radius:4px;min-width:4px}
+.ch-bar-val{width:65px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0}
+
+/* FOOTER */
+.pg-footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:14px;font-size:10.5px;border-radius:var(--r);line-height:1.9}
+
+/* DATE PICKER */
+.date-picker-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dp-label{font-size:11px;font-weight:600;color:var(--other);white-space:nowrap;letter-spacing:.5px}
+.dp-input{border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Mono',monospace;color:var(--ink);background:#fff;transition:border-color .2s;height:32px}
+.dp-input:focus{outline:none;border-color:var(--ink-mid)}
+.dp-sep{font-size:12px;color:var(--other);flex-shrink:0}
+.btn-ghost{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px dashed #d4ac5a;background:#fffbf0;color:#92400e;transition:all .2s;height:32px}
+.btn-ghost:hover{background:#fef3c7}
+.btn.btn-ink,.btn.btn-ol{height:32px}
+@media(max-width:700px){.date-picker-group{gap:6px}.dp-label{display:none}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card,.kpi{animation:fadeUp .45s ease both}
+.kpi:nth-child(1){animation-delay:.05s} .kpi:nth-child(2){animation-delay:.10s}
+.kpi:nth-child(3){animation-delay:.15s} .kpi:nth-child(4){animation-delay:.20s}
+.kpi:nth-child(5){animation-delay:.25s}
+
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.two-col,.remark-grid{grid-template-columns:1fr}.pg-body{padding:0 12px 40px}.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:10px 10px 9px}.kpi-cur{font-size:17px}}
+@media print{.act-bar{display:none!important}body{background:#fff}.card{box-shadow:none;border:1px solid var(--border)}}
+
+/* ── 9-Metric KPI Panel ── */
+.kpi-panel{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.kpi-row{display:grid;grid-template-columns:68px 1fr 1fr 1fr;align-items:stretch}
+.kpi-divider{height:1px;background:linear-gradient(90deg,transparent 68px,var(--border) 68px)}
+.kpi-row-label{display:flex;align-items:center;justify-content:center;padding:18px 6px;background:#f9fafb;border-right:2px solid var(--border)}
+.kpi-row-badge{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:800;letter-spacing:3px;padding:6px 4px;border-radius:5px}
+.kpi-cell{padding:14px 18px 12px;border-left:1px solid var(--border);position:relative}
+.kpi-lbl{font-size:10px;letter-spacing:1.4px;color:var(--other);font-weight:600;text-transform:uppercase;margin-bottom:5px}
+.kpi-cur{font-size:22px;font-weight:900;font-family:'DM Mono',monospace;line-height:1.1;margin-bottom:6px}
+.kpi-unit{font-size:9.5px;color:var(--other);font-family:'DM Mono',monospace;margin-left:2px}
+.kpi-compare{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.kpi-prev{font-size:11px;color:#9ca3af;font-family:'DM Mono',monospace}
+.kpi-prev span{color:#6b7280;font-weight:600}
+.kpi-delta{font-size:11.5px;font-family:'DM Mono',monospace;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.delta-pos{background:#dcfce7;color:#166534}
+.delta-neg{background:#fde8e8;color:#991b1b}
+.delta-neu{background:#f1f5f9;color:#475569}
+.k-net{border-top:3px solid var(--border)}
+.k-net-pos{border-top-color:var(--buy)}
+.k-net-neg{border-top-color:var(--sell)}
+.badge-total{background:var(--gold-pale);color:#92400e}
+.badge-gen{background:#dbeafe;color:#1e40af}
+.badge-mm{background:#ede9fb;color:#5b21b6}
+.badge-total{background:var(--ink);color:#fff}
+.badge-gen{background:#d1fae5;color:#065f46}
+.badge-mm{background:#ede9fb;color:#3730a3}
+.kpi-cell{padding:18px 20px;border-right:1px solid #f3f4f6;transition:background .2s}
+.kpi-cell:last-child{border-right:none}
+.kpi-cell:hover{background:#fafafa}
+.k-net{background:linear-gradient(135deg,rgba(255,255,255,0),rgba(248,250,252,.7))}
+.k-net-pos .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--buy);border-radius:2px;margin-bottom:6px}
+.k-net-neg .kpi-val::before{content:'';display:block;width:28px;height:3px;background:var(--sell);border-radius:2px;margin-bottom:6px}
+.kpi-lbl{font-size:10px;letter-spacing:1.2px;color:#6b7280;font-weight:600;margin-bottom:7px;text-transform:uppercase}
+.kpi-val{font-size:24px;font-weight:900;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
+.kpi-unit{font-size:10px;color:#9ca3af;margin-bottom:4px}
+.kpi-note{font-size:11px;color:#6b7280;font-style:italic}
+@media(max-width:900px){.kpi-row{grid-template-columns:52px 1fr 1fr 1fr}.kpi-cell{padding:14px 12px}.kpi-val{font-size:18px}}
+@media(max-width:600px){.kpi-row{grid-template-columns:36px 1fr 1fr}.kpi-row .kpi-cell:nth-child(4){grid-column:2/5;border-top:1px solid #f3f4f6}}
+
+
+/* ── v2 additions ── */
+.rankcell{text-align:left!important;font-family:'Noto Sans TC',sans-serif!important;line-height:1.5}
+.rankcell .fd{display:block;font-size:12px;font-weight:600;color:var(--ink)}
+.rankcell .am{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-mid);margin-left:5px}
+.concl-box{margin-top:12px}
+.pct-hot{background:#fde8e8;border-radius:6px;padding:0 5px;color:var(--sell);font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="pg-hdr">
+  <div class="hdr-l">
+    <div class="hdr-eye">TAIWAN COOPERATIVE BANK INVESTMENT TRUST · WEEKLY TRADING REPORT</div>
+    <div class="hdr-ttl">一週交易彙總表分析</div>
+    <div class="hdr-sub">分析期間：<span id="hdrPeriod">2026/11/09（一）至 2026/11/13（五）</span>　｜　資料來源：每日交易彙總表、預報信、基金日報表</div>
+  </div>
+  <div class="hdr-r">
+    <div class="period-badge" id="periodBadge">2026/11/09 – 2026/11/13</div>
+    <div class="gen-at">製表日期：2026-11-14</div>
+  </div>
+</header>
+
+<div class="act-bar">
+  <div class="date-picker-group">
+    <label class="dp-label">分析期間</label>
+    <input type="date" id="dpFrom" class="dp-input" value="2026-11-09">
+    <span class="dp-sep">至</span>
+    <input type="date" id="dpTo" class="dp-input" value="2026-11-13">
+    <button class="btn btn-ink" onclick="requestNewReport()">🔍 產生週報</button>
+    <span id="sendTip" style="display:none;font-size:11px;color:#0a6b3a;font-weight:600;white-space:nowrap">✅ 已複製，請貼至 Claude 對話框送出</span>
+    <button class="btn btn-ghost" onclick="setLastWeek()">⚡ 上週</button>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button class="btn btn-ol" onclick="window.print()">🖨️ 列印</button>
+    <button class="btn btn-ink" onclick="dlHTML()">⬇️ 下載</button>
+  </div>
+</div>
+
+<div class="pg-body">
+
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">📌</span>第一章｜重點摘要</div><span class="card-note">1 執行摘要～7 一般型逐日申贖情況</span>
+  </div>
+  <div class="card-body"><div style="background:#fffbeb;border:1px solid #fde68a;border-left:5px solid #a16207;border-radius:var(--r);padding:14px 20px;font-size:13.5px;line-height:2"><span style="margin-right:8px">🟡</span><b style="color:#a16207">執行摘要</b><ul style="margin:8px 0 0;padding-left:20px;line-height:2"><li><b style="color:#a16207">一般型轉為淨申購</b>｜淨申購 0.33 億，上週淨贖回 0.02 億；前四週平均淨申購 0.49 億，本週少 0.17 億，近五週排第 3。申購、贖回金額都比前四週少：平均每天申購 2,840 萬、贖回 2,183 萬，分別是前四週平均每天的 63.5%、64.8%。</li><li><b style="color:#a16207">客戶行為</b>｜台股從上週大跌反彈（11/06 → 11/13 加權指數 +10.01%），合庫商銀客戶持續申購國內兩檔：台灣高科技五天都進入每天申購金額前三名、合計 4,030 萬，台灣基金 6 次、合計 3,548 萬；上漲的三天（11/09～11/11）都是淨申購，沒有出現大量贖回。</li><li><b style="color:#a16207">全球複合收益債贖回</b>｜本週 4 次進入每天贖回金額前三名、合計 4,214 萬，占一般型贖回 38.6%，比前四週合計（2,407 萬）還多；其中 11/12 直銷一筆 2,491 萬（占當天一般型贖回 65.4%）。</li><li><b style="color:#a16207">貨幣型</b>｜淨贖回 13.23 億、近五週最多。11/13 富邦人壽贖回 15 億（11/11 預告）、新光人壽贖回 4 億（11/13 下午才預告），兩筆占本週貨幣型贖回 83.7%；11/10 新光人壽申購 6 億。銀行通路申購 3.46 億、贖回 3.69 億，淨贖回 0.23 億（其中 11/11～11/13 為當天推算）。</li><li><b style="color:#a16207">規模</b>｜一般型 122.63 → 127.89 億（+5.26 億），淨值漲跌 +5.88 億、資金進出 -0.61 億，主要是淨值回升，補回上週的 -4.75 億；貨幣型 +5.84 億到 307.39 億。</li><li><b style="color:#a16207">下週留意</b>｜11/13 富邦人壽、新光人壽贖回的 19 億會在 11/16 資料日入帳，貨幣型規模會減少；11/13 費城半導體指數 -3.43%，AI電力創新、AI電動車 11/16 計算的淨值可能下跌（報表 11/17 寄到）。</li><li><b style="color:#a16207">資料</b>｜上週（11/02～11/06）沒有出週報，本期由原始郵件逐日讀入當作對照；通路報表 11/04 漏列新光人壽 5 億直銷申購，已用同一系列報表的累計數字核對補上。</li></ul></div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">2.　整體流量</div><div class="tbl-scroll" style="margin-top:12px"><table class="tbl" style="min-width:820px">
+<thead><tr><th class="fund">類別</th><th class="th-buy">申購</th><th class="th-sell">贖回</th><th>淨額</th>
+<th>上週淨額</th><th>本週平均每天淨額</th><th>上週平均每天淨額</th></tr></thead>
+<tbody><tr><td><span class='cp cp-tcb'>一般型</span></td><td class='v-buy'>1.42</td><td class='v-sell'>1.09</td><td class='v-pos' style='font-weight:700'>+0.33</td><td style='color:#6b7280'>-0.02</td><td class='v-pos' style='font-weight:700'>+0.07</td><td style='color:#6b7280'>-0.00</td></tr><tr><td><span class='cp cp-life'>貨幣型</span></td><td class='v-buy'>9.46</td><td class='v-sell'>22.69</td><td class='v-neg' style='font-weight:700'>-13.23</td><td style='color:#6b7280'>+5.14</td><td class='v-neg' style='font-weight:700'>-2.65</td><td style='color:#6b7280'>+1.03</td></tr><tr><td><span class='cp cp-oth'>加總</span></td><td class='v-buy'>10.88</td><td class='v-sell'>23.79</td><td class='v-neg' style='font-weight:700'>-12.90</td><td style='color:#6b7280'>+5.12</td><td class='v-neg' style='font-weight:700'>-2.58</td><td style='color:#6b7280'>+1.02</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">單位：億元。本週 11/09～11/13 五個交易日；上週取 11/02～11/06 五天對照（上週沒有出週報，由原始郵件逐日讀入）。淨額＝申購−贖回，正數是淨申購、負數是淨贖回；平均每天＝淨額÷交易日數。貨幣型大額進出逐筆見第 9 段。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li style="margin-bottom:6px"><b>2.1 一般型</b>｜申購 1.42 億、贖回 1.09 億，淨申購 0.33 億；上週淨贖回 0.02 億。平均每天申購 2,840 萬是上週的 0.84 倍、平均每天贖回 2,183 萬是上週的 0.64 倍，贖回減少得比申購多；五天中只有 11/12 淨贖回 1,755 萬（全球複合收益債直銷贖回 2,491 萬）。</li><li style="margin-bottom:6px"><b>2.2 貨幣型</b>｜申購 9.46 億、贖回 22.69 億，淨贖回 13.23 億；上週淨申購 5.14 億。申購裡 6 億是新光人壽 11/10 直銷申購（占 63.4%），贖回裡 19 億是 11/13 富邦人壽 15 億、新光人壽 4 億（占 83.7%）；不計這三筆，本週淨贖回 0.23 億。</li><li style="margin-bottom:6px"><b>2.3 加總</b>｜申購 10.88 億、贖回 23.79 億，淨贖回 12.90 億；上週淨申購 5.12 億。平均每天淨贖回 2.58 億，主要來自 11/13 貨幣型兩筆法人贖回。一般型淨申購、貨幣型淨贖回：一般型是客戶進出國內股票型基金，貨幣型是法人調度資金。</li></ul></div></div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">3.　AUM 漲跌貢獻來源</div><div class="tbl-scroll" style="margin-top:12px"><table class="tbl" style="min-width:820px">
+<thead><tr><th class="fund">類別</th><th>期初</th><th>期末</th><th>規模變動</th><th>％</th>
+<th>其中：淨值漲跌</th><th>其中：資金進出</th></tr></thead>
+<tbody><tr><td><span class='cp cp-tcb'>一般型</span></td><td>122.63</td><td>127.89</td><td class='v-pos' style='font-weight:700'>+5.26</td><td class='v-pos'>+4.29%</td><td class='v-pos'>+5.88</td><td class='v-neg' style='font-weight:700'>-0.61</td></tr><tr><td><span class='cp cp-life'>貨幣型</span></td><td>301.56</td><td>307.39</td><td class='v-pos' style='font-weight:700'>+5.84</td><td class='v-pos'>+1.94%</td><td class='v-pos'>+0.08</td><td class='v-pos' style='font-weight:700'>+5.76</td></tr><tr><td><span class='cp cp-oth'>加總</span></td><td>424.18</td><td>435.28</td><td class='v-pos' style='font-weight:700'>+11.10</td><td class='v-pos'>+2.62%</td><td class='v-pos'>+5.96</td><td class='v-pos' style='font-weight:700'>+5.14</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">單位：億元；資料日 11/06 → 11/12（規模比交易晚一個營業日，不能和第 2 段直接相減）。淨值漲跌＝前一資料日規模 × 當日淨值報酬逐日累加；資金進出＝規模變動 − 淨值漲跌。一般型逐檔拆解見第 10 段。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li style="margin-bottom:6px"><b>3.1 一般型</b>｜122.63 → 127.89 億（+5.26 億、+4.29%）＝淨值漲跌 +5.88 億＋資金進出 -0.61 億，主要是淨值回升。國內兩檔資金進出 +0.63 億（台灣高科技 +4,219 萬、台灣基金 +2,061 萬），其他 14 檔資金進出 -1.24 億（ESG積極組合 -4,449 萬、2032目標日期 -2,344 萬、全球複合收益債 -1,860 萬、AI電力創新 -1,682 萬等）。逐檔見第 10 段。</li><li style="margin-bottom:6px"><b>3.2 貨幣型</b>｜301.56 → 307.39 億（+5.84 億、+1.94%）＝淨值漲跌 +0.08 億＋資金進出 +5.76 億。逐日資金進出 -1.32、+5.72、+0.04、+1.32 億，都等於「當天申購 − 前一營業日贖回」；新光人壽 6 億落在 11/10 資料日，11/13 的 19 億贖回算進下期。</li><li style="margin-bottom:6px"><b>3.3 加總</b>｜424.18 → 435.28 億（+11.10 億、+2.62%）＝淨值漲跌 +5.96 億＋資金進出 +5.14 億。一般型主要是淨值回升、貨幣型主要是資金流入；11/13 的 19 億貨幣型贖回還沒入帳。</li></ul></div></div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">4.　本週資金動向：本週 vs 一個月平均</div><div class="tbl-scroll" style="margin-top:12px"><table class="tbl" style="min-width:820px">
+<thead><tr><th class="fund">類別</th><th>本週淨額</th><th>四週平均淨額</th><th>與平均差</th>
+<th>本週平均每天</th><th>前四週平均每天</th><th>近五週排名</th></tr></thead>
+<tbody><tr><td><span class='cp cp-tcb'>一般型</span></td><td class='v-pos' style='font-weight:700'>+0.33</td><td style='color:#6b7280'>+0.49</td><td class='v-neg' style='font-weight:700'>-0.17</td><td class='v-pos'>+0.07</td><td style='color:#6b7280'>+0.11</td><td>3 / 5</td></tr><tr><td><span class='cp cp-life'>貨幣型</span></td><td class='v-neg' style='font-weight:700'>-13.23</td><td style='color:#6b7280'>+2.26</td><td class='v-neg' style='font-weight:700'>-15.49</td><td class='v-neg'>-2.65</td><td style='color:#6b7280'>+0.50</td><td>5 / 5</td></tr><tr><td><span class='cp cp-oth'>加總</span></td><td class='v-neg' style='font-weight:700'>-12.90</td><td style='color:#6b7280'>+2.75</td><td class='v-neg' style='font-weight:700'>-15.65</td><td class='v-neg'>-2.58</td><td style='color:#6b7280'>+0.61</td><td>5 / 5</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">單位：億元。四週＝前四週 10/12–11/06；前四週平均每天＝四週淨額總和÷18 個交易日（休市週天數少，看平均每天的金額較公平）；淨額正數是淨申購、負數是淨贖回；排名 1＝淨申購最多。</div><div class="sec-lbl" style="margin-top:18px">近一個月逐週淨額（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:760px">
+<thead><tr><th class="fund">週別</th><th>交易日</th><th>一般型淨額</th><th>貨幣型淨額</th><th>加總淨額</th><th>一般型平均每天淨額</th></tr></thead>
+<tbody><tr><td>10/12–10/16</td><td style='color:#6b7280'>5</td><td class='v-pos'>+0.48</td><td class='v-neg'>-2.77</td><td class='v-neg'>-2.29</td><td>+0.10</td></tr><tr><td>10/19–10/23<span class='dt'>10/23 休市</span></td><td style='color:#6b7280'>4</td><td class='v-pos'>+1.25</td><td class='v-neg'>-1.96</td><td class='v-neg'>-0.72</td><td>+0.31</td></tr><tr><td>10/26–10/30<span class='dt'>10/26 休市</span></td><td style='color:#6b7280'>4</td><td class='v-pos'>+0.27</td><td class='v-pos'>+8.62</td><td class='v-pos'>+8.89</td><td>+0.07</td></tr><tr><td>11/02–11/06</td><td style='color:#6b7280'>5</td><td class='v-neg'>-0.02</td><td class='v-pos'>+5.14</td><td class='v-pos'>+5.12</td><td>-0.00</td></tr><tr style='background:var(--surface)'><td>前四週平均</td><td style='color:#6b7280'>4.5</td><td class='v-pos'>+0.49</td><td class='v-pos'>+2.26</td><td class='v-pos'>+2.75</td><td>+0.11</td></tr><tr class='tr-total'><td>本週 11/09–11/13</td><td>5</td><td class='v-pos' style='font-weight:700'>+0.33</td><td class='v-neg' style='font-weight:700'>-13.23</td><td class='v-neg' style='font-weight:700'>-12.90</td><td>+0.07</td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li style="margin-bottom:6px"><b>4.1 一般型</b>｜淨申購 0.33 億，前四週平均淨申購 0.49 億，本週少 0.17 億；平均每天淨申購 657 萬，前四週平均每天 1,099 萬。近五週排第 3（10/19 那週 +1.25 億第 1、10/12 那週 +0.48 億第 2）。申購比前四週平均少 0.59 億、贖回少 0.43 億；平均每天申購 2,840 萬是近五週最低，連續五週減少。</li><li style="margin-bottom:6px"><b>4.2 貨幣型</b>｜淨贖回 13.23 億，前四週平均淨申購 2.26 億，差 15.49 億；平均每天淨贖回 2.65 億，前四週平均每天淨申購 0.50 億，近五週排第 5。不計三筆法人大額則淨贖回 0.23 億。</li><li style="margin-bottom:6px"><b>4.3 加總</b>｜淨贖回 12.90 億，前四週平均淨申購 2.75 億，差 15.65 億；平均每天淨贖回 2.58 億，前四週平均每天淨申購 0.61 億，近五週排第 5。</li></ul></div></div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">5.　Top3 資金流量基金（一般型）</div><div class="tbl-scroll" style="margin-top:12px"><table class="tbl" style="min-width:720px">
+<thead><tr><th>名次</th><th class="fund">基金</th><th class="th-buy">榜上申購</th><th class="th-sell">榜上贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td><span class='top-rank r1'>1</span></td><td class='fund'>30_全球複合收益債</td><td class='v-buy'>—</td><td class='v-sell'>4,214<span class='dt'>4 天</span></td><td class='v-neg' style='font-weight:700'>-4,214</td></tr><tr><td><span class='top-rank r2'>2</span></td><td class='fund'>16_台灣高科技</td><td class='v-buy'>4,030<span class='dt'>5 天</span></td><td class='v-sell'>401<span class='dt'>1 天</span></td><td class='v-pos' style='font-weight:700'>+3,629</td></tr><tr><td><span class='top-rank r3'>3</span></td><td class='fund'>01_台灣基金</td><td class='v-buy'>3,548<span class='dt'>6 天</span></td><td class='v-sell'>1,118<span class='dt'>4 天</span></td><td class='v-pos' style='font-weight:700'>+2,430</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">單位：萬元。依每日申購／贖回前三名歸戶相抵後的淨額絕對值排序（同檔可雙邊上榜）；只涵蓋每天前三名，全部上榜基金見 7.1。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li style="margin-bottom:6px"><b>5.1 Top1　30_全球複合收益債</b>｜淨贖回 4,214 萬。只有贖回：11/09 合庫商銀 1,171 萬、11/10 402 萬、11/11 彰銀 150 萬、11/12 直銷 2,491 萬，占一般型贖回 38.6%。上週排行榜上淨申購 420 萬（11/02 申購 700 萬）；近五週淨贖回 0.59 億。規模資金進出 -1,860 萬（涵蓋 11/09～11/11 的交易），可信度高，11/12 那筆算進下期。</li><li style="margin-bottom:6px"><b>5.2 Top2　16_台灣高科技</b>｜淨申購 3,629 萬（上週 +4,810 萬）。五天都進入申購前三名（合庫商銀 1,463、878、543、590、556 萬，合計 4,030 萬，四天是第 1 名），贖回只有 11/10 一次 401 萬；逐日淨額五天都是淨申購。淨值 11/06 → 11/12 +10.44%；規模資金進出 +4,219 萬，方向一致。</li><li style="margin-bottom:6px"><b>5.3 Top3　01_台灣基金</b>｜淨申購 2,430 萬（上週 +1,318 萬）。6 次進入申購前三名、合計 3,548 萬（合庫商銀 731、456、371 萬，11/11 一銀 912 萬、基富通證 797 萬，11/13 鉅亨投顧 281 萬）；4 次進入贖回前三名、合計 1,118 萬（11/11 合庫商銀 448 萬、一銀 206 萬，11/12 合庫商銀 359 萬，11/13 一銀 105 萬）。淨值 11/06 → 11/12 +10.46%；規模資金進出 +2,061 萬。</li></ul></div></div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">6.　本週貨幣型大額進出</div><div class="rmk rmk-info concl-box"><div class="rmk-title">重點</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li><b>11/13 富邦人壽贖回 15 億</b>：11/11 下午預告，提前兩個營業日；富邦人壽 10/28 曾申購 10 億。</li><li><b>11/13 新光人壽贖回 4 億</b>：11/13 下午 1:46 才預告，當天執行；兩筆合計 19 億，占本週貨幣型贖回 83.7%，11/16 資料日入帳。</li><li><b>11/10 新光人壽申購 6 億</b>：11/06 下午預告，占本週貨幣型申購 63.4%。</li><li><b>銀行通路</b>：申購 3.46 億、贖回 3.69 億，淨贖回 0.23 億，全部是合庫商銀；11/12 申購 15,150 萬、贖回 18,296 萬最多。11/11～11/13 為當天推算（＊）。</li><li><b>下週</b>：截至 11/14 沒有預告。</li></ul></div></div><div class="sec-lbl" style="margin-top:18px">直銷 vs 銀行通路（單位：億元；已涵蓋 5/5 天；11/11、11/12、11/13 為當天推算＊）</div><div class="tbl-scroll"><table class="tbl" style="min-width:520px"><thead><tr><th class="fund">通路</th><th class="th-buy">申購</th><th class="th-sell">贖回</th><th>淨額</th></tr></thead><tbody><tr><td class='fund'>直銷（壽險／法人）</td><td class='v-buy'>6.00</td><td class='v-sell'>19.00</td><td class='v-neg' style='font-weight:700'>-13.00</td></tr><tr><td class='fund'>銀行通路</td><td class='v-buy'>3.46</td><td class='v-sell'>3.69</td><td class='v-neg' style='font-weight:700'>-0.23</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">直銷＝通路代碼 99900 合庫投信（壽險／法人，大額有預報制度）；銀行通路不在預報制度內。資料：特定日期銷售通路基金規模報表「銷售通路申購贖回總額（貨幣市場基金）」，逐日與每日交易彙總表核對。＊當天推算：該表統計到三個營業日前，尚未涵蓋的日子以「直銷＝執行日當天執行的壽險／法人大額交易（大額一律有預報）、銀行≈交易彙總表當天貨幣型合計−直銷」計算，通路報表到齊後核對（差異只會是直銷未達預報門檻的小額交易）。</div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">逐筆時間軸與預告紀錄見第 9 段。</div><div style="margin-top:30px;padding:6px 0 6px 12px;border-left:4px solid var(--gold);font-size:15px;font-weight:700;color:var(--ink)">7.　一般型逐日申贖情況</div><div class="sec-lbl" style="margin-top:20px">7.1　逐日申贖 Top3 彙總表與解說</div><div class="tbl-scroll"><table class="tbl" style="min-width:520px">
+<thead><tr><th class="fund">日期</th><th class="th-buy">一般型申購</th><th class="th-sell">一般型贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td>11/09<span class='dt'>一</span></td><td class='v-buy'>3,876</td><td class='v-sell'>3,171</td><td class='v-pos' style='font-weight:700'>+705</td></tr><tr><td>11/10<span class='dt'>二</span></td><td class='v-buy'>3,024</td><td class='v-sell'>1,701</td><td class='v-pos' style='font-weight:700'>+1,323</td></tr><tr><td>11/11<span class='dt'>三</span></td><td class='v-buy'>3,597</td><td class='v-sell'>1,513</td><td class='v-pos' style='font-weight:700'>+2,084</td></tr><tr><td>11/12<span class='dt'>四</span></td><td class='v-buy'>2,053</td><td class='v-sell'>3,809</td><td class='v-neg' style='font-weight:700'>-1,755</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='v-buy'>1,651</td><td class='v-sell'>722</td><td class='v-pos' style='font-weight:700'>+929</td></tr><tr class='tr-total'><td>一週合計</td><td>14,201</td><td>10,916</td><td class='v-pos'>+3,286</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">單位：萬元。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>五天淨額 +705 → +1,323 → +2,084 → -1,755 → +929 萬，四天淨申購、11/12 淨贖回，全週 +0.33 億。上週是 +1,775、+2,310、-781、+2,721、-6,209 萬，最後一天 11/06 台股大跌時淨贖回 6,209 萬。</li><li>申購五天 3,876、3,024、3,597、2,053、1,651 萬，11/09 最多（台灣高科技 1,463 萬），之後下降；上週是 3,811、3,734、2,367、3,355、3,677 萬。</li><li>贖回五天 3,171、1,701、1,513、3,809、722 萬；只有 11/09、11/12 兩天超過 3,000 萬，兩天的贖回第 1 名都是全球複合收益債（1,171 萬、2,491 萬）。上週 11/06 一天贖回 9,886 萬。</li><li>11/12 淨贖回的原因是全球複合收益債一筆直銷贖回 2,491 萬（占當天贖回 65.4%）；不是國內股票型基金的贖回。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">逐日申購前三名（分母＝當日一般型總申購；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:980px">
+<thead><tr><th class="fund">日期</th><th class="fund">第 1 名</th><th class="fund">第 2 名</th>
+<th class="fund">第 3 名</th><th class="th-buy">前三合計</th><th>當日總申購</th>
+<th>前三占比</th><th>第1名占比</th></tr></thead>
+<tbody><tr><td>11/09<span class='dt'>一</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,463 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>731 萬</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>565 萬</span></td><td>2,759</td><td style='color:#6b7280'>3,876</td><td style='font-weight:700'>71.2%</td><td style='font-weight:700'><span class='pct-hot'>37.7%</span></td></tr><tr><td>11/10<span class='dt'>二</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>878 萬</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>473 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>456 萬</span></td><td>1,807</td><td style='color:#6b7280'>3,024</td><td style='font-weight:700'>59.8%</td><td style='font-weight:700'>29.0%</td></tr><tr><td>11/11<span class='dt'>三</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-oth'>一銀</span><span class='am'>912 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-dir'>基富通證</span><span class='am'>797 萬</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>543 萬</span></td><td>2,252</td><td style='color:#6b7280'>3,597</td><td style='font-weight:700'>62.6%</td><td style='font-weight:700'>25.4%</td></tr><tr><td>11/12<span class='dt'>四</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>590 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>371 萬</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>357 萬</span></td><td>1,318</td><td style='color:#6b7280'>2,053</td><td style='font-weight:700'>64.2%</td><td style='font-weight:700'>28.7%</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>556 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-anue'>鉅亨投顧</span><span class='am'>281 萬</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>243 萬</span></td><td>1,080</td><td style='color:#6b7280'>1,651</td><td style='font-weight:700'>65.4%</td><td style='font-weight:700'><span class='pct-hot'>33.7%</span></td></tr><tr class='tr-total'><td>一週合計</td><td colspan='3'></td><td>9,216</td><td>14,201</td><td>64.9%</td><td></td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>前三名占當日一般型申購的比重，五天依序 71.2%、59.8%、62.6%、64.2%、65.4%，全週 64.9%（上週 63.6%）。</li><li>第 1 名占比 37.7%、29.0%、25.4%、28.7%、33.7%：除了 11/11 是台灣基金（一銀 912 萬），其餘四天都是台灣高科技合庫商銀（1,463、878、590、556 萬）。</li><li>台灣基金 6 次進入申購前三名、合計 3,548 萬：合庫商銀三次（731、456、371 萬）、11/11 一銀 912 萬與基富通證 797 萬、11/13 鉅亨投顧 281 萬；AI電動車 4 次 1,638 萬（565、473、357、243 萬），都是合庫商銀。</li><li>五天的申購前三名共 15 筆，只有台灣高科技、台灣基金、AI電動車三檔，合計占一般型申購 64.9%；通路是合庫商銀 12 筆（7,226 萬）、一銀、基富通證、鉅亨投顧各 1 筆。</li></ul></div></div>
+<div class="sec-lbl" style="margin-top:22px">逐日贖回前三名（分母＝當日一般型總贖回；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:980px">
+<thead><tr><th class="fund">日期</th><th class="fund">第 1 名</th><th class="fund">第 2 名</th>
+<th class="fund">第 3 名</th><th class="th-sell">前三合計</th><th>當日總贖回</th>
+<th>前三占比</th><th>第1名占比</th></tr></thead>
+<tbody><tr><td>11/09<span class='dt'>一</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>1,171 萬</span></td><td class='rankcell'><span class='fd'>27_入息多重資產</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>338 萬</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>320 萬</span></td><td>1,829</td><td style='color:#6b7280'>3,171</td><td style='font-weight:700'>57.7%</td><td style='font-weight:700'><span class='pct-hot'>36.9%</span></td></tr><tr><td>11/10<span class='dt'>二</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>402 萬</span></td><td class='rankcell'><span class='fd'>16_台灣高科技</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>401 萬</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-oth'>元大銀行</span><span class='am'>257 萬</span></td><td>1,060</td><td style='color:#6b7280'>1,701</td><td style='font-weight:700'>62.3%</td><td style='font-weight:700'>23.6%</td></tr><tr><td>11/11<span class='dt'>三</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>448 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-oth'>一銀</span><span class='am'>206 萬</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-chb'>彰銀</span><span class='am'>150 萬</span></td><td>804</td><td style='color:#6b7280'>1,513</td><td style='font-weight:700'>53.1%</td><td style='font-weight:700'>29.6%</td></tr><tr><td>11/12<span class='dt'>四</span></td><td class='rankcell'><span class='fd'>30_全球複合收益債</span><span class='cp cp-dir'>合庫投信</span><span class='am'>2,491 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>359 萬</span></td><td class='rankcell'><span class='fd'>20_ESG積極組合</span><span class='cp cp-life'>合作金庫人壽</span><span class='am'>151 萬</span></td><td>3,001</td><td style='color:#6b7280'>3,809</td><td style='font-weight:700'>78.8%</td><td style='font-weight:700'><span class='pct-hot'>65.4%</span></td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='rankcell'><span class='fd'>12_AI電動車</span><span class='cp cp-tcb'>合庫商銀</span><span class='am'>110 萬</span></td><td class='rankcell'><span class='fd'>01_台灣基金</span><span class='cp cp-oth'>一銀</span><span class='am'>105 萬</span></td><td class='rankcell'><span class='fd'>31_AI電力創新多重資產基金</span><span class='cp cp-oth'>元大銀行</span><span class='am'>99 萬</span></td><td>314</td><td style='color:#6b7280'>722</td><td style='font-weight:700'>43.5%</td><td style='font-weight:700'>15.2%</td></tr><tr class='tr-total'><td>一週合計</td><td colspan='3'></td><td>7,008</td><td>10,916</td><td>64.2%</td><td></td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>前三名占當日一般型贖回的比重，五天依序 57.7%、62.3%、53.1%、78.8%、43.5%，全週 64.2%（上週 70.3%）。</li><li>第 1 名占比 36.9%、23.6%、29.6%、65.4%、15.2%：全球複合收益債三天是第 1 名（11/09 合庫商銀 1,171 萬、11/10 402 萬、11/12 直銷 2,491 萬），11/12 一筆就占當天贖回 65.4%。</li><li>11/11 第 1、2 名都是台灣基金（合庫商銀 448 萬、一銀 206 萬），當天台灣基金也是申購第 1、2 名（一銀 912 萬、基富通證 797 萬）；11/13 贖回第 1 名只有 110 萬（AI電動車）。</li><li>五天的贖回前三名共 15 筆：合庫商銀 8 筆（3,548 萬）、直銷 1 筆（2,491 萬）、元大銀行 2 筆（356 萬）、一銀 2 筆（311 萬）、合作金庫人壽 1 筆（151 萬）、彰銀 1 筆（150 萬）。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">本週上榜基金歸戶淨額（申購榜＋贖回榜相抵；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:640px">
+<thead><tr><th class="fund">基金</th><th class="th-buy">榜上申購</th><th class="th-sell">榜上贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td class='fund'>16_台灣高科技</td><td class='v-buy'>4,030<span class='dt'>5 天</span></td><td class='v-sell'>401<span class='dt'>1 天</span></td><td class='v-pos' style='font-weight:700'>+3,629</td></tr><tr><td class='fund'>01_台灣基金</td><td class='v-buy'>3,548<span class='dt'>6 天</span></td><td class='v-sell'>1,118<span class='dt'>4 天</span></td><td class='v-pos' style='font-weight:700'>+2,430</td></tr><tr><td class='fund'>12_AI電動車</td><td class='v-buy'>1,638<span class='dt'>4 天</span></td><td class='v-sell'>110<span class='dt'>1 天</span></td><td class='v-pos' style='font-weight:700'>+1,528</td></tr><tr><td class='fund'>20_ESG積極組合</td><td class='v-buy'>—</td><td class='v-sell'>151<span class='dt'>1 天</span></td><td class='v-neg' style='font-weight:700'>-151</td></tr><tr><td class='fund'>27_入息多重資產</td><td class='v-buy'>—</td><td class='v-sell'>338<span class='dt'>1 天</span></td><td class='v-neg' style='font-weight:700'>-338</td></tr><tr><td class='fund'>31_AI電力創新多重資產基金</td><td class='v-buy'>—</td><td class='v-sell'>676<span class='dt'>3 天</span></td><td class='v-neg' style='font-weight:700'>-676</td></tr><tr><td class='fund'>30_全球複合收益債</td><td class='v-buy'>—</td><td class='v-sell'>4,214<span class='dt'>4 天</span></td><td class='v-neg' style='font-weight:700'>-4,214</td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>歸戶相抵後淨申購最多的是台灣高科技 +3,629 萬（申購 4,030 萬、贖回 401 萬；上週 +4,810 萬），其次台灣基金 +2,430 萬（申購 3,548 萬、贖回 1,118 萬；上週 +1,318 萬）、AI電動車 +1,528 萬（上週沒有上榜）。</li><li>淨贖回最多的是全球複合收益債 -4,214 萬（只有贖回；上週 +420 萬），其次 AI電力創新 -676 萬（上週 -1,123 萬）、入息多重資產 -338 萬、ESG積極組合 -151 萬（上週 -4,459 萬）。</li><li>台灣高科技逐日淨額 +1,463、+477、+543、+590、+556 萬，五天都是淨申購；台灣基金 +731、+456、+1,055、+12、+175 萬，11/12 申購 371 萬、贖回 359 萬幾乎相抵。</li><li>這張表的方向和第 10 段規模一致：國內兩檔資金進出 +0.63 億（台灣高科技 +4,219 萬、台灣基金 +2,061 萬），ESG積極組合 -4,449 萬（上週 11/06 遠雄人壽贖回 4,079 萬落在本期規模），全球複合收益債 -1,860 萬，AI電力創新 -1,682 萬。規模涵蓋 11/06、11/09～11/11 四天的交易，這四天一般型交易淨額 -0.21 億，規模的資金進出 -0.61 億，方向一致；差額主要是 2032目標日期、全球醫療照護、入息優化等排行榜外的贖回。</li><li>這張表只涵蓋每天前三名，排行榜外的零星申贖不在內；全貌請看第 2 段的總量。</li></ul></div></div><div class="sec-lbl" style="margin-top:20px">7.2　指數與基金淨值變動表格與相關性說明</div><div class="tbl-scroll"><table class="tbl" style="min-width:860px">
+<thead><tr><th class="fund">交易日</th><th>台灣加權指數</th><th>台灣基金淨值</th><th>台灣高科技淨值</th>
+<th class="th-buy">一般型申購</th><th class="th-sell">一般型贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td>11/09<span class='dt'>一</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+4.94%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+5.71%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+5.66%</td><td class='v-buy'>3,876</td><td class='v-sell'>3,171</td><td class='v-pos' style='font-weight:700'>+705</td></tr><tr><td>11/10<span class='dt'>二</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+2.52%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+4.81%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+4.60%</td><td class='v-buy'>3,024</td><td class='v-sell'>1,701</td><td class='v-pos' style='font-weight:700'>+1,323</td></tr><tr><td>11/11<span class='dt'>三</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+3.62%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+4.64%</td><td class='v-pos' style='font-family:DM Mono,monospace'>+4.52%</td><td class='v-buy'>3,597</td><td class='v-sell'>1,513</td><td class='v-pos' style='font-weight:700'>+2,084</td></tr><tr><td>11/12<span class='dt'>四</span></td><td class='v-neg' style='font-family:DM Mono,monospace;font-weight:700'>-2.63%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-4.72%</td><td class='v-neg' style='font-family:DM Mono,monospace'>-4.40%</td><td class='v-buy'>2,053</td><td class='v-sell'>3,809</td><td class='v-neg' style='font-weight:700'>-1,755</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='v-pos' style='font-family:DM Mono,monospace;font-weight:700'>+1.35%</td><td style='color:#9ca3af'>—</td><td style='color:#9ca3af'>—</td><td class='v-buy'>1,651</td><td class='v-sell'>722</td><td class='v-pos' style='font-weight:700'>+929</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">漲跌為日變動；申贖單位：萬元。國內股票型淨值＝當日；11/13 的淨值報表下一個營業日才寄達，先以指數對照。海外型淨值落後一日，與費城半導體指數、那斯達克指數的對照見下方說明。指數：財經日報指數整理表「最新收盤價」欄（產檔日＝交易日次日，檔內 observe_date 逐日核對）；淨值：基金日報表附件 NAV PDF 台幣 A 類（11/13 的淨值報表 11/16 才寄，該格標「—」）。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">相關性說明</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li><b>上漲日持續淨申購。</b>11/09 加權 +4.94%（國內兩檔淨值 +5.71%、+5.66%），一般型申購 3,876 萬是本週最多，台灣高科技 1,463 萬；11/10 +2.52%、11/11 +3.62%，兩天淨申購 1,323、2,084 萬。上漲的三天沒有出現大量贖回。</li><li><b>下跌日的贖回不是國內股票型。</b>11/12 加權 -2.63%、兩檔淨值 -4.72%、-4.40%，當天淨贖回 1,755 萬，但贖回 3,809 萬裡 2,491 萬是全球複合收益債直銷贖回；台灣基金贖回 359 萬，申購前三名仍是台灣高科技、台灣基金、AI電動車。</li><li><b>國內兩檔漲幅比大盤多。</b>11/06 → 11/12 台灣基金淨值 +10.46%、台灣高科技 +10.44%，加權同期 +8.54%；11/13 加權再漲 1.35%，11/06 → 11/13 累計 +10.01%。上週 11/06 當天加權 -4.51%、當週 -12.19%。</li><li><b>海外型：淨值回升，11/13 美股下跌下週才反映。</b>費城半導體指數 11/06 → 11/12 +11.89%、那斯達克指數 +3.20%；AI電力創新淨值（台幣 A）11/05 8.64 → 11/11 9.12 元（+5.56%）、AI電動車 24.07 → 26.74 元（+11.09%）。11/13 費城半導體指數 -3.43%、那斯達克指數 -0.91%，海外型淨值落後一日，要到 11/16 計算的淨值才會反映。</li><li><b>匯率影響小。</b>美元兌台幣 11/06 32.765 → 11/12 32.980（台幣小幅貶值 0.66%），11/13 32.875。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-good"><div class="rmk-icon">🛒</div><div class="rmk-title">台股反彈，合庫商銀客戶持續申購國內兩檔</div><div class="rmk-body">台灣高科技五天都進入申購前三名（合庫商銀 1,463、878、543、590、556 萬，合計 4,030 萬），贖回只有 11/10 一次 401 萬；台灣基金 6 次進入申購前三名、合計 3,548 萬。上週 11/06 加權 -4.51%、本週 11/06 → 11/13 +10.01%，下跌與反彈期間都以申購為主。</div></div><div class="rmk rmk-warn"><div class="rmk-icon">🔍</div><div class="rmk-title">全球複合收益債：本週贖回 4,214 萬</div><div class="rmk-body">11/09 合庫商銀 1,171 萬、11/10 402 萬、11/11 彰銀 150 萬、11/12 直銷 2,491 萬，占一般型贖回 38.6%，比前四週合計（2,407 萬）還多。規模資金進出 -1,860 萬（涵蓋 11/09～11/11 的交易），11/12 那筆會算進下期規模。</div></div><div class="rmk rmk-warn"><div class="rmk-icon">📉</div><div class="rmk-title">AI電力創新：贖回持續、本週沒有申購</div><div class="rmk-body">本週 3 次進入贖回前三名、合計 676 萬（11/09 合庫商銀 320 萬、元大銀行 11/10 257 萬、11/13 99 萬），是上週贖回前三名金額（1,123 萬）的 60.1%。五週 21 天上贖回榜，淨贖回 0.69 億；淨值 11/05 → 11/11 +5.56%。</div></div><div class="rmk rmk-note"><div class="rmk-icon">🏢</div><div class="rmk-title">11/12 淨贖回是一筆直銷贖回造成</div><div class="rmk-body">11/12 加權 -2.63%，一般型淨贖回 1,755 萬；贖回 3,809 萬裡全球複合收益債直銷一筆 2,491 萬占 65.4%。國內股票型當天贖回只有台灣基金 359 萬，申購仍有台灣高科技 590 萬、台灣基金 371 萬。</div></div><div class="rmk rmk-watch"><div class="rmk-icon">⚠️</div><div class="rmk-title">11/13 費城半導體指數 -3.43%，11/16 計算的淨值才反映</div><div class="rmk-body">海外型淨值落後一日，11/13 美股的跌幅（費城半導體指數 -3.43%、那斯達克指數 -0.91%）要到 11/16 計算的淨值才會反映，報表 11/17 才寄到，AI電力創新、AI電動車影響較大。台股 11/13 加權 +1.35%，國內兩檔 11/13 淨值報表 11/16 寄到。</div></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">🏆</span>8｜最近一個月累計 Top3：申購／贖回／加總</div><span class="card-note">一般型；每日前三名累計</span>
+  </div>
+  <div class="card-body"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+<div><div class="sec-lbl">累計申購 Top3</div><div class="tbl-scroll"><table class="tbl">
+<thead><tr><th>名次</th><th class="fund">基金</th><th class="th-buy">榜上申購</th></tr></thead><tbody><tr><td><span class='top-rank r1'>1</span></td><td class='fund'>16_台灣高科技</td><td class='v-buy' style='font-weight:700'>36,884<span class='dt'>23 天</span></td></tr><tr><td><span class='top-rank r2'>2</span></td><td class='fund'>01_台灣基金</td><td class='v-buy' style='font-weight:700'>21,907<span class='dt'>33 天</span></td></tr><tr><td><span class='top-rank r3'>3</span></td><td class='fund'>12_AI電動車</td><td class='v-buy' style='font-weight:700'>4,711<span class='dt'>10 天</span></td></tr></tbody></table></div></div>
+<div><div class="sec-lbl">累計贖回 Top3</div><div class="tbl-scroll"><table class="tbl">
+<thead><tr><th>名次</th><th class="fund">基金</th><th class="th-sell">榜上贖回</th></tr></thead><tbody><tr><td><span class='top-rank r1'>1</span></td><td class='fund'>01_台灣基金</td><td class='v-sell' style='font-weight:700'>10,456<span class='dt'>13 天</span></td></tr><tr><td><span class='top-rank r2'>2</span></td><td class='fund'>16_台灣高科技</td><td class='v-sell' style='font-weight:700'>8,034<span class='dt'>9 天</span></td></tr><tr><td><span class='top-rank r3'>3</span></td><td class='fund'>31_AI電力創新多重資產基金</td><td class='v-sell' style='font-weight:700'>7,911<span class='dt'>21 天</span></td></tr></tbody></table></div></div>
+</div>
+<div class="sec-lbl" style="margin-top:18px">累計加總 Top3（申購 − 贖回，依淨額絕對值）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:620px">
+<thead><tr><th>名次</th><th class="fund">基金</th><th>淨額</th><th class="th-buy">榜上申購</th><th class="th-sell">榜上贖回</th></tr></thead>
+<tbody><tr><td><span class='top-rank r1'>1</span></td><td class='fund'>16_台灣高科技</td><td class='v-pos' style='font-weight:700'>+28,850</td><td class='v-buy'>36,884</td><td class='v-sell'>8,034</td></tr><tr><td><span class='top-rank r2'>2</span></td><td class='fund'>01_台灣基金</td><td class='v-pos' style='font-weight:700'>+11,451</td><td class='v-buy'>21,907</td><td class='v-sell'>10,456</td></tr><tr><td><span class='top-rank r3'>3</span></td><td class='fund'>31_AI電力創新多重資產基金</td><td class='v-neg' style='font-weight:700'>-6,904</td><td class='v-buy'>1,006</td><td class='v-sell'>7,911</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">期間 10/12–11/13（前四週＋本週）；單位：萬元，小字為上榜天數。只統計每日一般型申購／贖回前三名。</div><div class="sec-lbl" style="margin-top:22px">一個月內經常上榜的基金（本週上榜，或前四週有兩週以上上榜；單位：萬元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:960px">
+<thead><tr><th class="fund">基金</th><th class="th-buy">前四週申購榜</th><th class="th-buy">本週申購榜</th>
+<th class="th-sell">前四週贖回榜</th><th class="th-sell">本週贖回榜</th><th>上榜週數</th><th class="fund">型態</th></tr></thead>
+<tbody><tr><td class='fund'>01_台灣基金</td><td class='v-buy'>18,360<span class='dt'>27 天</span></td><td class='v-buy' style='font-weight:700'>3,548<span class='dt'>6 天</span></td><td class='v-sell'>9,338<span class='dt'>9 天</span></td><td class='v-sell' style='font-weight:700'>1,118<span class='dt'>4 天</span></td><td style='color:#6b7280'>5 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 4 週上榜</span></td></tr><tr><td class='fund'>16_台灣高科技</td><td class='v-buy'>32,854<span class='dt'>18 天</span></td><td class='v-buy' style='font-weight:700'>4,030<span class='dt'>5 天</span></td><td class='v-sell'>7,633<span class='dt'>8 天</span></td><td class='v-sell' style='font-weight:700'>401<span class='dt'>1 天</span></td><td style='color:#6b7280'>5 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 4 週上榜</span></td></tr><tr><td class='fund'>31_AI電力創新多重資產基金</td><td class='v-buy'>1,006<span class='dt'>1 天</span></td><td class='v-buy' style='font-weight:700'>—</td><td class='v-sell'>7,235<span class='dt'>18 天</span></td><td class='v-sell' style='font-weight:700'>676<span class='dt'>3 天</span></td><td style='color:#6b7280'>5 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 4 週上榜</span></td></tr><tr><td class='fund'>30_全球複合收益債</td><td class='v-buy'>700<span class='dt'>1 天</span></td><td class='v-buy' style='font-weight:700'>—</td><td class='v-sell'>2,407<span class='dt'>4 天</span></td><td class='v-sell' style='font-weight:700'>4,214<span class='dt'>4 天</span></td><td style='color:#6b7280'>4 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 3 週上榜</span></td></tr><tr><td class='fund'>12_AI電動車</td><td class='v-buy'>3,073<span class='dt'>6 天</span></td><td class='v-buy' style='font-weight:700'>1,638<span class='dt'>4 天</span></td><td class='v-sell'>4,904<span class='dt'>2 天</span></td><td class='v-sell' style='font-weight:700'>110<span class='dt'>1 天</span></td><td style='color:#6b7280'>4 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 3 週上榜</span></td></tr><tr><td class='fund'>27_入息多重資產</td><td class='v-buy'>—</td><td class='v-buy' style='font-weight:700'>—</td><td class='v-sell'>264<span class='dt'>2 天</span></td><td class='v-sell' style='font-weight:700'>338<span class='dt'>1 天</span></td><td style='color:#6b7280'>3 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 2 週上榜</span></td></tr><tr><td class='fund'>20_ESG積極組合</td><td class='v-buy'>—</td><td class='v-buy' style='font-weight:700'>—</td><td class='v-sell'>4,857<span class='dt'>4 天</span></td><td class='v-sell' style='font-weight:700'>151<span class='dt'>1 天</span></td><td style='color:#6b7280'>3 / 5</td><td class='fund'><span class='cp cp-tcb'>前四週有 2 週上榜</span></td></tr><tr><td class='fund'>28_合庫AI 多重資產證券投資信託基金</td><td class='v-buy'>677<span class='dt'>1 天</span></td><td class='v-buy' style='font-weight:700'>—</td><td class='v-sell'>595<span class='dt'>2 天</span></td><td class='v-sell' style='font-weight:700'>—</td><td style='color:#6b7280'>2 / 5</td><td class='fund'><span class='cp cp-oth'>本週未上榜</span></td></tr></tbody></table></div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li><b>申購 Top3</b>：台灣高科技 3.69 億（23 天）、台灣基金 2.19 億（33 天）、AI電動車 0.47 億（10 天）。本週分別占五週累計的 10.9%、16.2%、34.8%。</li><li><b>贖回 Top3</b>：台灣基金 1.05 億（13 天）、台灣高科技 0.80 億（9 天）、AI電力創新 0.79 億（21 天）；全球複合收益債 0.66 億排第 4，其中本週 4,214 萬。</li><li><b>加總 Top3</b>：台灣高科技淨申購 2.88 億、台灣基金淨申購 1.15 億、AI電力創新淨贖回 0.69 億。國內兩檔一個月來都是淨申購；AI電力創新前四週 -6,229 萬、本週再 -676 萬。</li><li><b>其他淨贖回</b>：全球複合收益債 -0.59 億（前四週 -1,706 萬、本週 -4,214 萬）、ESG積極組合 -0.50 億（上週遠雄人壽 4,079 萬）。</li><li><b>經常上榜的基金</b>（進入每天申購或贖回金額前三名）：台灣高科技、台灣基金、AI電力創新五週都上榜；全球複合收益債、AI電動車四週；入息多重資產、ESG積極組合三週；合庫AI多重資產本週沒有上榜。</li></ul></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">🏦</span>9｜貨幣型申贖時間軸</div><span class="card-note">單位：億元</span>
+  </div>
+  <div class="card-body"><div class="sec-lbl">預報信載明的大額交易（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:760px">
+<thead><tr><th class="fund">日期</th><th class="fund">法人</th><th>動作</th><th>金額</th>
+<th>當日貨幣型同向總量</th><th class="fund">預告紀錄</th></tr></thead>
+<tbody><tr><td>11/10<span class='dt'>二</span></td><td class='fund'>新光人壽</td><td><span class='v-buy'>申購</span></td><td style='font-weight:700'>6.00</td><td style='color:#6b7280'>6.20</td><td class='fund' style='font-size:11.5px;color:var(--other)'>11/06 預告</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='fund'>富邦人壽</td><td><span class='v-sell'>贖回</span></td><td style='font-weight:700'>15.00</td><td style='color:#6b7280'>19.40</td><td class='fund' style='font-size:11.5px;color:var(--other)'>11/11 預告</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='fund'>新光人壽</td><td><span class='v-sell'>贖回</span></td><td style='font-weight:700'>4.00</td><td style='color:#6b7280'>19.40</td><td class='fund' style='font-size:11.5px;color:var(--other)'>11/13 當天預告</td></tr></tbody></table></div>
+<div class="sec-lbl" style="margin-top:18px">貨幣型逐日申贖（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:900px">
+<thead><tr><th class="fund">日期</th><th class="th-buy">直銷申購</th><th class="th-sell">直銷贖回</th><th class="th-buy">銀行申購</th><th class="th-sell">銀行贖回</th><th class="th-buy">合計申購</th><th class="th-sell">合計贖回</th><th>淨額</th></tr></thead>
+<tbody><tr><td>11/09<span class='dt'>一</span></td><td class='v-buy'>0.00</td><td class='v-sell'>0.00</td><td class='v-buy'>0.32</td><td class='v-sell'>0.49</td><td class='v-buy'>0.32</td><td class='v-sell'>0.49</td><td class='v-neg' style='font-weight:700'>-0.17</td></tr><tr><td>11/10<span class='dt'>二</span></td><td class='v-buy'>6.00</td><td class='v-sell'>0.00</td><td class='v-buy'>0.20</td><td class='v-sell'>0.79</td><td class='v-buy'>6.20</td><td class='v-sell'>0.79</td><td class='v-pos' style='font-weight:700'>+5.41</td></tr><tr><td>11/11<span class='dt'>三</span></td><td class='v-buy'>0.00＊</td><td class='v-sell'>0.00＊</td><td class='v-buy'>0.83＊</td><td class='v-sell'>0.19＊</td><td class='v-buy'>0.83</td><td class='v-sell'>0.19</td><td class='v-pos' style='font-weight:700'>+0.63</td></tr><tr><td>11/12<span class='dt'>四</span></td><td class='v-buy'>0.00＊</td><td class='v-sell'>0.00＊</td><td class='v-buy'>1.51＊</td><td class='v-sell'>1.83＊</td><td class='v-buy'>1.51</td><td class='v-sell'>1.83</td><td class='v-neg' style='font-weight:700'>-0.31</td></tr><tr><td>11/13<span class='dt'>五</span></td><td class='v-buy'>0.00＊</td><td class='v-sell'>19.00＊</td><td class='v-buy'>0.60＊</td><td class='v-sell'>0.40＊</td><td class='v-buy'>0.60</td><td class='v-sell'>19.40</td><td class='v-neg' style='font-weight:700'>-18.80</td></tr></tbody></table></div>
+<div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">＊當天推算：直銷＝執行日當天執行的壽險／法人大額交易（大額一律有預報）、銀行≈交易彙總表當天貨幣型合計−直銷，通路報表到齊後核對。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>貨幣型全週申購 9.46 億、贖回 22.69 億，淨贖回 13.23 億；上週淨申購 5.14 億。</li><li><b>直銷：11/13 富邦人壽贖回 15 億、新光人壽贖回 4 億</b>：富邦人壽 11/11 下午 3:47 預報，提前兩個營業日；新光人壽 11/13 下午 1:46 才預報，當天執行。兩筆合計 19 億，占本週貨幣型贖回 83.7%。富邦人壽 10/28 曾申購 10 億。</li><li><b>直銷：11/10 新光人壽申購 6 億</b>：11/06 下午預報，占本週貨幣型申購 63.4%。新光人壽本月 11/04 申購 5 億、11/10 申購 6 億、11/13 贖回 4 億。</li><li><b>銀行通路</b>：申購 3.46 億、贖回 3.69 億，淨贖回 0.23 億（上週淨贖回 1.83 億），全部是合庫商銀；11/12 申購 15,150 萬、贖回 18,296 萬是本週銀行通路進出最多的一天。11/09、11/10 已與通路報表核對，11/11～11/13 為當天推算。</li><li><b>入帳時點</b>：貨幣型規模逐日的資金進出（11/09 -1.32、11/10 +5.72、11/11 +0.04、11/12 +1.32 億）都等於「當天申購 − 前一營業日贖回」，差距在 21 萬以內。所以 11/12、11/13 的贖回會落在 11/13、11/16 資料日，算進下期規模。截至 11/14 信箱沒有下週的預告。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-note"><div class="rmk-icon">🏦</div><div class="rmk-title">11/13 富邦人壽、新光人壽贖回貨幣型 19 億</div><div class="rmk-body">富邦人壽 15 億（11/11 預告）、新光人壽 4 億（11/13 下午 1:46 才預告），占本週貨幣型贖回 83.7%；會在 11/16 資料日入帳，下期貨幣型規模會減少。富邦人壽 10/28 曾申購 10 億。</div></div><div class="rmk rmk-note"><div class="rmk-icon">🏦</div><div class="rmk-title">新光人壽 11/10 申購貨幣型 6 億</div><div class="rmk-body">11/06 預告、11/10 申購，占本週貨幣型申購 63.4%。新光人壽本月 11/04 申購 5 億、11/10 申購 6 億、11/13 贖回 4 億。不計三筆法人大額，本週貨幣型淨贖回 0.23 億，都是合庫商銀的銀行通路。</div></div></div></div>
+</div>
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-ttl"><span class="card-ico">💼</span>10｜每檔基金 AUM／淨申贖變動／貢獻度</div><span class="card-note">資料日 11/06 → 11/12｜規模比交易晚一個營業日，不得直接相減</span>
+  </div>
+  <div class="card-body"><div class="tbl-scroll"><table class="tbl" style="min-width:1180px">
+<thead><tr><th class="fund">基金</th><th>期初規模（億）</th><th>期末規模（億）</th><th>規模變動</th><th>其中：淨值漲跌</th>
+<th>其中：淨申贖（資金進出）</th><th>貢獻度</th><th class="fund">型態</th><th>資金數字可信度</th></tr></thead>
+<tbody><tr><td class='fund'>合庫台灣基金</td><td>13.13</td><td>14.71</td><td class='v-pos' style='font-weight:700'>+15,843</td><td class='v-pos'>+13,783</td><td class='v-pos' style='font-weight:700'>+2,061</td><td>30.1%</td><td class='fund'><span class='cp cp-tcb'>淨值上漲＋資金流入</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫AI電動車及車聯網創新基金</td><td>10.12</td><td>11.45</td><td class='v-pos' style='font-weight:700'>+13,218</td><td class='v-pos'>+11,313</td><td class='v-pos' style='font-weight:700'>+1,905</td><td>25.1%</td><td class='fund'><span class='cp cp-tcb'>淨值上漲＋資金流入</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫台灣高科技基金</td><td>8.53</td><td>9.85</td><td class='v-pos' style='font-weight:700'>+13,138</td><td class='v-pos'>+8,919</td><td class='v-pos' style='font-weight:700'>+4,219</td><td>25.0%</td><td class='fund'><span class='cp cp-tcb'>淨值上漲＋資金流入</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫AI電力創新多重資產基金</td><td>25.68</td><td>26.94</td><td class='v-pos' style='font-weight:700'>+12,545</td><td class='v-pos'>+14,227</td><td class='v-neg' style='font-weight:700'>-1,682</td><td>23.8%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫樂活安養ESG積極成長組合基金</td><td>3.98</td><td>3.61</td><td class='v-neg' style='font-weight:700'>-3,657</td><td class='v-pos'>+792</td><td class='v-neg' style='font-weight:700'>-4,449</td><td>-6.9%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td>高</td></tr><tr><td class='fund'>合庫AI多重資產基金</td><td>2.10</td><td>2.31</td><td class='v-pos' style='font-weight:700'>+2,126</td><td class='v-pos'>+1,981</td><td class='v-pos' style='font-weight:700'>+145</td><td>4.0%</td><td class='fund'><span class='cp cp-tcb'>淨值上漲＋資金流入</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>全球複合收益債券基金</td><td>17.27</td><td>17.07</td><td class='v-neg' style='font-weight:700'>-2,034</td><td class='v-neg'>-174</td><td class='v-neg' style='font-weight:700'>-1,860</td><td>-3.9%</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>淨值下跌＋資金流出</span></td><td>高</td></tr><tr><td class='fund'>合庫全球醫療照護產業多重資產收益基金</td><td>8.56</td><td>8.69</td><td class='v-pos' style='font-weight:700'>+1,355</td><td class='v-pos'>+2,564</td><td class='v-neg' style='font-weight:700'>-1,210</td><td>2.6%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>全球核心基礎建設基金</td><td>2.29</td><td>2.39</td><td class='v-pos' style='font-weight:700'>+943</td><td class='v-pos'>+1,040</td><td class='v-neg' style='font-weight:700'>-97</td><td>1.8%</td><td class='fund'><span class='cp cp-oth'>主要是淨值變動</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫入息優化多重資產基金</td><td>4.20</td><td>4.13</td><td class='v-neg' style='font-weight:700'>-674</td><td class='v-pos'>+319</td><td class='v-neg' style='font-weight:700'>-992</td><td>-1.3%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td>高</td></tr><tr><td class='fund'>合庫核心趨勢多重基金</td><td>3.79</td><td>3.84</td><td class='v-pos' style='font-weight:700'>+509</td><td class='v-pos'>+954</td><td class='v-neg' style='font-weight:700'>-445</td><td>1.0%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫標普利變特別股收益指數基金</td><td>4.12</td><td>4.08</td><td class='v-neg' style='font-weight:700'>-417</td><td class='v-neg'>-96</td><td class='v-neg' style='font-weight:700'>-320</td><td>-0.8%</td><td class='fund'><span class='cp' style='background:var(--sell-bg);color:var(--sell)'>資金流出</span></td><td>高</td></tr><tr><td class='fund'>合庫全球非投資等級債券基金</td><td>6.14</td><td>6.11</td><td class='v-neg' style='font-weight:700'>-340</td><td class='v-pos'>+139</td><td class='v-neg' style='font-weight:700'>-480</td><td>-0.6%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td>高</td></tr><tr><td class='fund'>合庫2032目標日期多重資產收益基金</td><td>6.96</td><td>6.95</td><td class='v-neg' style='font-weight:700'>-113</td><td class='v-pos'>+2,231</td><td class='v-neg' style='font-weight:700'>-2,344</td><td>-0.2%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫樂活安養ESG穩健成長組合基金</td><td>3.48</td><td>3.49</td><td class='v-pos' style='font-weight:700'>+105</td><td class='v-pos'>+533</td><td class='v-neg' style='font-weight:700'>-427</td><td>0.2%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr><td class='fund'>合庫新興多重收益基金</td><td>2.27</td><td>2.28</td><td class='v-pos' style='font-weight:700'>+95</td><td class='v-pos'>+234</td><td class='v-neg' style='font-weight:700'>-139</td><td>0.2%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td><span style='color:var(--gold);font-weight:700'>低</span></td></tr><tr class='tr-total'><td>一般型合計</td><td>122.63</td><td>127.89</td><td>+52,643</td><td>+58,759</td><td>-6,116</td><td>100.0%</td><td class='fund'><span class='cp cp-anue'>淨值上漲、資金流出</span></td><td></td></tr><tr style='background:var(--surface)'><td class='fund'>合庫貨幣市場基金（貨幣型）</td><td>301.56</td><td>307.39</td><td class='v-pos' style='font-weight:700'>+58,389</td><td class='v-pos'>+837</td><td class='v-pos' style='font-weight:700'>+57,551</td><td>—</td><td class='fund'><span class='cp cp-tcb'>淨值上漲＋資金流入</span></td><td>高</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">規模變動／淨值漲跌／淨申贖單位：萬元。每一列「規模變動＝淨值漲跌＋淨申贖」，逐檔與合計皆與官方報表相符（差異 0）。貢獻度＝該檔規模變動占一般型合計變動的比重（方向與合計相反者為負）。淨申贖是推算值（規模變動減掉淨值影響），可信度標「低」＝資金量比淨值波動小，方向可參考、金額別當精確；多級別基金取台幣 A 類淨值當代表。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">解讀</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>一般型規模 122.63 → 127.89 億，增加 5.26 億（+4.29%）；拆開是「淨值漲跌 +5.88 億、資金進出 -0.61 億」，主要是淨值上漲。逐日 11/09 +0.99 億、11/10 +3.41 億、11/11 +0.77 億、11/12 +0.10 億；期初 11/06 當天 -4.14 億（上週台股、美股大跌）。</li><li>國內兩檔規模合計 +2.90 億（淨值漲跌 +2.27 億、資金進出 +0.63 億）：台灣基金 +15,843 萬（資金進出 +2,061 萬）、台灣高科技 +13,138 萬（資金進出 +4,219 萬）。方向與交易一致，但本期淨值漲幅大，兩檔資金數字可信度低，只能當方向參考。</li><li>其他 14 檔合計 +2.37 億（淨值漲跌 +3.61 億、資金進出 -1.24 億）：AI電動車 +13,218 萬、AI電力創新 +12,545 萬（資金進出 -1,682 萬），兩檔主要是淨值回升；ESG積極組合 -3,657 萬（資金進出 -4,449 萬）、全球複合收益債 -2,034 萬（資金進出 -1,860 萬），兩檔可信度高。</li><li>貨幣型 301.56 → 307.39 億（+5.84 億、+1.94%）＝淨值漲跌 +0.08 億＋資金進出 +5.76 億。合計 424.18 → 435.28 億（+11.10 億、+2.62%）＝淨值漲跌 +5.96 億＋資金進出 +5.14 億。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">逐日規模（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:720px">
+<thead><tr><th class="fund">資料日</th><th>一般型</th><th>增減</th><th>貨幣型</th><th>增減</th><th>合計</th><th>增減</th></tr></thead>
+<tbody><tr><td>11/06</td><td>122.63</td><td class='v-neg'>-4.14</td><td>301.56</td><td class='v-pos'>+0.31</td><td>424.18</td><td class='v-neg'>-3.83</td></tr><tr><td>11/09</td><td>123.61</td><td class='v-pos'>+0.99</td><td>300.27</td><td class='v-neg'>-1.28</td><td>423.89</td><td class='v-neg'>-0.29</td></tr><tr><td>11/10</td><td>127.02</td><td class='v-pos'>+3.41</td><td>306.00</td><td class='v-pos'>+5.73</td><td>433.02</td><td class='v-pos'>+9.13</td></tr><tr><td>11/11</td><td>127.79</td><td class='v-pos'>+0.77</td><td>306.06</td><td class='v-pos'>+0.06</td><td>433.85</td><td class='v-pos'>+0.82</td></tr><tr><td>11/12</td><td>127.89</td><td class='v-pos'>+0.10</td><td>307.39</td><td class='v-pos'>+1.33</td><td>435.28</td><td class='v-pos'>+1.44</td></tr></tbody></table></div><div class="sec-lbl" style="margin-top:22px">近五週規模變動（單位：億元）</div>
+<div class="tbl-scroll"><table class="tbl" style="min-width:760px">
+<thead><tr><th class="fund">週別</th><th>資料日</th><th>一般型期末</th><th>一般型變動</th><th>貨幣型期末</th><th>貨幣型變動</th></tr></thead>
+<tbody><tr><td>10/12–10/16</td><td style='color:#6b7280'>10/08 → 10/15</td><td>131.05</td><td class='v-neg' style='font-weight:700'>-6.18</td><td>288.46</td><td class='v-neg' style='font-weight:700'>-7.24</td></tr><tr><td>10/19–10/23</td><td style='color:#6b7280'>10/16 → 10/22</td><td>132.07</td><td class='v-pos' style='font-weight:700'>+0.62</td><td>286.39</td><td class='v-neg' style='font-weight:700'>-1.67</td></tr><tr><td>10/26–10/30</td><td style='color:#6b7280'>10/22 → 10/29</td><td>132.68</td><td class='v-pos' style='font-weight:700'>+0.61</td><td>295.89</td><td class='v-pos' style='font-weight:700'>+9.50</td></tr><tr><td>11/02–11/06</td><td style='color:#6b7280'>10/31 → 11/05</td><td>126.76</td><td class='v-neg' style='font-weight:700'>-4.75</td><td>301.25</td><td class='v-pos' style='font-weight:700'>+6.12</td></tr><tr style='background:var(--surface)'><td>前四週平均變動</td><td></td><td></td><td class='v-neg' style='font-weight:700'>-2.42</td><td></td><td class='v-pos' style='font-weight:700'>+1.68</td></tr><tr class='tr-total'><td>本週 11/09–11/13</td><td style='color:#6b7280'>11/06 → 11/12</td><td>127.89</td><td class='v-pos' style='font-weight:700'>+5.26</td><td>307.39</td><td class='v-pos' style='font-weight:700'>+5.84</td></tr></tbody></table></div><div style="font-size:11px;color:var(--other);margin-top:8px;line-height:1.9">每週從上週最後一個資料日起算，各列各自成立、不要串起來相加。</div><div class="rmk rmk-info concl-box"><div class="rmk-title">與近一個月比較</div><div class="rmk-body"><ul style="margin:0;padding-left:18px;line-height:2"><li>近五週一般型規模每週變動 -6.18、+0.62、+0.61、-4.75、+5.26 億；本週是近五週增加最多的一週，前四週平均每週 -2.42 億，五週累計 -4.43 億。</li><li>上週 -4.75 億、本週 +5.26 億，主要都是淨值變動：上週台股、美股大跌，本週回升；本週資金進出 -0.61 億，資金仍是流出。</li><li>一般型期末 127.89 億，比上週（11/05 資料日 126.76 億）高，但仍低於 10/29 資料日的 132.68 億。</li><li>貨幣型近五週 -7.24、-1.67、+9.50、+6.12、+5.84 億，前四週平均 +1.68 億、五週累計 +12.55 億；11/13 的 19 億贖回下期入帳，下期規模會減少。</li></ul></div></div><div class="sec-lbl" style="margin-top:22px">重點觀察</div><div class="remark-grid"><div class="rmk rmk-good"><div class="rmk-icon">📈</div><div class="rmk-title">一般型規模 +5.26 億，主要是淨值回升</div><div class="rmk-body">122.63 → 127.89 億，淨值漲跌 +5.88 億、資金進出 -0.61 億。國內兩檔資金進出 +0.63 億，其他 14 檔資金進出 -1.24 億；補回上週的 -4.75 億，但仍低於 10/29 資料日的 132.68 億。</div></div><div class="rmk rmk-warn"><div class="rmk-icon">🏢</div><div class="rmk-title">ESG積極組合：遠雄人壽贖回落在本期規模</div><div class="rmk-body">上週 11/06 遠雄人壽贖回 4,079 萬（占當天一般型贖回 41.3%），本期規模資金進出 -4,449 萬、可信度高；本週 11/12 合作金庫人壽再贖回 151 萬。五週淨贖回 0.50 億，申購一次都沒有進入每天前三名。</div></div><div class="rmk rmk-info"><div class="rmk-icon">📐</div><div class="rmk-title">資金流估算的可信度</div><div class="rmk-body">資金金額超過淨值漲跌 1.5 倍、可信度高的有 ESG積極組合、全球複合收益債、入息優化、標普利變、全球非投資等級債五檔。其他 11 檔（包括台灣基金、台灣高科技、AI電動車、AI電力創新）本期淨值變動大，資金數字只能當方向參考。2032目標日期資金進出 -2,344 萬，但本週排行榜上沒有這檔（上週 11/04 合作金庫人壽贖回 1,965 萬），資金數字可信度低。</div></div><div class="rmk rmk-info"><div class="rmk-icon">⏱️</div><div class="rmk-title">貨幣型規模：申購當天入帳、贖回隔一個營業日</div><div class="rmk-body">11/09～11/12 四天貨幣型資金進出 -1.32、+5.72、+0.04、+1.32 億，都等於「當天申購 − 前一營業日贖回」（差距 21 萬以內）；新光人壽 6 億落在 11/10 資料日。</div></div></div></div>
+</div><div class="alert-warn" style="background:var(--surface);border-color:var(--border);color:#4b5563"><span>🧾</span><div style="line-height:1.9">【資料來源與驗算】① 本期交易日 11/09～11/13 五天；上週對照取 11/02～11/06 五天。上週沒有出週報，本期逐封讀取 11/02～11/06 五封「每日交易彙總表」原始郵件內文當作上週對照與近一個月背景（含排行）。② 逐日申贖與排行取自 11/09～11/13 五封「每日交易彙總表」原始郵件內文；每日「一般型＋貨幣型＝合計」與淨申贖欄各自驗算相符。③ 貨幣型法人進出取自預報原始郵件（11/10 新光人壽申購 6 億，11/06 預告；11/13 富邦人壽贖回 15 億，11/11 預告；11/13 新光人壽贖回 4 億，11/13 當天下午預告），並與當日貨幣型總量對照；直銷與銀行通路的拆分取自「特定日期銷售通路基金規模」報表（通路 99900 合庫投信＝直銷），逐日與每日交易彙總表核對。該表統計到三個營業日前，11/13 寄達的報表統計到 11/10：11/09、11/10 與交易彙總表相符；11/11～11/13 在執行日推算（直銷＝當天執行的壽險／法人大額交易、銀行≈交易彙總表當天合計−直銷），報告以「＊」標示，下期用通路報表核對。上週 11/02～11/06 五天都已核對：11/02 贖回差 6,124 元（贖回以單位數申請，通路報表是淨值算出後的實際金額）；11/04 逐日表漏列新光人壽 5 億直銷申購（只列合庫商銀 1.23 億，交易彙總表當天申購 6.23 億），同一系列報表「基金申贖單位」直銷申購累計 11/04 由 228.04 億增為 233.04 億（+5.00 億），與預報信、交易彙總表一致，照實計入直銷（10/28 富邦人壽 10 億也是同型漏列）。本期沒有收到單一基金大額贖回通知信。④ 規模資料：期初 11/06，變動日 11/09～11/12 四天。五個資料日的 PDF 合計與 xlsx 歷史檔一般型、貨幣型、合計逐日核對差異皆為 0；規模拆解以 period_attribution.py 計算，逐日合計、一般型合計與期間合計（+5.26 億）核對差異皆為 0。⑤ 11/05 收到 11 月系列基金配息情形通知（配息期間 10 月，多檔固定配息或固定年化配息率），除息造成的淨值下降算在「淨值漲跌」裡，不影響資金進出。⑥ 指數漲跌取自財經日報指數整理表「最新收盤價」欄，逐日核對檔內 observe_date；11/13 國內淨值報表 11/16 才寄，該格標「—」。⑦ 近一個月背景由 month_context.py 組裝：10/12～10/16、10/19～10/23、10/26～10/30 三週沿用已出刊週報資料，11/02～11/06 由原始郵件逐日讀入（含排行），四週排行齊全；規模背景與本期快照核對一致。⑧ 交易金額與規模金額涵蓋的日子不同，規模也比交易晚一個營業日入帳，兩組數字不能直接相減比對。</div></div>
+<div class="pg-footer">
+  本報告依每日交易彙總表整理製作，數據僅供內部管理參考，不得作為對外引用或投資建議之依據。<br>
+  資料期間：2026/11/09（一）至 2026/11/13（五）　｜　製表日：2026-11-14　｜　合庫投信 投資管理部
+</div>
+</div><!-- /pg-body -->
+
+<script>
+function dlHTML(){
+  const b=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`合庫投信_週報_20261109_20261113.html`;a.click();
+}
+function fmtDate(d){return d.toISOString().split('T')[0]}
+function parseDate(s){return new Date(s+'T00:00:00')}
+function weekdayTW(d){return['日','一','二','三','四','五','六'][d.getDay()]}
+function updatePeriodDisplay(){
+  const f=document.getElementById('dpFrom').value;
+  const t=document.getElementById('dpTo').value;
+  if(!f||!t)return;
+  const fd=parseDate(f),td=parseDate(t);
+  document.getElementById('periodBadge').textContent=f.replace(/-/g,'/')+' – '+t.replace(/-/g,'/');
+  document.getElementById('hdrPeriod').textContent=`${f.replace(/-/g,'/')}（${weekdayTW(fd)}）至 ${t.replace(/-/g,'/')}（${weekdayTW(td)}）`;
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.dp-input').forEach(el=>el.addEventListener('change',updatePeriodDisplay));
+});
+function setLastWeek(){
+  const today=new Date();const dow=today.getDay();
+  const toFri=dow===0?2:dow===6?1:dow+1;
+  const fri=new Date(today);fri.setDate(today.getDate()-toFri);
+  const mon=new Date(fri);mon.setDate(fri.getDate()-4);
+  document.getElementById('dpFrom').value=fmtDate(mon);
+  document.getElementById('dpTo').value=fmtDate(fri);
+  updatePeriodDisplay();
+}
+function requestNewReport(){
+  const from=document.getElementById('dpFrom').value;
+  const to=document.getElementById('dpTo').value;
+  if(!from||!to){alert('請先選擇起訖日期');return}
+  const msg='請製作一週交易彙總表與 AUM 分析，分析期間：'+from+' '+to+'（v3 11 段版型，流程見 code/一週交易彙總表流程.md）';
+  if(typeof window.sendPrompt==='function'){window.sendPrompt(msg);}
+  else{
+    const tip=document.getElementById('sendTip');
+    navigator.clipboard&&navigator.clipboard.writeText(msg).then(()=>{tip.style.display='inline';setTimeout(()=>tip.style.display='none',4000)}).catch(()=>{});
+  }
+}
+</script>
+</body>
+</html>
